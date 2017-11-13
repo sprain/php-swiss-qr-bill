@@ -1,0 +1,5 @@
+{
+    "autoload": {
+        "psr-4": { "Sprain\\SwissQrBill\\": "src" }
+    }
+}
