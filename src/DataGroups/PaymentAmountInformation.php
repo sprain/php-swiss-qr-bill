@@ -2,12 +2,28 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
+
 class PaymentAmountInformation
 {
+    /**
+     * The payment amount due
+     *
+     * @var float
+     */
     private $amount;
 
+    /**
+     * Payment currency code (ISO 4217)
+     *
+     * @var string
+     */
     private $currency;
 
+    /**
+     * Due date on which, according to the biller, the payment should be paid at the latest
+     *
+     * @var \DateTime
+     */
     private $dueDate;
 
 

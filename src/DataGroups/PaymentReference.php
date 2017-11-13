@@ -8,10 +8,26 @@ class PaymentReference
     const TYPE_SCOR = 'SCOR';
     const TYPE_NON = 'NON';
 
+    /**
+     * Reference type
+     *
+     * @var string
+     */
     private $type;
 
+    /**
+     * Strutured reference number
+     * Either a QR reference or a Creditor Reference (ISO 11649)
+     *
+     * @var string
+     */
     private $reference;
 
+    /**
+     * Unstructured message
+     *
+     * @var string
+     */
     private $message;
 
 

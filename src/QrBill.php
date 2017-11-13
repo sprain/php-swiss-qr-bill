@@ -1,25 +1,46 @@
- <?php
+<?php
 
 namespace Sprain\SwissQrBill;
 
+use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
+use Sprain\SwissQrBill\DataGroups\Creditor;
+use Sprain\SwissQrBill\DataGroups\CreditorInformation;
+use Sprain\SwissQrBill\DataGroups\Header;
+use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
+use Sprain\SwissQrBill\DataGroups\PaymentReference;
+use Sprain\SwissQrBill\DataGroups\UltimateCreditor;
+use Sprain\SwissQrBill\DataGroups\UltimateDebtor;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class QrBill
 {
+    /** @var Header */
     private $header;
 
+    /** @var CreditorInformation */
     private $creditorInformation;
 
+    /** @var Creditor */
     private $creditor;
 
+    /** @var UltimateCreditor */
     private $ultimateCreditor;
 
+    /** @var PaymentAmountInformation */
     private $paymentAmountInformation;
 
+    /** @var UltimateDebtor */
     private $ultimateDebtor;
 
+    /** @var PaymentReference */
     private $paymentReference;
 
+    /** @var AlternativeScheme[] */
     private $alternativeSchemes;
+
+    /** @var ValidatorInterface */
+    private $validator;
 
 
     public static function create() : self
@@ -133,6 +154,12 @@ class QrBill
 
     public function validate()
     {
+        if (null == $this->validator) {
+            $this->validator = Validation::createValidatorBuilder()
+                ->addMethodMapping('loadValidatorMetadata')
+                ->getValidator();
+        }
 
+        $this->validator->validate($this);
     }
 }

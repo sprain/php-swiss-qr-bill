@@ -7,6 +7,11 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class CreditorInformation
 {
+    /**
+     * IBAN or QR-IBAN of the creditor
+     *
+     * @var string
+     */
     private $iban;
 
     public function getIban(): string

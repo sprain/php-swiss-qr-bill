@@ -7,33 +7,36 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class Header
 {
+    const QRTYPE_SPC = 'SPC';
+    const VERSION_0100 = '0100';
+    const CODING_LATIN = 1;
+
     /**
      * Unambiguous indicator for the Swiss QR code.
-     * Fixed value "SPC" (Swiss Payments Code).
+     *
+     * @var string
      */
-    const QRTYPE_SPC = 'SPC';
+    private $qrType;
 
     /**
      * Version of the specifications (Implementation Guidelines) in use on
      * the date on which the Swiss QR code was created.
      * The first two positions indicate the main version, the following the
      * two positions the sub-version ("0100" for version 1.0).
+     *
+     * @var string
      */
-    const VERSION_0100 = '0100';
-
-    /**
-     * Character set code.
-     * Fixed value 1 indicates Latin character set.
-     */
-    const CODING_LATIN = 1;
-
-    private $qrType;
-
     private $version;
 
+    /**
+     * Character set code
+     *
+     * @var int
+     */
     private $coding;
 
-        public function getQrType(): string
+
+    public function getQrType(): string
     {
         return $this->qrType;
     }
