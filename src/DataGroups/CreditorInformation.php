@@ -2,6 +2,9 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+
 class CreditorInformation
 {
     private $iban;
@@ -13,8 +16,21 @@ class CreditorInformation
 
     public function setIban(string $iban) : self
     {
-        $this->iban = $iban;
+        $this->iban = preg_replace('/\s/', '', $iban);
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        // Fixed length, 21 alphanumeric characters, only IBANs with CH or LI country code
+        $metadata->addPropertyConstraints('iban', [
+            new Assert\NotBlank(),
+            new Assert\Iban(),
+            new Assert\Regex([
+                'pattern' => '/^(CH|LI)/',
+                'match' => true
+            ])
+        ]);
     }
 }

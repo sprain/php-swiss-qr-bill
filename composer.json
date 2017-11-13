@@ -1,5 +1,11 @@
 {
     "autoload": {
         "psr-4": { "Sprain\\SwissQrBill\\": "src" }
+    },
+    "require": {
+        "symfony/validator": "^3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
     }
 }

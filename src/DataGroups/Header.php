@@ -2,6 +2,9 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+
 class Header
 {
     /**
@@ -19,9 +22,10 @@ class Header
     const VERSION_0100 = '0100';
 
     /**
-     * Character set code. Fixed value 1 indicates Latin character set.
+     * Character set code.
+     * Fixed value 1 indicates Latin character set.
      */
-    const CODING_LATIN = '1';
+    const CODING_LATIN = 1;
 
     private $qrType;
 
@@ -29,8 +33,7 @@ class Header
 
     private $coding;
 
-
-    public function getQrType(): string
+        public function getQrType(): string
     {
         return $this->qrType;
     }
@@ -54,15 +57,45 @@ class Header
         return $this;
     }
 
-    public function getCoding(): string
+    public function getCoding(): int
     {
         return $this->coding;
     }
 
-    public function setCoding(string $coding) : self
+    public function setCoding(int $coding) : self
     {
         $this->coding = $coding;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        // Fixed length, three-digit, alphanumeric
+        $metadata->addPropertyConstraints('qrType', [
+            new Assert\NotBlank(),
+            new Assert\Regex([
+                'pattern' => '/^[a-zA-Z0-9]{3}$/',
+                'match' => true
+            ])
+        ]);
+
+        // Fixed length, four-digit, numeric
+        $metadata->addPropertyConstraints('version', [
+            new Assert\NotBlank(),
+            new Assert\Regex([
+                'pattern' => '/^\d{4}$/',
+                'match' => true
+            ])
+        ]);
+
+        // One-digit, numeric
+        $metadata->addPropertyConstraints('coding', [
+            new Assert\NotBlank(),
+            new Assert\Regex([
+                'pattern' => '/^\d{1}$/',
+                'match' => true
+            ])
+        ]);
     }
 }
