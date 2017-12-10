@@ -28,7 +28,7 @@ class CreditorInformation
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        // Fixed length, 21 alphanumeric characters, only IBANs with CH or LI country code
+        // Only IBANs with CH or LI country code
         $metadata->addPropertyConstraints('iban', [
             new Assert\NotBlank(),
             new Assert\Iban(),
