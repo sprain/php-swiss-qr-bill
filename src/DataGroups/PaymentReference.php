@@ -2,7 +2,11 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
-class PaymentReference
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\GroupSequenceProviderInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+class PaymentReference implements GroupSequenceProviderInterface
 {
     const TYPE_QR = 'QRR';
     const TYPE_SCOR = 'SCOR';
@@ -65,5 +69,56 @@ class PaymentReference
         $this->message = $message;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->setGroupSequenceProvider(true);
+
+        $metadata->addPropertyConstraints('type', [
+            new Assert\NotBlank(),
+            new Assert\Choice([
+                self::TYPE_QR,
+                self::TYPE_SCOR,
+                self::TYPE_NON
+            ])
+        ]);
+
+        $metadata->addPropertyConstraints('reference', [
+            new Assert\Type([
+                'type' => 'alnum',
+                'groups' => [self::TYPE_QR, self::TYPE_SCOR]
+            ]),
+            new Assert\NotBlank([
+                'groups' => [self::TYPE_QR, self::TYPE_SCOR]
+            ]),
+            new Assert\Length([
+                'min' => 27,
+                'max' => 27,
+                'groups' => [self::TYPE_QR]
+            ]),
+            new Assert\Length([
+                'min' => 5,
+                'max' => 25,
+                'groups' => [self::TYPE_SCOR]
+            ]),
+            new Assert\Blank([
+                'groups' => [self::TYPE_NON]
+            ]),
+        ]);
+
+        $metadata->addPropertyConstraints('message', [
+            new Assert\Length([
+                'max'=> 140
+            ])
+        ]);
+    }
+
+    public function getGroupSequence()
+    {
+        $groups = array('Default');
+        $groups[] = $this->getType();
+
+        return $groups;
     }
 }
