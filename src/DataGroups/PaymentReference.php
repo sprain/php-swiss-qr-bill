@@ -2,6 +2,7 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
+use Sprain\SwissQrBill\Constraints\ValidCreditorReference;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -87,24 +88,22 @@ class PaymentReference implements GroupSequenceProviderInterface
         $metadata->addPropertyConstraints('reference', [
             new Assert\Type([
                 'type' => 'alnum',
-                'groups' => [self::TYPE_QR, self::TYPE_SCOR]
+                'groups' => [self::TYPE_QR]
             ]),
             new Assert\NotBlank([
-                'groups' => [self::TYPE_QR, self::TYPE_SCOR]
+                'groups' => [self::TYPE_QR]
             ]),
             new Assert\Length([
                 'min' => 27,
                 'max' => 27,
                 'groups' => [self::TYPE_QR]
             ]),
-            new Assert\Length([
-                'min' => 5,
-                'max' => 25,
-                'groups' => [self::TYPE_SCOR]
-            ]),
             new Assert\Blank([
                 'groups' => [self::TYPE_NON]
             ]),
+            new ValidCreditorReference([
+                'groups' => [self::TYPE_SCOR]
+            ])
         ]);
 
         $metadata->addPropertyConstraints('message', [
