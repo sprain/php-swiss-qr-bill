@@ -62,4 +62,5 @@ if (false === $qrBill->isValid()) {
     die(sprintf('There have been %s violations in your qr bill.', $violations->count()));
 }
 
-print $qrBill->getQrCodeData();
+// Get QR code image
+$qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');

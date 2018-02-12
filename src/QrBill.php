@@ -2,6 +2,7 @@
 
 namespace Sprain\SwissQrBill;
 
+use Endroid\QrCode\QrCode;
 use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroups\Creditor;
 use Sprain\SwissQrBill\DataGroups\CreditorInformation;
@@ -20,6 +21,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class QrBill
 {
+    const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.png';
+
     /** @var Header */
     private $header;
 
@@ -165,7 +168,40 @@ class QrBill
         return $this;
     }
 
-    public function getQrCodeData() : string
+    public function getQrCode() : QrCode
+    {
+        $qrCode = new QrCode();
+        $qrCode->setText($this->getQrCodeData());
+        $qrCode->setSize(543);
+        $qrCode->setMargin(19);
+        $qrCode->setLogoPath(self::SWISS_CROSS_LOGO_FILE);
+        $qrCode->setLogoWidth(83);
+
+        return $qrCode;
+    }
+
+    public function getViolations() : ConstraintViolationListInterface
+    {
+        if (null == $this->validator) {
+            $this->validator = Validation::createValidatorBuilder()
+                ->addMethodMapping('loadValidatorMetadata')
+                ->getValidator();
+        }
+
+        return $this->validator->validate($this);
+    }
+
+    public function isValid() : bool
+    {
+        if (0 == $this->getViolations()->count()) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function getQrCodeData() : string
     {
         $elements = [
             $this->getHeader(),
@@ -192,27 +228,6 @@ class QrBill
         }
 
         return implode("\r\n", $qrCodeElements);
-    }
-
-    public function getViolations() : ConstraintViolationListInterface
-    {
-        if (null == $this->validator) {
-            $this->validator = Validation::createValidatorBuilder()
-                ->addMethodMapping('loadValidatorMetadata')
-                ->getValidator();
-        }
-
-        return $this->validator->validate($this);
-    }
-
-    public function isValid() : bool
-    {
-        if (0 == $this->getViolations()->count()) {
-
-            return true;
-        }
-
-        return false;
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
