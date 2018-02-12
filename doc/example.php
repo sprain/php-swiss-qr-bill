@@ -1,0 +1,65 @@
+<?php
+
+use Sprain\SwissQrBill as QrBill;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+// Create a new instance of QrBill, containing default headers with fixed values
+$qrBill = QrBill\QrBill::create();
+
+// Add creditor information
+// Who will receive the payment and to which bank account?
+$creditorInformation = (new QrBill\DataGroups\CreditorInformation())
+    ->setIban('CH9300762011623852957');
+
+$creditor = (new QrBill\DataGroups\Creditor())
+    ->setName('My Company Ltd.')
+    ->setStreet('Bahnhofstrasse')
+    ->setHouseNumber('1')
+    ->setPostalCode('8000')
+    ->setCity('Zürich')
+    ->setCountry('CH');
+
+$qrBill->setCreditorInformation($creditorInformation);
+$qrBill->setCreditor($creditor);
+
+// Add debtor information
+// Who has to pay the invoice? This part is optional.
+$debtor = (new QrBill\DataGroups\UltimateDebtor())
+    ->setName('Thomas LeClaire')
+    ->setStreet('Rue examplaire')
+    ->setHouseNumber('22a')
+    ->setPostalCode('1000')
+    ->setCity('Lausanne')
+    ->setCountry('CH');
+
+// Add payment amount information
+// What amount is to be paid? When is it due?
+$paymentAmountInformation = (new QrBill\DataGroups\PaymentAmountInformation())
+    ->setAmount(25.90)
+    ->setCurrency('CHF')
+    ->setDueDate(new \DateTime('+30 days'));
+
+$qrBill->setPaymentAmountInformation($paymentAmountInformation);
+
+// Add payment reference
+// This is what you will need to identify incoming payments.
+$referenceNumber = (new QrBill\Helpers\QrPaymentReferenceGenerator())
+    ->setCustomerIdentificationNumber('123456') // you receive this number from your bank
+    ->setReferenceNumber('11223344') // a number to match the payment with your other data, e.g. an invoice number
+    ->generate();
+
+$paymentReference = (new QrBill\DataGroups\PaymentReference())
+    ->setType(QrBill\DataGroups\PaymentReference::TYPE_QR)
+    ->setReference($referenceNumber)
+    ->setMessage('Invoice 11223344, Gardening Work');
+
+$qrBill->setPaymentReference($paymentReference);
+
+// Make sure all data is valid
+if (false === $qrBill->isValid()) {
+    $violations = $qrBill->getViolations();
+    die(sprintf('There have been %s violations in your qr bill.', $violations->count()));
+}
+
+print $qrBill->getQrCodeData();
