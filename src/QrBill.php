@@ -11,6 +11,8 @@ use Sprain\SwissQrBill\DataGroups\PaymentReference;
 use Sprain\SwissQrBill\DataGroups\UltimateCreditor;
 use Sprain\SwissQrBill\DataGroups\UltimateDebtor;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -44,6 +46,8 @@ class QrBill
     /** @var ValidatorInterface */
     private $validator;
 
+    /** @var ConstraintViolationListInterface */
+    private $violations;
 
     public static function create() : self
     {
@@ -56,6 +60,11 @@ class QrBill
         $qrBill->setHeader($header);
 
         return $qrBill;
+    }
+
+    public function __construct()
+    {
+        $this->violations = new ConstraintViolationList();
     }
 
     public function getHeader(): Header
@@ -154,6 +163,27 @@ class QrBill
         return $this;
     }
 
+    public function getViolations() : ConstraintViolationListInterface
+    {
+        if (null == $this->validator) {
+            $this->validator = Validation::createValidatorBuilder()
+                ->addMethodMapping('loadValidatorMetadata')
+                ->getValidator();
+        }
+
+        return $this->validator->validate($this);
+    }
+
+    public function isValid() : bool
+    {
+        if (0 == $this->getViolations()->count()) {
+
+            return true;
+        }
+
+        return false;
+    }
+
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraints('header', [
@@ -175,16 +205,5 @@ class QrBill
         $metadata->addPropertyConstraints('paymentReference', [
             new Assert\NotNull()
         ]);
-    }
-
-    public function validate()
-    {
-        if (null == $this->validator) {
-            $this->validator = Validation::createValidatorBuilder()
-                ->addMethodMapping('loadValidatorMetadata')
-                ->getValidator();
-        }
-
-        return $this->validator->validate($this);
     }
 }

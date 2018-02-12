@@ -27,7 +27,7 @@ class QrBillTest extends TestCase
             ->setPaymentAmountInformation($this->createMock(PaymentAmountInformation::class))
             ->setPaymentReference($this->createMock(PaymentReference::class));
 
-        $this->assertSame(0, $qrBill->validate()->count());
+        $this->assertTrue($qrBill->isValid());
     }
 
     public function testHeaderIsSetInDefault()
@@ -38,7 +38,7 @@ class QrBillTest extends TestCase
             ->setPaymentAmountInformation($this->createMock(PaymentAmountInformation::class))
             ->setPaymentReference($this->createMock(PaymentReference::class));
 
-        $this->assertSame(0, $qrBill->validate()->count());
+        $this->assertTrue($qrBill->isValid());
     }
 
     public function testAllRequiredPropertiesMustBeSet()
@@ -53,7 +53,7 @@ class QrBillTest extends TestCase
             ($i == 4) ?: $qrBill->setPaymentAmountInformation($this->createMock(PaymentAmountInformation::class));
             ($i == 5) ?: $qrBill->setPaymentReference($this->createMock(PaymentReference::class));
 
-            $this->assertSame(1, $qrBill->validate()->count(), sprintf('Failed with property number %s.', $i));
+            $this->assertSame(1, $qrBill->getViolations()->count(), sprintf('Failed with property number %s.', $i));
         }
     }
 
@@ -70,6 +70,6 @@ class QrBillTest extends TestCase
             ->setUltimateDebtor($this->createMock(UltimateDebtor::class))
             ->setAlternativeSchemes([$this->createMock(AlternativeScheme::class)]);
 
-        $this->assertSame(0, $qrBill->validate()->count());
+        $this->assertTrue($qrBill->isValid());
     }
 }
