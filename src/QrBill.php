@@ -10,6 +10,8 @@ use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
 use Sprain\SwissQrBill\DataGroups\UltimateCreditor;
 use Sprain\SwissQrBill\DataGroups\UltimateDebtor;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -152,6 +154,29 @@ class QrBill
         return $this;
     }
 
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraints('header', [
+            new Assert\NotNull()
+        ]);
+
+        $metadata->addPropertyConstraints('creditorInformation', [
+            new Assert\NotNull()
+        ]);
+
+        $metadata->addPropertyConstraints('creditor', [
+            new Assert\NotNull()
+        ]);
+
+        $metadata->addPropertyConstraints('paymentAmountInformation', [
+            new Assert\NotNull()
+        ]);
+
+        $metadata->addPropertyConstraints('paymentReference', [
+            new Assert\NotNull()
+        ]);
+    }
+
     public function validate()
     {
         if (null == $this->validator) {
@@ -160,6 +185,6 @@ class QrBill
                 ->getValidator();
         }
 
-        $this->validator->validate($this);
+        return $this->validator->validate($this);
     }
 }
