@@ -1,5 +1,7 @@
 # Swiss QR Bill
 
+[![Build Status](https://travis-ci.org/sprain/php-swiss-qr-bill.svg?branch=master)](https://travis-ci.org/sprain/php-swiss-qr-bill)
+
 A PHP library to create Swiss QR bills, a new standard which will replace the existing inpayment slips in 2019.
 
 For official information see
