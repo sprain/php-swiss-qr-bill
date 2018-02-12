@@ -2,10 +2,11 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
+use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class PaymentAmountInformation
+class PaymentAmountInformation implements QrCodeData
 {
     const CURRENCY_CHF = 'CHF';
     const CURRENCY_EUR = 'EUR';
@@ -32,12 +33,12 @@ class PaymentAmountInformation
     private $dueDate;
 
 
-    public function getAmount(): float
+    public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    public function setAmount(float $amount = null)
+    public function setAmount(float $amount = null) : self
     {
         $this->amount = $amount;
 
@@ -66,6 +67,15 @@ class PaymentAmountInformation
         $this->dueDate = $dueDate;
 
         return $this;
+    }
+
+    public function getQrCodeData() : array
+    {
+        return [
+            number_format($this->getAmount(), 2, '.', ''),
+            $this->getCurrency(),
+            $this->getDueDate()->format('Y-m-d'),
+        ];
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)

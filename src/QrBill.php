@@ -6,6 +6,7 @@ use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroups\Creditor;
 use Sprain\SwissQrBill\DataGroups\CreditorInformation;
 use Sprain\SwissQrBill\DataGroups\Header;
+use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
 use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
 use Sprain\SwissQrBill\DataGroups\UltimateCreditor;
@@ -65,6 +66,7 @@ class QrBill
     public function __construct()
     {
         $this->violations = new ConstraintViolationList();
+        $this->alternativeSchemes = [];
     }
 
     public function getHeader(): Header
@@ -103,7 +105,7 @@ class QrBill
         return $this;
     }
 
-    public function getUltimateCreditor(): UltimateCreditor
+    public function getUltimateCreditor(): ?UltimateCreditor
     {
         return $this->ultimateCreditor;
     }
@@ -127,7 +129,7 @@ class QrBill
         return $this;
     }
 
-    public function getUltimateDebtor(): UltimateDebtor
+    public function getUltimateDebtor(): ?UltimateDebtor
     {
         return $this->ultimateDebtor;
     }
@@ -163,6 +165,35 @@ class QrBill
         return $this;
     }
 
+    public function getQrCodeData() : string
+    {
+        $elements = [
+            $this->getHeader(),
+            $this->getCreditorInformation(),
+            $this->getCreditor(),
+            $this->getUltimateCreditor() ?: new UltimateCreditor(),
+            $this->getPaymentAmountInformation(),
+            $this->getUltimateDebtor() ?: new UltimateDebtor(),
+            $this->getPaymentReference(),
+            $this->getAlternativeSchemes()
+        ];
+
+        return $this->extractQrCodeDataFromElements($elements);
+    }
+
+    private function extractQrCodeDataFromElements(array $elements) : string
+    {
+        $qrCodeElements = [];
+
+        foreach ($elements as $element) {
+            if ($element instanceof QrCodeData) {
+                $qrCodeElements = array_merge($qrCodeElements, $element->getQrCodeData());
+            }
+        }
+
+        return implode("\r\n", $qrCodeElements);
+    }
+
     public function getViolations() : ConstraintViolationListInterface
     {
         if (null == $this->validator) {
@@ -187,23 +218,36 @@ class QrBill
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraints('header', [
-            new Assert\NotNull()
+            new Assert\NotNull(),
+            new Assert\Valid()
         ]);
 
         $metadata->addPropertyConstraints('creditorInformation', [
-            new Assert\NotNull()
+            new Assert\NotNull(),
+            new Assert\Valid()
         ]);
 
         $metadata->addPropertyConstraints('creditor', [
-            new Assert\NotNull()
+            new Assert\NotNull(),
+            new Assert\Valid()
+        ]);
+
+        $metadata->addPropertyConstraints('ultimateCreditor', [
+            new Assert\Valid()
         ]);
 
         $metadata->addPropertyConstraints('paymentAmountInformation', [
-            new Assert\NotNull()
+            new Assert\NotNull(),
+            new Assert\Valid()
+        ]);
+
+        $metadata->addPropertyConstraints('ultimateDebtor', [
+            new Assert\Valid()
         ]);
 
         $metadata->addPropertyConstraints('paymentReference', [
-            new Assert\NotNull()
+            new Assert\NotNull(),
+            new Assert\Valid()
         ]);
     }
 }

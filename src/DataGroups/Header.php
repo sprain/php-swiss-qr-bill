@@ -2,10 +2,11 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
+use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class Header
+class Header implements QrCodeData
 {
     const QRTYPE_SPC = 'SPC';
     const VERSION_0100 = '0100';
@@ -70,6 +71,15 @@ class Header
         $this->coding = $coding;
 
         return $this;
+    }
+
+    public function getQrCodeData() : array
+    {
+        return [
+            $this->getQrType(),
+            $this->getVersion(),
+            $this->getCoding()
+        ];
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)

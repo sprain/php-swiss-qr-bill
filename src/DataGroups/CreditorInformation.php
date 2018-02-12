@@ -2,10 +2,11 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
+use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class CreditorInformation
+class CreditorInformation implements QrCodeData
 {
     /**
      * IBAN or QR-IBAN of the creditor
@@ -24,6 +25,13 @@ class CreditorInformation
         $this->iban = preg_replace('/\s/', '', $iban);
 
         return $this;
+    }
+
+    public function getQrCodeData() : array
+    {
+        return [
+            $this->getIban()
+        ];
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)

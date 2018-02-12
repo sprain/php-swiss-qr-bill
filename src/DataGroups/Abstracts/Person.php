@@ -2,10 +2,11 @@
 
 namespace Sprain\SwissQrBill\DataGroups\Abstracts;
 
+use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-abstract class Person
+abstract class Person implements QrCodeData
 {
     /**
      * Name or company
@@ -54,7 +55,7 @@ abstract class Person
     private $country;
 
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -66,7 +67,7 @@ abstract class Person
         return $this;
     }
 
-    public function getStreet(): string
+    public function getStreet(): ?string
     {
         return $this->street;
     }
@@ -78,7 +79,7 @@ abstract class Person
         return $this;
     }
 
-    public function getHouseNumber(): string
+    public function getHouseNumber(): ?string
     {
         return $this->houseNumber;
     }
@@ -90,7 +91,7 @@ abstract class Person
         return $this;
     }
 
-    public function getPostalCode(): string
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
@@ -102,7 +103,7 @@ abstract class Person
         return $this;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -114,7 +115,7 @@ abstract class Person
         return $this;
     }
 
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->country;
     }
@@ -124,6 +125,18 @@ abstract class Person
         $this->country = strtoupper($country);
 
         return $this;
+    }
+
+    public function getQrCodeData() : array
+    {
+        return [
+            $this->getName(),
+            $this->getStreet(),
+            $this->getHouseNumber(),
+            $this->getPostalCode(),
+            $this->getCity(),
+            $this->getCountry()
+        ];
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)

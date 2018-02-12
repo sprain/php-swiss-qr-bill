@@ -2,7 +2,9 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
-class AlternativeScheme
+use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
+
+class AlternativeScheme implements QrCodeData
 {
     /**
      * Parameter character chain of the alternative scheme
@@ -21,5 +23,12 @@ class AlternativeScheme
         $this->parameter = $parameter;
 
         return $this;
+    }
+
+    public function getQrCodeData() : array
+    {
+        return [
+            $this->getParameter()
+        ];
     }
 }
