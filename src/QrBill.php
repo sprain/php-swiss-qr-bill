@@ -172,10 +172,10 @@ class QrBill
     {
         $qrCode = new QrCode();
         $qrCode->setText($this->getQrCodeData());
-        $qrCode->setSize(543);
-        $qrCode->setMargin(19);
+        $qrCode->setSize(543); // recommended 46x46 mm in px @ 300dpi
+        $qrCode->setMargin(19); // recommended 1,6 mm in px @ 300dpi
         $qrCode->setLogoPath(self::SWISS_CROSS_LOGO_FILE);
-        $qrCode->setLogoWidth(83);
+        $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
 
         return $qrCode;
     }
