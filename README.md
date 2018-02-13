@@ -7,7 +7,7 @@ A PHP library to create Swiss QR bills, a new standard which will replace the ex
 For official information see
 https://www.paymentstandards.ch/en/home/softwarepartner/qr-bill.html
 
-**This is work in progress. [You are welcome to contribute.](https://github.com/sprain/php-swiss-qr-bill/issues)**
+**This is work in progress and not yet ready for production. [You are welcome to contribute.](https://github.com/sprain/php-swiss-qr-bill/issues)**
 
 ## Documentation
 
