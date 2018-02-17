@@ -12,7 +12,7 @@ use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
 use Sprain\SwissQrBill\DataGroups\UltimateCreditor;
 use Sprain\SwissQrBill\DataGroups\UltimateDebtor;
-use Sprain\SwissQrBill\Exception\InvalidQrBillData;
+use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
 use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -177,7 +177,7 @@ class QrBill implements Validatable
     private function getQrCodeData() : string
     {
         if (!$this->isValid()) {
-            throw new InvalidQrBillData(
+            throw new InvalidQrBillDataException(
                 'The provided data is not valid to generate a qr code. Use getViolations() to find details.'
             );
         }

@@ -47,7 +47,7 @@ class QrBillTest extends TestCase
     }
 
     /**
-     * @expectedException Sprain\SwissQrBill\Exception\InvalidQrBillData
+     * @expectedException Sprain\SwissQrBill\Exception\InvalidQrBillDataException
      */
     public function testCatchInvalidData()
     {
