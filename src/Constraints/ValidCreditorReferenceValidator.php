@@ -16,7 +16,7 @@ class ValidCreditorReferenceValidator extends ConstraintValidator
 
         $referenceGenerator = new phpIso11649();
 
-        if (false == $referenceGenerator->validateRfReference($value)) {
+        if (false === $referenceGenerator->validateRfReference($value)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
