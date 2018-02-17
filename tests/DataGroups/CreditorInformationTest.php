@@ -4,30 +4,18 @@ namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroups\CreditorInformation;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreditorInformationTest extends TestCase
 {
-    /** @var  ValidatorInterface */
-    private $validator;
-
-    public function setUp()
-    {
-        $this->validator = Validation::createValidatorBuilder()
-            ->addMethodMapping('loadValidatorMetadata')
-            ->getValidator();
-    }
-
     /**
      * @dataProvider validIbanProvider
      */
     public function testIbanIsValid($value)
     {
-        $header = new CreditorInformation();
-        $header->setIban($value);
+        $creditorInformation = new CreditorInformation();
+        $creditorInformation->setIban($value);
 
-        $this->assertSame(0, $this->validator->validate($header)->count());
+        $this->assertSame(0, $creditorInformation->getViolations()->count());
     }
 
     public function validIbanProvider()
@@ -45,10 +33,10 @@ class CreditorInformationTest extends TestCase
      */
     public function testIbanIsInvalid($value, $numberOfViolations)
     {
-        $header = new CreditorInformation();
-        $header->setIban($value);
+        $creditorInformation = new CreditorInformation();
+        $creditorInformation->setIban($value);
 
-        $this->assertSame($numberOfViolations, $this->validator->validate($header)->count());
+        $this->assertSame($numberOfViolations, $creditorInformation->getViolations()->count());
     }
 
     public function invalidIbanProvider()
@@ -80,8 +68,8 @@ class CreditorInformationTest extends TestCase
 
     public function testIbanIsRequired()
     {
-        $header = new CreditorInformation();
+        $creditorInformation = new CreditorInformation();
 
-        $this->assertSame(1, $this->validator->validate($header)->count());
+        $this->assertSame(1, $creditorInformation->getViolations()->count());
     }
 }

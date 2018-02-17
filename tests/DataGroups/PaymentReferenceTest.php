@@ -3,33 +3,17 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PaymentReferenceTest extends TestCase
 {
-    /** @var  ValidatorInterface */
-    private $validator;
-
-    /** @var PaymentAmountInformation */
-    private $paymentAmountInformation;
-
-    public function setUp()
-    {
-        $this->validator = Validation::createValidatorBuilder()
-            ->addMethodMapping('loadValidatorMetadata')
-            ->getValidator();
-    }
-
     public function testValidQrReference()
     {
         $paymentReference = new PaymentReference();
         $paymentReference->setType(PaymentReference::TYPE_QR);
         $paymentReference->setReference('012345678901234567890123456');
 
-        $this->assertSame(0, $this->validator->validate($paymentReference)->count());
+        $this->assertSame(0, $paymentReference->getViolations()->count());
     }
 
     /**
@@ -41,7 +25,7 @@ class PaymentReferenceTest extends TestCase
         $paymentReference->setType(PaymentReference::TYPE_QR);
         $paymentReference->setReference($value);
 
-        $this->assertSame(1, $this->validator->validate($paymentReference)->count());
+        $this->assertSame(1, $paymentReference->getViolations()->count());
     }
 
     public function invalidQrReferenceProvider()
@@ -59,7 +43,7 @@ class PaymentReferenceTest extends TestCase
         $paymentReference->setType(PaymentReference::TYPE_SCOR);
         $paymentReference->setReference('RF18539007547034');
 
-        $this->assertSame(0, $this->validator->validate($paymentReference)->count());
+        $this->assertSame(0, $paymentReference->getViolations()->count());
     }
 
     /**
@@ -71,7 +55,7 @@ class PaymentReferenceTest extends TestCase
         $paymentReference->setType(PaymentReference::TYPE_SCOR);
         $paymentReference->setReference($value);
 
-        $this->assertSame(1, $this->validator->validate($paymentReference)->count());
+        $this->assertSame(1, $paymentReference->getViolations()->count());
     }
 
     public function invalidScorReferenceProvider()

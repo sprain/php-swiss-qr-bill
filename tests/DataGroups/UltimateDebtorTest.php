@@ -5,23 +5,14 @@ namespace Sprain\SwissQrBill\Tests\DataGroups;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroups\Debtor;
 use Sprain\SwissQrBill\DataGroups\UltimateDebtor;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UltimateDebtorTest extends TestCase
 {
-    /** @var  ValidatorInterface */
-    private $validator;
-
     /** @var UltimateDebtor */
     private $ultimateDebtor;
 
     public function setUp()
     {
-        $this->validator = Validation::createValidatorBuilder()
-            ->addMethodMapping('loadValidatorMetadata')
-            ->getValidator();
-
         // Valid default to be adjusted in single tests
         $this->ultimateDebtor = (new UltimateDebtor())
             ->setName('Thomas Mustermann')
@@ -39,7 +30,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setName($value);
 
-        $this->assertSame(0, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(0, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function validNameProvider()
@@ -60,7 +51,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setName($value);
 
-        $this->assertSame(1, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(1, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function invalidNameProvider()
@@ -78,7 +69,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setStreet($value);
 
-        $this->assertSame(0, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(0, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function validStreetProvider()
@@ -100,7 +91,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setStreet($value);
 
-        $this->assertSame(1, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(1, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function invalidStreetProvider()
@@ -117,7 +108,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setHouseNumber($value);
 
-        $this->assertSame(0, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(0, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function validHouseNumberProvider()
@@ -139,7 +130,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setHouseNumber($value);
 
-        $this->assertSame(1, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(1, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function invalidHouseNumberProvider()
@@ -156,7 +147,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setPostalCode($value);
 
-        $this->assertSame(0, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(0, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function validPostalCodeProvider()
@@ -176,7 +167,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setPostalCode($value);
 
-        $this->assertSame(1, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(1, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function invalidPostalCodeProvider()
@@ -194,7 +185,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setCity($value);
 
-        $this->assertSame(0, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(0, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function validCityProvider()
@@ -213,7 +204,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setCity($value);
 
-        $this->assertSame(1, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(1, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function invalidCityProvider()
@@ -231,7 +222,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setCountry($value);
 
-        $this->assertSame(0, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(0, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function validCountryProvider()
@@ -252,7 +243,7 @@ class UltimateDebtorTest extends TestCase
     {
         $this->ultimateDebtor->setCountry($value);
 
-        $this->assertSame(1, $this->validator->validate($this->ultimateDebtor)->count());
+        $this->assertSame(1, $this->ultimateDebtor->getViolations()->count());
     }
 
     public function invalidCountryProvider()

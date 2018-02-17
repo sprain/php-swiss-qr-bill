@@ -4,23 +4,14 @@ namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PaymentAmountInformationTest extends TestCase
 {
-    /** @var  ValidatorInterface */
-    private $validator;
-
     /** @var PaymentAmountInformation */
     private $paymentAmountInformation;
 
     public function setUp()
     {
-        $this->validator = Validation::createValidatorBuilder()
-            ->addMethodMapping('loadValidatorMetadata')
-            ->getValidator();
-
         // Valid default to be adjusted in single tests
         $this->paymentAmountInformation = (new PaymentAmountInformation())
             ->setAmount(25)
@@ -35,7 +26,7 @@ class PaymentAmountInformationTest extends TestCase
     {
         $this->paymentAmountInformation->setAmount($value);
 
-        $this->assertSame(0, $this->validator->validate($this->paymentAmountInformation)->count());
+        $this->assertSame(0, $this->paymentAmountInformation->getViolations()->count());
     }
 
     public function validAmountProvider()
@@ -55,7 +46,7 @@ class PaymentAmountInformationTest extends TestCase
     {
         $this->paymentAmountInformation->setAmount($value);
 
-        $this->assertSame(1, $this->validator->validate($this->paymentAmountInformation)->count());
+        $this->assertSame(1, $this->paymentAmountInformation->getViolations()->count());
     }
 
     public function invalidAmountProvider()

@@ -4,23 +4,14 @@ namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroups\Creditor;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreditorTest extends TestCase
 {
-    /** @var  ValidatorInterface */
-    private $validator;
-
     /** @var Creditor */
     private $creditor;
 
     public function setUp()
     {
-        $this->validator = Validation::createValidatorBuilder()
-            ->addMethodMapping('loadValidatorMetadata')
-            ->getValidator();
-
         // Valid default to be adjusted in single tests
         $this->creditor = (new Creditor())
             ->setName('Thomas Mustermann')
@@ -38,7 +29,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setName($value);
 
-        $this->assertSame(0, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(0, $this->creditor->getViolations()->count());
     }
 
     public function validNameProvider()
@@ -59,7 +50,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setName($value);
 
-        $this->assertSame(1, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(1, $this->creditor->getViolations()->count());
     }
 
     public function invalidNameProvider()
@@ -77,7 +68,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setStreet($value);
 
-        $this->assertSame(0, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(0, $this->creditor->getViolations()->count());
     }
 
     public function validStreetProvider()
@@ -99,7 +90,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setStreet($value);
 
-        $this->assertSame(1, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(1, $this->creditor->getViolations()->count());
     }
 
     public function invalidStreetProvider()
@@ -116,7 +107,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setHouseNumber($value);
 
-        $this->assertSame(0, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(0, $this->creditor->getViolations()->count());
     }
 
     public function validHouseNumberProvider()
@@ -138,7 +129,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setHouseNumber($value);
 
-        $this->assertSame(1, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(1, $this->creditor->getViolations()->count());
     }
 
     public function invalidHouseNumberProvider()
@@ -155,7 +146,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setPostalCode($value);
 
-        $this->assertSame(0, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(0, $this->creditor->getViolations()->count());
     }
 
     public function validPostalCodeProvider()
@@ -175,7 +166,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setPostalCode($value);
 
-        $this->assertSame(1, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(1, $this->creditor->getViolations()->count());
     }
 
     public function invalidPostalCodeProvider()
@@ -193,7 +184,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setCity($value);
 
-        $this->assertSame(0, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(0, $this->creditor->getViolations()->count());
     }
 
     public function validCityProvider()
@@ -212,7 +203,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setCity($value);
 
-        $this->assertSame(1, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(1, $this->creditor->getViolations()->count());
     }
 
     public function invalidCityProvider()
@@ -230,7 +221,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setCountry($value);
 
-        $this->assertSame(0, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(0, $this->creditor->getViolations()->count());
     }
 
     public function validCountryProvider()
@@ -251,7 +242,7 @@ class CreditorTest extends TestCase
     {
         $this->creditor->setCountry($value);
 
-        $this->assertSame(1, $this->validator->validate($this->creditor)->count());
+        $this->assertSame(1, $this->creditor->getViolations()->count());
     }
 
     public function invalidCountryProvider()

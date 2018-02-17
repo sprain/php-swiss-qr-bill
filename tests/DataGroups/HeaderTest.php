@@ -4,21 +4,9 @@ namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroups\Header;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class HeaderTest extends TestCase
 {
-    /** @var  ValidatorInterface */
-    private $validator;
-
-    public function setUp()
-    {
-        $this->validator = Validation::createValidatorBuilder()
-            ->addMethodMapping('loadValidatorMetadata')
-            ->getValidator();
-    }
-
     /**
      * @dataProvider validQrTypeProvider
      */
@@ -29,7 +17,7 @@ class HeaderTest extends TestCase
         $header->setVersion('0100');
         $header->setCoding(1);
 
-        $this->assertSame(0, $this->validator->validate($header)->count());
+        $this->assertSame(0, $header->getViolations()->count());
     }
 
     public function validQrTypeProvider()
@@ -55,7 +43,7 @@ class HeaderTest extends TestCase
         $header->setVersion('0100');
         $header->setCoding(1);
 
-        $this->assertSame(1, $this->validator->validate($header)->count());
+        $this->assertSame(1, $header->getViolations()->count());
     }
 
     public function invalidQrTypeProvider()
@@ -78,7 +66,7 @@ class HeaderTest extends TestCase
         $header->setVersion('0100');
         $header->setCoding(1);
 
-        $this->assertSame(1, $this->validator->validate($header)->count());
+        $this->assertSame(1, $header->getViolations()->count());
     }
 
     /**
@@ -91,7 +79,7 @@ class HeaderTest extends TestCase
         $header->setVersion($value);
         $header->setCoding(1);
 
-        $this->assertSame(0, $this->validator->validate($header)->count());
+        $this->assertSame(0, $header->getViolations()->count());
     }
 
     public function validVersionProvider()
@@ -114,7 +102,7 @@ class HeaderTest extends TestCase
         $header->setVersion($value);
         $header->setCoding(1);
 
-        $this->assertSame(1, $this->validator->validate($header)->count());
+        $this->assertSame(1, $header->getViolations()->count());
     }
 
     public function invalidVersionProvider()
@@ -137,7 +125,7 @@ class HeaderTest extends TestCase
         $header->setQrType('SPC');
         $header->setCoding(1);
 
-        $this->assertSame(1, $this->validator->validate($header)->count());
+        $this->assertSame(1, $header->getViolations()->count());
     }
 
     /**
@@ -150,7 +138,7 @@ class HeaderTest extends TestCase
         $header->setVersion('0100');
         $header->setCoding($value);
 
-        $this->assertSame(0, $this->validator->validate($header)->count());
+        $this->assertSame(0, $header->getViolations()->count());
     }
 
     public function validCodingProvider()
@@ -179,7 +167,7 @@ class HeaderTest extends TestCase
         $header->setVersion('0100');
         $header->setCoding($value);
 
-        $this->assertSame(1, $this->validator->validate($header)->count());
+        $this->assertSame(1, $header->getViolations()->count());
     }
 
     public function invalidCodingProvider()
@@ -196,6 +184,6 @@ class HeaderTest extends TestCase
         $header->setQrType('SPC');
         $header->setVersion('0100');
 
-        $this->assertSame(1, $this->validator->validate($header)->count());
+        $this->assertSame(1, $header->getViolations()->count());
     }
 }
