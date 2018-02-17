@@ -3,11 +3,15 @@
 namespace Sprain\SwissQrBill\DataGroups\Abstracts;
 
 use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
+use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
+use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-abstract class Person implements QrCodeData
+abstract class Person implements QrCodeData, Validatable
 {
+    use ValidatorTrait;
+
     /**
      * Name or company
      *

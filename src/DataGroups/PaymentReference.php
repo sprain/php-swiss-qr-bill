@@ -4,12 +4,16 @@ namespace Sprain\SwissQrBill\DataGroups;
 
 use Sprain\SwissQrBill\Constraints\ValidCreditorReference;
 use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
+use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
+use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class PaymentReference implements GroupSequenceProviderInterface, QrCodeData
+class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Validatable
 {
+    use ValidatorTrait;
+
     const TYPE_QR = 'QRR';
     const TYPE_SCOR = 'SCOR';
     const TYPE_NON = 'NON';

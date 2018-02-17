@@ -3,11 +3,15 @@
 namespace Sprain\SwissQrBill\DataGroups;
 
 use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
+use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
+use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class PaymentAmountInformation implements QrCodeData
+class PaymentAmountInformation implements QrCodeData, Validatable
 {
+    use ValidatorTrait;
+
     const CURRENCY_CHF = 'CHF';
     const CURRENCY_EUR = 'EUR';
 

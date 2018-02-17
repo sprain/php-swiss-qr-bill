@@ -22,7 +22,7 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     /**
      * @dataProvider qrPaymentReferenceProvider
      */
-    public function testCreateValidQrPaymentReference($customerIdentification, $referenceNumber, $expectedResult)
+    public function testValidQrPaymentReference($customerIdentification, $referenceNumber, $expectedResult)
     {
         $qrReference = (new QrPaymentReferenceGenerator())
             ->setCustomerIdentificationNumber($customerIdentification)
@@ -46,11 +46,16 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
             // Correct handling of whitespace
             [' 310 014 ', ' 1831001 9779911119 ', '310014000183100197799111196'],
-
-            // Correct handling of empty strings
-            ['', '11223344', '000000000000000000112233442'],
-            ['123456', '', '123456000000000000000000006'],
         ];
+    }
+
+    /**
+     * @expectedException Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException
+     */
+    public function testInvalidQrPaymentReference()
+    {
+        (new QrPaymentReferenceGenerator())
+            ->generate(); // Generating without data is not valid
     }
 
     /**

@@ -2,11 +2,16 @@
 
 namespace Sprain\SwissQrBill\Reference;
 
+use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
+use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
+use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class QrPaymentReferenceGenerator
+class QrPaymentReferenceGenerator implements Validatable
 {
+    use ValidatorTrait;
+
     /** @var string */
     private $customerIdentificationNumber;
 
@@ -39,6 +44,12 @@ class QrPaymentReferenceGenerator
 
     public function generate()
     {
+        if (!$this->isValid()) {
+            throw new InvalidQrPaymentReferenceException(
+                'The provided data is not valid to generate a qr payment reference number. Use getViolations() to find details.'
+            );
+        }
+
         $completeReferenceNumber  = str_pad($this->getCustomerIdentificationNumber(), 6, '0', STR_PAD_RIGHT);
         $completeReferenceNumber .= str_pad($this->getReferenceNumber(), 20, '0', STR_PAD_LEFT);
         $completeReferenceNumber .= $this->modulo10($completeReferenceNumber);

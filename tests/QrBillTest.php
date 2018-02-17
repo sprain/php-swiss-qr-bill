@@ -46,6 +46,15 @@ class QrBillTest extends TestCase
         $this->assertTrue($qrBill->isValid());
     }
 
+    /**
+     * @expectedException Sprain\SwissQrBill\Exception\InvalidQrBillData
+     */
+    public function testCatchInvalidData()
+    {
+        $qrBill = QrBill::create();
+        $qrBill->getQrCode();
+    }
+
     public function testCreditorInformationIsRequired()
     {
         $qrBill = QrBill::create();

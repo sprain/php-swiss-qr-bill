@@ -12,15 +12,16 @@ use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
 use Sprain\SwissQrBill\DataGroups\UltimateCreditor;
 use Sprain\SwissQrBill\DataGroups\UltimateDebtor;
+use Sprain\SwissQrBill\Exception\InvalidQrBillData;
+use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
+use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class QrBill
+class QrBill implements Validatable
 {
+    use ValidatorTrait;
+
     const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.png';
 
     /** @var Header */
@@ -47,12 +48,6 @@ class QrBill
     /** @var AlternativeScheme[] */
     private $alternativeSchemes;
 
-    /** @var ValidatorInterface */
-    private $validator;
-
-    /** @var ConstraintViolationListInterface */
-    private $violations;
-
     public static function create() : self
     {
         $header = new Header();
@@ -68,7 +63,6 @@ class QrBill
 
     public function __construct()
     {
-        $this->violations = new ConstraintViolationList();
         $this->alternativeSchemes = [];
     }
 
@@ -180,29 +174,14 @@ class QrBill
         return $qrCode;
     }
 
-    public function getViolations() : ConstraintViolationListInterface
-    {
-        if (null == $this->validator) {
-            $this->validator = Validation::createValidatorBuilder()
-                ->addMethodMapping('loadValidatorMetadata')
-                ->getValidator();
-        }
-
-        return $this->validator->validate($this);
-    }
-
-    public function isValid() : bool
-    {
-        if (0 == $this->getViolations()->count()) {
-
-            return true;
-        }
-
-        return false;
-    }
-
     private function getQrCodeData() : string
     {
+        if (!$this->isValid()) {
+            throw new InvalidQrBillData(
+                'The provided data is not valid to generate a qr code. Use getViolations() to find details.'
+            );
+        }
+
         $elements = [
             $this->getHeader(),
             $this->getCreditorInformation(),
