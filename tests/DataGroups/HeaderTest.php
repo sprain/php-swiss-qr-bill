@@ -186,4 +186,20 @@ class HeaderTest extends TestCase
 
         $this->assertSame(1, $header->getViolations()->count());
     }
+
+    public function testQrCodeData()
+    {
+        $header = new Header();
+        $header->setQrType(Header::QRTYPE_SPC);
+        $header->setVersion('0100');
+        $header->setCoding(1);
+
+        $expected = [
+            Header::QRTYPE_SPC,
+            '0100',
+            1
+        ];
+
+        $this->assertSame($expected, $header->getQrCodeData());
+    }
 }

@@ -57,4 +57,15 @@ class PaymentAmountInformationTest extends TestCase
             // [11.111], @todo: only two decimal places should be allowed
         ];
     }
+
+    public function testQrCodeData()
+    {
+        $expected = [
+            '25.00',
+            'CHF',
+            (new \DateTime('+30 days'))->format('Y-m-d')
+        ];
+
+        $this->assertSame($expected, $this->paymentAmountInformation->getQrCodeData());
+    }
 }

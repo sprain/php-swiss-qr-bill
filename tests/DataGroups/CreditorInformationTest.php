@@ -72,4 +72,16 @@ class CreditorInformationTest extends TestCase
 
         $this->assertSame(1, $creditorInformation->getViolations()->count());
     }
+
+    public function testQrCodeData()
+    {
+        $creditorInformation = new CreditorInformation();
+        $creditorInformation->setIban('CH93 0076 2011 6238 5295 7');
+
+        $expected = [
+            'CH9300762011623852957',
+        ];
+
+        $this->assertSame($expected, $creditorInformation->getQrCodeData());
+    }
 }
