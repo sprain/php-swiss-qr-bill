@@ -2,6 +2,7 @@
     "name": "sprain/swiss-qr-bill",
     "description": "A PHP library to create Swiss QR bills",
     "type": "library",
+    "license": "MIT",
     "require": {
         "php": ">=7.1",
         "symfony/validator": "^3.3",
