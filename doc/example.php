@@ -12,7 +12,7 @@ $qrBill = QrBill\QrBill::create();
 $creditorInformation = (new QrBill\DataGroups\CreditorInformation())
     ->setIban('CH9300762011623852957');
 
-$creditor = (new QrBill\DataGroups\Creditor())
+$creditor = (new QrBill\DataGroups\Address())
     ->setName('My Company Ltd.')
     ->setStreet('Bahnhofstrasse')
     ->setHouseNumber('1')
@@ -25,7 +25,7 @@ $qrBill->setCreditor($creditor);
 
 // Add debtor information
 // Who has to pay the invoice? This part is optional.
-$debtor = (new QrBill\DataGroups\UltimateDebtor())
+$debtor = (new QrBill\DataGroups\Address())
     ->setName('Thomas LeClaire')
     ->setStreet('Rue examplaire')
     ->setHouseNumber('22a')

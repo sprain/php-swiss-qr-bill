@@ -3,17 +3,17 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\UltimateCreditor;
+use Sprain\SwissQrBill\DataGroups\Address;
 
-class UltimateCreditorTest extends TestCase
+class AddressTest extends TestCase
 {
-    /** @var UltimateCreditor */
-    private $ultimateCreditor;
+    /** @var Address */
+    private $address;
 
     public function setUp()
     {
         // Valid default to be adjusted in single tests
-        $this->ultimateCreditor = (new UltimateCreditor())
+        $this->address = (new Address())
             ->setName('Thomas Mustermann')
             ->setStreet('Musterweg')
             ->setHouseNumber('22a')
@@ -27,9 +27,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testNameIsValid($value)
     {
-        $this->ultimateCreditor->setName($value);
+        $this->address->setName($value);
 
-        $this->assertSame(0, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(0, $this->address->getViolations()->count());
     }
 
     public function validNameProvider()
@@ -48,9 +48,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testNameIsInvalid($value)
     {
-        $this->ultimateCreditor->setName($value);
+        $this->address->setName($value);
 
-        $this->assertSame(1, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(1, $this->address->getViolations()->count());
     }
 
     public function invalidNameProvider()
@@ -66,9 +66,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testStreetIsValid($value)
     {
-        $this->ultimateCreditor->setStreet($value);
+        $this->address->setStreet($value);
 
-        $this->assertSame(0, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(0, $this->address->getViolations()->count());
     }
 
     public function validStreetProvider()
@@ -88,9 +88,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testStreetIsInvalid($value)
     {
-        $this->ultimateCreditor->setStreet($value);
+        $this->address->setStreet($value);
 
-        $this->assertSame(1, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(1, $this->address->getViolations()->count());
     }
 
     public function invalidStreetProvider()
@@ -105,9 +105,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testHouseNumberIsValid($value)
     {
-        $this->ultimateCreditor->setHouseNumber($value);
+        $this->address->setHouseNumber($value);
 
-        $this->assertSame(0, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(0, $this->address->getViolations()->count());
     }
 
     public function validHouseNumberProvider()
@@ -127,9 +127,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testHouseNumberIsInvalid($value)
     {
-        $this->ultimateCreditor->setHouseNumber($value);
+        $this->address->setHouseNumber($value);
 
-        $this->assertSame(1, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(1, $this->address->getViolations()->count());
     }
 
     public function invalidHouseNumberProvider()
@@ -144,9 +144,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testPostalCodeIsValid($value)
     {
-        $this->ultimateCreditor->setPostalCode($value);
+        $this->address->setPostalCode($value);
 
-        $this->assertSame(0, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(0, $this->address->getViolations()->count());
     }
 
     public function validPostalCodeProvider()
@@ -164,9 +164,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testPostalCodeIsInvalid($value)
     {
-        $this->ultimateCreditor->setPostalCode($value);
+        $this->address->setPostalCode($value);
 
-        $this->assertSame(1, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(1, $this->address->getViolations()->count());
     }
 
     public function invalidPostalCodeProvider()
@@ -182,9 +182,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testCityIsValid($value)
     {
-        $this->ultimateCreditor->setCity($value);
+        $this->address->setCity($value);
 
-        $this->assertSame(0, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(0, $this->address->getViolations()->count());
     }
 
     public function validCityProvider()
@@ -201,9 +201,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testCityIsInvalid($value)
     {
-        $this->ultimateCreditor->setCity($value);
+        $this->address->setCity($value);
 
-        $this->assertSame(1, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(1, $this->address->getViolations()->count());
     }
 
     public function invalidCityProvider()
@@ -219,9 +219,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testCountryIsValid($value)
     {
-        $this->ultimateCreditor->setCountry($value);
+        $this->address->setCountry($value);
 
-        $this->assertSame(0, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(0, $this->address->getViolations()->count());
     }
 
     public function validCountryProvider()
@@ -240,9 +240,9 @@ class UltimateCreditorTest extends TestCase
      */
     public function testCountryIsInvalid($value)
     {
-        $this->ultimateCreditor->setCountry($value);
+        $this->address->setCountry($value);
 
-        $this->assertSame(1, $this->ultimateCreditor->getViolations()->count());
+        $this->assertSame(1, $this->address->getViolations()->count());
     }
 
     public function invalidCountryProvider()
@@ -266,6 +266,6 @@ class UltimateCreditorTest extends TestCase
             'CH',
         ];
 
-        $this->assertSame($expected, $this->ultimateCreditor->getQrCodeData());
+        $this->assertSame($expected, $this->address->getQrCodeData());
     }
 }

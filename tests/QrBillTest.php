@@ -3,14 +3,12 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
+use Sprain\SwissQrBill\DataGroups\Address;
 use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
-use Sprain\SwissQrBill\DataGroups\Creditor;
 use Sprain\SwissQrBill\DataGroups\CreditorInformation;
 use Sprain\SwissQrBill\DataGroups\Header;
 use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
-use Sprain\SwissQrBill\DataGroups\UltimateCreditor;
-use Sprain\SwissQrBill\DataGroups\UltimateDebtor;
 use Sprain\SwissQrBill\QrBill;
 
 class QrBillTest extends TestCase
@@ -279,26 +277,12 @@ class QrBillTest extends TestCase
 
     public function creditor(QrBill &$qrBill)
     {
-        $creditor = (new Creditor())
-            ->setName('My Company Ltd.')
-            ->setStreet('Bahnhofstrasse')
-            ->setHouseNumber('1')
-            ->setPostalCode('8000')
-            ->setCity('Zürich')
-            ->setCountry('CH');
-        $qrBill->setCreditor($creditor);
+        $qrBill->setCreditor($this->address());
     }
 
     public function invalidCreditor(QrBill &$qrBill)
     {
-        $creditor = (new Creditor())
-            // NO NAME!
-            ->setStreet('Bahnhofstrasse')
-            ->setHouseNumber('1')
-            ->setPostalCode('8000')
-            ->setCity('Zürich')
-            ->setCountry('CH');
-        $qrBill->setCreditor($creditor);
+        $qrBill->setCreditor($this->invalidAddress());
     }
 
     public function paymentAmountInformation(QrBill &$qrBill)
@@ -337,49 +321,43 @@ class QrBillTest extends TestCase
 
     public function ultimateCreditor(QrBill &$qrBill)
     {
-        $ultimateCreditor = (new UltimateCreditor())
-            ->setName('My Company Holding Ltd.')
-            ->setStreet('Bahnhofstrasse')
-            ->setHouseNumber('1')
-            ->setPostalCode('8000')
-            ->setCity('Zürich')
-            ->setCountry('CH');
-        $qrBill->setUltimateCreditor($ultimateCreditor);
+        $qrBill->setUltimateCreditor($this->address());
     }
 
     public function invalidUltimateCreditor(QrBill &$qrBill)
     {
-        $ultimateCreditor = (new UltimateCreditor())
-            // NO NAME!
-            ->setStreet('Bahnhofstrasse')
-            ->setHouseNumber('1')
-            ->setPostalCode('8000')
-            ->setCity('Zürich')
-            ->setCountry('CH');
-        $qrBill->setUltimateCreditor($ultimateCreditor);
+        $qrBill->setUltimateCreditor($this->invalidAddress());
     }
 
     public function ultimateDebtor(QrBill &$qrBill)
     {
-        $ultimateDebtor = (new UltimateDebtor())
+        $qrBill->setUltimateDebtor($this->address());
+    }
+
+    public function invalidUltimateDebtor(QrBill &$qrBill)
+    {
+        $qrBill->setUltimateDebtor($this->invalidAddress());
+    }
+
+    public function address()
+    {
+        return (new Address())
             ->setName('Thomas LeClaire')
             ->setStreet('Rue examplaire')
             ->setHouseNumber('22a')
             ->setPostalCode('1000')
             ->setCity('Lausanne')
             ->setCountry('CH');
-        $qrBill->setUltimateDebtor($ultimateDebtor);
     }
 
-    public function invalidUltimateDebtor(QrBill &$qrBill)
+    public function invalidAddress()
     {
-        $ultimateDebtor = (new UltimateDebtor())
+        return (new Address())
             // NO NAME!
             ->setStreet('Rue examplaire')
             ->setHouseNumber('22a')
             ->setPostalCode('1000')
             ->setCity('Lausanne')
             ->setCountry('CH');
-        $qrBill->setUltimateDebtor($ultimateDebtor);
     }
 }
