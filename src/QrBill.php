@@ -159,6 +159,12 @@ class QrBill implements Validatable
 
     public function getQrCode() : QrCode
     {
+        if (!$this->isValid()) {
+            throw new InvalidQrBillDataException(
+                'The provided data is not valid to generate a qr code. Use getViolations() to find details.'
+            );
+        }
+
         $qrCode = new QrCode();
         $qrCode->setText($this->getQrCodeData());
         $qrCode->setSize(543); // recommended 46x46 mm in px @ 300dpi
@@ -171,12 +177,6 @@ class QrBill implements Validatable
 
     private function getQrCodeData() : string
     {
-        if (!$this->isValid()) {
-            throw new InvalidQrBillDataException(
-                'The provided data is not valid to generate a qr code. Use getViolations() to find details.'
-            );
-        }
-
         $elements = [
             $this->getHeader(),
             $this->getCreditorInformation(),
