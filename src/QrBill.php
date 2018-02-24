@@ -46,7 +46,7 @@ class QrBill implements Validatable
     private $paymentReference;
 
     /** @var AlternativeScheme[] */
-    private $alternativeSchemes;
+    private $alternativeSchemes = [];
 
     public static function create() : self
     {
@@ -59,11 +59,6 @@ class QrBill implements Validatable
         $qrBill->setHeader($header);
 
         return $qrBill;
-    }
-
-    public function __construct()
-    {
-        $this->alternativeSchemes = [];
     }
 
     public function getHeader(): Header
