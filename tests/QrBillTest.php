@@ -245,20 +245,17 @@ class QrBillTest extends TestCase
 
     public function header(QrBill &$qrBill)
     {
-        $header = new Header();
-        $header->setCoding(Header::CODING_LATIN);
-        $header->setQrType(Header::QRTYPE_SPC);
-        $header->setVersion(Header::VERSION_0100);
-
+        $header = (new Header())
+            ->setCoding(Header::CODING_LATIN)
+            ->setQrType(Header::QRTYPE_SPC)
+            ->setVersion(Header::VERSION_0100);
         $qrBill->setHeader($header);
     }
 
     public function invalidHeader(QrBill &$qrBill)
     {
         // INVALID EMPTY HEADER
-        $header = new Header();
-
-        $qrBill->setHeader($header);
+        $qrBill->setHeader(new Header());
     }
 
     public function creditorInformation(QrBill &$qrBill)
