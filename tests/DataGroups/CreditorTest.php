@@ -254,4 +254,18 @@ class CreditorTest extends TestCase
             ['12']
         ];
     }
+
+    public function testQrCodeData()
+    {
+        $expected = [
+            'Thomas Mustermann',
+            'Musterweg',
+            '22a',
+            '1000',
+            'Lausanne',
+            'CH',
+        ];
+
+        $this->assertSame($expected, $this->creditor->getQrCodeData());
+    }
 }

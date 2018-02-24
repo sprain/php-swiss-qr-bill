@@ -66,4 +66,19 @@ class PaymentReferenceTest extends TestCase
             ['RF1853900754703Ä']  // invalid characters
         ];
     }
+
+    public function testQrCodeData()
+    {
+        $paymentReference = new PaymentReference();
+        $paymentReference->setType(PaymentReference::TYPE_QR);
+        $paymentReference->setReference('012345678901234567890123456');
+
+        $expected = [
+            PaymentReference::TYPE_QR,
+            '012345678901234567890123456',
+            null
+        ];
+
+        $this->assertSame($expected, $paymentReference->getQrCodeData());
+    }
 }
