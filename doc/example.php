@@ -33,6 +33,8 @@ $debtor = (new QrBill\DataGroups\Address())
     ->setCity('Lausanne')
     ->setCountry('CH');
 
+$qrBill->setUltimateDebtor($debtor);
+
 // Add payment amount information
 // What amount is to be paid? When is it due?
 $paymentAmountInformation = (new QrBill\DataGroups\PaymentAmountInformation())
@@ -56,10 +58,9 @@ $paymentReference = (new QrBill\DataGroups\PaymentReference())
 
 $qrBill->setPaymentReference($paymentReference);
 
-// Make sure all data is valid
+// Optionally, make sure all data is valid
 if (false === $qrBill->isValid()) {
-    $violations = $qrBill->getViolations();
-    die(sprintf('There have been %s violations in your qr bill.', $violations->count()));
+    die(sprintf('There have been %s violations in your qr bill.', $qrBill->getViolations()->count()));
 }
 
 // Get QR code image
