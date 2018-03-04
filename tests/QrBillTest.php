@@ -13,7 +13,7 @@ use Sprain\SwissQrBill\QrBill;
 
 class QrBillTest extends TestCase
 {
-    public function testMinimalSetupIsValid()
+    public function testMinimalSetup()
     {
         $qrBill = $this->createQrBill([
             'header',
@@ -23,7 +23,10 @@ class QrBillTest extends TestCase
             'paymentReference'
         ]);
 
-        $this->assertTrue($qrBill->isValid());
+        $this->assertSame(
+            $qrBill->getQrCode()->writeString(),
+            file_get_contents(__DIR__ . '/TestData/qr-minimal-setup.png')
+        );
     }
 
     public function testHeaderIsRequired()
@@ -174,7 +177,10 @@ class QrBillTest extends TestCase
             'ultimateCreditor'
         ]);
 
-        $this->assertTrue($qrBill->isValid());
+        $this->assertSame(
+            $qrBill->getQrCode()->writeString(),
+            file_get_contents(__DIR__ . '/TestData/qr-ultimate-creditor.png')
+        );
     }
 
     public function testOptionalUltimateCreditorMustBeValid()
@@ -202,7 +208,10 @@ class QrBillTest extends TestCase
             'ultimateDebtor'
         ]);
 
-        $this->assertTrue($qrBill->isValid());
+        $this->assertSame(
+            $qrBill->getQrCode()->writeString(),
+            file_get_contents(__DIR__ . '/TestData/qr-ultimate-debtor.png')
+        );
     }
 
     public function testOptionalUltimateDebtorMustBeValid()
