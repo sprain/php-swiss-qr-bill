@@ -11,7 +11,7 @@ use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
 use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
-use Sprain\SwissQrBill\String\StringCleaner;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
 use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -201,8 +201,8 @@ class QrBill implements Validatable
         }
 
         array_walk($qrCodeElements, function(&$string){
-            $string = StringCleaner::replaceLineBreaksWithString($string);
-            $string = StringCleaner::replaceMultipleSpacesWithOne($string);
+            $string = StringModifier::replaceLineBreaksWithString($string);
+            $string = StringModifier::replaceMultipleSpacesWithOne($string);
             $string = trim($string);
         });
 

@@ -2,7 +2,7 @@
 
 namespace Sprain\SwissQrBill\String;
 
-class StringCleaner
+class StringModifier
 {
     public static function replaceLineBreaksWithString($string) : string
     {

@@ -3,9 +3,9 @@
 namespace Sprain\SwissQrBill\Tests\String;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\String\StringCleaner;
+use Sprain\SwissQrBill\String\StringModifier;
 
-class StringCleanerTest extends TestCase
+class StringModifierTest extends TestCase
 {
     /**
      * @dataProvider lineBreaksProvider
@@ -14,7 +14,7 @@ class StringCleanerTest extends TestCase
     {
         $this->assertSame(
             $expectedResult,
-            StringCleaner::replaceLineBreaksWithString($string)
+            StringModifier::replaceLineBreaksWithString($string)
         );
     }
 
@@ -34,7 +34,7 @@ class StringCleanerTest extends TestCase
     {
         $this->assertSame(
             $expectedResult,
-            StringCleaner::replaceMultipleSpacesWithOne($string)
+            StringModifier::replaceMultipleSpacesWithOne($string)
         );
     }
 
