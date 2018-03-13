@@ -259,7 +259,9 @@ class QrBill implements Validatable
             new Assert\Count([
                 'max' => 2
             ]),
-            new Assert\Valid()
+            new Assert\Valid([
+                'traverse' => true
+            ])
         ]);
     }
 }

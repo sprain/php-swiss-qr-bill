@@ -244,7 +244,7 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
-    public function testAlternativeSchemes()
+    public function testAlternativeSchemesCanBeAdded()
     {
         $qrBill = $this->createQrBill([
             'header',
@@ -252,14 +252,52 @@ class QrBillTest extends TestCase
             'creditor',
             'paymentAmountInformation',
             'paymentReference',
-            'alternativeScheme',
-            'alternativeScheme'
+        ]);
+
+        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/TestData/qr-alternative-schemes.png'),
+            $qrBill->getQrCode()->writeString()
+        );
+    }
+
+    public function testAlternativeSchemesCanBeSetAtOnce()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReference',
+        ]);
+
+        $qrBill->setAlternativeSchemes([
+            (new AlternativeScheme())->setParameter('foo'),
+            (new AlternativeScheme())->setParameter('foo')
         ]);
 
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-alternative-schemes.png'),
             $qrBill->getQrCode()->writeString()
         );
+    }
+
+    public function testAlternativeSchemesMustBeValid()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReference',
+        ]);
+
+        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme((new AlternativeScheme()));
+
+        $this->assertFalse($qrBill->isValid());
     }
 
     public function testMaximumTwoAlternativeSchemesAreAllowed()
@@ -269,11 +307,12 @@ class QrBillTest extends TestCase
             'creditorInformation',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference',
-            'alternativeScheme',
-            'alternativeScheme',
-            'alternativeScheme'
+            'paymentReference'
         ]);
+
+        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
 
         $this->assertFalse($qrBill->isValid());
     }
@@ -287,12 +326,11 @@ class QrBillTest extends TestCase
             'ultimateCreditor',
             'paymentAmountInformation',
             'paymentReferenceWithMessage',
-            'ultimateDebtor',
-            'alternativeScheme',
-            'alternativeScheme'
+            'ultimateDebtor'
         ]);
 
-        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
+        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
 
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-full-set.png'),
@@ -431,6 +469,13 @@ class QrBillTest extends TestCase
     {
         $alternativeScheme = (new AlternativeScheme())
             ->setParameter('alternativeSchemeParameter');
+
+        $qrBill->addAlternativeScheme($alternativeScheme);
+    }
+
+    public function invalidAlternativeScheme(QrBill &$qrBill)
+    {
+        $alternativeScheme = (new AlternativeScheme());
 
         $qrBill->addAlternativeScheme($alternativeScheme);
     }
