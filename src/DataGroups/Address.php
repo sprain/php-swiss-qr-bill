@@ -15,8 +15,6 @@ class Address implements QrCodeData, Validatable
     /**
      * Name or company
      *
-     * For creditors: Always matches the account holder.
-     *
      * @var string
      */
     private $name;

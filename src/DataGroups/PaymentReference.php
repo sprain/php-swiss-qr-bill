@@ -26,7 +26,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
     private $type;
 
     /**
-     * Strutured reference number
+     * Structured reference number
      * Either a QR reference or a Creditor Reference (ISO 11649)
      *
      * @var string
