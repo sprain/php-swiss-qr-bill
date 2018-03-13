@@ -26,7 +26,7 @@ class CreditorInformation implements QrCodeData, Validatable
 
     public function setIban(string $iban) : self
     {
-        $this->iban = preg_replace('/\s/', '', $iban);
+        $this->iban = $iban;
 
         return $this;
     }

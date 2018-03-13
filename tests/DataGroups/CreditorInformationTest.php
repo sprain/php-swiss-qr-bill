@@ -76,7 +76,7 @@ class CreditorInformationTest extends TestCase
     public function testQrCodeData()
     {
         $creditorInformation = new CreditorInformation();
-        $creditorInformation->setIban('CH93 0076 2011 6238 5295 7');
+        $creditorInformation->setIban('CH9300762011623852957');
 
         $expected = [
             'CH9300762011623852957',
