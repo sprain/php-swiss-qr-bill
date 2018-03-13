@@ -24,8 +24,8 @@ class QrBillTest extends TestCase
         ]);
 
         $this->assertSame(
-            $qrBill->getQrCode()->writeString(),
-            file_get_contents(__DIR__ . '/TestData/qr-minimal-setup.png')
+            file_get_contents(__DIR__ . '/TestData/qr-minimal-setup.png'),
+            $qrBill->getQrCode()->writeString()
         );
     }
 
@@ -178,8 +178,8 @@ class QrBillTest extends TestCase
         ]);
 
         $this->assertSame(
-            $qrBill->getQrCode()->writeString(),
-            file_get_contents(__DIR__ . '/TestData/qr-ultimate-creditor.png')
+            file_get_contents(__DIR__ . '/TestData/qr-ultimate-creditor.png'),
+            $qrBill->getQrCode()->writeString()
         );
     }
 
@@ -209,8 +209,8 @@ class QrBillTest extends TestCase
         ]);
 
         $this->assertSame(
-            $qrBill->getQrCode()->writeString(),
-            file_get_contents(__DIR__ . '/TestData/qr-ultimate-debtor.png')
+            file_get_contents(__DIR__ . '/TestData/qr-ultimate-debtor.png'),
+            $qrBill->getQrCode()->writeString()
         );
     }
 
