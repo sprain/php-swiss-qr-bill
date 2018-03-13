@@ -27,9 +27,9 @@ class TestDataTest extends TestCase
     public function qrFileProvider()
     {
         return [
-            [__DIR__ . '/qr-minimal-setup.png', '79a08f144bd1ef9c884be00068cc534d'],
-            [__DIR__ . '/qr-ultimate-creditor.png', 'ffc358811c92c65b3b744c07ec0785cb'],
-            [__DIR__ . '/qr-ultimate-debtor.png', 'af0bc2f9bacf16d3b81423817fc2bf43'],
+            [__DIR__ . '/qr-minimal-setup.png', 'c8ea1adfa1e22189c0b491073e0f9c7b'],
+            [__DIR__ . '/qr-ultimate-creditor.png', '6830f77bb6f80221891a3e9de3bcbcbd'],
+            [__DIR__ . '/qr-ultimate-debtor.png', 'f05a37e51fa10c89a6e8da99a69848a0'],
         ];
     }
 }
