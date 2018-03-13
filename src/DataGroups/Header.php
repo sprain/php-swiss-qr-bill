@@ -41,7 +41,7 @@ class Header implements QrCodeData, Validatable
     private $coding;
 
 
-    public function getQrType(): string
+    public function getQrType(): ?string
     {
         return $this->qrType;
     }
@@ -53,7 +53,7 @@ class Header implements QrCodeData, Validatable
         return $this;
     }
 
-    public function getVersion(): string
+    public function getVersion(): ?string
     {
         return $this->version;
     }
@@ -65,7 +65,7 @@ class Header implements QrCodeData, Validatable
         return $this;
     }
 
-    public function getCoding(): int
+    public function getCoding(): ?int
     {
         return $this->coding;
     }

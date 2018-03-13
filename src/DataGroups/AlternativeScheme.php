@@ -13,7 +13,7 @@ class AlternativeScheme implements QrCodeData
      */
     private $parameter;
 
-    public function getParameter(): string
+    public function getParameter(): ?string
     {
         return $this->parameter;
     }

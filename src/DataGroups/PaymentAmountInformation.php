@@ -49,7 +49,7 @@ class PaymentAmountInformation implements QrCodeData, Validatable
         return $this;
     }
 
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }

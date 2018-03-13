@@ -41,7 +41,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
     private $message;
 
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -53,7 +53,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
         return $this;
     }
 
-    public function getReference(): string
+    public function getReference(): ?string
     {
         return $this->reference;
     }

@@ -19,7 +19,7 @@ class CreditorInformation implements QrCodeData, Validatable
      */
     private $iban;
 
-    public function getIban(): string
+    public function getIban(): ?string
     {
         return $this->iban;
     }
