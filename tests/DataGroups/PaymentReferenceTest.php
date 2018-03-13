@@ -72,11 +72,12 @@ class PaymentReferenceTest extends TestCase
         $paymentReference = new PaymentReference();
         $paymentReference->setType(PaymentReference::TYPE_QR);
         $paymentReference->setReference('012345678901234567890123456');
+        $paymentReference->setMessage('message');
 
         $expected = [
             PaymentReference::TYPE_QR,
             '012345678901234567890123456',
-            null
+            'message'
         ];
 
         $this->assertSame($expected, $paymentReference->getQrCodeData());
