@@ -201,8 +201,9 @@ class QrBill implements Validatable
         }
 
         array_walk($qrCodeElements, function(&$string){
-            $string = StringCleaner::removeLineBreaks($string);
-            $string = StringCleaner::removeMultipleSpaces($string);
+            $string = StringCleaner::replaceLineBreaksWithString($string);
+            $string = StringCleaner::replaceMultipleSpacesWithOne($string);
+            $string = trim($string);
         });
 
         return implode("\r\n", $qrCodeElements);
