@@ -156,6 +156,13 @@ class QrBill implements Validatable
         return $this;
     }
 
+    public function addAlternativeScheme(AlternativeScheme $alternativeScheme) : self
+    {
+        $this->alternativeSchemes[] = $alternativeScheme;
+
+        return $this;
+    }
+
     public function getQrCode() : QrCode
     {
         if (!$this->isValid()) {
@@ -187,16 +194,20 @@ class QrBill implements Validatable
             $this->getAlternativeSchemes()
         ];
 
-        return $this->extractQrCodeDataFromElements($elements);
+        $qrCodeStringElements = $this->extractQrCodeDataFromElements($elements);
+
+        return implode("\r\n", $qrCodeStringElements);
     }
 
-    private function extractQrCodeDataFromElements(array $elements) : string
+    private function extractQrCodeDataFromElements(array $elements) : array
     {
         $qrCodeElements = [];
 
         foreach ($elements as $element) {
             if ($element instanceof QrCodeData) {
                 $qrCodeElements = array_merge($qrCodeElements, $element->getQrCodeData());
+            } elseif (is_array($element)) {
+                $qrCodeElements = array_merge($qrCodeElements, $this->extractQrCodeDataFromElements($element));
             }
         }
 
@@ -206,7 +217,7 @@ class QrBill implements Validatable
             $string = trim($string);
         });
 
-        return implode("\r\n", $qrCodeElements);
+        return $qrCodeElements;
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -241,6 +252,13 @@ class QrBill implements Validatable
 
         $metadata->addPropertyConstraints('paymentReference', [
             new Assert\NotNull(),
+            new Assert\Valid()
+        ]);
+
+        $metadata->addPropertyConstraints('alternativeSchemes', [
+            new Assert\Count([
+                'max' => 2
+            ]),
             new Assert\Valid()
         ]);
     }

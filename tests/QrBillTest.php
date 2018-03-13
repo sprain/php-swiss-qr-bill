@@ -243,7 +243,63 @@ class QrBillTest extends TestCase
 
         $this->assertFalse($qrBill->isValid());
     }
-    
+
+    public function testAlternativeSchemes()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReference',
+            'alternativeScheme',
+            'alternativeScheme'
+        ]);
+
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/TestData/qr-alternative-schemes.png'),
+            $qrBill->getQrCode()->writeString()
+        );
+    }
+
+    public function testMaximumTwoAlternativeSchemesAreAllowed()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReference',
+            'alternativeScheme',
+            'alternativeScheme',
+            'alternativeScheme'
+        ]);
+
+        $this->assertFalse($qrBill->isValid());
+    }
+
+    public function testFullQrCodeSet()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'ultimateCreditor',
+            'paymentAmountInformation',
+            'paymentReferenceWithMessage',
+            'ultimateDebtor',
+            'alternativeScheme',
+            'alternativeScheme'
+        ]);
+
+        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
+
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/TestData/qr-full-set.png'),
+            $qrBill->getQrCode()->writeString()
+        );
+    }
+
     /**
      * @expectedException \Sprain\SwissQrBill\Exception\InvalidQrBillDataException
      */
@@ -369,6 +425,14 @@ class QrBillTest extends TestCase
     public function invalidUltimateDebtor(QrBill &$qrBill)
     {
         $qrBill->setUltimateDebtor($this->invalidAddress());
+    }
+
+    public function alternativeScheme(QrBill &$qrBill)
+    {
+        $alternativeScheme = (new AlternativeScheme())
+            ->setParameter('alternativeSchemeParameter');
+
+        $qrBill->addAlternativeScheme($alternativeScheme);
     }
 
     public function address()
