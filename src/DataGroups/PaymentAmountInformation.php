@@ -61,7 +61,7 @@ class PaymentAmountInformation implements QrCodeData, Validatable
         return $this;
     }
 
-    public function getDueDate(): \DateTime
+    public function getDueDate(): ?\DateTime
     {
         return $this->dueDate;
     }
@@ -76,9 +76,9 @@ class PaymentAmountInformation implements QrCodeData, Validatable
     public function getQrCodeData() : array
     {
         return [
-            number_format($this->getAmount(), 2, '.', ''),
+            $this->getAmount() ? number_format($this->getAmount(), 2, '.', '') : null,
             $this->getCurrency(),
-            $this->getDueDate()->format('Y-m-d'),
+            $this->getDueDate() ? $this->getDueDate()->format('Y-m-d') : null,
         ];
     }
 

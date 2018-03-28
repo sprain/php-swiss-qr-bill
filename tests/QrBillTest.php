@@ -141,6 +141,22 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
+    public function testPaymentAmountInformationWithoutAmountAndDate()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'paymentAmountInformationWithoutAmountAndDate',
+            'paymentReference'
+        ]);
+
+        $this->assertSame(
+            file_get_contents(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png'),
+            $qrBill->getQrCode()->writeString()
+        );
+    }
+
     public function testPaymentReferenceIsRequired()
     {
         $qrBill = $this->createQrBill([
@@ -407,6 +423,13 @@ class QrBillTest extends TestCase
             ->setAmount(25.90)
             ->setCurrency('CHF')
             ->setDueDate(new \DateTime('2018-12-31'));
+        $qrBill->setPaymentAmountInformation($paymentAmountInformation);
+    }
+
+    public function paymentAmountInformationWithoutAmountAndDate(QrBill &$qrBill)
+    {
+        $paymentAmountInformation = (new PaymentAmountInformation())
+            ->setCurrency('EUR');
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 

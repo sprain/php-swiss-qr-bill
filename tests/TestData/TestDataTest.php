@@ -30,6 +30,7 @@ class TestDataTest extends TestCase
             [__DIR__ . '/qr-alternative-schemes.png', '9c1de9751e3be7f82dc4816f5e6c5c4f'],
             [__DIR__ . '/qr-full-set.png', '88cc582addea3b58a70851d99c77970e'],
             [__DIR__ . '/qr-minimal-setup.png', 'b2b7eb7ee9daeebe0589c46373a060b9'],
+            [__DIR__ . '/qr-payment-information-without-amount-and-date.png', '11b20927a5cde8225325c4c27343cd6c'],
             [__DIR__ . '/qr-payment-reference-with-message.png', '3cf46d39d75332d12e40798b80d27d3e'],
             [__DIR__ . '/qr-ultimate-creditor.png', '52e06bde55994fb284aeaf764520d961'],
             [__DIR__ . '/qr-ultimate-debtor.png', '9237a7d00d5099a15cf93919819fd71e'],
