@@ -32,6 +32,7 @@ class PaymentAmountInformationTest extends TestCase
     public function validAmountProvider()
     {
         return [
+            [null],
             [0],
             [11.11],
             [100.2],
@@ -55,6 +56,64 @@ class PaymentAmountInformationTest extends TestCase
             [-0.01],
             [1999999999.99],
             // [11.111], @todo: only two decimal places should be allowed
+        ];
+    }
+
+    /**
+     * @dataProvider validCurrencyProvider
+     */
+    public function testCurrencyIsValid($value)
+    {
+        $this->paymentAmountInformation->setCurrency($value);
+
+        $this->assertSame(0, $this->paymentAmountInformation->getViolations()->count());
+    }
+
+    public function validCurrencyProvider()
+    {
+        return [
+            ['CHF'],
+            ['EUR'],
+            ['chf'],
+            ['eur']
+        ];
+    }
+
+    /**
+     * @dataProvider invalidCurrencyProvider
+     */
+    public function testCurrencyIsInvalid($value)
+    {
+        $this->paymentAmountInformation->setCurrency($value);
+
+        $this->assertSame(1, $this->paymentAmountInformation->getViolations()->count());
+    }
+
+    public function invalidCurrencyProvider()
+    {
+        return [
+            ['USD'],
+            ['PLN'],
+            [' chf '],
+            [' EUR']
+        ];
+    }
+
+    /**
+     * @dataProvider validDueDateProvider
+     */
+    public function testDueDateIsValid($value)
+    {
+        $this->paymentAmountInformation->setDueDate($value);
+
+        $this->assertSame(0, $this->paymentAmountInformation->getViolations()->count());
+    }
+
+    public function validDueDateProvider()
+    {
+        return [
+            [new \DateTime()],
+            [null]
         ];
     }
 
