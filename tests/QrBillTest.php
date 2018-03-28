@@ -406,7 +406,7 @@ class QrBillTest extends TestCase
         $paymentAmountInformation = (new PaymentAmountInformation())
             ->setAmount(25.90)
             ->setCurrency('CHF')
-            ->setDueDate(new \DateTime('+30 days'));
+            ->setDueDate(new \DateTime('2018-12-31'));
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
@@ -415,7 +415,7 @@ class QrBillTest extends TestCase
         $paymentAmountInformation = (new PaymentAmountInformation())
             ->setAmount(25.90)
             ->setCurrency('USD') // INVALID CURRENCY
-            ->setDueDate(new \DateTime('+30 days'));
+            ->setDueDate(new \DateTime('2018-12-31'));
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
