@@ -31,6 +31,7 @@ class PaymentReferenceTest extends TestCase
     public function invalidQrReferenceProvider()
     {
         return [
+            [null],
             ['01234567890123456789012345'],   // too short
             ['0123456789012345678901234567'], // too long
             ['Ä12345678901234567890123456']   // invalid characters
@@ -61,9 +62,79 @@ class PaymentReferenceTest extends TestCase
     public function invalidScorReferenceProvider()
     {
         return [
+            [null],
             ['RF12'],// too short
             ['RF181234567890123456789012'], // too long
             ['RF1853900754703Ä']  // invalid characters
+        ];
+    }
+
+    public function testValidNonReference()
+    {
+        $paymentReference = new PaymentReference();
+        $paymentReference->setType(PaymentReference::TYPE_NON);
+        $paymentReference->setReference(null);
+
+        $this->assertSame(0, $paymentReference->getViolations()->count());
+    }
+
+    /**
+     * @dataProvider invalidNonReferenceProvider
+     */
+    public function testInvalidNonReference($value)
+    {
+        $paymentReference = new PaymentReference();
+        $paymentReference->setType(PaymentReference::TYPE_NON);
+        $paymentReference->setReference($value);
+
+        $this->assertSame(1, $paymentReference->getViolations()->count());
+    }
+
+    public function invalidNonReferenceProvider()
+    {
+        return [
+            ['anything-non-empty'],
+            [' '],
+            [0]
+        ];
+    }
+
+    /**
+     * @dataProvider validMessageProvider
+     */
+    public function testValidMessage($value)
+    {
+        $paymentReference = new PaymentReference();
+        $paymentReference->setType(PaymentReference::TYPE_NON);
+        $paymentReference->setMessage($value);
+
+        $this->assertSame(0, $paymentReference->getViolations()->count());
+    }
+
+    public function validMessageProvider()
+    {
+        return [
+            ['012345678901234567890123456'],
+            [null]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidMessageProvider
+     */
+    public function testInvalidMessage($value)
+    {
+        $paymentReference = new PaymentReference();
+        $paymentReference->setType(PaymentReference::TYPE_NON);
+        $paymentReference->setMessage($value);
+
+        $this->assertSame(1, $paymentReference->getViolations()->count());
+    }
+
+    public function invalidMessageProvider()
+    {
+        return [
+            ['123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'], // too long
         ];
     }
 

@@ -58,7 +58,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
         return $this->reference;
     }
 
-    public function setReference(string $reference) : self
+    public function setReference(string $reference = null) : self
     {
         $this->reference = $reference;
 
@@ -70,7 +70,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
         return $this->message;
     }
 
-    public function setMessage(string $message) : self
+    public function setMessage(string $message = null) : self
     {
         $this->message = $message;
 
@@ -91,11 +91,16 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
         $metadata->setGroupSequenceProvider(true);
 
         $metadata->addPropertyConstraints('type', [
-            new Assert\NotBlank(),
+            new Assert\NotBlank([
+                'groups' => ['default']
+            ]),
             new Assert\Choice([
-                self::TYPE_QR,
-                self::TYPE_SCOR,
-                self::TYPE_NON
+                'groups' => ['default'],
+                'choices' => [
+                    self::TYPE_QR,
+                    self::TYPE_SCOR,
+                    self::TYPE_NON
+                ]
             ])
         ]);
 
@@ -105,7 +110,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
                 'groups' => [self::TYPE_QR]
             ]),
             new Assert\NotBlank([
-                'groups' => [self::TYPE_QR]
+                'groups' => [self::TYPE_QR, self::TYPE_SCOR]
             ]),
             new Assert\Length([
                 'min' => 27,
@@ -122,15 +127,18 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
 
         $metadata->addPropertyConstraints('message', [
             new Assert\Length([
-                'max'=> 140
+                'max'=> 140,
+                'groups' => ['default']
             ])
         ]);
     }
 
     public function getGroupSequence()
     {
-        $groups = array('Default');
-        $groups[] = $this->getType();
+        $groups = [
+            'default',
+            $this->getType()
+        ];
 
         return $groups;
     }

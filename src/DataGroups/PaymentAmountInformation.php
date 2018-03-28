@@ -89,7 +89,6 @@ class PaymentAmountInformation implements QrCodeData, Validatable
                 'min' => 0,
                 'max'=> 999999999.99
             ]),
-
         ]);
 
         $metadata->addPropertyConstraints('currency', [
