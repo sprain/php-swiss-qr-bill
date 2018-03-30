@@ -9,61 +9,64 @@ $qrBill = QrBill\QrBill::create();
 
 // Add creditor information
 // Who will receive the payment and to which bank account?
-$qrBill->setCreditor(
-    QrBill\DataGroup\Element\CombinedAddress::create(
-        'My Company Ltd.',
-        'Bahnhofstrasse 1',
-        '8000 Zürich',
-        'CH'
-    ));
+$creditorInformation = (new QrBill\DataGroups\CreditorInformation())
+    ->setIban('CH9300762011623852957');
 
-$qrBill->setCreditorInformation(
-    QrBill\DataGroup\Element\CreditorInformation::create(
-        'CH4431999123000889012'
-    ));
+$creditor = (new QrBill\DataGroups\Address())
+    ->setName('My Company Ltd.')
+    ->setStreet('Bahnhofstrasse')
+    ->setHouseNumber('1')
+    ->setPostalCode('8000')
+    ->setCity('Zürich')
+    ->setCountry('CH');
+
+$qrBill->setCreditorInformation($creditorInformation);
+$qrBill->setCreditor($creditor);
 
 // Add debtor information
 // Who has to pay the invoice? This part is optional.
-//
-// Notice how you can use two different styles of addresses: CombinedAddress or StructuredAddress.
-// They are interchangeable for creditor as well as debtor.
-$qrBill->setUltimateDebtor(
-    QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
-        'Thomas LeClaire',
-        'Rue examplaire',
-        '22a',
-        '1000',
-        'Lausanne',
-        'CH'
-    ));
+$debtor = (new QrBill\DataGroups\Address())
+    ->setName('Thomas LeClaire')
+    ->setStreet('Rue examplaire')
+    ->setHouseNumber('22a')
+    ->setPostalCode('1000')
+    ->setCity('Lausanne')
+    ->setCountry('CH');
+
+$qrBill->setUltimateDebtor($debtor);
 
 // Add payment amount information
-// What amount is to be paid?
-$qrBill->setPaymentAmountInformation(
-    QrBill\DataGroup\Element\PaymentAmountInformation::create(
-        'CHF',
-        25.90
-    ));
+// What amount is to be paid? When is it due?
+$paymentAmountInformation = (new QrBill\DataGroups\PaymentAmountInformation())
+    ->setAmount(25.90)
+    ->setCurrency('CHF')
+    ->setDueDate(new \DateTime('+30 days'));
+
+$qrBill->setPaymentAmountInformation($paymentAmountInformation);
 
 // Add payment reference
 // This is what you will need to identify incoming payments.
-$referenceNumber = QrBill\Reference\QrPaymentReferenceGenerator::generate(
-    '123456',  // you receive this number from your bank
-    '11223344' // a number to match the payment with your other data, e.g. an invoice number
-);
+$referenceNumber = (new QrBill\Reference\QrPaymentReferenceGenerator())
+    ->setCustomerIdentificationNumber('123456') // you receive this number from your bank
+    ->setReferenceNumber('11223344') // a number to match the payment with your other data, e.g. an invoice number
+    ->generate();
 
-$qrBill->setPaymentReference(
-    QrBill\DataGroup\Element\PaymentReference::create(
-        QrBill\DataGroup\Element\PaymentReference::TYPE_QR,
-        $referenceNumber
-    ));
+$paymentReference = (new QrBill\DataGroups\PaymentReference())
+    ->setType(QrBill\DataGroups\PaymentReference::TYPE_QR)
+    ->setReference($referenceNumber)
+    ->setMessage('Invoice 11223344, Gardening Work');
 
-// Add additional information
-$qrBill->setAdditionalInformation(
-    QrBill\DataGroup\Element\AdditionalInformation::create(
-        'Invoice 11223344, Gardening Work'
-    ));
+$qrBill->setPaymentReference($paymentReference);
 
-// Get QR code image (supports svg and png)
-$qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
-$qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
+// Optionally, make sure all data is valid
+if (false === $qrBill->isValid()) {
+    die(sprintf('There have been %s violations in your qr bill.', $qrBill->getViolations()->count()));
+}
+
+// Get QR code image
+#$qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
+
+$htmlOutput = new QrBill\PaymentPart\HtmlOutput\HtmlOutput();
+$htmlOutput->setQrBill($qrBill);
+$htmlOutput->setLanguage('de');
+print $htmlOutput->getPaymentPart();
