@@ -129,6 +129,23 @@ class Address implements QrCodeData, Validatable
         return $this;
     }
 
+    public function getFullAddress() : string
+    {
+        $address = $this->getName();
+
+        if ($this->getStreet()) {
+            $address .= "\n" . $this->getStreet();
+
+            if ($this->getHouseNumber()) {
+                $address .= " " . $this->getHouseNumber();
+            }
+        }
+
+        $address .= sprintf("\n%s-%s %s", $this->getCountry(), $this->getPostalCode(), $this->getCity());
+
+        return $address;
+    }
+
     public function getQrCodeData() : array
     {
         return [

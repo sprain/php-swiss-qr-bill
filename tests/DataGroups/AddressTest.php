@@ -268,4 +268,54 @@ class AddressTest extends TestCase
 
         $this->assertSame($expected, $this->address->getQrCodeData());
     }
+
+    /**
+     * @dataProvider addressProvider
+     */
+    public function testFullAddressString(Address $address, $expected)
+    {
+        $this->assertSame($expected, $address->getFullAddress());
+    }
+
+    public function addressProvider()
+    {
+        return [
+            [
+                $this->address = (new Address())
+                    ->setName('Thomas Mustermann')
+                    ->setStreet('Musterweg')
+                    ->setHouseNumber('22a')
+                    ->setPostalCode('1000')
+                    ->setCity('Lausanne')
+                    ->setCountry('CH'),
+                "Thomas Mustermann\nMusterweg 22a\nCH-1000 Lausanne"
+            ],
+            [
+                $this->address = (new Address())
+                    ->setName('Thomas Mustermann')
+                    ->setStreet('Musterweg')
+                    ->setPostalCode('1000')
+                    ->setCity('Lausanne')
+                    ->setCountry('CH'),
+                "Thomas Mustermann\nMusterweg\nCH-1000 Lausanne"
+            ],
+            [
+                $this->address = (new Address())
+                    ->setName('Thomas Mustermann')
+                    ->setPostalCode('1000')
+                    ->setCity('Lausanne')
+                    ->setCountry('CH'),
+                "Thomas Mustermann\nCH-1000 Lausanne"
+            ],
+            [
+                $this->address = (new Address())
+                    ->setName('Thomas Mustermann')
+                    ->setHouseNumber('22a')
+                    ->setPostalCode('1000')
+                    ->setCity('Lausanne')
+                    ->setCountry('CH'),
+                "Thomas Mustermann\nCH-1000 Lausanne"
+            ]
+        ];
+    }
 }
