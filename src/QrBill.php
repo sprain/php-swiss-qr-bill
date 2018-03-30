@@ -174,9 +174,10 @@ class QrBill implements Validatable
         $qrCode = new QrCode();
         $qrCode->setText($this->getQrCodeData());
         $qrCode->setSize(543); // recommended 46x46 mm in px @ 300dpi
-        $qrCode->setMargin(19); // recommended 1,6 mm in px @ 300dpi
         $qrCode->setLogoPath(self::SWISS_CROSS_LOGO_FILE);
         $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
+        $qrCode->setRoundBlockSize(false);
+        $qrCode->setMargin(0);
 
         return $qrCode;
     }

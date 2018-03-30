@@ -23,6 +23,8 @@ class QrBillTest extends TestCase
             'paymentReference'
         ]);
 
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
+
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-minimal-setup.png'),
             $qrBill->getQrCode()->writeString()
@@ -151,6 +153,8 @@ class QrBillTest extends TestCase
             'paymentReference'
         ]);
 
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png');
+
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png'),
             $qrBill->getQrCode()->writeString()
@@ -192,6 +196,8 @@ class QrBillTest extends TestCase
             'paymentReferenceWithMessage'
         ]);
 
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-with-message.png');
+
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-payment-reference-with-message.png'),
             $qrBill->getQrCode()->writeString()
@@ -208,6 +214,8 @@ class QrBillTest extends TestCase
             'paymentReference',
             'ultimateCreditor'
         ]);
+
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-creditor.png');
 
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-ultimate-creditor.png'),
@@ -239,6 +247,8 @@ class QrBillTest extends TestCase
             'paymentReference',
             'ultimateDebtor'
         ]);
+
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-debtor.png');
 
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-ultimate-debtor.png'),
@@ -272,6 +282,8 @@ class QrBillTest extends TestCase
 
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-alternative-schemes.png');
 
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-alternative-schemes.png'),
@@ -347,6 +359,8 @@ class QrBillTest extends TestCase
 
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
 
         $this->assertSame(
             file_get_contents(__DIR__ . '/TestData/qr-full-set.png'),
