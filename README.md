@@ -9,7 +9,7 @@ For official information see
 * https://www.paymentstandards.ch/en/home/roadmap/payment-slips.html
 * https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html
 
-**Please note:** Up to v0.4 of this library, the code was based upon v1.0 of the implementation guidelines. This guideline was rejected by the Swiss financial institutions and on November 15, 2018 the v2.0 of the implementation guidelines was released. This library is in the progress of being updated to those new guidelines.
+**Please note:** Up until v0.5 of this library, the code is based upon v1.0 of the implementation guidelines. This guideline was rejected by the Swiss financial institutions and on November 15, 2018 the v2.0 of the implementation guidelines was released. This library is in the progress of being updated to those new guidelines.
 
 
 **This is work in progress. [You are welcome to contribute.](https://github.com/sprain/php-swiss-qr-bill/issues)**
