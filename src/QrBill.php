@@ -2,6 +2,7 @@
 
 namespace Sprain\SwissQrBill;
 
+use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use Sprain\SwissQrBill\DataGroups\Address;
 use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
@@ -178,6 +179,7 @@ class QrBill implements Validatable
         $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
         $qrCode->setRoundBlockSize(false);
         $qrCode->setMargin(0);
+        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM));
 
         return $qrCode;
     }
