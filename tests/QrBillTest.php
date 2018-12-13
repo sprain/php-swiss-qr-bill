@@ -10,6 +10,7 @@ use Sprain\SwissQrBill\DataGroups\Header;
 use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
 use Sprain\SwissQrBill\QrBill;
+use Zxing\QrReader;
 
 class QrBillTest extends TestCase
 {
@@ -26,8 +27,8 @@ class QrBillTest extends TestCase
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/TestData/qr-minimal-setup.png'),
-            $qrBill->getQrCode()->writeString()
+            (new QrReader(__DIR__ . '/TestData/qr-minimal-setup.png'))->text(),
+            $qrBill->getQrCode()->getText()
         );
     }
 
@@ -156,8 +157,8 @@ class QrBillTest extends TestCase
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png'),
-            $qrBill->getQrCode()->writeString()
+            (new QrReader(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png'))->text(),
+            $qrBill->getQrCode()->getText()
         );
     }
 
@@ -199,8 +200,8 @@ class QrBillTest extends TestCase
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-with-message.png');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/TestData/qr-payment-reference-with-message.png'),
-            $qrBill->getQrCode()->writeString()
+            (new QrReader(__DIR__ . '/TestData/qr-payment-reference-with-message.png'))->text(),
+            $qrBill->getQrCode()->getText()
         );
     }
 
@@ -218,8 +219,8 @@ class QrBillTest extends TestCase
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-creditor.png');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/TestData/qr-ultimate-creditor.png'),
-            $qrBill->getQrCode()->writeString()
+            (new QrReader(__DIR__ . '/TestData/qr-ultimate-creditor.png'))->text(),
+            $qrBill->getQrCode()->getText()
         );
     }
 
@@ -251,8 +252,8 @@ class QrBillTest extends TestCase
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-debtor.png');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/TestData/qr-ultimate-debtor.png'),
-            $qrBill->getQrCode()->writeString()
+            (new QrReader(__DIR__ . '/TestData/qr-ultimate-debtor.png'))->text(),
+            $qrBill->getQrCode()->getText()
         );
     }
 
@@ -286,8 +287,8 @@ class QrBillTest extends TestCase
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-alternative-schemes.png');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/TestData/qr-alternative-schemes.png'),
-            $qrBill->getQrCode()->writeString()
+            (new QrReader(__DIR__ . '/TestData/qr-alternative-schemes.png'))->text(),
+            $qrBill->getQrCode()->getText()
         );
     }
 
@@ -307,8 +308,8 @@ class QrBillTest extends TestCase
         ]);
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/TestData/qr-alternative-schemes.png'),
-            $qrBill->getQrCode()->writeString()
+            (new QrReader(__DIR__ . '/TestData/qr-alternative-schemes.png'))->text(),
+            $qrBill->getQrCode()->getText()
         );
     }
 
@@ -363,8 +364,8 @@ class QrBillTest extends TestCase
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
 
         $this->assertSame(
-            file_get_contents(__DIR__ . '/TestData/qr-full-set.png'),
-            $qrBill->getQrCode()->writeString()
+            (new QrReader(__DIR__ . '/TestData/qr-full-set.png'))->text(),
+            $qrBill->getQrCode()->getText()
         );
     }
 
