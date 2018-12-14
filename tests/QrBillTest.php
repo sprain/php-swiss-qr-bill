@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
+use Sprain\SwissQrBill\DataGroups\CombinedAddress;
 use Sprain\SwissQrBill\DataGroups\StructuredAddress;
 use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroups\CreditorInformation;
@@ -424,7 +425,7 @@ class QrBillTest extends TestCase
 
     public function creditor(QrBill &$qrBill)
     {
-        $qrBill->setCreditor($this->address());
+        $qrBill->setCreditor($this->structuredAddress());
     }
 
     public function invalidCreditor(QrBill &$qrBill)
@@ -485,7 +486,7 @@ class QrBillTest extends TestCase
 
     public function ultimateCreditor(QrBill &$qrBill)
     {
-        $qrBill->setUltimateCreditor($this->address());
+        $qrBill->setUltimateCreditor($this->structuredAddress());
     }
 
     public function invalidUltimateCreditor(QrBill &$qrBill)
@@ -495,7 +496,7 @@ class QrBillTest extends TestCase
 
     public function ultimateDebtor(QrBill &$qrBill)
     {
-        $qrBill->setUltimateDebtor($this->address());
+        $qrBill->setUltimateDebtor($this->combinedAddress());
     }
 
     public function invalidUltimateDebtor(QrBill &$qrBill)
@@ -518,7 +519,7 @@ class QrBillTest extends TestCase
         $qrBill->addAlternativeScheme($alternativeScheme);
     }
 
-    public function address()
+    public function structuredAddress()
     {
         return (new StructuredAddress())
             ->setName('Thomas LeClaire')
@@ -526,6 +527,15 @@ class QrBillTest extends TestCase
             ->setBuildingNumber('22a')
             ->setPostalCode('1000')
             ->setCity('Lausanne')
+            ->setCountry('CH');
+    }
+
+    public function combinedAddress()
+    {
+        return (new CombinedAddress())
+            ->setName('Thomas LeClaire')
+            ->setAddressLine1('Rue examplaire 22a')
+            ->setAddressLine2('1000 Lausanne')
             ->setCountry('CH');
     }
 
