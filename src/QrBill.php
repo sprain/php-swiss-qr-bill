@@ -5,6 +5,7 @@ namespace Sprain\SwissQrBill;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
 use Sprain\SwissQrBill\DataGroups\Abstracts\Address;
+use Sprain\SwissQrBill\DataGroups\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroups\CreditorInformation;
 use Sprain\SwissQrBill\DataGroups\Header;
@@ -45,6 +46,9 @@ class QrBill implements Validatable
 
     /** @var PaymentReference */
     private $paymentReference;
+
+    /** @var AdditionalInformation */
+    private $additionalInformation;
 
     /** @var AlternativeScheme[] */
     private $alternativeSchemes = [];
@@ -146,6 +150,18 @@ class QrBill implements Validatable
         return $this;
     }
 
+    public function getAdditionalInformation(): ?AdditionalInformation
+    {
+        return $this->additionalInformation;
+    }
+
+    public function setAdditionalInformation(AdditionalInformation $additionalInformation) : self
+    {
+        $this->additionalInformation = $additionalInformation;
+
+        return $this;
+    }
+
     public function getAlternativeSchemes(): array
     {
         return $this->alternativeSchemes;
@@ -195,6 +211,7 @@ class QrBill implements Validatable
             $this->getPaymentAmountInformation(),
             $this->getUltimateDebtor() ?: new StructuredAddress(),
             $this->getPaymentReference(),
+            $this->getAdditionalInformation() ?: new AdditionalInformation(),
             $this->getAlternativeSchemes()
         ];
 
