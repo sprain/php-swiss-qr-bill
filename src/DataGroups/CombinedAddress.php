@@ -69,7 +69,7 @@ class CombinedAddress extends Address
     {
         return [
             $this->getName(),
-            self::ADDRESS_TYPE,
+            $this->getAddressLine2() ? self::ADDRESS_TYPE : '',
             $this->getAddressLine1(),
             $this->getAddressLine2(),
             '',

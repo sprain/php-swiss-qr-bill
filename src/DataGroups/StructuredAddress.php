@@ -109,7 +109,7 @@ class StructuredAddress extends Address
     {
         return [
             $this->getName(),
-            self::ADDRESS_TYPE,
+            $this->getCity() ? self::ADDRESS_TYPE : '',
             $this->getStreet(),
             $this->getBuildingNumber(),
             $this->getPostalCode(),
