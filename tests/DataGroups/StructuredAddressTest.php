@@ -16,7 +16,7 @@ class StructuredAddressTest extends TestCase
         $this->address = (new StructuredAddress())
             ->setName('Thomas Mustermann')
             ->setStreet('Musterweg')
-            ->setHouseNumber('22a')
+            ->setBuildingNumber('22a')
             ->setPostalCode('1000')
             ->setCity('Lausanne')
             ->setCountry('CH');
@@ -62,16 +62,16 @@ class StructuredAddressTest extends TestCase
     }
 
     /**
-     * @dataProvider validHouseNumberProvider
+     * @dataProvider validbuildingNumberProvider
      */
-    public function testHouseNumberIsValid($value)
+    public function testbuildingNumberIsValid($value)
     {
-        $this->address->setHouseNumber($value);
+        $this->address->setBuildingNumber($value);
 
         $this->assertSame(0, $this->address->getViolations()->count());
     }
 
-    public function validHouseNumberProvider()
+    public function validbuildingNumberProvider()
     {
         return [
             [null],
@@ -84,16 +84,16 @@ class StructuredAddressTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidHouseNumberProvider
+     * @dataProvider invalidbuildingNumberProvider
      */
-    public function testHouseNumberIsInvalid($value)
+    public function testbuildingNumberIsInvalid($value)
     {
-        $this->address->setHouseNumber($value);
+        $this->address->setBuildingNumber($value);
 
         $this->assertSame(1, $this->address->getViolations()->count());
     }
 
-    public function invalidHouseNumberProvider()
+    public function invalidbuildingNumberProvider()
     {
         return [
             ['17 chars, ++limit']
@@ -205,7 +205,7 @@ class StructuredAddressTest extends TestCase
                 $this->address = (new StructuredAddress())
                     ->setName('Thomas Mustermann')
                     ->setStreet('Musterweg')
-                    ->setHouseNumber('22a')
+                    ->setBuildingNumber('22a')
                     ->setPostalCode('1000')
                     ->setCity('Lausanne')
                     ->setCountry('CH'),
@@ -231,7 +231,7 @@ class StructuredAddressTest extends TestCase
             [
                 $this->address = (new StructuredAddress())
                     ->setName('Thomas Mustermann')
-                    ->setHouseNumber('22a')
+                    ->setBuildingNumber('22a')
                     ->setPostalCode('1000')
                     ->setCity('Lausanne')
                     ->setCountry('CH'),

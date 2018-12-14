@@ -20,11 +20,11 @@ class StructuredAddress extends Address
     private $street;
 
     /**
-     * House number of the creditor
+     * Building number of the creditor
      *
      * @var string
      */
-    private $houseNumber;
+    private $buildingNumber;
 
     /**
      * Postal code without county code
@@ -52,14 +52,14 @@ class StructuredAddress extends Address
         return $this;
     }
 
-    public function getHouseNumber(): ?string
+    public function getBuildingNumber(): ?string
     {
-        return $this->houseNumber;
+        return $this->buildingNumber;
     }
 
-    public function setHouseNumber(string $houseNumber = null) : self
+    public function setBuildingNumber(string $buildingNumber = null) : self
     {
-        $this->houseNumber = $houseNumber;
+        $this->buildingNumber = $buildingNumber;
 
         return $this;
     }
@@ -95,8 +95,8 @@ class StructuredAddress extends Address
         if ($this->getStreet()) {
             $address .= "\n" . $this->getStreet();
 
-            if ($this->getHouseNumber()) {
-                $address .= " " . $this->getHouseNumber();
+            if ($this->getBuildingNumber()) {
+                $address .= " " . $this->getBuildingNumber();
             }
         }
 
@@ -111,7 +111,7 @@ class StructuredAddress extends Address
             self::ADDRESS_TYPE,
             $this->getName(),
             $this->getStreet(),
-            $this->getHouseNumber(),
+            $this->getBuildingNumber(),
             $this->getPostalCode(),
             $this->getCity(),
             $this->getCountry()
@@ -126,7 +126,7 @@ class StructuredAddress extends Address
             ])
         ]);
 
-        $metadata->addPropertyConstraints('houseNumber', [
+        $metadata->addPropertyConstraints('buildingNumber', [
             new Assert\Length([
                 'max' => 16
             ])

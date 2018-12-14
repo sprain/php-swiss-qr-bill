@@ -15,7 +15,7 @@ $creditorInformation = (new QrBill\DataGroups\CreditorInformation())
 $creditor = (new QrBill\DataGroups\StructuredAddress())
     ->setName('My Company Ltd.')
     ->setStreet('Bahnhofstrasse')
-    ->setHouseNumber('1')
+    ->setBuildingNumber('1')
     ->setPostalCode('8000')
     ->setCity('Zürich')
     ->setCountry('CH');
@@ -28,7 +28,7 @@ $qrBill->setCreditor($creditor);
 $debtor = (new QrBill\DataGroups\StructuredAddress())
     ->setName('Thomas LeClaire')
     ->setStreet('Rue examplaire')
-    ->setHouseNumber('22a')
+    ->setBuildingNumber('22a')
     ->setPostalCode('1000')
     ->setCity('Lausanne')
     ->setCountry('CH');

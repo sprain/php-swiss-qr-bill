@@ -523,7 +523,7 @@ class QrBillTest extends TestCase
         return (new StructuredAddress())
             ->setName('Thomas LeClaire')
             ->setStreet('Rue examplaire')
-            ->setHouseNumber('22a')
+            ->setBuildingNumber('22a')
             ->setPostalCode('1000')
             ->setCity('Lausanne')
             ->setCountry('CH');
@@ -534,7 +534,7 @@ class QrBillTest extends TestCase
         return (new StructuredAddress())
             // NO NAME!
             ->setStreet('Rue examplaire')
-            ->setHouseNumber('22a')
+            ->setBuildingNumber('22a')
             ->setPostalCode('1000')
             ->setCity('Lausanne')
             ->setCountry('CH');
