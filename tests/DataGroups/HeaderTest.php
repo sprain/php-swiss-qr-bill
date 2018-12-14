@@ -14,7 +14,7 @@ class HeaderTest extends TestCase
     {
         $header = new Header();
         $header->setQrType($value);
-        $header->setVersion('0100');
+        $header->setVersion('0200');
         $header->setCoding(1);
 
         $this->assertSame(0, $header->getViolations()->count());
@@ -40,7 +40,7 @@ class HeaderTest extends TestCase
     {
         $header = new Header();
         $header->setQrType($value);
-        $header->setVersion('0100');
+        $header->setVersion('0200');
         $header->setCoding(1);
 
         $this->assertSame(1, $header->getViolations()->count());
@@ -63,7 +63,7 @@ class HeaderTest extends TestCase
     public function testQrTypeIsRequired()
     {
         $header = new Header();
-        $header->setVersion('0100');
+        $header->setVersion('0200');
         $header->setCoding(1);
 
         $this->assertSame(1, $header->getViolations()->count());
@@ -85,7 +85,7 @@ class HeaderTest extends TestCase
     public function validVersionProvider()
     {
         return [
-            ['0100'],
+            ['0200'],
             ['1234'],
             ['0000'],
             ['9999'],
@@ -135,7 +135,7 @@ class HeaderTest extends TestCase
     {
         $header = new Header();
         $header->setQrType('SPC');
-        $header->setVersion('0100');
+        $header->setVersion('0200');
         $header->setCoding($value);
 
         $this->assertSame(0, $header->getViolations()->count());
@@ -164,7 +164,7 @@ class HeaderTest extends TestCase
     {
         $header = new Header();
         $header->setQrType('SPC');
-        $header->setVersion('0100');
+        $header->setVersion('0200');
         $header->setCoding($value);
 
         $this->assertSame(1, $header->getViolations()->count());
@@ -182,7 +182,7 @@ class HeaderTest extends TestCase
     {
         $header = new Header();
         $header->setQrType('SPC');
-        $header->setVersion('0100');
+        $header->setVersion('0200');
 
         $this->assertSame(1, $header->getViolations()->count());
     }
@@ -191,12 +191,12 @@ class HeaderTest extends TestCase
     {
         $header = new Header();
         $header->setQrType(Header::QRTYPE_SPC);
-        $header->setVersion('0100');
+        $header->setVersion('0200');
         $header->setCoding(1);
 
         $expected = [
             Header::QRTYPE_SPC,
-            '0100',
+            '0200',
             1
         ];
 

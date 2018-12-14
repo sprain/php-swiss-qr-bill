@@ -398,7 +398,7 @@ class QrBillTest extends TestCase
         $header = (new Header())
             ->setCoding(Header::CODING_LATIN)
             ->setQrType(Header::QRTYPE_SPC)
-            ->setVersion(Header::VERSION_0100);
+            ->setVersion(Header::VERSION_0200);
         $qrBill->setHeader($header);
     }
 

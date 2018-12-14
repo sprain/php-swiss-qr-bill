@@ -53,7 +53,7 @@ class QrBill implements Validatable
         $header = new Header();
         $header->setCoding(Header::CODING_LATIN);
         $header->setQrType(Header::QRTYPE_SPC);
-        $header->setVersion(Header::VERSION_0100);
+        $header->setVersion(Header::VERSION_0200);
 
         $qrBill = new self();
         $qrBill->setHeader($header);

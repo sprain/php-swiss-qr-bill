@@ -75,7 +75,7 @@ class QrPaymentReferenceGeneratorTest extends TestCase
         return [
             ['1234567'], // too long
             ['12345A'],  // non-digits
-            ['1234.5'],   // non-digits
+            ['1234.5'],  // non-digits
             ['']
         ];
     }

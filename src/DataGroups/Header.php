@@ -13,7 +13,7 @@ class Header implements QrCodeData, Validatable
     use ValidatorTrait;
 
     const QRTYPE_SPC = 'SPC';
-    const VERSION_0100 = '0100';
+    const VERSION_0200 = '0200';
     const CODING_LATIN = 1;
 
     /**
@@ -27,7 +27,7 @@ class Header implements QrCodeData, Validatable
      * Version of the specifications (Implementation Guidelines) in use on
      * the date on which the Swiss QR code was created.
      * The first two positions indicate the main version, the following the
-     * two positions the sub-version ("0100" for version 1.0).
+     * two positions the sub-version ("0200" for version 2.0).
      *
      * @var string
      */
