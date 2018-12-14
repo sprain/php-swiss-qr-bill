@@ -11,7 +11,7 @@ class StructuredAddress extends Address
     const ADDRESS_TYPE = 'S';
 
     /**
-     * Street / P.O. box of the creditor
+     * Street / P.O. box 
      *
      * May not include building or house number.
      *
@@ -20,7 +20,7 @@ class StructuredAddress extends Address
     private $street;
 
     /**
-     * Building number of the creditor
+     * Building number 
      *
      * @var string
      */
