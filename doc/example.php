@@ -39,8 +39,7 @@ $qrBill->setUltimateDebtor($debtor);
 // What amount is to be paid? When is it due?
 $paymentAmountInformation = (new QrBill\DataGroups\PaymentAmountInformation())
     ->setAmount(25.90)
-    ->setCurrency('CHF')
-    ->setDueDate(new \DateTime('+30 days'));
+    ->setCurrency('CHF');
 
 $qrBill->setPaymentAmountInformation($paymentAmountInformation);
 
@@ -53,10 +52,13 @@ $referenceNumber = (new QrBill\Reference\QrPaymentReferenceGenerator())
 
 $paymentReference = (new QrBill\DataGroups\PaymentReference())
     ->setType(QrBill\DataGroups\PaymentReference::TYPE_QR)
-    ->setReference($referenceNumber)
-    ->setMessage('Invoice 11223344, Gardening Work');
-
+    ->setReference($referenceNumber);
 $qrBill->setPaymentReference($paymentReference);
+
+// Add additional information
+$additionalInformation = (new QrBill\DataGroups\AdditionalInformation())
+    ->setMessage('Invoice 11223344, Gardening Work');
+$qrBill->setAdditionalInformation($additionalInformation);
 
 // Optionally, make sure all data is valid
 if (false === $qrBill->isValid()) {
