@@ -25,7 +25,7 @@ class QrBillTest extends TestCase
             'paymentReference'
         ]);
 
-        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-minimal-setup.png'))->text(),
@@ -145,17 +145,17 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
-    public function testPaymentAmountInformationWithoutAmountAndDate()
+    public function testPaymentAmountInformationWithoutAmount()
     {
         $qrBill = $this->createQrBill([
             'header',
             'creditorInformation',
             'creditor',
-            'paymentAmountInformationWithoutAmountAndDate',
+            'paymentAmountInformationWithoutAmount',
             'paymentReference'
         ]);
 
-        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png');
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-payment-information-without-amount-and-date.png'))->text(),
@@ -198,7 +198,7 @@ class QrBillTest extends TestCase
             'paymentReferenceWithMessage'
         ]);
 
-        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-with-message.png');
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-with-message.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-payment-reference-with-message.png'))->text(),
@@ -217,7 +217,7 @@ class QrBillTest extends TestCase
             'ultimateCreditor'
         ]);
 
-        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-creditor.png');
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-creditor.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-ultimate-creditor.png'))->text(),
@@ -250,7 +250,7 @@ class QrBillTest extends TestCase
             'ultimateDebtor'
         ]);
 
-        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-debtor.png');
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-debtor.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-ultimate-debtor.png'))->text(),
@@ -285,7 +285,7 @@ class QrBillTest extends TestCase
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
 
-        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-alternative-schemes.png');
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-alternative-schemes.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-alternative-schemes.png'))->text(),
@@ -362,7 +362,7 @@ class QrBillTest extends TestCase
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
 
-        $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-full-set.png'))->text(),
@@ -441,7 +441,7 @@ class QrBillTest extends TestCase
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
-    public function paymentAmountInformationWithoutAmountAndDate(QrBill &$qrBill)
+    public function paymentAmountInformationWithoutAmount(QrBill &$qrBill)
     {
         $paymentAmountInformation = (new PaymentAmountInformation())
             ->setCurrency('EUR');

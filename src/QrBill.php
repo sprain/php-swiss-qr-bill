@@ -196,7 +196,7 @@ class QrBill implements Validatable
         $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
         $qrCode->setRoundBlockSize(false);
         $qrCode->setMargin(0);
-        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM));
+        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::HIGH));
 
         return $qrCode;
     }
