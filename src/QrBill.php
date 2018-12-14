@@ -4,13 +4,14 @@ namespace Sprain\SwissQrBill;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
-use Sprain\SwissQrBill\DataGroups\StructuredAddress;
+use Sprain\SwissQrBill\DataGroups\Abstracts\Address;
 use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroups\CreditorInformation;
 use Sprain\SwissQrBill\DataGroups\Header;
 use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
 use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroups\PaymentReference;
+use Sprain\SwissQrBill\DataGroups\StructuredAddress;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
@@ -30,16 +31,16 @@ class QrBill implements Validatable
     /** @var CreditorInformation */
     private $creditorInformation;
 
-    /** @var StructuredAddress */
+    /** @var Address */
     private $creditor;
 
-    /** @var StructuredAddress */
+    /** @var Address */
     private $ultimateCreditor;
 
     /** @var PaymentAmountInformation */
     private $paymentAmountInformation;
 
-    /** @var StructuredAddress */
+    /** @var Address */
     private $ultimateDebtor;
 
     /** @var PaymentReference */
@@ -85,24 +86,24 @@ class QrBill implements Validatable
         return $this;
     }
 
-    public function getCreditor(): StructuredAddress
+    public function getCreditor(): Address
     {
         return $this->creditor;
     }
 
-    public function setCreditor(StructuredAddress $creditor) : self
+    public function setCreditor(Address $creditor) : self
     {
         $this->creditor = $creditor;
         
         return $this;
     }
 
-    public function getUltimateCreditor(): ?StructuredAddress
+    public function getUltimateCreditor(): ?Address
     {
         return $this->ultimateCreditor;
     }
 
-    public function setUltimateCreditor(StructuredAddress $ultimateCreditor) : self
+    public function setUltimateCreditor(Address $ultimateCreditor) : self
     {
         $this->ultimateCreditor = $ultimateCreditor;
         
@@ -121,12 +122,12 @@ class QrBill implements Validatable
         return $this;
     }
 
-    public function getUltimateDebtor(): ?StructuredAddress
+    public function getUltimateDebtor(): ?Address
     {
         return $this->ultimateDebtor;
     }
 
-    public function setUltimateDebtor(StructuredAddress $ultimateDebtor) : self
+    public function setUltimateDebtor(Address $ultimateDebtor) : self
     {
         $this->ultimateDebtor = $ultimateDebtor;
         
