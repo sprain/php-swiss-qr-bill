@@ -29,13 +29,6 @@ class PaymentAmountInformation implements QrCodeData, Validatable
      */
     private $currency;
 
-    /**
-     * Due date on which, according to the biller, the payment should be paid at the latest
-     *
-     * @var \DateTime
-     */
-    private $dueDate;
-
 
     public function getAmount(): ?float
     {
@@ -61,24 +54,11 @@ class PaymentAmountInformation implements QrCodeData, Validatable
         return $this;
     }
 
-    public function getDueDate(): ?\DateTime
-    {
-        return $this->dueDate;
-    }
-
-    public function setDueDate(\DateTime $dueDate = null)
-    {
-        $this->dueDate = $dueDate;
-
-        return $this;
-    }
-
     public function getQrCodeData() : array
     {
         return [
             $this->getAmount() ? number_format($this->getAmount(), 2, '.', '') : null,
-            $this->getCurrency(),
-            $this->getDueDate() ? $this->getDueDate()->format('Y-m-d') : null,
+            $this->getCurrency()
         ];
     }
 

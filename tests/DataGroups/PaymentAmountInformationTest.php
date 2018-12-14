@@ -15,8 +15,7 @@ class PaymentAmountInformationTest extends TestCase
         // Valid default to be adjusted in single tests
         $this->paymentAmountInformation = (new PaymentAmountInformation())
             ->setAmount(25)
-            ->setCurrency('CHF')
-            ->setDueDate(new \DateTime('+30 days'));
+            ->setCurrency('CHF');
     }
 
     /**
@@ -99,30 +98,11 @@ class PaymentAmountInformationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validDueDateProvider
-     */
-    public function testDueDateIsValid($value)
-    {
-        $this->paymentAmountInformation->setDueDate($value);
-
-        $this->assertSame(0, $this->paymentAmountInformation->getViolations()->count());
-    }
-
-    public function validDueDateProvider()
-    {
-        return [
-            [new \DateTime()],
-            [null]
-        ];
-    }
-
     public function testQrCodeData()
     {
         $expected = [
             '25.00',
-            'CHF',
-            (new \DateTime('+30 days'))->format('Y-m-d')
+            'CHF'
         ];
 
         $this->assertSame($expected, $this->paymentAmountInformation->getQrCodeData());
