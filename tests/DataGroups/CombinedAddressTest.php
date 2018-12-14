@@ -106,8 +106,8 @@ class CombinedAddressTest extends TestCase
     public function testQrCodeData()
     {
         $expected = [
-            'K',
             'Thomas Mustermann',
+            'K',
             'Musterweg 22a',
             '1000 Lausanne',
             '',

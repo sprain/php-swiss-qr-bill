@@ -178,8 +178,8 @@ class StructuredAddressTest extends TestCase
     public function testQrCodeData()
     {
         $expected = [
-            'S',
             'Thomas Mustermann',
+            'S',
             'Musterweg',
             '22a',
             '1000',

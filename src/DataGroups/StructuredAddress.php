@@ -108,8 +108,8 @@ class StructuredAddress extends Address
     public function getQrCodeData() : array
     {
         return [
-            self::ADDRESS_TYPE,
             $this->getName(),
+            self::ADDRESS_TYPE,
             $this->getStreet(),
             $this->getBuildingNumber(),
             $this->getPostalCode(),
