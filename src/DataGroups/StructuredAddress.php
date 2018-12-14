@@ -2,25 +2,16 @@
 
 namespace Sprain\SwissQrBill\DataGroups;
 
-use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
-use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
-use Sprain\SwissQrBill\Validator\ValidatorTrait;
+use Sprain\SwissQrBill\DataGroups\Abstracts\Address;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class Address implements QrCodeData, Validatable
+class StructuredAddress extends Address
 {
-    use ValidatorTrait;
+    const ADDRESS_TYPE = 'S';
 
     /**
-     * Name or company
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
-     * Street / P.O. box of the creditor.
+     * Street / P.O. box of the creditor
      *
      * May not include building or house number.
      *
@@ -48,26 +39,6 @@ class Address implements QrCodeData, Validatable
      * @var string
      */
     private $city;
-
-    /**
-     * Country (ISO 3166-1 alpha-2)
-     *
-     * @var string
-     */
-    private $country;
-
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name) : self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
 
     public function getStreet(): ?string
     {
@@ -117,18 +88,6 @@ class Address implements QrCodeData, Validatable
         return $this;
     }
 
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country) : self
-    {
-        $this->country = strtoupper($country);
-
-        return $this;
-    }
-
     public function getFullAddress() : string
     {
         $address = $this->getName();
@@ -149,6 +108,7 @@ class Address implements QrCodeData, Validatable
     public function getQrCodeData() : array
     {
         return [
+            self::ADDRESS_TYPE,
             $this->getName(),
             $this->getStreet(),
             $this->getHouseNumber(),
@@ -160,13 +120,6 @@ class Address implements QrCodeData, Validatable
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addPropertyConstraints('name', [
-            new Assert\NotBlank(),
-            new Assert\Length([
-                'max' => 70
-            ])
-        ]);
-
         $metadata->addPropertyConstraints('street', [
             new Assert\Length([
                 'max' => 70
@@ -191,11 +144,6 @@ class Address implements QrCodeData, Validatable
             new Assert\Length([
                 'max' => 35
             ])
-        ]);
-
-        $metadata->addPropertyConstraints('country', [
-            new Assert\NotBlank(),
-            new Assert\Country()
         ]);
     }
 }

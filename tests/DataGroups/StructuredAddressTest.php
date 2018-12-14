@@ -3,17 +3,17 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\Address;
+use Sprain\SwissQrBill\DataGroups\StructuredAddress;
 
-class AddressTest extends TestCase
+class StructuredAddressTest extends TestCase
 {
-    /** @var Address */
+    /** @var StructuredAddress */
     private $address;
 
     public function setUp()
     {
         // Valid default to be adjusted in single tests
-        $this->address = (new Address())
+        $this->address = (new StructuredAddress())
             ->setName('Thomas Mustermann')
             ->setStreet('Musterweg')
             ->setHouseNumber('22a')
@@ -258,6 +258,7 @@ class AddressTest extends TestCase
     public function testQrCodeData()
     {
         $expected = [
+            'S',
             'Thomas Mustermann',
             'Musterweg',
             '22a',
@@ -272,7 +273,7 @@ class AddressTest extends TestCase
     /**
      * @dataProvider addressProvider
      */
-    public function testFullAddressString(Address $address, $expected)
+    public function testFullAddressString(StructuredAddress $address, $expected)
     {
         $this->assertSame($expected, $address->getFullAddress());
     }
@@ -281,7 +282,7 @@ class AddressTest extends TestCase
     {
         return [
             [
-                $this->address = (new Address())
+                $this->address = (new StructuredAddress())
                     ->setName('Thomas Mustermann')
                     ->setStreet('Musterweg')
                     ->setHouseNumber('22a')
@@ -291,7 +292,7 @@ class AddressTest extends TestCase
                 "Thomas Mustermann\nMusterweg 22a\nCH-1000 Lausanne"
             ],
             [
-                $this->address = (new Address())
+                $this->address = (new StructuredAddress())
                     ->setName('Thomas Mustermann')
                     ->setStreet('Musterweg')
                     ->setPostalCode('1000')
@@ -300,7 +301,7 @@ class AddressTest extends TestCase
                 "Thomas Mustermann\nMusterweg\nCH-1000 Lausanne"
             ],
             [
-                $this->address = (new Address())
+                $this->address = (new StructuredAddress())
                     ->setName('Thomas Mustermann')
                     ->setPostalCode('1000')
                     ->setCity('Lausanne')
@@ -308,7 +309,7 @@ class AddressTest extends TestCase
                 "Thomas Mustermann\nCH-1000 Lausanne"
             ],
             [
-                $this->address = (new Address())
+                $this->address = (new StructuredAddress())
                     ->setName('Thomas Mustermann')
                     ->setHouseNumber('22a')
                     ->setPostalCode('1000')

@@ -3,7 +3,7 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\Address;
+use Sprain\SwissQrBill\DataGroups\StructuredAddress;
 use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroups\CreditorInformation;
 use Sprain\SwissQrBill\DataGroups\Header;
@@ -520,7 +520,7 @@ class QrBillTest extends TestCase
 
     public function address()
     {
-        return (new Address())
+        return (new StructuredAddress())
             ->setName('Thomas LeClaire')
             ->setStreet('Rue examplaire')
             ->setHouseNumber('22a')
@@ -531,7 +531,7 @@ class QrBillTest extends TestCase
 
     public function invalidAddress()
     {
-        return (new Address())
+        return (new StructuredAddress())
             // NO NAME!
             ->setStreet('Rue examplaire')
             ->setHouseNumber('22a')
