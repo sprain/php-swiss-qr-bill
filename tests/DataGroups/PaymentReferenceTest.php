@@ -99,56 +99,15 @@ class PaymentReferenceTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validMessageProvider
-     */
-    public function testValidMessage($value)
-    {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_NON);
-        $paymentReference->setMessage($value);
-
-        $this->assertSame(0, $paymentReference->getViolations()->count());
-    }
-
-    public function validMessageProvider()
-    {
-        return [
-            ['012345678901234567890123456'],
-            [null]
-        ];
-    }
-
-    /**
-     * @dataProvider invalidMessageProvider
-     */
-    public function testInvalidMessage($value)
-    {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_NON);
-        $paymentReference->setMessage($value);
-
-        $this->assertSame(1, $paymentReference->getViolations()->count());
-    }
-
-    public function invalidMessageProvider()
-    {
-        return [
-            ['123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'], // too long
-        ];
-    }
-
     public function testQrCodeData()
     {
         $paymentReference = new PaymentReference();
         $paymentReference->setType(PaymentReference::TYPE_QR);
         $paymentReference->setReference('012345678901234567890123456');
-        $paymentReference->setMessage('message');
 
         $expected = [
             PaymentReference::TYPE_QR,
-            '012345678901234567890123456',
-            'message'
+            '012345678901234567890123456'
         ];
 
         $this->assertSame($expected, $paymentReference->getQrCodeData());

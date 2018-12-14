@@ -33,14 +33,6 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
      */
     private $reference;
 
-    /**
-     * Unstructured message
-     *
-     * @var string
-     */
-    private $message;
-
-
     public function getType(): ?string
     {
         return $this->type;
@@ -65,24 +57,11 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
         return $this;
     }
 
-    public function getMessage(): ?string
-    {
-        return $this->message;
-    }
-
-    public function setMessage(string $message = null) : self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
     public function getQrCodeData() : array
     {
         return [
             $this->getType(),
-            $this->getReference(),
-            $this->getMessage(),
+            $this->getReference()
         ];
     }
 
@@ -122,13 +101,6 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, Va
             ]),
             new ValidCreditorReference([
                 'groups' => [self::TYPE_SCOR]
-            ])
-        ]);
-
-        $metadata->addPropertyConstraints('message', [
-            new Assert\Length([
-                'max'=> 140,
-                'groups' => ['default']
             ])
         ]);
     }
