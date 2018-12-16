@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "000776b54856ed623441f2be5cc52aad",
+    "content-hash": "812dfd9ada0c08a97862db868523e8a8",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -144,16 +144,16 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "dev-bugfix-imagecopyresampled",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sprain/qr-code.git",
-                "reference": "203ee2251049797362f5ff8e51cd5e2e58b55194"
+                "url": "https://github.com/endroid/qr-code.git",
+                "reference": "fdd809ae038284753fab44fa203689a54cbccde4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sprain/qr-code/zipball/203ee2251049797362f5ff8e51cd5e2e58b55194",
-                "reference": "203ee2251049797362f5ff8e51cd5e2e58b55194",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/fdd809ae038284753fab44fa203689a54cbccde4",
+                "reference": "fdd809ae038284753fab44fa203689a54cbccde4",
                 "shasum": ""
             },
             "require": {
@@ -180,11 +180,7 @@
                     "Endroid\\QrCode\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Endroid\\QrCode\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -204,10 +200,7 @@
                 "qr",
                 "qrcode"
             ],
-            "support": {
-                "source": "https://github.com/sprain/qr-code/tree/bugfix-imagecopyresampled"
-            },
-            "time": "2018-12-13 21:39:52"
+            "time": "2018-12-16 11:19:12"
         },
         {
             "name": "khanamiryan/qrcode-detector-decoder",
