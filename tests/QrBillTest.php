@@ -323,8 +323,9 @@ class QrBillTest extends TestCase
             'creditorInformation',
             'creditor',
             'paymentAmountInformation',
-            'paymentReferenceWithMessage',
-            'ultimateDebtor'
+            'ultimateDebtor',
+            'paymentReference',
+            'additionalInformation'
         ]);
 
         $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
