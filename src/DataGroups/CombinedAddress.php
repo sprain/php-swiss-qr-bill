@@ -68,8 +68,8 @@ class CombinedAddress extends Address
     public function getQrCodeData() : array
     {
         return [
-            $this->getName(),
             $this->getAddressLine2() ? self::ADDRESS_TYPE : '',
+            $this->getName(),
             $this->getAddressLine1(),
             $this->getAddressLine2(),
             '',
