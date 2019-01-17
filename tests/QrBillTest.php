@@ -188,24 +188,6 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
-    public function testPaymentReferenceWithMessage()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformation',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceWithMessage'
-        ]);
-
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-with-message.png');
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-payment-reference-with-message.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
-    }
-
     public function testOptionalUltimateDebtorCanBeSet()
     {
         $qrBill = $this->createQrBill([
@@ -427,15 +409,6 @@ class QrBillTest extends TestCase
         $paymentReference = (new PaymentReference())
             ->setType(PaymentReference::TYPE_QR)
             ->setReference('123456789012345678901234567');
-        $qrBill->setPaymentReference($paymentReference);
-    }
-
-    public function paymentReferenceWithMessage(QrBill &$qrBill)
-    {
-        $paymentReference = (new PaymentReference())
-            ->setType(PaymentReference::TYPE_QR)
-            ->setReference('123456789012345678901234567')
-        ;
         $qrBill->setPaymentReference($paymentReference);
     }
 
