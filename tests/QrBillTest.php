@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
+use Sprain\SwissQrBill\DataGroups\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroups\CombinedAddress;
 use Sprain\SwissQrBill\DataGroups\StructuredAddress;
 use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
@@ -296,6 +297,25 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
+    public function testAdditionalInformationCanBeAdded()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReference',
+            'additionalInformation'
+        ]);
+
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-additional-information.png');
+
+        $this->assertSame(
+            (new QrReader(__DIR__ . '/TestData/qr-additional-information.png'))->text(),
+            $qrBill->getQrCode()->getText()
+        );
+    }
+
     public function testFullQrCodeSet()
     {
         $qrBill = $this->createQrBill([
@@ -443,6 +463,14 @@ class QrBillTest extends TestCase
         $alternativeScheme = (new AlternativeScheme());
 
         $qrBill->addAlternativeScheme($alternativeScheme);
+    }
+
+    public function additionalInformation(QrBill &$qrBill)
+    {
+        $additionalInformation = (new AdditionalInformation())
+            ->setMessage('Invoice 123456');
+
+        $qrBill->setAdditionalInformation($additionalInformation);
     }
 
     public function structuredAddress()
