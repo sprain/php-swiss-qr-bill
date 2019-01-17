@@ -26,6 +26,10 @@ class QrBill implements Validatable
 
     const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.png';
 
+    const ERROR_CORRECTION_LEVEL_HIGH = ErrorCorrectionLevel::HIGH;
+    const ERROR_CORRECTION_LEVEL_MEDIUM = ErrorCorrectionLevel::MEDIUM;
+    const ERROR_CORRECTION_LEVEL_LOW = ErrorCorrectionLevel::LOW;
+
     /** @var Header */
     private $header;
 
@@ -49,6 +53,9 @@ class QrBill implements Validatable
 
     /** @var AlternativeScheme[] */
     private $alternativeSchemes = [];
+
+    /** @var string  */
+    private $errorCorrectionLevel = self::ERROR_CORRECTION_LEVEL_HIGH;
 
     public static function create() : self
     {
@@ -166,6 +173,13 @@ class QrBill implements Validatable
         return $this;
     }
 
+    public function setErrorCorrectionLevel(string $errorCorrectionLevel) : self
+    {
+        $this->errorCorrectionLevel = $errorCorrectionLevel;
+
+        return $this;
+    }
+
     public function getQrCode() : QrCode
     {
         if (!$this->isValid()) {
@@ -181,7 +195,7 @@ class QrBill implements Validatable
         $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
         $qrCode->setRoundBlockSize(false);
         $qrCode->setMargin(0);
-        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::HIGH));
+        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel($this->errorCorrectionLevel));
 
         return $qrCode;
     }

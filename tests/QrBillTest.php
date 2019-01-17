@@ -189,6 +189,44 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
+    public function testPaymentReferenceScor()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReferenceScor'
+        ]);
+
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-scor.png');
+
+        $this->assertSame(
+            (new QrReader(__DIR__ . '/TestData/qr-payment-reference-scor.png'))->text(),
+            $qrBill->getQrCode()->getText()
+        );
+    }
+
+    public function testPaymentReferenceNon()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformation',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReferenceNon'
+        ]);
+
+        # $qrBill
+        #    ->setErrorCorrectionLevel(QrBill::ERROR_CORRECTION_LEVEL_MEDIUM) // due to limitations of QrReader class used in assert below
+        #    ->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-non.png');
+
+        $this->assertSame(
+            (new QrReader(__DIR__ . '/TestData/qr-payment-reference-non.png'))->text(),
+            $qrBill->getQrCode()->getText()
+        );
+    }
+
     public function testOptionalUltimateDebtorCanBeSet()
     {
         $qrBill = $this->createQrBill([
@@ -430,6 +468,22 @@ class QrBillTest extends TestCase
         $paymentReference = (new PaymentReference())
             ->setType(PaymentReference::TYPE_QR)
             ->setReference('123456789012345678901234567');
+        $qrBill->setPaymentReference($paymentReference);
+    }
+
+    public function paymentReferenceScor(QrBill &$qrBill)
+    {
+        $paymentReference = (new PaymentReference())
+            ->setType(PaymentReference::TYPE_SCOR)
+            ->setReference('RF18539007547034');
+        $qrBill->setPaymentReference($paymentReference);
+    }
+
+    public function paymentReferenceNon(QrBill &$qrBill)
+    {
+        $paymentReference = (new PaymentReference())
+            ->setType(PaymentReference::TYPE_NON);
+
         $qrBill->setPaymentReference($paymentReference);
     }
 
