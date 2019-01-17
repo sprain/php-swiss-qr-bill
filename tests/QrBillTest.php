@@ -206,39 +206,6 @@ class QrBillTest extends TestCase
         );
     }
 
-    public function testOptionalUltimateCreditorCanBeSet()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformation',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReference',
-            'ultimateCreditor'
-        ]);
-
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-creditor.png');
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-ultimate-creditor.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
-    }
-
-    public function testOptionalUltimateCreditorMustBeValid()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformation',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReference',
-            'invalidUltimateCreditor'
-        ]);
-
-        $this->assertFalse($qrBill->isValid());
-    }
-
     public function testOptionalUltimateDebtorCanBeSet()
     {
         $qrBill = $this->createQrBill([
@@ -353,7 +320,6 @@ class QrBillTest extends TestCase
             'header',
             'creditorInformation',
             'creditor',
-            'ultimateCreditor',
             'paymentAmountInformation',
             'paymentReferenceWithMessage',
             'ultimateDebtor'
@@ -479,16 +445,6 @@ class QrBillTest extends TestCase
             ->setType(PaymentReference::TYPE_QR)
             ->setReference('INVALID REFERENCE');
         $qrBill->setPaymentReference($paymentReference);
-    }
-
-    public function ultimateCreditor(QrBill &$qrBill)
-    {
-        $qrBill->setUltimateCreditor($this->structuredAddress());
-    }
-
-    public function invalidUltimateCreditor(QrBill &$qrBill)
-    {
-        $qrBill->setUltimateCreditor($this->invalidAddress());
     }
 
     public function ultimateDebtor(QrBill &$qrBill)

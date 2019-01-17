@@ -35,9 +35,6 @@ class QrBill implements Validatable
     /** @var Address */
     private $creditor;
 
-    /** @var Address */
-    private $ultimateCreditor;
-
     /** @var PaymentAmountInformation */
     private $paymentAmountInformation;
 
@@ -98,18 +95,6 @@ class QrBill implements Validatable
     public function setCreditor(Address $creditor) : self
     {
         $this->creditor = $creditor;
-        
-        return $this;
-    }
-
-    public function getUltimateCreditor(): ?Address
-    {
-        return $this->ultimateCreditor;
-    }
-
-    public function setUltimateCreditor(Address $ultimateCreditor) : self
-    {
-        $this->ultimateCreditor = $ultimateCreditor;
         
         return $this;
     }
@@ -207,7 +192,7 @@ class QrBill implements Validatable
             $this->getHeader(),
             $this->getCreditorInformation(),
             $this->getCreditor(),
-            $this->getUltimateCreditor() ?: new StructuredAddress(),
+            new StructuredAddress(),
             $this->getPaymentAmountInformation(),
             $this->getUltimateDebtor() ?: new StructuredAddress(),
             $this->getPaymentReference(),
@@ -255,10 +240,6 @@ class QrBill implements Validatable
 
         $metadata->addPropertyConstraints('creditor', [
             new Assert\NotNull(),
-            new Assert\Valid()
-        ]);
-
-        $metadata->addPropertyConstraints('ultimateCreditor', [
             new Assert\Valid()
         ]);
 
