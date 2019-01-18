@@ -12,12 +12,10 @@ $qrBill = QrBill\QrBill::create();
 $creditorInformation = (new QrBill\DataGroups\CreditorInformation())
     ->setIban('CH9300762011623852957');
 
-$creditor = (new QrBill\DataGroups\StructuredAddress())
+$creditor = (new QrBill\DataGroups\CombinedAddress())
     ->setName('My Company Ltd.')
-    ->setStreet('Bahnhofstrasse')
-    ->setBuildingNumber('1')
-    ->setPostalCode('8000')
-    ->setCity('Zürich')
+    ->setAddressLine1('Bahnhofstrasse 1')
+    ->setAddressLine2('8000 Zürich')
     ->setCountry('CH');
 
 $qrBill->setCreditorInformation($creditorInformation);
@@ -25,6 +23,9 @@ $qrBill->setCreditor($creditor);
 
 // Add debtor information
 // Who has to pay the invoice? This part is optional.
+//
+// Notice how you can use two different styles of addresses: CombinedAddress or StructuredAddress.
+// They are interchangeable for creditor as well as debtor.
 $debtor = (new QrBill\DataGroups\StructuredAddress())
     ->setName('Thomas LeClaire')
     ->setStreet('Rue examplaire')
