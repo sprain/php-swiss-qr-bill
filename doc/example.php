@@ -54,11 +54,13 @@ $referenceNumber = (new QrBill\Reference\QrPaymentReferenceGenerator())
 $paymentReference = (new QrBill\DataGroups\PaymentReference())
     ->setType(QrBill\DataGroups\PaymentReference::TYPE_QR)
     ->setReference($referenceNumber);
+
 $qrBill->setPaymentReference($paymentReference);
 
 // Add additional information
 $additionalInformation = (new QrBill\DataGroups\AdditionalInformation())
     ->setMessage('Invoice 11223344, Gardening Work');
+
 $qrBill->setAdditionalInformation($additionalInformation);
 
 // Optionally, make sure all data is valid
