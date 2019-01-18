@@ -36,7 +36,7 @@ $debtor = (new QrBill\DataGroups\Address())
 $qrBill->setUltimateDebtor($debtor);
 
 // Add payment amount information
-// What amount is to be paid? When is it due?
+// What amount is to be paid?
 $paymentAmountInformation = (new QrBill\DataGroups\PaymentAmountInformation())
     ->setAmount(25.90)
     ->setCurrency('CHF')
