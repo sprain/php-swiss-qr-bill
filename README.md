@@ -19,6 +19,9 @@ For official information see
 * https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html
 
 
+## Prerequisites
+This library currently actively supports PHP 7.1 – 7.3
+
 ## Installation
 
 ```
