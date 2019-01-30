@@ -3,12 +3,12 @@
 namespace Sprain\SwissQrBill\Reference;
 
 use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
-use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
+use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class QrPaymentReferenceGenerator implements Validatable
+class QrPaymentReferenceGenerator implements SelfValidatable
 {
     use ValidatorTrait;
 

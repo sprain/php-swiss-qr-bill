@@ -4,7 +4,7 @@ namespace Sprain\SwissQrBill\Validator\Interfaces;
 
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-interface Validatable
+interface SelfValidatable
 {
     public function getViolations() : ConstraintViolationListInterface;
 

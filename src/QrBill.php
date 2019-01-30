@@ -15,12 +15,12 @@ use Sprain\SwissQrBill\DataGroup\PaymentReference;
 use Sprain\SwissQrBill\DataGroup\StructuredAddress;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\String\StringModifier;
-use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
+use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class QrBill implements Validatable
+class QrBill implements SelfValidatable
 {
     use ValidatorTrait;
 
