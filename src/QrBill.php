@@ -206,7 +206,7 @@ class QrBill implements SelfValidatable
             $this->getHeader(),
             $this->getCreditorInformation(),
             $this->getCreditor(),
-            new StructuredAddress(),
+            new StructuredAddress(), # Placeholder for ultimateCreditor, which is currently not yet allowed to be used by the implementation guidelines
             $this->getPaymentAmountInformation(),
             $this->getUltimateDebtor() ?: new StructuredAddress(),
             $this->getPaymentReference(),
