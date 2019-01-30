@@ -1,8 +1,8 @@
 <?php
 
-namespace Sprain\SwissQrBill\DataGroups;
+namespace Sprain\SwissQrBill\DataGroup;
 
-use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
+use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeData;
 use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;

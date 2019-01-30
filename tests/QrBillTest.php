@@ -3,14 +3,14 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\AdditionalInformation;
-use Sprain\SwissQrBill\DataGroups\CombinedAddress;
-use Sprain\SwissQrBill\DataGroups\StructuredAddress;
-use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
-use Sprain\SwissQrBill\DataGroups\CreditorInformation;
-use Sprain\SwissQrBill\DataGroups\Header;
-use Sprain\SwissQrBill\DataGroups\PaymentAmountInformation;
-use Sprain\SwissQrBill\DataGroups\PaymentReference;
+use Sprain\SwissQrBill\DataGroup\AdditionalInformation;
+use Sprain\SwissQrBill\DataGroup\CombinedAddress;
+use Sprain\SwissQrBill\DataGroup\StructuredAddress;
+use Sprain\SwissQrBill\DataGroup\AlternativeScheme;
+use Sprain\SwissQrBill\DataGroup\CreditorInformation;
+use Sprain\SwissQrBill\DataGroup\Header;
+use Sprain\SwissQrBill\DataGroup\PaymentAmountInformation;
+use Sprain\SwissQrBill\DataGroup\PaymentReference;
 use Sprain\SwissQrBill\QrBill;
 use Zxing\QrReader;
 

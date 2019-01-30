@@ -3,7 +3,7 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\CreditorInformation;
+use Sprain\SwissQrBill\DataGroup\CreditorInformation;
 
 class CreditorInformationTest extends TestCase
 {

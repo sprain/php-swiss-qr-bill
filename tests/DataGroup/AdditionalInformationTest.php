@@ -3,9 +3,9 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\AdditionalInformation;
-use Sprain\SwissQrBill\DataGroups\StructuredAddress;
-use Sprain\SwissQrBill\DataGroups\AlternativeScheme;
+use Sprain\SwissQrBill\DataGroup\AdditionalInformation;
+use Sprain\SwissQrBill\DataGroup\StructuredAddress;
+use Sprain\SwissQrBill\DataGroup\AlternativeScheme;
 
 class AdditionalInformationTest extends TestCase
 {

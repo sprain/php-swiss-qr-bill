@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\DataGroups\Interfaces;
+namespace Sprain\SwissQrBill\DataGroup\Interfaces;
 
 interface QrCodeData
 {

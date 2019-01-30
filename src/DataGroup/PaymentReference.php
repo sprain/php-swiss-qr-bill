@@ -1,9 +1,9 @@
 <?php
 
-namespace Sprain\SwissQrBill\DataGroups;
+namespace Sprain\SwissQrBill\DataGroup;
 
-use Sprain\SwissQrBill\Constraints\ValidCreditorReference;
-use Sprain\SwissQrBill\DataGroups\Interfaces\QrCodeData;
+use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
+use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeData;
 use Sprain\SwissQrBill\Validator\Interfaces\Validatable;
 use Sprain\SwissQrBill\Validator\ValidatorTrait;
 use Symfony\Component\Validator\Constraints as Assert;

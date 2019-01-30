@@ -3,7 +3,7 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\Header;
+use Sprain\SwissQrBill\DataGroup\Header;
 
 class HeaderTest extends TestCase
 {

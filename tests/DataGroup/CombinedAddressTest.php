@@ -3,7 +3,7 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\CombinedAddress;
+use Sprain\SwissQrBill\DataGroup\CombinedAddress;
 
 class CombinedAddressTest extends TestCase
 {

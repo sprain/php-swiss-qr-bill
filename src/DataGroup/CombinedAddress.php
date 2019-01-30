@@ -1,8 +1,8 @@
 <?php
 
-namespace Sprain\SwissQrBill\DataGroups;
+namespace Sprain\SwissQrBill\DataGroup;
 
-use Sprain\SwissQrBill\DataGroups\Abstracts\Address;
+use Sprain\SwissQrBill\DataGroup\Abstracts\Address;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 

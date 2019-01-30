@@ -2,8 +2,8 @@
 
 namespace Sprain\SwissQrBill\Tests\Constraints;
 
-use Sprain\SwissQrBill\Constraints\ValidCreditorReference;
-use Sprain\SwissQrBill\Constraints\ValidCreditorReferenceValidator;
+use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
+use Sprain\SwissQrBill\Constraint\ValidCreditorReferenceValidator;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 class ValidCreditorReferenceTest extends ConstraintValidatorTestCase

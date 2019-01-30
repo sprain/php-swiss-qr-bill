@@ -3,7 +3,7 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroups\StructuredAddress;
+use Sprain\SwissQrBill\DataGroup\StructuredAddress;
 
 class StructuredAddressTest extends TestCase
 {
