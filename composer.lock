@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "812dfd9ada0c08a97862db868523e8a8",
+    "content-hash": "5ac0e140d100a097edb75663bc102b78",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -144,16 +144,16 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "dev-master",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "a70a1d7b0483313c06469881ab532044dba81c6d"
+                "reference": "d95143907cf178f9073523af4b37feb25bd6cdd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/a70a1d7b0483313c06469881ab532044dba81c6d",
-                "reference": "a70a1d7b0483313c06469881ab532044dba81c6d",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/d95143907cf178f9073523af4b37feb25bd6cdd0",
+                "reference": "d95143907cf178f9073523af4b37feb25bd6cdd0",
                 "shasum": ""
             },
             "require": {
@@ -200,7 +200,7 @@
                 "qr",
                 "qrcode"
             ],
-            "time": "2018-12-17T22:08:35+00:00"
+            "time": "2018-12-16T12:37:37+00:00"
         },
         {
             "name": "khanamiryan/qrcode-detector-decoder",
@@ -2393,9 +2393,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "endroid/qr-code": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
