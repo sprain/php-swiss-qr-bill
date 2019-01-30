@@ -11,7 +11,7 @@ env:
     - PREFER_LOWEST=""
 
 before_script:
-  - composer install --prefer-source $PREFER_LOWEST
+  - composer update --prefer-source $PREFER_LOWEST
 
 script:
   - vendor/bin/phpunit
