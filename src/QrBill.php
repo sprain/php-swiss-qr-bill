@@ -16,13 +16,13 @@ use Sprain\SwissQrBill\DataGroup\StructuredAddress;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
-use Sprain\SwissQrBill\Validator\ValidatorTrait;
+use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class QrBill implements SelfValidatable
 {
-    use ValidatorTrait;
+    use SelfValidatableTrait;
 
     const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.png';
 

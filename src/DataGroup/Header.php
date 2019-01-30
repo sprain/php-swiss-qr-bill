@@ -4,13 +4,13 @@ namespace Sprain\SwissQrBill\DataGroup;
 
 use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeData;
 use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
-use Sprain\SwissQrBill\Validator\ValidatorTrait;
+use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class Header implements QrCodeData, SelfValidatable
 {
-    use ValidatorTrait;
+    use SelfValidatableTrait;
 
     const QRTYPE_SPC = 'SPC';
     const VERSION_0200 = '0200';

@@ -3,13 +3,13 @@
 namespace Sprain\SwissQrBill\DataGroup;
 
 use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeData;
-use Sprain\SwissQrBill\Validator\ValidatorTrait;
+use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class AlternativeScheme implements QrCodeData
 {
-    use ValidatorTrait;
+    use SelfValidatableTrait;
 
     /**
      * Parameter character chain of the alternative scheme

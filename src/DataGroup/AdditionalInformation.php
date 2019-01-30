@@ -3,13 +3,13 @@
 namespace Sprain\SwissQrBill\DataGroup;
 
 use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeData;
-use Sprain\SwissQrBill\Validator\ValidatorTrait;
+use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class AdditionalInformation implements QrCodeData
 {
-    use ValidatorTrait;
+    use SelfValidatableTrait;
 
     const TRAILER_EPD = 'EPD';
 
