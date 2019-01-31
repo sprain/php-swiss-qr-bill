@@ -9,18 +9,18 @@ use Sprain\SwissQrBill\DataGroup\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroup\CreditorInformation;
 use Sprain\SwissQrBill\DataGroup\Header;
-use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeable;
+use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeableInterface;
 use Sprain\SwissQrBill\DataGroup\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\PaymentReference;
 use Sprain\SwissQrBill\DataGroup\StructuredAddress;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\String\StringModifier;
-use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
+use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
-class QrBill implements SelfValidatable
+class QrBill implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
@@ -224,7 +224,7 @@ class QrBill implements SelfValidatable
         $qrCodeElements = [];
 
         foreach ($elements as $element) {
-            if ($element instanceof QrCodeable) {
+            if ($element instanceof QrCodeableInterface) {
                 $qrCodeElements = array_merge($qrCodeElements, $element->getQrCodeData());
             } elseif (is_array($element)) {
                 $qrCodeElements = array_merge($qrCodeElements, $this->extractQrCodeDataFromElements($element));

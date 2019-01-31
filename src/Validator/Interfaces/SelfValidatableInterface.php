@@ -5,7 +5,7 @@ namespace Sprain\SwissQrBill\Validator\Interfaces;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
-interface SelfValidatable
+interface SelfValidatableInterface
 {
     public function getViolations() : ConstraintViolationListInterface;
 

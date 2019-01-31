@@ -2,13 +2,13 @@
 
 namespace Sprain\SwissQrBill\DataGroup;
 
-use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeable;
-use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
+use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeableInterface;
+use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
-class Header implements QrCodeable, SelfValidatable
+class Header implements QrCodeableInterface, SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
