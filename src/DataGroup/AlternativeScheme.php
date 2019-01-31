@@ -6,7 +6,7 @@ use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeable;
 use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
 class AlternativeScheme implements QrCodeable, SelfValidatable
 {
@@ -42,7 +42,7 @@ class AlternativeScheme implements QrCodeable, SelfValidatable
      * Note that no real-life alternative schemes yet exist. Therefore validation is kept simple yet.
      * @link https://www.paymentstandards.ch/en/home/softwarepartner/qr-bill/alternative-schemes.html
      */
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
     {
         $metadata->addPropertyConstraints('parameter', [
             new Assert\NotBlank(),

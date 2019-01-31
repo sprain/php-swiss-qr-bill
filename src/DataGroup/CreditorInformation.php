@@ -6,7 +6,7 @@ use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeable;
 use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
 class CreditorInformation implements QrCodeable, SelfValidatable
 {
@@ -38,7 +38,7 @@ class CreditorInformation implements QrCodeable, SelfValidatable
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
     {
         // Only IBANs with CH or LI country code
         $metadata->addPropertyConstraints('iban', [

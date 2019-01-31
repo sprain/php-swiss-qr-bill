@@ -4,7 +4,7 @@ namespace Sprain\SwissQrBill\DataGroup;
 
 use Sprain\SwissQrBill\DataGroup\Abstracts\Address;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
 class StructuredAddress extends Address
 {
@@ -118,7 +118,7 @@ class StructuredAddress extends Address
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
     {
         $metadata->addPropertyConstraints('street', [
             new Assert\Length([

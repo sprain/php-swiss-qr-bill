@@ -6,7 +6,7 @@ use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
 use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
 class QrPaymentReferenceGenerator implements SelfValidatable
 {
@@ -57,7 +57,7 @@ class QrPaymentReferenceGenerator implements SelfValidatable
         return $completeReferenceNumber;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
     {
         $metadata->addPropertyConstraints('customerIdentificationNumber', [
             // Only numbers are allowed (including leading zeros)

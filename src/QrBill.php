@@ -18,7 +18,7 @@ use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
 class QrBill implements SelfValidatable
 {
@@ -240,7 +240,7 @@ class QrBill implements SelfValidatable
         return $qrCodeElements;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
     {
         $metadata->addPropertyConstraints('header', [
             new Assert\NotNull(),

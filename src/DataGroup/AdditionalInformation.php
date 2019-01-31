@@ -6,7 +6,7 @@ use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeable;
 use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
 class AdditionalInformation implements QrCodeable, SelfValidatable
 {
@@ -63,7 +63,7 @@ class AdditionalInformation implements QrCodeable, SelfValidatable
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
     {
         $metadata->addPropertyConstraints('message', [
             new Assert\Length([

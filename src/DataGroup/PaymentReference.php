@@ -8,7 +8,7 @@ use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
 class PaymentReference implements GroupSequenceProviderInterface, QrCodeable, SelfValidatable
 {
@@ -65,7 +65,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeable, Se
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
     {
         $metadata->setGroupSequenceProvider(true);
 
