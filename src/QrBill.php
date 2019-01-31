@@ -4,7 +4,7 @@ namespace Sprain\SwissQrBill;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
-use Sprain\SwissQrBill\DataGroup\Abstracts\Address;
+use Sprain\SwissQrBill\DataGroup\Abstracts\AbstractAddress;
 use Sprain\SwissQrBill\DataGroup\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroup\CreditorInformation;
@@ -36,13 +36,13 @@ class QrBill implements SelfValidatableInterface
     /** @var CreditorInformation */
     private $creditorInformation;
 
-    /** @var Address */
+    /** @var AbstractAddress*/
     private $creditor;
 
     /** @var PaymentAmountInformation */
     private $paymentAmountInformation;
 
-    /** @var Address */
+    /** @var AbstractAddress*/
     private $ultimateDebtor;
 
     /** @var PaymentReference */
@@ -94,12 +94,12 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
-    public function getCreditor(): Address
+    public function getCreditor(): AbstractAddress
     {
         return $this->creditor;
     }
 
-    public function setCreditor(Address $creditor) : self
+    public function setCreditor(AbstractAddress$creditor) : self
     {
         $this->creditor = $creditor;
         
@@ -118,12 +118,12 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
-    public function getUltimateDebtor(): ?Address
+    public function getUltimateDebtor(): ?AbstractAddress
     {
         return $this->ultimateDebtor;
     }
 
-    public function setUltimateDebtor(Address $ultimateDebtor) : self
+    public function setUltimateDebtor(AbstractAddress $ultimateDebtor) : self
     {
         $this->ultimateDebtor = $ultimateDebtor;
         

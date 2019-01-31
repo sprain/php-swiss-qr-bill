@@ -3,17 +3,17 @@
 namespace Sprain\SwissQrBill\Tests\DataGroups;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroup\Abstracts\Address;
+use Sprain\SwissQrBill\DataGroup\Abstracts\AbstractAddress;
 
-class AddressTest extends TestCase
+class AbstractAddressTest extends TestCase
 {
-    /** @var Address */
+    /** @var AbstractAddress */
     private $address;
 
     public function setUp()
     {
         // Valid default to be adjusted in single tests
-        $this->address = ($this->getMockForAbstractClass(Address::class))
+        $this->address = ($this->getMockForAbstractClass(AbstractAddress::class))
             ->setName('Thomas Mustermann')
             ->setCountry('CH');
     }

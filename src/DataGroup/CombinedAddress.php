@@ -2,11 +2,11 @@
 
 namespace Sprain\SwissQrBill\DataGroup;
 
-use Sprain\SwissQrBill\DataGroup\Abstracts\Address;
+use Sprain\SwissQrBill\DataGroup\Abstracts\AbstractAddress;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 
-class CombinedAddress extends Address
+class CombinedAddress extends AbstractAddress
 {
     const ADDRESS_TYPE = 'K';
 
