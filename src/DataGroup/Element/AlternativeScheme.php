@@ -40,7 +40,7 @@ class AlternativeScheme implements QrCodeableInterface, SelfValidatableInterface
 
     /**
      * Note that no real-life alternative schemes yet exist. Therefore validation is kept simple yet.
-     * @link https://www.paymentstandards.ch/en/home/softwarepartner/qr-bill/alternative-schemes.html
+     * @link https://www.paymentstandards.ch/en/home/software-partner/alternative-schemes.html
      */
     public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
     {
