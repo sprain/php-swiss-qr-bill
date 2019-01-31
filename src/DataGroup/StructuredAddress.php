@@ -2,7 +2,7 @@
 
 namespace Sprain\SwissQrBill\DataGroup;
 
-use Sprain\SwissQrBill\DataGroup\Abstracts\AbstractAddress;
+use Sprain\SwissQrBill\DataGroup\AbstractAddress;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
 

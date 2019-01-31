@@ -4,7 +4,7 @@ namespace Sprain\SwissQrBill;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
-use Sprain\SwissQrBill\DataGroup\Abstracts\AbstractAddress;
+use Sprain\SwissQrBill\DataGroup\AbstractAddress;
 use Sprain\SwissQrBill\DataGroup\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroup\CreditorInformation;
