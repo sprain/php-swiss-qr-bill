@@ -3,14 +3,14 @@
 namespace Sprain\SwissQrBill\DataGroup;
 
 use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
-use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeData;
+use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeable;
 use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatable;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class PaymentReference implements GroupSequenceProviderInterface, QrCodeData, SelfValidatable
+class PaymentReference implements GroupSequenceProviderInterface, QrCodeable, SelfValidatable
 {
     use SelfValidatableTrait;
 

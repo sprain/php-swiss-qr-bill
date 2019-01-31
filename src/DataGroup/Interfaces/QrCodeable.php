@@ -2,7 +2,7 @@
 
 namespace Sprain\SwissQrBill\DataGroup\Interfaces;
 
-interface QrCodeData
+interface QrCodeable
 {
     public function getQrCodeData() : array;
 }

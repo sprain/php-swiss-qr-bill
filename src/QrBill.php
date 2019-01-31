@@ -9,7 +9,7 @@ use Sprain\SwissQrBill\DataGroup\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroup\CreditorInformation;
 use Sprain\SwissQrBill\DataGroup\Header;
-use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeData;
+use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeable;
 use Sprain\SwissQrBill\DataGroup\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\PaymentReference;
 use Sprain\SwissQrBill\DataGroup\StructuredAddress;
@@ -224,7 +224,7 @@ class QrBill implements SelfValidatable
         $qrCodeElements = [];
 
         foreach ($elements as $element) {
-            if ($element instanceof QrCodeData) {
+            if ($element instanceof QrCodeable) {
                 $qrCodeElements = array_merge($qrCodeElements, $element->getQrCodeData());
             } elseif (is_array($element)) {
                 $qrCodeElements = array_merge($qrCodeElements, $this->extractQrCodeDataFromElements($element));
