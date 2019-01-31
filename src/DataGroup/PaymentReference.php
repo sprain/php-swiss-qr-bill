@@ -3,8 +3,8 @@
 namespace Sprain\SwissQrBill\DataGroup;
 
 use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
-use Sprain\SwissQrBill\DataGroup\Interfaces\QrCodeableInterface;
-use Sprain\SwissQrBill\Validator\Interfaces\SelfValidatableInterface;
+use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
