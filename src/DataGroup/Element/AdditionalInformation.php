@@ -23,7 +23,7 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
     private $message;
 
     /**
-     * Bill information contain coded information for automated booking of the payment.
+     * Bill information contains coded information for automated booking of the payment.
      * The data is not forwarded with the payment.
      *
      * @var string
