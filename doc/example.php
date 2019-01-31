@@ -9,10 +9,10 @@ $qrBill = QrBill\QrBill::create();
 
 // Add creditor information
 // Who will receive the payment and to which bank account?
-$creditorInformation = (new QrBill\DataGroup\CreditorInformation())
+$creditorInformation = (new QrBill\DataGroup\Element\CreditorInformation())
     ->setIban('CH9300762011623852957');
 
-$creditor = (new QrBill\DataGroup\CombinedAddress())
+$creditor = (new QrBill\DataGroup\Element\CombinedAddress())
     ->setName('My Company Ltd.')
     ->setAddressLine1('Bahnhofstrasse 1')
     ->setAddressLine2('8000 Zürich')
@@ -26,7 +26,7 @@ $qrBill->setCreditor($creditor);
 //
 // Notice how you can use two different styles of addresses: CombinedAddress or StructuredAddress.
 // They are interchangeable for creditor as well as debtor.
-$debtor = (new QrBill\DataGroup\StructuredAddress())
+$debtor = (new QrBill\DataGroup\Element\StructuredAddress())
     ->setName('Thomas LeClaire')
     ->setStreet('Rue examplaire')
     ->setBuildingNumber('22a')
@@ -38,7 +38,7 @@ $qrBill->setUltimateDebtor($debtor);
 
 // Add payment amount information
 // What amount is to be paid?
-$paymentAmountInformation = (new QrBill\DataGroup\PaymentAmountInformation())
+$paymentAmountInformation = (new QrBill\DataGroup\Element\PaymentAmountInformation())
     ->setAmount(25.90)
     ->setCurrency('CHF');
 
@@ -51,14 +51,14 @@ $referenceNumber = (new QrBill\Reference\QrPaymentReferenceGenerator())
     ->setReferenceNumber('11223344') // a number to match the payment with your other data, e.g. an invoice number
     ->generate();
 
-$paymentReference = (new QrBill\DataGroup\PaymentReference())
-    ->setType(QrBill\DataGroup\PaymentReference::TYPE_QR)
+$paymentReference = (new QrBill\DataGroup\Element\PaymentReference())
+    ->setType(QrBill\DataGroup\Element\PaymentReference::TYPE_QR)
     ->setReference($referenceNumber);
 
 $qrBill->setPaymentReference($paymentReference);
 
 // Add additional information
-$additionalInformation = (new QrBill\DataGroup\AdditionalInformation())
+$additionalInformation = (new QrBill\DataGroup\Element\AdditionalInformation())
     ->setMessage('Invoice 11223344, Gardening Work');
 
 $qrBill->setAdditionalInformation($additionalInformation);

@@ -1,9 +1,9 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\DataGroups;
+namespace Sprain\SwissQrBill\Tests\DataGroup\Element;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroup\StructuredAddress;
+use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
 
 class StructuredAddressTest extends TestCase
 {

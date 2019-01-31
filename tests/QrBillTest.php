@@ -1,16 +1,16 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\DataGroups;
+namespace Sprain\SwissQrBill\Tests\Element;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroup\AdditionalInformation;
-use Sprain\SwissQrBill\DataGroup\CombinedAddress;
-use Sprain\SwissQrBill\DataGroup\StructuredAddress;
-use Sprain\SwissQrBill\DataGroup\AlternativeScheme;
-use Sprain\SwissQrBill\DataGroup\CreditorInformation;
-use Sprain\SwissQrBill\DataGroup\Header;
-use Sprain\SwissQrBill\DataGroup\PaymentAmountInformation;
-use Sprain\SwissQrBill\DataGroup\PaymentReference;
+use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
+use Sprain\SwissQrBill\DataGroup\Element\CombinedAddress;
+use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
+use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
+use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
+use Sprain\SwissQrBill\DataGroup\Element\Header;
+use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
+use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\QrBill;
 use Zxing\QrReader;
 

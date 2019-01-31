@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\DataGroup;
+namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
