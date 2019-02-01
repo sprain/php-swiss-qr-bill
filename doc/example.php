@@ -30,20 +30,20 @@ $qrBill->setCreditorInformation(
 // They are interchangeable for creditor as well as debtor.
 $qrBill->setUltimateDebtor(
     QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
-    'Thomas LeClaire',
-    'Rue examplaire',
-    '22a',
-    '1000',
-    'Lausanne',
-    'CH'
+        'Thomas LeClaire',
+        'Rue examplaire',
+        '22a',
+        '1000',
+        'Lausanne',
+        'CH'
     ));
 
 // Add payment amount information
 // What amount is to be paid?
 $qrBill->setPaymentAmountInformation(
     QrBill\DataGroup\Element\PaymentAmountInformation::create(
-    'CHF',
-    25.90
+        'CHF',
+        25.90
     ));
 
 // Add payment reference
