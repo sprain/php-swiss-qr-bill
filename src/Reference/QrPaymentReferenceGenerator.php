@@ -18,31 +18,26 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
     /** @var string */
     private $referenceNumber;
 
+    public static function generate(string $customerIdentificationNumber, string $referenceNumber)
+    {
+        $qrPaymentReferenceGenerator = new self();
+        $qrPaymentReferenceGenerator->customerIdentificationNumber = $qrPaymentReferenceGenerator->removeWhitespace($customerIdentificationNumber);
+        $qrPaymentReferenceGenerator->referenceNumber = $qrPaymentReferenceGenerator->removeWhitespace($referenceNumber);
+
+        return $qrPaymentReferenceGenerator->doGenerate();
+    }
+
     public function getCustomerIdentificationNumber() : ?string
     {
         return $this->customerIdentificationNumber;
     }
 
-    public function setCustomerIdentificationNumber(string $customerIdentificationNumber) : self
-    {
-        $this->customerIdentificationNumber = $this->removeWhitespace($customerIdentificationNumber);
-
-        return $this;
-    }
-
-    public function getReferenceNumber() : string
+    public function getReferenceNumber() : ?string
     {
         return $this->referenceNumber;
     }
 
-    public function setReferenceNumber(string $referenceNumber) : self
-    {
-        $this->referenceNumber = $this->removeWhitespace($referenceNumber);
-
-        return $this;
-    }
-
-    public function generate()
+    public function doGenerate()
     {
         if (!$this->isValid()) {
             throw new InvalidQrPaymentReferenceException(

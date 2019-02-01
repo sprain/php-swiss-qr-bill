@@ -40,17 +40,19 @@ class Header implements QrCodeableInterface, SelfValidatableInterface
      */
     private $coding;
 
+    public static function create(string $qrType, string $version, int $coding) : self
+    {
+        $header = new self();
+        $header->coding = $coding;
+        $header->qrType = $qrType;
+        $header->version = $version;
+
+        return $header;
+    }
 
     public function getQrType(): ?string
     {
         return $this->qrType;
-    }
-
-    public function setQrType(string $qrType) : self
-    {
-        $this->qrType = $qrType;
-
-        return $this;
     }
 
     public function getVersion(): ?string
@@ -58,23 +60,9 @@ class Header implements QrCodeableInterface, SelfValidatableInterface
         return $this->version;
     }
 
-    public function setVersion(string $version) : self
-    {
-        $this->version = $version;
-
-        return $this;
-    }
-
     public function getCoding(): ?int
     {
         return $this->coding;
-    }
-
-    public function setCoding(int $coding) : self
-    {
-        $this->coding = $coding;
-
-        return $this;
     }
 
     public function getQrCodeData() : array

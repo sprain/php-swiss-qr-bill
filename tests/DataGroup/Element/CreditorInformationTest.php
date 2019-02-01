@@ -8,80 +8,46 @@ use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
 class CreditorInformationTest extends TestCase
 {
     /**
-     * @dataProvider validIbanProvider
+     * @dataProvider ibanProvider
      */
-    public function testIbanIsValid($value)
+    public function testIban($numberOfViolations, $value)
     {
-        $creditorInformation = new CreditorInformation();
-        $creditorInformation->setIban($value);
-
-        $this->assertSame(0, $creditorInformation->getViolations()->count());
-    }
-
-    public function validIbanProvider()
-    {
-        return [
-            ['CH93 0076 2011 6238 5295 7'],
-            ['CH9300762011623852957'],
-            ['LI21 0881 0000 2324 013A A'],
-            ['LI21088100002324013AA'],
-        ];
-    }
-
-    /**
-     * @dataProvider invalidIbanProvider
-     */
-    public function testIbanIsInvalid($value, $numberOfViolations)
-    {
-        $creditorInformation = new CreditorInformation();
-        $creditorInformation->setIban($value);
+        $creditorInformation = CreditorInformation::create(
+            $value
+        );
 
         $this->assertSame($numberOfViolations, $creditorInformation->getViolations()->count());
     }
 
-    public function invalidIbanProvider()
+    public function ibanProvider()
     {
         return [
+            [0, 'CH93 0076 2011 6238 5295 7'],
+            [0, 'CH9300762011623852957'],
+            [0, 'LI21 0881 0000 2324 013A A'],
+            [0, 'LI21088100002324013AA'],
 
             // missing number at end
-            ['CH93 0076 2011 6238 5295', 1],
-            ['CH930076201162385295', 1],
-            ['LI21 0881 0000 2324 013A', 1],
-            ['LI21088100002324013A', 1],
+            [1, 'CH93 0076 2011 6238 5295'],
+            [1, 'CH930076201162385295'],
+            [1, 'LI21 0881 0000 2324 013A'],
+            [1, 'LI21088100002324013A'],
 
             // missing letter in front
-            ['H93 0076 2011 6238 5295', 2],
-            ['H930076201162385295', 2],
-            ['I21 0881 0000 2324 013A', 2],
-            ['I21088100002324013A', 2],
+            [2, 'H93 0076 2011 6238 5295'],
+            [2, 'H930076201162385295'],
+            [2, 'I21 0881 0000 2324 013A'],
+            [2, 'I21088100002324013A'],
 
             // valid IBANs from unsupported countries
-            ['AT61 1904 3002 3457 3201', 1],
-            ['NO9386011117947', 1],
+            [1, 'AT61 1904 3002 3457 3201'],
+            [1, 'NO9386011117947'],
 
             // random strings
-            ['foo', 2],
-            ['123', 2],
-            ['*', 2]
+            [2, 'foo'],
+            [2, '123'],
+            [2, '*'],
+            [1, '']
         ];
-    }
-
-    public function testIbanIsRequired()
-    {
-        $creditorInformation = new CreditorInformation();
-
-        $this->assertSame(1, $creditorInformation->getViolations()->count());
-    }
-
-    public function testQrCodeData()
-    {
-        $creditorInformation = new CreditorInformation();
-        $creditorInformation->setIban('CH9300762011623852957');
-
-        $expected = [
-            'CH9300762011623852957',
-        ];
-
-        $this->assertSame($expected, $creditorInformation->getQrCodeData());
     }
 }

@@ -7,103 +7,83 @@ use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 
 class PaymentReferenceTest extends TestCase
 {
-    public function testValidQrReference()
-    {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_QR);
-        $paymentReference->setReference('012345678901234567890123456');
-
-        $this->assertSame(0, $paymentReference->getViolations()->count());
-    }
-
     /**
-     * @dataProvider invalidQrReferenceProvider
+     * @dataProvider qrReferenceProvider
      */
-    public function testInvalidQrReference($value)
+    public function testQrReference($numberOfViolations, $value)
     {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_QR);
-        $paymentReference->setReference($value);
+        $paymentReference = PaymentReference::create(
+            PaymentReference::TYPE_QR,
+            $value
+        );
 
-        $this->assertSame(1, $paymentReference->getViolations()->count());
+        $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function invalidQrReferenceProvider()
+    public function qrReferenceProvider()
     {
         return [
-            [null],
-            ['01234567890123456789012345'],   // too short
-            ['0123456789012345678901234567'], // too long
-            ['Ä12345678901234567890123456']   // invalid characters
+            [0, '012345678901234567890123456'],
+            [1, null],
+            [1, '01234567890123456789012345'],   // too short
+            [1, '0123456789012345678901234567'], // too long
+            [1, 'Ä12345678901234567890123456']   // invalid characters
         ];
     }
 
-    public function testValidScorReference()
-    {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_SCOR);
-        $paymentReference->setReference('RF18539007547034');
-
-        $this->assertSame(0, $paymentReference->getViolations()->count());
-    }
-
     /**
-     * @dataProvider invalidScorReferenceProvider
+     * @dataProvider scorReferenceProvider
      */
-    public function testInvalidScorReference($value)
+    public function testScorReference($numberOfViolations, $value)
     {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_SCOR);
-        $paymentReference->setReference($value);
+        $paymentReference = PaymentReference::create(
+            PaymentReference::TYPE_SCOR,
+            $value
+        );
 
-        $this->assertSame(1, $paymentReference->getViolations()->count());
+        $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function invalidScorReferenceProvider()
+    public function scorReferenceProvider()
     {
         return [
-            [null],
-            ['RF12'],// too short
-            ['RF181234567890123456789012'], // too long
-            ['RF1853900754703Ä']  // invalid characters
+            [0, 'RF18539007547034'],
+            [1, null],
+            [1, 'RF12'],// too short
+            [1, 'RF181234567890123456789012'], // too long
+            [1, 'RF1853900754703Ä']  // invalid characters
         ];
     }
 
-    public function testValidNonReference()
-    {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_NON);
-        $paymentReference->setReference(null);
-
-        $this->assertSame(0, $paymentReference->getViolations()->count());
-    }
-
     /**
-     * @dataProvider invalidNonReferenceProvider
+     * @dataProvider nonReferenceProvider
      */
-    public function testInvalidNonReference($value)
+    public function testNonReference($numberOfViolations, $value)
     {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_NON);
-        $paymentReference->setReference($value);
+        $paymentReference = PaymentReference::create(
+            PaymentReference::TYPE_NON,
+            $value
+        );
 
-        $this->assertSame(1, $paymentReference->getViolations()->count());
+        $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function invalidNonReferenceProvider()
+    public function nonReferenceProvider()
     {
         return [
-            ['anything-non-empty'],
-            [' '],
-            [0]
+            [0, null],
+            [1, 'anything-non-empty'],
+            [1, ' '],
+            [1, 0]
         ];
     }
 
     public function testQrCodeData()
     {
-        $paymentReference = new PaymentReference();
-        $paymentReference->setType(PaymentReference::TYPE_QR);
-        $paymentReference->setReference('012345678901234567890123456');
+        $paymentReference = PaymentReference::create(
+            PaymentReference::TYPE_QR,
+            '012345678901234567890123456'
+        );
 
         $expected = [
             PaymentReference::TYPE_QR,

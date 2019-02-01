@@ -8,84 +8,48 @@ use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 class AdditionalInformationTest extends TestCase
 {
     /**
-     * @dataProvider validMessageProvider
+     * @dataProvider messageProvider
      */
-    public function testValidMessage($value)
+    public function testMessage($numberOfValidations, $value)
     {
-        $additionalInformation = new AdditionalInformation();
-        $additionalInformation->setMessage($value);
+        $additionalInformation = AdditionalInformation::create($value);
 
-        $this->assertSame(0, $additionalInformation->getViolations()->count());
+        $this->assertSame($numberOfValidations, $additionalInformation->getViolations()->count());
     }
 
-    public function validMessageProvider()
+    public function messageProvider()
     {
         return [
-            ['012345678901234567890123456'],
-            [null]
+            [0, '012345678901234567890123456'],
+            [0, null],
+            [0, '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'],
+            [1, '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'], // too long
         ];
     }
 
     /**
-     * @dataProvider invalidMessageProvider
+     * @dataProvider billInformationProvider
      */
-    public function testInvalidMessage($value)
+    public function testBillInformation($numberOfValidations, $value)
     {
-        $additionalInformation = new AdditionalInformation();
-        $additionalInformation->setMessage($value);
+        $additionalInformation = AdditionalInformation::create(null, $value);
 
-        $this->assertSame(1, $additionalInformation->getViolations()->count());
+        $this->assertSame($numberOfValidations, $additionalInformation->getViolations()->count());
     }
 
-    public function invalidMessageProvider()
+    public function billInformationProvider()
     {
         return [
-            ['123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'], // too long
-        ];
-    }
-
-    /**
-     * @dataProvider validBillInformationProvider
-     */
-    public function testValidBillInformation($value)
-    {
-        $additionalInformation = new AdditionalInformation();
-        $additionalInformation->setBillInformation($value);
-
-        $this->assertSame(0, $additionalInformation->getViolations()->count());
-    }
-
-    public function validBillInformationProvider()
-    {
-        return [
-            ['012345678901234567890123456'],
-            [null]
-        ];
-    }
-
-    /**
-     * @dataProvider invalidBillInformationProvider
-     */
-    public function testInvalidBillInformation($value)
-    {
-        $additionalInformation = new AdditionalInformation();
-        $additionalInformation->setBillInformation($value);
-
-        $this->assertSame(1, $additionalInformation->getViolations()->count());
-    }
-
-    public function invalidBillInformationProvider()
-    {
-        return [
-            ['123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'], // too long
+            [0, '012345678901234567890123456'],
+            [0, null],
+            [0, '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'],
+            [1, '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'], // too long
         ];
     }
 
     public function testQrCodeData()
     {
-        $additionalInformation = new AdditionalInformation();
-        $additionalInformation->setMessage('message');
-        $additionalInformation->setBillInformation('billInformation');
+        $additionalInformation = AdditionalInformation::create('message', 'billInformation');
 
         $expected = [
             'message',

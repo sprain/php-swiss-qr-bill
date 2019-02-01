@@ -30,28 +30,26 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
      */
     private $billInformation;
 
+    public static function create(
+        ?string $message,
+        ?string $billInformation = null
+    ) : self
+    {
+        $additionalInformation = new self();
+        $additionalInformation->message = $message;
+        $additionalInformation->billInformation = $billInformation;
+
+        return $additionalInformation;
+    }
+
     public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    public function setMessage(string $message = null): self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
     public function getBillInformation(): ?string
     {
         return $this->billInformation;
-    }
-
-    public function setBillInformation(string $billInformation = null) : self
-    {
-        $this->billInformation = $billInformation;
-
-        return $this;
     }
 
     public function getQrCodeData() : array

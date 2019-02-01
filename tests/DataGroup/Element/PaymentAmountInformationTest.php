@@ -7,104 +7,72 @@ use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 
 class PaymentAmountInformationTest extends TestCase
 {
-    /** @var PaymentAmountInformation */
-    private $paymentAmountInformation;
-
-    public function setUp()
-    {
-        // Valid default to be adjusted in single tests
-        $this->paymentAmountInformation = (new PaymentAmountInformation())
-            ->setAmount(25)
-            ->setCurrency('CHF');
-    }
-
     /**
-     * @dataProvider validAmountProvider
+     * @dataProvider amountProvider
      */
-    public function testAmountIsValid($value)
+    public function testAmount($numberOfViolations, $value)
     {
-        $this->paymentAmountInformation->setAmount($value);
+        $paymentAmountInformation = PaymentAmountInformation::create(
+            'CHF',
+            $value
+        );
 
-        $this->assertSame(0, $this->paymentAmountInformation->getViolations()->count());
+        $this->assertSame($numberOfViolations, $paymentAmountInformation->getViolations()->count());
     }
 
-    public function validAmountProvider()
+    public function amountProvider()
     {
         return [
-            [null],
-            [0],
-            [11.11],
-            [100.2],
-            [999999999.99],
+            [0, null],
+            [0, 0],
+            [0, 11.11],
+            [0, 100.2],
+            [0, 999999999.99],
+            [1, -0.01],
+            [1, 1999999999.99],
+            // [1, 11.111], @todo: only two decimal places should be allowed
         ];
     }
 
     /**
-     * @dataProvider invalidAmountProvider
+     * @dataProvider currencyProvider
      */
-    public function testAmountIsInvalid($value)
+    public function testCurrency($numberOfViolations, $value)
     {
-        $this->paymentAmountInformation->setAmount($value);
+        $paymentAmountInformation = PaymentAmountInformation::create(
+            $value,
+            25
+        );
 
-        $this->assertSame(1, $this->paymentAmountInformation->getViolations()->count());
+        $this->assertSame($numberOfViolations, $paymentAmountInformation->getViolations()->count());
     }
 
-    public function invalidAmountProvider()
+    public function currencyProvider()
     {
         return [
-            [-0.01],
-            [1999999999.99],
-            // [11.111], @todo: only two decimal places should be allowed
-        ];
-    }
-
-    /**
-     * @dataProvider validCurrencyProvider
-     */
-    public function testCurrencyIsValid($value)
-    {
-        $this->paymentAmountInformation->setCurrency($value);
-
-        $this->assertSame(0, $this->paymentAmountInformation->getViolations()->count());
-    }
-
-    public function validCurrencyProvider()
-    {
-        return [
-            ['CHF'],
-            ['EUR'],
-            ['chf'],
-            ['eur']
-        ];
-    }
-
-    /**
-     * @dataProvider invalidCurrencyProvider
-     */
-    public function testCurrencyIsInvalid($value)
-    {
-        $this->paymentAmountInformation->setCurrency($value);
-
-        $this->assertSame(1, $this->paymentAmountInformation->getViolations()->count());
-    }
-
-    public function invalidCurrencyProvider()
-    {
-        return [
-            ['USD'],
-            ['PLN'],
-            [' chf '],
-            [' EUR']
+            [0, 'CHF'],
+            [0, 'EUR'],
+            [0, 'chf'],
+            [0, 'eur'],
+            [1, 'USD'],
+            [1, 'PLN'],
+            [1, ' chf '],
+            [1, ' EUR']
         ];
     }
 
     public function testQrCodeData()
     {
+        $paymentAmountInformation = PaymentAmountInformation::create(
+            'CHF',
+            25
+        );
+
         $expected = [
             '25.00',
             'CHF'
         ];
 
-        $this->assertSame($expected, $this->paymentAmountInformation->getQrCodeData());
+        $this->assertSame($expected, $paymentAmountInformation->getQrCodeData());
     }
 }

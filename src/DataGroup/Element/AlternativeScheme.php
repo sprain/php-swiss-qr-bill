@@ -19,16 +19,17 @@ class AlternativeScheme implements QrCodeableInterface, SelfValidatableInterface
      */
     private $parameter;
 
+    public static function create(string $parameter) : self
+    {
+        $alternativeScheme = new self();
+        $alternativeScheme->parameter = $parameter;
+
+        return $alternativeScheme;
+    }
+
     public function getParameter(): ?string
     {
         return $this->parameter;
-    }
-
-    public function setParameter(string $parameter) : self
-    {
-        $this->parameter = $parameter;
-
-        return $this;
     }
 
     public function getQrCodeData() : array

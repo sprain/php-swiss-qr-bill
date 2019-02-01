@@ -19,16 +19,17 @@ class CreditorInformation implements QrCodeableInterface, SelfValidatableInterfa
      */
     private $iban;
 
+    public static function create(string $iban) : self
+    {
+        $creditorInformation = new self();
+        $creditorInformation->iban = $iban;
+
+        return $creditorInformation;
+    }
+
     public function getIban(): ?string
     {
         return $this->iban;
-    }
-
-    public function setIban(string $iban) : self
-    {
-        $this->iban = $iban;
-
-        return $this;
     }
 
     public function getQrCodeData() : array

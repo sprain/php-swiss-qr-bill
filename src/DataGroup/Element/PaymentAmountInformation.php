@@ -29,29 +29,23 @@ class PaymentAmountInformation implements QrCodeableInterface, SelfValidatableIn
      */
     private $currency;
 
+    public static function create(string $currency, ?float $amount = null) : self
+    {
+        $paymentInformation = new self();
+        $paymentInformation->currency = strtoupper($currency);
+        $paymentInformation->amount = $amount;
+
+        return $paymentInformation;
+    }
 
     public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    public function setAmount(float $amount = null) : self
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
     public function getCurrency(): ?string
     {
         return $this->currency;
-    }
-
-    public function setCurrency(string $currency)
-    {
-        $this->currency = strtoupper($currency);
-
-        return $this;
     }
 
     public function getQrCodeData() : array

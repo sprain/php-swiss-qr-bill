@@ -4,7 +4,7 @@ namespace Sprain\SwissQrBill;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\QrCode;
-use Sprain\SwissQrBill\DataGroup\Element\AbstractAddress;
+use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
@@ -36,13 +36,13 @@ class QrBill implements SelfValidatableInterface
     /** @var CreditorInformation */
     private $creditorInformation;
 
-    /** @var AbstractAddress*/
+    /** @var AddressInterface*/
     private $creditor;
 
     /** @var PaymentAmountInformation */
     private $paymentAmountInformation;
 
-    /** @var AbstractAddress*/
+    /** @var AddressInterface*/
     private $ultimateDebtor;
 
     /** @var PaymentReference */
@@ -59,13 +59,14 @@ class QrBill implements SelfValidatableInterface
 
     public static function create() : self
     {
-        $header = new Header();
-        $header->setCoding(Header::CODING_LATIN);
-        $header->setQrType(Header::QRTYPE_SPC);
-        $header->setVersion(Header::VERSION_0200);
+        $header = Header::create(
+            Header::QRTYPE_SPC,
+            Header::VERSION_0200,
+            Header::CODING_LATIN
+        );
 
         $qrBill = new self();
-        $qrBill->setHeader($header);
+        $qrBill->header = $header;
 
         return $qrBill;
     }
@@ -75,10 +76,10 @@ class QrBill implements SelfValidatableInterface
         return $this->header;
     }
 
-    public function setHeader(Header $header) : self
+    public function setHeader(Header $header): self
     {
         $this->header = $header;
-        
+
         return $this;
     }
 
@@ -94,12 +95,12 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
-    public function getCreditor(): AbstractAddress
+    public function getCreditor(): AddressInterface
     {
         return $this->creditor;
     }
 
-    public function setCreditor(AbstractAddress$creditor) : self
+    public function setCreditor(AddressInterface$creditor) : self
     {
         $this->creditor = $creditor;
         
@@ -118,12 +119,12 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
-    public function getUltimateDebtor(): ?AbstractAddress
+    public function getUltimateDebtor(): ?AddressInterface
     {
         return $this->ultimateDebtor;
     }
 
-    public function setUltimateDebtor(AbstractAddress $ultimateDebtor) : self
+    public function setUltimateDebtor(AddressInterface $ultimateDebtor) : self
     {
         $this->ultimateDebtor = $ultimateDebtor;
         

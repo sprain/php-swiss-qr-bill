@@ -33,28 +33,23 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
      */
     private $reference;
 
+    public static function create(string $type, ?string $reference = null) : self
+    {
+        $paymentReference = new self();
+        $paymentReference->type = $type;
+        $paymentReference->reference = $reference;
+
+        return $paymentReference;
+    }
+
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType(string $type) : self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getReference(): ?string
     {
         return $this->reference;
-    }
-
-    public function setReference(string $reference = null) : self
-    {
-        $this->reference = $reference;
-
-        return $this;
     }
 
     public function getQrCodeData() : array
