@@ -100,7 +100,7 @@ class QrBill implements SelfValidatableInterface
         return $this->creditor;
     }
 
-    public function setCreditor(AddressInterface$creditor) : self
+    public function setCreditor(AddressInterface $creditor) : self
     {
         $this->creditor = $creditor;
         
