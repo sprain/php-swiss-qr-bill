@@ -33,7 +33,7 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
     public static function create(
         ?string $message,
         ?string $billInformation = null
-    ) : self
+    ): self
     {
         $additionalInformation = new self();
         $additionalInformation->message = $message;
@@ -52,7 +52,7 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
         return $this->billInformation;
     }
 
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
             $this->getMessage(),
@@ -61,7 +61,7 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('message', [
             new Assert\Length([

@@ -33,7 +33,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
      */
     private $reference;
 
-    public static function create(string $type, ?string $reference = null) : self
+    public static function create(string $type, ?string $reference = null): self
     {
         $paymentReference = new self();
         $paymentReference->type = $type;
@@ -52,7 +52,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
         return $this->reference;
     }
 
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
             $this->getType(),
@@ -60,7 +60,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->setGroupSequenceProvider(true);
 

@@ -64,7 +64,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         string $postalCode,
         string $city,
         string $country
-    ) : self
+    ): self
     {
         $structuredAddress = new self();
         $structuredAddress->name = $name;
@@ -82,7 +82,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         string $postalCode,
         string $city,
         string $country
-    ) : self
+    ): self
     {
         $structuredAddress = new self();
         $structuredAddress->name = $name;
@@ -125,7 +125,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         return $this->country;
     }
 
-    public function getFullAddress() : string
+    public function getFullAddress(): string
     {
         $address = $this->getName();
 
@@ -142,7 +142,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         return $address;
     }
 
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
             $this->getCity() ? self::ADDRESS_TYPE : '',
@@ -155,7 +155,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('name', [
             new Assert\NotBlank(),

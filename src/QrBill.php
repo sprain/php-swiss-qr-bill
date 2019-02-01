@@ -57,7 +57,7 @@ class QrBill implements SelfValidatableInterface
     /** @var string  */
     private $errorCorrectionLevel = self::ERROR_CORRECTION_LEVEL_HIGH;
 
-    public static function create() : self
+    public static function create(): self
     {
         $header = Header::create(
             Header::QRTYPE_SPC,
@@ -88,7 +88,7 @@ class QrBill implements SelfValidatableInterface
         return $this->creditorInformation;
     }
 
-    public function setCreditorInformation(CreditorInformation $creditorInformation) : self
+    public function setCreditorInformation(CreditorInformation $creditorInformation): self
     {
         $this->creditorInformation = $creditorInformation;
 
@@ -100,7 +100,7 @@ class QrBill implements SelfValidatableInterface
         return $this->creditor;
     }
 
-    public function setCreditor(AddressInterface $creditor) : self
+    public function setCreditor(AddressInterface $creditor): self
     {
         $this->creditor = $creditor;
         
@@ -112,7 +112,7 @@ class QrBill implements SelfValidatableInterface
         return $this->paymentAmountInformation;
     }
 
-    public function setPaymentAmountInformation(PaymentAmountInformation $paymentAmountInformation) : self
+    public function setPaymentAmountInformation(PaymentAmountInformation $paymentAmountInformation): self
     {
         $this->paymentAmountInformation = $paymentAmountInformation;
         
@@ -124,7 +124,7 @@ class QrBill implements SelfValidatableInterface
         return $this->ultimateDebtor;
     }
 
-    public function setUltimateDebtor(AddressInterface $ultimateDebtor) : self
+    public function setUltimateDebtor(AddressInterface $ultimateDebtor): self
     {
         $this->ultimateDebtor = $ultimateDebtor;
         
@@ -136,7 +136,7 @@ class QrBill implements SelfValidatableInterface
         return $this->paymentReference;
     }
 
-    public function setPaymentReference(PaymentReference $paymentReference) : self
+    public function setPaymentReference(PaymentReference $paymentReference): self
     {
         $this->paymentReference = $paymentReference;
         
@@ -148,7 +148,7 @@ class QrBill implements SelfValidatableInterface
         return $this->additionalInformation;
     }
 
-    public function setAdditionalInformation(AdditionalInformation $additionalInformation) : self
+    public function setAdditionalInformation(AdditionalInformation $additionalInformation): self
     {
         $this->additionalInformation = $additionalInformation;
 
@@ -160,28 +160,28 @@ class QrBill implements SelfValidatableInterface
         return $this->alternativeSchemes;
     }
 
-    public function setAlternativeSchemes(array $alternativeSchemes) : self
+    public function setAlternativeSchemes(array $alternativeSchemes): self
     {
         $this->alternativeSchemes = $alternativeSchemes;
 
         return $this;
     }
 
-    public function addAlternativeScheme(AlternativeScheme $alternativeScheme) : self
+    public function addAlternativeScheme(AlternativeScheme $alternativeScheme): self
     {
         $this->alternativeSchemes[] = $alternativeScheme;
 
         return $this;
     }
 
-    public function setErrorCorrectionLevel(string $errorCorrectionLevel) : self
+    public function setErrorCorrectionLevel(string $errorCorrectionLevel): self
     {
         $this->errorCorrectionLevel = $errorCorrectionLevel;
 
         return $this;
     }
 
-    public function getQrCode() : QrCode
+    public function getQrCode(): QrCode
     {
         if (!$this->isValid()) {
             throw new InvalidQrBillDataException(
@@ -201,7 +201,7 @@ class QrBill implements SelfValidatableInterface
         return $qrCode;
     }
 
-    private function getQrCodeData() : string
+    private function getQrCodeData(): string
     {
         $elements = [
             $this->getHeader(),
@@ -220,7 +220,7 @@ class QrBill implements SelfValidatableInterface
         return implode("\r\n", $qrCodeStringElements);
     }
 
-    private function extractQrCodeDataFromElements(array $elements) : array
+    private function extractQrCodeDataFromElements(array $elements): array
     {
         $qrCodeElements = [];
 
@@ -241,7 +241,7 @@ class QrBill implements SelfValidatableInterface
         return $qrCodeElements;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('header', [
             new Assert\NotNull(),

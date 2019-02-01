@@ -52,7 +52,7 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         ?string $addressLine1,
         string $addressLine2,
         string $country
-    ) : self
+    ): self
     {
         $combinedAddress = new self();
         $combinedAddress->name = $name;
@@ -83,7 +83,7 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         return $this->country;
     }
 
-    public function getFullAddress() : string
+    public function getFullAddress(): string
     {
         $address = $this->getName();
 
@@ -96,7 +96,7 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         return $address;
     }
 
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
             $this->getAddressLine2() ? self::ADDRESS_TYPE : '',
@@ -109,7 +109,7 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('name', [
             new Assert\NotBlank(),

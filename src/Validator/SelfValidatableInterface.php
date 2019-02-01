@@ -7,9 +7,9 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 interface SelfValidatableInterface
 {
-    public function getViolations() : ConstraintViolationListInterface;
+    public function getViolations(): ConstraintViolationListInterface;
 
-    public function isValid() : bool;
+    public function isValid(): bool;
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void;
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void;
 }

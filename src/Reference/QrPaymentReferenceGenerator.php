@@ -27,12 +27,12 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $qrPaymentReferenceGenerator->doGenerate();
     }
 
-    public function getCustomerIdentificationNumber() : ?string
+    public function getCustomerIdentificationNumber(): ?string
     {
         return $this->customerIdentificationNumber;
     }
 
-    public function getReferenceNumber() : ?string
+    public function getReferenceNumber(): ?string
     {
         return $this->referenceNumber;
     }
@@ -52,7 +52,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $completeReferenceNumber;
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('customerIdentificationNumber', [
             // Only numbers are allowed (including leading zeros)
@@ -79,7 +79,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         ]);
     }
 
-    private function removeWhitespace(string $string) : string
+    private function removeWhitespace(string $string): string
     {
         return preg_replace('/\s+/', '', $string);
     }

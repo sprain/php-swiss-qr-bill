@@ -29,7 +29,7 @@ class PaymentAmountInformation implements QrCodeableInterface, SelfValidatableIn
      */
     private $currency;
 
-    public static function create(string $currency, ?float $amount = null) : self
+    public static function create(string $currency, ?float $amount = null): self
     {
         $paymentInformation = new self();
         $paymentInformation->currency = strtoupper($currency);
@@ -48,15 +48,15 @@ class PaymentAmountInformation implements QrCodeableInterface, SelfValidatableIn
         return $this->currency;
     }
 
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
-            $this->getAmount() ? number_format($this->getAmount(), 2, '.', '') : null,
+            $this->getAmount() ? number_format($this->getAmount(), 2, '.', ''): null,
             $this->getCurrency()
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('amount', [
             new Assert\Range([

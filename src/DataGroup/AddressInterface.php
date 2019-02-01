@@ -4,9 +4,9 @@ namespace Sprain\SwissQrBill\DataGroup;
 
 interface AddressInterface
 {
-    public function getName() : ?string;
+    public function getName(): ?string;
 
-    public function getCountry() : ?string;
+    public function getCountry(): ?string;
 
-    public function getFullAddress() : string;
+    public function getFullAddress(): string;
 }

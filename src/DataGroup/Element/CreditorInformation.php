@@ -19,7 +19,7 @@ class CreditorInformation implements QrCodeableInterface, SelfValidatableInterfa
      */
     private $iban;
 
-    public static function create(string $iban) : self
+    public static function create(string $iban): self
     {
         $creditorInformation = new self();
         $creditorInformation->iban = $iban;
@@ -32,14 +32,14 @@ class CreditorInformation implements QrCodeableInterface, SelfValidatableInterfa
         return $this->iban;
     }
 
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
             $this->getIban()
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         // Only IBANs with CH or LI country code
         $metadata->addPropertyConstraints('iban', [
