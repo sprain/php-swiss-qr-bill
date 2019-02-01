@@ -22,7 +22,6 @@ $qrBill->setCreditorInformation(
         'CH9300762011623852957'
     ));
 
-
 // Add debtor information
 // Who has to pay the invoice? This part is optional.
 //
