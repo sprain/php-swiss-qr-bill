@@ -7,7 +7,7 @@ use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class StructuredAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
@@ -155,7 +155,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata) : void
     {
         $metadata->addPropertyConstraints('name', [
             new Assert\NotBlank(),

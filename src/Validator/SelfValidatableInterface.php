@@ -3,7 +3,7 @@
 namespace Sprain\SwissQrBill\Validator;
 
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 interface SelfValidatableInterface
 {
@@ -11,5 +11,5 @@ interface SelfValidatableInterface
 
     public function isValid() : bool;
 
-    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void;
+    public static function loadValidatorMetadata(ClassMetadata $metadata) : void;
 }
