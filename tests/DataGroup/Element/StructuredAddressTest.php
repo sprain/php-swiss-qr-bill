@@ -7,176 +7,191 @@ use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
 
 class StructuredAddressTest extends TestCase
 {
-    /** @var StructuredAddress */
-    private $address;
-
-    public function setUp()
-    {
-        // Valid default to be adjusted in single tests
-        $this->address = (new StructuredAddress())
-            ->setName('Thomas Mustermann')
-            ->setStreet('Musterweg')
-            ->setBuildingNumber('22a')
-            ->setPostalCode('1000')
-            ->setCity('Lausanne')
-            ->setCountry('CH');
-    }
-
     /**
-     * @dataProvider validStreetProvider
+     * @dataProvider nameProvider
      */
-    public function testStreetIsValid($value)
+    public function testName($numberOfValidations, $value)
     {
-        $this->address->setStreet($value);
+        $address = StructuredAddress::createWithoutStreet(
+            $value,
+            '1000',
+            'Lausanne',
+            'CH'
+        );
 
-        $this->assertSame(0, $this->address->getViolations()->count());
+        $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function validStreetProvider()
+    public function nameProvider()
     {
         return [
-            [null],
-            [''],
-            ['A'],
-            ['123'],
-            ['Sonnenweg'],
-            ['70 chars, character limit abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr']
+            [0, 'A'],
+            [0, '123'],
+            [0, 'Müller AG'],
+            [0, 'Maria Bernasconi'],
+            [0, '70 chars, character limit abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr'],
+            [1, ''],
+            [1, '71 chars, above character limit abcdefghijklmnopqrstuvwxyzabcdefghijklm']
         ];
     }
 
     /**
-     * @dataProvider invalidStreetProvider
+     * @dataProvider streetProvider
      */
-    public function testStreetIsInvalid($value)
+    public function testStreet($numberOfViolations, $value)
     {
-        $this->address->setStreet($value);
+        $address = StructuredAddress::createWithStreet(
+            'Thomas Mustermann',
+            $value,
+            '22a',
+            '1000',
+            'Lausanne',
+            'CH'
+        );
 
-        $this->assertSame(1, $this->address->getViolations()->count());
+        $this->assertSame($numberOfViolations, $address->getViolations()->count());
     }
 
-    public function invalidStreetProvider()
+    public function streetProvider()
     {
         return [
-            ['71 chars, above character limit abcdefghijklmnopqrstuvwxyzabcdefghijklm'],
+            [0, ''],
+            [0, 'A'],
+            [0, '123'],
+            [0, 'Sonnenweg'],
+            [0, '70 chars, character limit abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr'],
+            [1, '71 chars, above character limit abcdefghijklmnopqrstuvwxyzabcdefghijklm'],
         ];
     }
 
     /**
-     * @dataProvider validbuildingNumberProvider
+     * @dataProvider buildingNumberProvider
      */
-    public function testbuildingNumberIsValid($value)
+    public function testBuildingNumber($numberOfViolations, $value)
     {
-        $this->address->setBuildingNumber($value);
+        $address = StructuredAddress::createWithStreet(
+            'Thomas Mustermann',
+            'Musterweg',
+            $value,
+            '1000',
+            'Lausanne',
+            'CH'
+        );
 
-        $this->assertSame(0, $this->address->getViolations()->count());
+        $this->assertSame($numberOfViolations, $address->getViolations()->count());
     }
 
-    public function validbuildingNumberProvider()
+    public function buildingNumberProvider()
     {
         return [
-            [null],
-            [''],
-            ['1'],
-            ['123'],
-            ['22a'],
-            ['16 chars, -limit']
+            [0, null],
+            [0, ''],
+            [0, '1'],
+            [0, '123'],
+            [0, '22a'],
+            [0, '16 chars, -limit'],
+            [1, '17 chars, ++limit']
         ];
     }
 
     /**
-     * @dataProvider invalidbuildingNumberProvider
+     * @dataProvider postalCodeProvider
      */
-    public function testbuildingNumberIsInvalid($value)
+    public function testPostalCode($numberOfViolations, $value)
     {
-        $this->address->setBuildingNumber($value);
+        $address = StructuredAddress::createWithStreet(
+            'Thomas Mustermann',
+            'Musterweg',
+            '22a',
+            $value,
+            'Lausanne',
+            'CH'
+        );
 
-        $this->assertSame(1, $this->address->getViolations()->count());
+        $this->assertSame($numberOfViolations, $address->getViolations()->count());
     }
 
-    public function invalidbuildingNumberProvider()
+    public function postalCodeProvider()
     {
         return [
-            ['17 chars, ++limit']
+            [0, '1'],
+            [0, '123'],
+            [0, '22a'],
+            [0, '16 chars, -limit'],
+            [1, ''],
+            [1, '17 chars, ++limit']
         ];
     }
 
     /**
-     * @dataProvider validPostalCodeProvider
+     * @dataProvider cityProvider
      */
-    public function testPostalCodeIsValid($value)
+    public function testCity($numberOfViolations, $value)
     {
-        $this->address->setPostalCode($value);
+        $address = StructuredAddress::createWithStreet(
+            'Thomas Mustermann',
+            'Musterweg',
+            '22a',
+            '1000',
+            $value,
+            'CH'
+        );
 
-        $this->assertSame(0, $this->address->getViolations()->count());
+        $this->assertSame($numberOfViolations, $address->getViolations()->count());
     }
 
-    public function validPostalCodeProvider()
+    public function cityProvider()
     {
         return [
-            ['1'],
-            ['123'],
-            ['22a'],
-            ['16 chars, -limit']
+            [0, 'A'],
+            [0, 'Zürich'],
+            [0, '35 chars, character limit abcdefghi'],
+            [1, ''],
+            [1, '36 chars, above character limit abcd']
         ];
     }
 
     /**
-     * @dataProvider invalidPostalCodeProvider
+     * @dataProvider countryProvider
      */
-    public function testPostalCodeIsInvalid($value)
+    public function testCountry($numberOfValidations, $value)
     {
-        $this->address->setPostalCode($value);
+        $address = StructuredAddress::createWithoutStreet(
+            'Thomas Mustermann',
+            '1000',
+            'Lausanne',
+            $value
+        );
 
-        $this->assertSame(1, $this->address->getViolations()->count());
+        $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function invalidPostalCodeProvider()
+    public function countryProvider()
     {
         return [
-            [''],
-            ['17 chars, ++limit']
-        ];
-    }
-
-    /**
-     * @dataProvider validCityProvider
-     */
-    public function testCityIsValid($value)
-    {
-        $this->address->setCity($value);
-
-        $this->assertSame(0, $this->address->getViolations()->count());
-    }
-
-    public function validCityProvider()
-    {
-        return [
-            ['A'],
-            ['Zürich'],
-            ['35 chars, character limit abcdefghi']
-        ];
-    }
-
-    /**
-     * @dataProvider invalidCityProvider
-     */
-    public function testCityIsInvalid($value)
-    {
-        $this->address->setCity($value);
-
-        $this->assertSame(1, $this->address->getViolations()->count());
-    }
-
-    public function invalidCityProvider()
-    {
-        return [
-            [''],
-            ['36 chars, above character limit abcd']
+            [0, 'CH'],
+            [0, 'ch'],
+            [0, 'DE'],
+            [0, 'LI'],
+            [0, 'US'],
+            [1, ''],
+            [1, 'XX'],
+            [1, 'SUI'],
+            [1, '12']
         ];
     }
 
     public function testQrCodeData()
     {
+        $address = StructuredAddress::createWithStreet(
+            'Thomas Mustermann',
+            'Musterweg',
+            '22a',
+            '1000',
+            'Lausanne',
+            'CH'
+        );
+
         $expected = [
             'S',
             'Thomas Mustermann',
@@ -187,7 +202,7 @@ class StructuredAddressTest extends TestCase
             'CH',
         ];
 
-        $this->assertSame($expected, $this->address->getQrCodeData());
+        $this->assertSame($expected, $address->getQrCodeData());
     }
 
     /**
@@ -202,39 +217,34 @@ class StructuredAddressTest extends TestCase
     {
         return [
             [
-                $this->address = (new StructuredAddress())
-                    ->setName('Thomas Mustermann')
-                    ->setStreet('Musterweg')
-                    ->setBuildingNumber('22a')
-                    ->setPostalCode('1000')
-                    ->setCity('Lausanne')
-                    ->setCountry('CH'),
+                $address = StructuredAddress::createWithStreet(
+                    'Thomas Mustermann',
+                    'Musterweg',
+                    '22a',
+                    '1000',
+                    'Lausanne',
+                    'CH'
+                ),
                 "Thomas Mustermann\nMusterweg 22a\nCH-1000 Lausanne"
             ],
             [
-                $this->address = (new StructuredAddress())
-                    ->setName('Thomas Mustermann')
-                    ->setStreet('Musterweg')
-                    ->setPostalCode('1000')
-                    ->setCity('Lausanne')
-                    ->setCountry('CH'),
+                $address = StructuredAddress::createWithStreet(
+                    'Thomas Mustermann',
+                    'Musterweg',
+                    null,
+                    '1000',
+                    'Lausanne',
+                    'CH'
+                ),
                 "Thomas Mustermann\nMusterweg\nCH-1000 Lausanne"
             ],
             [
-                $this->address = (new StructuredAddress())
-                    ->setName('Thomas Mustermann')
-                    ->setPostalCode('1000')
-                    ->setCity('Lausanne')
-                    ->setCountry('CH'),
-                "Thomas Mustermann\nCH-1000 Lausanne"
-            ],
-            [
-                $this->address = (new StructuredAddress())
-                    ->setName('Thomas Mustermann')
-                    ->setBuildingNumber('22a')
-                    ->setPostalCode('1000')
-                    ->setCity('Lausanne')
-                    ->setCountry('CH'),
+                $address = StructuredAddress::createWithoutStreet(
+                    'Thomas Mustermann',
+                    '1000',
+                    'Lausanne',
+                    'CH'
+                ),
                 "Thomas Mustermann\nCH-1000 Lausanne"
             ]
         ];

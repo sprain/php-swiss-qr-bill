@@ -2,13 +2,25 @@
 
 namespace Sprain\SwissQrBill\DataGroup\Element;
 
-use Sprain\SwissQrBill\DataGroup\Element\AbstractAddress;
+use Sprain\SwissQrBill\DataGroup\AddressInterface;
+use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
+use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class StructuredAddress extends AbstractAddress
+class StructuredAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
+    use SelfValidatableTrait;
+
     const ADDRESS_TYPE = 'S';
+
+    /**
+     * Name or company
+     *
+     * @var string
+     */
+    private $name;
 
     /**
      * Street / P.O. box 
@@ -40,16 +52,57 @@ class StructuredAddress extends AbstractAddress
      */
     private $city;
 
+    /**
+     * Country (ISO 3166-1 alpha-2)
+     *
+     * @var string
+     */
+    private $country;
+
+    public static function createWithoutStreet(
+        string $name,
+        string $postalCode,
+        string $city,
+        string $country
+    ): self
+    {
+        $structuredAddress = new self();
+        $structuredAddress->name = $name;
+        $structuredAddress->postalCode = $postalCode;
+        $structuredAddress->city = $city;
+        $structuredAddress->country = strtoupper($country);
+
+        return $structuredAddress;
+    }
+
+    public static function createWithStreet(
+        string $name,
+        string $street,
+        ?string $buildingNumber,
+        string $postalCode,
+        string $city,
+        string $country
+    ): self
+    {
+        $structuredAddress = new self();
+        $structuredAddress->name = $name;
+        $structuredAddress->street = $street;
+        $structuredAddress->buildingNumber = $buildingNumber;
+        $structuredAddress->postalCode = $postalCode;
+        $structuredAddress->city = $city;
+        $structuredAddress->country = strtoupper($country);
+
+        return $structuredAddress;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
     public function getStreet(): ?string
     {
         return $this->street;
-    }
-
-    public function setStreet(string $street = null) : self
-    {
-        $this->street = $street;
-
-        return $this;
     }
 
     public function getBuildingNumber(): ?string
@@ -57,23 +110,9 @@ class StructuredAddress extends AbstractAddress
         return $this->buildingNumber;
     }
 
-    public function setBuildingNumber(string $buildingNumber = null) : self
-    {
-        $this->buildingNumber = $buildingNumber;
-
-        return $this;
-    }
-
     public function getPostalCode(): ?string
     {
         return $this->postalCode;
-    }
-
-    public function setPostalCode(string $postalCode) : self
-    {
-        $this->postalCode = $postalCode;
-
-        return $this;
     }
 
     public function getCity(): ?string
@@ -81,14 +120,12 @@ class StructuredAddress extends AbstractAddress
         return $this->city;
     }
 
-    public function setCity(string $city) : self
+    public function getCountry(): ?string
     {
-        $this->city = $city;
-
-        return $this;
+        return $this->country;
     }
 
-    public function getFullAddress() : string
+    public function getFullAddress(): string
     {
         $address = $this->getName();
 
@@ -105,7 +142,7 @@ class StructuredAddress extends AbstractAddress
         return $address;
     }
 
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
             $this->getCity() ? self::ADDRESS_TYPE : '',
@@ -118,8 +155,15 @@ class StructuredAddress extends AbstractAddress
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
+        $metadata->addPropertyConstraints('name', [
+            new Assert\NotBlank(),
+            new Assert\Length([
+                'max' => 70
+            ])
+        ]);
+
         $metadata->addPropertyConstraints('street', [
             new Assert\Length([
                 'max' => 70
@@ -144,6 +188,11 @@ class StructuredAddress extends AbstractAddress
             new Assert\Length([
                 'max' => 35
             ])
+        ]);
+
+        $metadata->addPropertyConstraints('country', [
+            new Assert\NotBlank(),
+            new Assert\Country()
         ]);
     }
 }

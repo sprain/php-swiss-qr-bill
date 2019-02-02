@@ -26,8 +26,6 @@ class QrBillTest extends TestCase
             'paymentReference'
         ]);
 
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
-
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-minimal-setup.png'))->text(),
             $qrBill->getQrCode()->getText()
@@ -270,8 +268,8 @@ class QrBillTest extends TestCase
             'paymentReference',
         ]);
 
-        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
-        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
 
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-alternative-schemes.png');
 
@@ -292,8 +290,8 @@ class QrBillTest extends TestCase
         ]);
 
         $qrBill->setAlternativeSchemes([
-            (new AlternativeScheme())->setParameter('foo'),
-            (new AlternativeScheme())->setParameter('foo')
+            AlternativeScheme::create('foo'),
+            AlternativeScheme::create('foo')
         ]);
 
         $this->assertSame(
@@ -312,7 +310,7 @@ class QrBillTest extends TestCase
             'paymentReference',
         ]);
 
-        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
         $qrBill->addAlternativeScheme((new AlternativeScheme()));
 
         $this->assertFalse($qrBill->isValid());
@@ -328,9 +326,9 @@ class QrBillTest extends TestCase
             'paymentReference'
         ]);
 
-        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
-        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
-        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
 
         $this->assertFalse($qrBill->isValid());
     }
@@ -366,8 +364,8 @@ class QrBillTest extends TestCase
             'additionalInformation'
         ]);
 
-        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
-        $qrBill->addAlternativeScheme((new AlternativeScheme())->setParameter('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
 
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
 
@@ -403,10 +401,11 @@ class QrBillTest extends TestCase
 
     public function header(QrBill &$qrBill)
     {
-        $header = (new Header())
-            ->setCoding(Header::CODING_LATIN)
-            ->setQrType(Header::QRTYPE_SPC)
-            ->setVersion(Header::VERSION_0200);
+        $header = Header::create(
+            Header::QRTYPE_SPC,
+            Header::VERSION_0200,
+            Header::CODING_LATIN
+        );
         $qrBill->setHeader($header);
     }
 
@@ -418,15 +417,13 @@ class QrBillTest extends TestCase
 
     public function creditorInformation(QrBill &$qrBill)
     {
-        $creditorInformation = (new CreditorInformation())
-            ->setIban('CH9300762011623852957');
+        $creditorInformation = CreditorInformation::create('CH9300762011623852957');
         $qrBill->setCreditorInformation($creditorInformation);
     }
 
     public function inValidCreditorInformation(QrBill &$qrBill)
     {
-        $creditorInformation = (new CreditorInformation())
-            ->setIban('INVALIDIBAN');
+        $creditorInformation = CreditorInformation::create('INVALIDIBAN');
         $qrBill->setCreditorInformation($creditorInformation);
     }
 
@@ -442,56 +439,61 @@ class QrBillTest extends TestCase
 
     public function paymentAmountInformation(QrBill &$qrBill)
     {
-        $paymentAmountInformation = (new PaymentAmountInformation())
-            ->setAmount(25.90)
-            ->setCurrency('CHF');
+        $paymentAmountInformation = PaymentAmountInformation::create(
+            'CHF',
+            25.90
+        );
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
     public function paymentAmountInformationWithoutAmount(QrBill &$qrBill)
     {
-        $paymentAmountInformation = (new PaymentAmountInformation())
-            ->setCurrency('EUR');
+        $paymentAmountInformation = PaymentAmountInformation::create('EUR');
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
     public function invalidPaymentAmountInformation(QrBill &$qrBill)
     {
-        $paymentAmountInformation = (new PaymentAmountInformation())
-            ->setAmount(25.90)
-            ->setCurrency('USD'); // INVALID CURRENCY
+        $paymentAmountInformation = PaymentAmountInformation::create(
+            'USD', // invalid currency
+            25.90
+        );
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
     public function paymentReference(QrBill &$qrBill)
     {
-        $paymentReference = (new PaymentReference())
-            ->setType(PaymentReference::TYPE_QR)
-            ->setReference('123456789012345678901234567');
+        $paymentReference = PaymentReference::create(
+            PaymentReference::TYPE_QR,
+            '123456789012345678901234567'
+        );
         $qrBill->setPaymentReference($paymentReference);
     }
 
     public function paymentReferenceScor(QrBill &$qrBill)
     {
-        $paymentReference = (new PaymentReference())
-            ->setType(PaymentReference::TYPE_SCOR)
-            ->setReference('RF18539007547034');
+        $paymentReference = PaymentReference::create(
+            PaymentReference::TYPE_SCOR,
+            'RF18539007547034'
+        );
         $qrBill->setPaymentReference($paymentReference);
     }
 
     public function paymentReferenceNon(QrBill &$qrBill)
     {
-        $paymentReference = (new PaymentReference())
-            ->setType(PaymentReference::TYPE_NON);
+        $paymentReference = PaymentReference::create(
+            PaymentReference::TYPE_NON
+        );
 
         $qrBill->setPaymentReference($paymentReference);
     }
 
     public function invalidPaymentReference(QrBill &$qrBill)
     {
-        $paymentReference = (new PaymentReference())
-            ->setType(PaymentReference::TYPE_QR)
-            ->setReference('INVALID REFERENCE');
+        $paymentReference = PaymentReference::create(
+            PaymentReference::TYPE_QR,
+            'INVALID REFERENCE'
+        );
         $qrBill->setPaymentReference($paymentReference);
     }
 
@@ -507,8 +509,7 @@ class QrBillTest extends TestCase
 
     public function alternativeScheme(QrBill &$qrBill)
     {
-        $alternativeScheme = (new AlternativeScheme())
-            ->setParameter('alternativeSchemeParameter');
+        $alternativeScheme = AlternativeScheme::create('alternativeSchemeParameter');
 
         $qrBill->addAlternativeScheme($alternativeScheme);
     }
@@ -522,40 +523,34 @@ class QrBillTest extends TestCase
 
     public function additionalInformation(QrBill &$qrBill)
     {
-        $additionalInformation = (new AdditionalInformation())
-            ->setMessage('Invoice 123456');
-
+        $additionalInformation = AdditionalInformation::create('Invoice 123456');
         $qrBill->setAdditionalInformation($additionalInformation);
     }
 
     public function structuredAddress()
     {
-        return (new StructuredAddress())
-            ->setName('Thomas LeClaire')
-            ->setStreet('Rue examplaire')
-            ->setBuildingNumber('22a')
-            ->setPostalCode('1000')
-            ->setCity('Lausanne')
-            ->setCountry('CH');
+        return StructuredAddress::createWithStreet(
+            'Thomas LeClaire',
+            'Rue examplaire',
+            '22a',
+            '1000',
+            'Lausanne',
+            'CH',''
+        );
     }
 
     public function combinedAddress()
     {
-        return (new CombinedAddress())
-            ->setName('Thomas LeClaire')
-            ->setAddressLine1('Rue examplaire 22a')
-            ->setAddressLine2('1000 Lausanne')
-            ->setCountry('CH');
+        return CombinedAddress::create(
+            'Thomas LeClaire',
+            'Rue examplaire 22a',
+            '1000 Lausanne',
+            'CH'
+        );
     }
 
     public function invalidAddress()
     {
-        return (new StructuredAddress())
-            // NO NAME!
-            ->setStreet('Rue examplaire')
-            ->setBuildingNumber('22a')
-            ->setPostalCode('1000')
-            ->setCity('Lausanne')
-            ->setCountry('CH');
+        return new CombinedAddress();
     }
 }

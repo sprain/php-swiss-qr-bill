@@ -8,7 +8,7 @@ use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
-use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInterface, SelfValidatableInterface
 {
@@ -33,16 +33,18 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
      */
     private $reference;
 
+    public static function create(string $type, ?string $reference = null): self
+    {
+        $paymentReference = new self();
+        $paymentReference->type = $type;
+        $paymentReference->reference = $reference;
+
+        return $paymentReference;
+    }
+
     public function getType(): ?string
     {
         return $this->type;
-    }
-
-    public function setType(string $type) : self
-    {
-        $this->type = $type;
-
-        return $this;
     }
 
     public function getReference(): ?string
@@ -50,14 +52,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
         return $this->reference;
     }
 
-    public function setReference(string $reference = null) : self
-    {
-        $this->reference = $reference;
-
-        return $this;
-    }
-
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
             $this->getType(),
@@ -65,7 +60,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->setGroupSequenceProvider(true);
 

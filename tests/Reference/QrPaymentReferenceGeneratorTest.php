@@ -22,12 +22,12 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     /**
      * @dataProvider qrPaymentReferenceProvider
      */
-    public function testValidQrPaymentReference($customerIdentification, $referenceNumber, $expectedResult)
+    public function testQrPaymentReference($customerIdentification, $referenceNumber, $expectedResult)
     {
-        $qrReference = (new QrPaymentReferenceGenerator())
-            ->setCustomerIdentificationNumber($customerIdentification)
-            ->setReferenceNumber($referenceNumber)
-            ->generate();
+        $qrReference = QrPaymentReferenceGenerator::generate(
+            $customerIdentification,
+            $referenceNumber
+        );
 
         $this->assertSame($expectedResult, $qrReference);
     }
@@ -50,24 +50,15 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     }
 
     /**
+     * @dataProvider invalidCustomerIdentificationNumberProvider
      * @expectedException Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException
      */
-    public function testInvalidQrPaymentReference()
+    public function testInvalidCustomerIdentificationNumber($value)
     {
-        (new QrPaymentReferenceGenerator())
-            ->generate(); // Generating without data is not valid
-    }
-
-    /**
-     * @dataProvider invalidCustomerIdentificationNumberProvider
-     */
-    public function testCustomerIdentificationNumberMustBeValid($invalidCustomerIdentificationNumber)
-    {
-        $qrReference = (new QrPaymentReferenceGenerator())
-            ->setCustomerIdentificationNumber($invalidCustomerIdentificationNumber)
-            ->setReferenceNumber('18310019779911119');
-
-        $this->assertSame(1, $this->validator->validate($qrReference)->count());
+        $qrReference = QrPaymentReferenceGenerator::generate(
+            $value,
+            '18310019779911119'
+        );
     }
 
     public function invalidCustomerIdentificationNumberProvider()
@@ -82,14 +73,14 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
     /**
      * @dataProvider invalidReferenceNumberProvider
+     * @expectedException Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException
      */
-    public function testReferenceNumberMustBeValid($invalidReferenceNumber)
+    public function testInvalidReferenceNumber($value)
     {
-        $qrReference = (new QrPaymentReferenceGenerator())
-            ->setCustomerIdentificationNumber('123456')
-            ->setReferenceNumber($invalidReferenceNumber);
-
-        $this->assertSame(1, $this->validator->validate($qrReference)->count());
+        $qrReference = QrPaymentReferenceGenerator::generate(
+            '123456',
+            $value
+        );
     }
 
     public function invalidReferenceNumberProvider()

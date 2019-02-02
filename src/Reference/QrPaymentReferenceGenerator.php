@@ -6,7 +6,7 @@ use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class QrPaymentReferenceGenerator implements SelfValidatableInterface
 {
@@ -18,31 +18,26 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
     /** @var string */
     private $referenceNumber;
 
-    public function getCustomerIdentificationNumber() : ?string
+    public static function generate(string $customerIdentificationNumber, string $referenceNumber)
+    {
+        $qrPaymentReferenceGenerator = new self();
+        $qrPaymentReferenceGenerator->customerIdentificationNumber = $qrPaymentReferenceGenerator->removeWhitespace($customerIdentificationNumber);
+        $qrPaymentReferenceGenerator->referenceNumber = $qrPaymentReferenceGenerator->removeWhitespace($referenceNumber);
+
+        return $qrPaymentReferenceGenerator->doGenerate();
+    }
+
+    public function getCustomerIdentificationNumber(): ?string
     {
         return $this->customerIdentificationNumber;
     }
 
-    public function setCustomerIdentificationNumber(string $customerIdentificationNumber) : self
-    {
-        $this->customerIdentificationNumber = $this->removeWhitespace($customerIdentificationNumber);
-
-        return $this;
-    }
-
-    public function getReferenceNumber() : string
+    public function getReferenceNumber(): ?string
     {
         return $this->referenceNumber;
     }
 
-    public function setReferenceNumber(string $referenceNumber) : self
-    {
-        $this->referenceNumber = $this->removeWhitespace($referenceNumber);
-
-        return $this;
-    }
-
-    public function generate()
+    public function doGenerate()
     {
         if (!$this->isValid()) {
             throw new InvalidQrPaymentReferenceException(
@@ -57,7 +52,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $completeReferenceNumber;
     }
 
-    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('customerIdentificationNumber', [
             // Only numbers are allowed (including leading zeros)
@@ -84,7 +79,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         ]);
     }
 
-    private function removeWhitespace(string $string) : string
+    private function removeWhitespace(string $string): string
     {
         return preg_replace('/\s+/', '', $string);
     }

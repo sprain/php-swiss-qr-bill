@@ -6,7 +6,7 @@ use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Mapping\ClassMetadataInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class AdditionalInformation implements QrCodeableInterface, SelfValidatableInterface
 {
@@ -30,16 +30,21 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
      */
     private $billInformation;
 
+    public static function create(
+        ?string $message,
+        ?string $billInformation = null
+    ): self
+    {
+        $additionalInformation = new self();
+        $additionalInformation->message = $message;
+        $additionalInformation->billInformation = $billInformation;
+
+        return $additionalInformation;
+    }
+
     public function getMessage(): ?string
     {
         return $this->message;
-    }
-
-    public function setMessage(string $message = null): self
-    {
-        $this->message = $message;
-
-        return $this;
     }
 
     public function getBillInformation(): ?string
@@ -47,14 +52,7 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
         return $this->billInformation;
     }
 
-    public function setBillInformation(string $billInformation = null) : self
-    {
-        $this->billInformation = $billInformation;
-
-        return $this;
-    }
-
-    public function getQrCodeData() : array
+    public function getQrCodeData(): array
     {
         return [
             $this->getMessage(),
@@ -63,7 +61,7 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
         ];
     }
 
-    public static function loadValidatorMetadata(ClassMetadataInterface $metadata) : void
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('message', [
             new Assert\Length([

@@ -8,194 +8,114 @@ use Sprain\SwissQrBill\DataGroup\Element\Header;
 class HeaderTest extends TestCase
 {
     /**
-     * @dataProvider validQrTypeProvider
+     * @dataProvider qrTypeProvider
      */
-    public function testQrTypeIsValid($value)
+    public function testQrType($numberOfViolations, $value)
     {
-        $header = new Header();
-        $header->setQrType($value);
-        $header->setVersion('0200');
-        $header->setCoding(1);
+        $header = Header::create(
+            $value,
+            '0200',
+            1
+        );
 
-        $this->assertSame(0, $header->getViolations()->count());
+        $this->assertSame($numberOfViolations, $header->getViolations()->count());
     }
 
-    public function validQrTypeProvider()
+    public function qrTypeProvider()
     {
         return [
-            ['SPC'],
-            ['foo'],
-            ['123'],
-            ['000'],
-            ['A1B'],
-            ['1AB'],
-            ['AB1'],
+            [0, 'SPC'],
+            [0, 'foo'],
+            [0, '123'],
+            [0, '000'],
+            [0, 'A1B'],
+            [0, '1AB'],
+            [0, 'AB1'],
+            [1, 'SP'],
+            [1, 'SPCC'],
+            [1, 'fo'],
+            [1, 'fooo'],
+            [1, '12'],
+            [1, '00'],
+            [1, 'SP*'],
+            [1, '*SP'],
         ];
     }
 
     /**
-     * @dataProvider invalidQrTypeProvider
+     * @dataProvider versionProvider
      */
-    public function testQrTypeIsInvalid($value)
+    public function testVersionIsValid($numberOfViolations, $value)
     {
-        $header = new Header();
-        $header->setQrType($value);
-        $header->setVersion('0200');
-        $header->setCoding(1);
+        $header = Header::create(
+            'SPC',
+            $value,
+            1
+        );
 
-        $this->assertSame(1, $header->getViolations()->count());
+        $this->assertSame($numberOfViolations, $header->getViolations()->count());
     }
 
-    public function invalidQrTypeProvider()
+    public function versionProvider()
     {
         return [
-            ['SP'],
-            ['SPCC'],
-            ['fo'],
-            ['fooo'],
-            ['12'],
-            ['00'],
-            ['SP*'],
-            ['*SP'],
-        ];
-    }
-
-    public function testQrTypeIsRequired()
-    {
-        $header = new Header();
-        $header->setVersion('0200');
-        $header->setCoding(1);
-
-        $this->assertSame(1, $header->getViolations()->count());
-    }
-
-    /**
-     * @dataProvider validVersionProvider
-     */
-    public function testVersionIsValid($value)
-    {
-        $header = new Header();
-        $header->setQrType('SPC');
-        $header->setVersion($value);
-        $header->setCoding(1);
-
-        $this->assertSame(0, $header->getViolations()->count());
-    }
-
-    public function validVersionProvider()
-    {
-        return [
-            ['0200'],
-            ['1234'],
-            ['0000'],
-            ['9999'],
+            [0, '0200'],
+            [0, '1234'],
+            [0, '0000'],
+            [0, '9999'],
+            [1, '010'],
+            [1, '234'],
+            [1, 'ABCD'],
+            [1, 'abcd'],
+            [1, 'a1b2'],
+            [1, '1a2b'],
+            [1, '010*'],
+            [1, '*010']
         ];
     }
 
     /**
-     * @dataProvider invalidVersionProvider
+     * @dataProvider codingProvider
      */
-    public function testVersionIsInvalid($value)
+    public function testCodingIsValid($numberOfViolations, $value)
     {
-        $header = new Header();
-        $header->setQrType('SPC');
-        $header->setVersion($value);
-        $header->setCoding(1);
+        $header = Header::create(
+            'SPC',
+            '0200',
+            $value
+        );
 
-        $this->assertSame(1, $header->getViolations()->count());
+        $this->assertSame($numberOfViolations, $header->getViolations()->count());
     }
 
-    public function invalidVersionProvider()
+    public function codingProvider()
     {
         return [
-            ['010'],
-            ['234'],
-            ['ABCD'],
-            ['abcd'],
-            ['a1b2'],
-            ['1a2b'],
-            ['010*'],
-            ['*010']
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [0, 3],
+            [0, 4],
+            [0, 5],
+            [0, 6],
+            [0, 7],
+            [0, 8],
+            [0, 9],
+            [1, 11],
+            [1, 222],
         ];
-    }
-
-    public function testVersionIsRequired()
-    {
-        $header = new Header();
-        $header->setQrType('SPC');
-        $header->setCoding(1);
-
-        $this->assertSame(1, $header->getViolations()->count());
-    }
-
-    /**
-     * @dataProvider validCodingProvider
-     */
-    public function testCodingIsValid($value)
-    {
-        $header = new Header();
-        $header->setQrType('SPC');
-        $header->setVersion('0200');
-        $header->setCoding($value);
-
-        $this->assertSame(0, $header->getViolations()->count());
-    }
-
-    public function validCodingProvider()
-    {
-        return [
-            [0],
-            [1],
-            [2],
-            [3],
-            [4],
-            [5],
-            [6],
-            [7],
-            [8],
-            [9],
-        ];
-    }
-
-    /**
-     * @dataProvider invalidCodingProvider
-     */
-    public function testCodingIsInvalid($value)
-    {
-        $header = new Header();
-        $header->setQrType('SPC');
-        $header->setVersion('0200');
-        $header->setCoding($value);
-
-        $this->assertSame(1, $header->getViolations()->count());
-    }
-
-    public function invalidCodingProvider()
-    {
-        return [
-            [11],
-            [222],
-        ];
-    }
-
-    public function testCodingisRequired()
-    {
-        $header = new Header();
-        $header->setQrType('SPC');
-        $header->setVersion('0200');
-
-        $this->assertSame(1, $header->getViolations()->count());
     }
 
     public function testQrCodeData()
     {
-        $header = new Header();
-        $header->setQrType(Header::QRTYPE_SPC);
-        $header->setVersion('0200');
-        $header->setCoding(1);
+        $header = Header::create(
+            'SPC',
+            '0200',
+            1
+        );
 
         $expected = [
-            Header::QRTYPE_SPC,
+            'SPC',
             '0200',
             1
         ];
