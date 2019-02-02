@@ -26,6 +26,8 @@ class QrBillTest extends TestCase
             'paymentReference'
         ]);
 
+        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
+
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-minimal-setup.png'))->text(),
             $qrBill->getQrCode()->getText()
