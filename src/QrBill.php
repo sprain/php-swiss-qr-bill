@@ -3,7 +3,6 @@
 namespace Sprain\SwissQrBill;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\QrCode;
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
@@ -14,6 +13,7 @@ use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
+use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;

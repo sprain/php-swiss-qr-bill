@@ -64,5 +64,6 @@ $qrBill->setAdditionalInformation(
         'Invoice 11223344, Gardening Work'
     ));
 
-// Get QR code image
+// Get QR code image (supports svg and png)
 $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
+$qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
