@@ -23,16 +23,16 @@ class TestDataTest extends TestCase
     public function qrFileProvider()
     {
         return [
-            [__DIR__ . '/qr-additional-information.png', '5e6b1246239a91b9a2971916284048c7'],
-            [__DIR__ . '/qr-alternative-schemes.png', '2794b92f0e8c2bd292cff604a6fe2b96'],
-            [__DIR__ . '/qr-full-set.png', '65461878a3a797567c9a2640b6a784e2'],
-            [__DIR__ . '/qr-minimal-setup.png', '00d82b2797622e24b4736b1974094c75'],
-            [__DIR__ . '/qr-payment-information-without-amount.png', '82abf9e7e2efb63d2b8d1d3809b82ddd'],
+            [__DIR__ . '/qr-additional-information.png', '00b350883b49687f643b654cb5f4ff99'],
+            [__DIR__ . '/qr-alternative-schemes.png', '2308b5d51d85885559b55a6bfe972d36'],
+            [__DIR__ . '/qr-full-set.png', '5eac83c30c2cc01321469f928649ea5f'],
+            [__DIR__ . '/qr-minimal-setup.png', '1736bdbccd89fa16599bdd908da248b0'],
+            [__DIR__ . '/qr-payment-information-without-amount.png', 'a95e41c5e808d498910fceefa40d6e3b'],
             [__DIR__ . '/qr-payment-reference-non.png', 'e999c59e2b83e8adba46d4eca3242ac1'],
             [__DIR__ . '/qr-payment-reference-scor.png', 'de185228c42c39b361a2a0f01627ec1f'],
-            [__DIR__ . '/qr-ultimate-debtor.png', '835efdaebe41b0b30e3f967b7aa6a0cb'],
+            [__DIR__ . '/qr-ultimate-debtor.png', '9594b5397a24b5dfb96e2f58d198b8bf'],
 
-            [__DIR__ . '/proof-of-validation.png', 'a825cef70eb1b942d2b643439149bda1'],
+            [__DIR__ . '/proof-of-validation.png', '145dadeadfea03e8132bd71761100fa9'],
         ];
     }
 }

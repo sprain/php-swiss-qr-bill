@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill;
 
 use Endroid\QrCode\ErrorCorrectionLevel;
+use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombination;
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
@@ -83,7 +84,7 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
-    public function getCreditorInformation(): CreditorInformation
+    public function getCreditorInformation(): ?CreditorInformation
     {
         return $this->creditorInformation;
     }
@@ -95,7 +96,7 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
-    public function getCreditor(): AddressInterface
+    public function getCreditor(): ?AddressInterface
     {
         return $this->creditor;
     }
@@ -107,7 +108,7 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
-    public function getPaymentAmountInformation(): PaymentAmountInformation
+    public function getPaymentAmountInformation(): ?PaymentAmountInformation
     {
         return $this->paymentAmountInformation;
     }
@@ -131,7 +132,7 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
-    public function getPaymentReference(): PaymentReference
+    public function getPaymentReference(): ?PaymentReference
     {
         return $this->paymentReference;
     }
@@ -243,6 +244,10 @@ class QrBill implements SelfValidatableInterface
 
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
+        $metadata->addConstraint(
+            new ValidCreditorInformationPaymentReferenceCombination()
+        );
+
         $metadata->addPropertyConstraints('header', [
             new Assert\NotNull(),
             new Assert\Valid()
