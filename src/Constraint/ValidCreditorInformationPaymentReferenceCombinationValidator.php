@@ -10,6 +10,12 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ValidCreditorInformationPaymentReferenceCombinationValidator extends ConstraintValidator
 {
+    private const QR_IBAN_IS_ALLOWED = [
+        PaymentReference::TYPE_QR   => true,
+        PaymentReference::TYPE_SCOR => false,
+        PaymentReference::TYPE_NON  => false,
+    ];
+
     public function validate($qrBill, Constraint $constraint)
     {
         if (!$qrBill instanceof QrBill) {
@@ -27,20 +33,11 @@ class ValidCreditorInformationPaymentReferenceCombinationValidator extends Const
             return;
         }
 
-        if ($creditorInformation->containsQrIban()) {
-            if ($qrBill->getPaymentReference()->getType() !== PaymentReference::TYPE_QR) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ referenceType }}', $paymentReference->getType())
-                    ->setParameter('{{ iban }}', $creditorInformation->getIban())
-                    ->addViolation();
-            }
-        } else {
-            if ($qrBill->getPaymentReference()->getType() === PaymentReference::TYPE_QR) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ referenceType }}', $paymentReference->getType())
-                    ->setParameter('{{ iban }}', $creditorInformation->getIban())
-                    ->addViolation();
-            }
+        if (self::QR_IBAN_IS_ALLOWED[$paymentReference->getType()] !== $creditorInformation->containsQrIban()) {
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ referenceType }}', $paymentReference->getType())
+                ->setParameter('{{ iban }}', $creditorInformation->getIban())
+                ->addViolation();
         }
     }
 }
