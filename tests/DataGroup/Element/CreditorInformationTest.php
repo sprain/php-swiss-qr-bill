@@ -56,7 +56,7 @@ class CreditorInformationTest extends TestCase
     }
 
     /**
-     * @dataProvider qrIbanProvider
+     * @dataProvider qrIbanCheckProvider
      */
     public function testContainsQrIban($isQrIban, $value)
     {
@@ -67,12 +67,18 @@ class CreditorInformationTest extends TestCase
         $this->assertSame($isQrIban, $creditorInformation->containsQrIban());
     }
 
-    public function qrIbanProvider()
+    public function qrIbanCheckProvider()
     {
         return [
+            // normal valid IBANs
             [false, 'CH9300762011623852957'],
             [false, 'LI21088100002324013AA'],
+
+            // invalid or unsupported IBANs
+            [false, 'AT61 1904 3002 3457 3201'],
             [false, ''],
+
+            // QR-IBANs
             [true, 'CH44 3199 9123 0008 8901 2'],
             [true, 'CH4431999123000889012'],
         ];
