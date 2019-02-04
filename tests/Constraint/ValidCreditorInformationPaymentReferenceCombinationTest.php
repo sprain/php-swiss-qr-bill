@@ -43,24 +43,24 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
     public function emptyQrBillMocksProvider()
     {
         return [
-            [$this->getQBillMock()],
-            [$this->getQBillMock(
+            [$this->getQrBillMock()],
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock(),
                 $this->getPaymentReferenceMock()
             )],
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock(),
                 null
             )],
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 null,
                 $this->getPaymentReferenceMock()
             )],
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock('any-iban'),
                 $this->getPaymentReferenceMock()
             )],
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock(),
                 $this->getPaymentReferenceMock(PaymentReference::TYPE_QR)
             )],
@@ -80,15 +80,15 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
     public function validCombinationsQrBillMocksProvider()
     {
         return [
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock('any-iban', true),
                 $this->getPaymentReferenceMock(PaymentReference::TYPE_QR)
             )],
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock('any-iban', false),
                 $this->getPaymentReferenceMock(PaymentReference::TYPE_SCOR)
             )],
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock('any-iban', false),
                 $this->getPaymentReferenceMock(PaymentReference::TYPE_NON)
             )],
@@ -113,22 +113,22 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
     public function invalidCombinationsQrBillMocksProvider()
     {
         return [
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock('any-iban', false),
                 $this->getPaymentReferenceMock(PaymentReference::TYPE_QR)
             )],
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock('any-iban', true),
                 $this->getPaymentReferenceMock(PaymentReference::TYPE_SCOR)
             )],
-            [$this->getQBillMock(
+            [$this->getQrBillMock(
                 $this->getCreditorInformationMock('any-iban', true),
                 $this->getPaymentReferenceMock(PaymentReference::TYPE_NON)
             )],
         ];
     }
 
-    public function getQBillMock($creditorInformation = null, $paymentReference = null)
+    public function getQrBillMock($creditorInformation = null, $paymentReference = null)
     {
         $qrBill = $this->createMock(QrBill::class);
 
