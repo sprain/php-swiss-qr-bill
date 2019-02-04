@@ -224,9 +224,9 @@ class QrBillTest extends TestCase
             'paymentReferenceNon'
         ]);
 
-        $qrBill
-            ->setErrorCorrectionLevel(QrBill::ERROR_CORRECTION_LEVEL_MEDIUM) // due to limitations of QrReader class used in assert below
-            ->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-non.png');
+        # $qrBill
+        #     ->setErrorCorrectionLevel(QrBill::ERROR_CORRECTION_LEVEL_MEDIUM) // due to limitations of QrReader class used in assert below
+        #     ->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-non.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-payment-reference-non.png'))->text(),
