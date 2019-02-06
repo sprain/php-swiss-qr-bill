@@ -19,7 +19,7 @@ $qrBill->setCreditor(
 
 $qrBill->setCreditorInformation(
     QrBill\DataGroup\Element\CreditorInformation::create(
-        'CH9300762011623852957'
+        'CH4431999123000889012'
     ));
 
 // Add debtor information
