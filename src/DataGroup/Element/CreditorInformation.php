@@ -22,7 +22,7 @@ class CreditorInformation implements QrCodeableInterface, SelfValidatableInterfa
     public static function create(string $iban): self
     {
         $creditorInformation = new self();
-        $creditorInformation->iban = $iban;
+        $creditorInformation->iban = preg_replace('/\s+/', '', $iban);
 
         return $creditorInformation;
     }
@@ -30,6 +30,17 @@ class CreditorInformation implements QrCodeableInterface, SelfValidatableInterfa
     public function getIban(): ?string
     {
         return $this->iban;
+    }
+
+    public function containsQrIban(): bool
+    {
+        $qrIid = substr($this->iban, 4, 5);
+
+        if ($this->isValid() && (int) $qrIid >= 30000 && (int) $qrIid <= 31999) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getQrCodeData(): array

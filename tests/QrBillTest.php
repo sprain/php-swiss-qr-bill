@@ -20,13 +20,20 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
+        # $qrBill
+        #    ->setErrorCorrectionLevel(QrBill::ERROR_CORRECTION_LEVEL_MEDIUM) // due to limitations of QrReader class used in assert below
+        #    ->getQrCode()
+        #    ->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
+
+        foreach ($qrBill->getViolations() as $violation) {
+            print $violation->getMessage()."\n";
+        }
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-minimal-setup.png'))->text(),
@@ -37,10 +44,10 @@ class QrBillTest extends TestCase
     public function testHeaderIsRequired()
     {
         $qrBill = $this->createQrBill([
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $this->assertSame(1, $qrBill->getViolations()->count());
@@ -50,10 +57,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'invalidHeader',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $this->assertFalse($qrBill->isValid());
@@ -63,10 +70,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = QrBill::create();
 
-        $this->creditorInformation($qrBill);
+        $this->creditorInformationQrIban($qrBill);
         $this->creditor($qrBill);
         $this->paymentAmountInformation($qrBill);
-        $this->paymentReference($qrBill);
+        $this->paymentReferenceQr($qrBill);
 
         $this->assertTrue($qrBill->isValid());
     }
@@ -77,7 +84,7 @@ class QrBillTest extends TestCase
             'header',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $this->assertSame(1, $qrBill->getViolations()->count());
@@ -90,7 +97,7 @@ class QrBillTest extends TestCase
             'invalidCreditorInformation',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $this->assertFalse($qrBill->isValid());
@@ -100,9 +107,9 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'paymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $this->assertSame(1, $qrBill->getViolations()->count());
@@ -112,10 +119,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'invalidCreditor',
             'paymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $this->assertFalse($qrBill->isValid());
@@ -125,9 +132,9 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $this->assertSame(1, $qrBill->getViolations()->count());
@@ -137,10 +144,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'invalidPaymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $this->assertFalse($qrBill->isValid());
@@ -150,10 +157,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformationWithoutAmount',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-information-without-amount.png');
@@ -168,7 +175,7 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
         ]);
@@ -180,7 +187,7 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
             'invalidPaymentReference'
@@ -193,7 +200,7 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationIban',
             'creditor',
             'paymentAmountInformation',
             'paymentReferenceScor'
@@ -211,15 +218,15 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationIban',
             'creditor',
             'paymentAmountInformation',
             'paymentReferenceNon'
         ]);
 
         # $qrBill
-        #    ->setErrorCorrectionLevel(QrBill::ERROR_CORRECTION_LEVEL_MEDIUM) // due to limitations of QrReader class used in assert below
-        #    ->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-non.png');
+        #     ->setErrorCorrectionLevel(QrBill::ERROR_CORRECTION_LEVEL_MEDIUM) // due to limitations of QrReader class used in assert below
+        #     ->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-non.png');
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-payment-reference-non.png'))->text(),
@@ -227,14 +234,27 @@ class QrBillTest extends TestCase
         );
     }
 
+    public function testNonMatchingAccountAndReference()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationIban',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReferenceQr'
+        ]);
+
+        $this->assertFalse($qrBill->isValid());
+    }
+
     public function testOptionalUltimateDebtorCanBeSet()
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference',
+            'paymentReferenceQr',
             'ultimateDebtor'
         ]);
 
@@ -250,10 +270,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference',
+            'paymentReferenceQr',
             'invalidUltimateDebtor'
         ]);
 
@@ -264,10 +284,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference',
+            'paymentReferenceQr',
         ]);
 
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
@@ -285,10 +305,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference',
+            'paymentReferenceQr',
         ]);
 
         $qrBill->setAlternativeSchemes([
@@ -306,10 +326,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference',
+            'paymentReferenceQr',
         ]);
 
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
@@ -322,10 +342,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference'
+            'paymentReferenceQr'
         ]);
 
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
@@ -339,10 +359,10 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReference',
+            'paymentReferenceQr',
             'additionalInformation'
         ]);
 
@@ -358,11 +378,11 @@ class QrBillTest extends TestCase
     {
         $qrBill = $this->createQrBill([
             'header',
-            'creditorInformation',
+            'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
             'ultimateDebtor',
-            'paymentReference',
+            'paymentReferenceQr',
             'additionalInformation'
         ]);
 
@@ -417,9 +437,15 @@ class QrBillTest extends TestCase
         $qrBill->setHeader(new Header());
     }
 
-    public function creditorInformation(QrBill &$qrBill)
+    public function creditorInformationIban(QrBill &$qrBill)
     {
         $creditorInformation = CreditorInformation::create('CH9300762011623852957');
+        $qrBill->setCreditorInformation($creditorInformation);
+    }
+
+    public function creditorInformationQrIban(QrBill &$qrBill)
+    {
+        $creditorInformation = CreditorInformation::create('CH4431999123000889012');
         $qrBill->setCreditorInformation($creditorInformation);
     }
 
@@ -463,7 +489,7 @@ class QrBillTest extends TestCase
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
-    public function paymentReference(QrBill &$qrBill)
+    public function paymentReferenceQr(QrBill &$qrBill)
     {
         $paymentReference = PaymentReference::create(
             PaymentReference::TYPE_QR,
