@@ -43,11 +43,9 @@ abstract class AbstractOutput
         $availableInformationElements =  [
             'text.account' => $this->qrBill->getCreditorInformation()->getIban(),
             'text.creditor' => $this->qrBill->getCreditor() ? nl2br($this->qrBill->getCreditor()->getFullAddress()) : null,
-            'text.ultimateCreditor' =>  $this->qrBill->getUltimateCreditor() ? nl2br($this->qrBill->getUltimateCreditor()->getFullAddress()) : null,
             'text.referenceNumber' => $this->qrBill->getPaymentReference()->getReference(),
-            'text.additionalInformation' => $this->qrBill->getPaymentReference()->getMessage(),
+            'text.additionalInformation' => $this->qrBill->getAdditionalInformation()->getMessage(),
             'text.debtor' => $this->qrBill->getUltimateDebtor() ? nl2br($this->qrBill->getUltimateDebtor()->getFullAddress()) : null,
-            'text.dueDate' => $this->qrBill->getPaymentAmountInformation()->getDueDate() ? $this->qrBill->getPaymentAmountInformation()->getDueDate()->format('d.m.Y') : null
         ];
 
         foreach($availableInformationElements as $key => $content) {
