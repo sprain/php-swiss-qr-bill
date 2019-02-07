@@ -12,28 +12,20 @@ abstract class AbstractOutput
     /** @var  string */
     protected $language;
 
+    public function __construct(QrBill $qrBill, string $language)
+    {
+        $this->qrBill = $qrBill;
+        $this->language = $language;
+    }
+
     public function getQrBill() : ?QrBill
     {
         return $this->qrBill;
     }
 
-    public function setQrBill(QrBill $qrBill) : self
-    {
-        $this->qrBill = $qrBill;
-
-        return $this;
-    }
-
     public function getLanguage(): ?string
     {
         return $this->language;
-    }
-
-    public function setLanguage(string $language): self
-    {
-        $this->language = $language;
-
-        return $this;
     }
 
     public function getInformationElements() : array

@@ -2,12 +2,13 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\HtmlOutput;
 
-use Sprain\SwissQrBill\PaymentPart\HtmlOutput\Templates\ContentElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\HtmlOutput\Templates\PaymentPartTemplate;
 use Sprain\SwissQrBill\PaymentPart\AbstractOutput;
+use Sprain\SwissQrBill\PaymentPart\HtmlOutput\Template\ContentElementTemplate;
+use Sprain\SwissQrBill\PaymentPart\HtmlOutput\Template\PaymentPartTemplate;
+use Sprain\SwissQrBill\PaymentPart\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
-class HtmlOutput extends AbstractOutput
+class HtmlOutput extends AbstractOutput implements OutputInterface
 {
     public function getPaymentPart() : string
     {
@@ -24,7 +25,7 @@ class HtmlOutput extends AbstractOutput
         return $paymentPart;
     }
 
-    protected function addSchemeContent(string $paymentPart) : string
+    private function addSchemeContent(string $paymentPart) : string
     {
         $schemeContent = $this->getContentElement('{{ text.supports }}', '{{ text.creditTransfer }}');
         $paymentPart = str_replace('{{ scheme-content }}', $schemeContent, $paymentPart);
@@ -32,14 +33,14 @@ class HtmlOutput extends AbstractOutput
         return $paymentPart;
     }
 
-    protected function addSwissQrCodeImage(string $paymentPart) : string
+    private function addSwissQrCodeImage(string $paymentPart) : string
     {
         $paymentPart = str_replace('{{ swiss-qr-image }}', $this->qrBill->getQrCode()->writeDataUri(), $paymentPart);
 
         return $paymentPart;
     }
 
-    protected function addInformationContent(string $paymentPart) : string
+    private function addInformationContent(string $paymentPart) : string
     {
         $informationContent = '';
 
@@ -53,7 +54,7 @@ class HtmlOutput extends AbstractOutput
         return $paymentPart;
     }
 
-    protected function addCurrencyContent(string $paymentPart) : string
+    private function addCurrencyContent(string $paymentPart) : string
     {
         $currencyContent = $this->getContentElement('{{ text.currency }}', $this->qrBill->getPaymentAmountInformation()->getCurrency());
         $paymentPart = str_replace('{{ currency-content }}', $currencyContent, $paymentPart);
@@ -61,7 +62,7 @@ class HtmlOutput extends AbstractOutput
         return $paymentPart;
     }
 
-    protected function addAmountContent(string $paymentPart) : string
+    private function addAmountContent(string $paymentPart) : string
     {
         $amountString = number_format(
             $this->qrBill->getPaymentAmountInformation()->getAmount(),
@@ -76,7 +77,7 @@ class HtmlOutput extends AbstractOutput
         return $paymentPart;
     }
 
-    protected function getContentElement(string $title, string $content) : string
+    private function getContentElement(string $title, string $content) : string
     {
         $contentElementTemplate = ContentElementTemplate::TEMPLATE;
         $contentElement = $contentElementTemplate;
@@ -87,7 +88,7 @@ class HtmlOutput extends AbstractOutput
         return $contentElement;
     }
 
-    protected function translateContents($paymentPart, $language)
+    private function translateContents($paymentPart, $language)
     {
         $translations = Translation::getAllByLanguage($language);
         foreach($translations as $key => $text) {

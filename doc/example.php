@@ -65,10 +65,13 @@ $qrBill->setAdditionalInformation(
         'Invoice 11223344, Gardening Work'
     ));
 
-// Get QR code image
-#$qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
 
-$htmlOutput = new QrBill\PaymentPart\HtmlOutput\HtmlOutput();
-$htmlOutput->setQrBill($qrBill);
-$htmlOutput->setLanguage('de');
-print $htmlOutput->getPaymentPart();
+// Time to output something!
+//
+// Get the QR code image  …
+$qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
+$qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
+
+// … or output a full payment part
+$output = new QrBill\PaymentPart\HtmlOutput\HtmlOutput($qrBill, 'de');
+print $output->getPaymentPart();

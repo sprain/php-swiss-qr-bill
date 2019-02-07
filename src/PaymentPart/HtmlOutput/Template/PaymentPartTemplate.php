@@ -1,10 +1,10 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart\HtmlOutput\Templates;
+namespace Sprain\SwissQrBill\PaymentPart\HtmlOutput\Template;
 
 class PaymentPartTemplate
 {
-    const TEMPLATE = <<<EOT
+    public const TEMPLATE = <<<EOT
 <style>
 #qr-bill-payment-part {
 	box-sizing: border-box;
