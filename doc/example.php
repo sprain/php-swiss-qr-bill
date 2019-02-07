@@ -42,8 +42,8 @@ $qrBill->setUltimateDebtor(
 // What amount is to be paid?
 $qrBill->setPaymentAmountInformation(
     QrBill\DataGroup\Element\PaymentAmountInformation::create(
-    'CHF',
-    25.90
+        'CHF',
+        2345.90
     ));
 
 // Add payment reference
@@ -73,5 +73,5 @@ $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
 $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
 
 // … or output a full payment part
-$output = new QrBill\PaymentPart\HtmlOutput\HtmlOutput($qrBill, 'de');
+$output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'de');
 print $output->getPaymentPart();

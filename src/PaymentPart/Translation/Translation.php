@@ -6,63 +6,63 @@ class Translation
 {
     private const TRANSLATIONS = [
         'de' => [
-            'paymentPart' => 'Zahlteil QR-Rechnung',
-            'supports' => 'Unterstützt',
-            'creditTransfer' => 'Überweisung',
-            'account' => 'Konto',
-            'creditor' => 'Zahlungsempfänger',
-            'ultimateCreditor' => 'Endgültiger Zahlungsempfänger',
-            'referenceNumber' => 'Referenznummer',
+            'paymentPart' => 'Zahlteil',
+            'creditor' => 'Konto / Zahlbar an',
+            'reference' => 'Referenz',
             'additionalInformation' => 'Zusätzliche Informationen',
-            'debtor' => 'Zahlungspflichtiger',
-            'dueDate' => 'Zahlbar bis',
             'currency' => 'Währung',
-            'amount' => 'Betrag'
+            'amount' => 'Betrag',
+            'receipt' => 'Empfangsschein',
+            'acceptancePoint' => 'Annahmestelle',
+            'separate' => 'Vor der Einzahlung abzutrennen',
+            'payableBy' => 'Zahlbar durch',
+            'payableByName' => 'Zahlbar durch (Name/Adresse)',
+            'inFavorOf' => 'Zugunsten'
         ],
 
         'fr' => [
-            'paymentPart' => 'Section paiement QR-facture',
-            'supports' => 'Support',
-            'creditTransfer' => 'Virement',
-            'account' => 'Compte',
-            'creditor' => 'Bénéficiaire',
-            'ultimateCreditor' => 'Bénéficiaire final',
-            'referenceNumber' => 'Numéro de référence',
+            'paymentPart' => 'Section paiement',
+            'creditor' => 'Compte / Payable à',
+            'reference' => 'Référence',
             'additionalInformation' => 'Informations supplémentaires',
-            'debtor' => 'Débiteur',
-            'dueDate' => 'À payer jusqu\'au',
             'currency' => 'Monnaie',
-            'amount' => 'Montant'
+            'amount' => 'Montant',
+            'receipt' => 'Récépissé',
+            'acceptancePoint' => 'Point de dépôt',
+            'separate' => 'A détacher avant le versement',
+            'payableBy' => 'Payable par',
+            'payableByName' => 'Payable par (nom/adresse)',
+            'inFavorOf' => 'En faveur de'
         ],
 
         'it' => [
-            'paymentPart' => 'Sezione pagamento QR-fattura',
-            'supports' => 'Sostiene',
-            'creditTransfer' => 'Bonifico',
-            'account' => 'Conto',
-            'creditor' => 'Beneficiario',
-            'ultimateCreditor' => 'Beneficiario finale',
-            'referenceNumber' => 'Numero di riferimento',
+            'paymentPart' => 'Sezione pagamento',
+            'creditor' => 'Conto / Pagabile a',
+            'reference' => 'Riferimento',
             'additionalInformation' => 'Informazioni supplementari',
-            'debtor' => 'Debitore',
-            'dueDate' => 'Da pagare entro il',
             'currency' => 'Valuta',
-            'amount' => 'Importo'
+            'amount' => 'Importo',
+            'receipt' => 'Ricevuta',
+            'acceptancePoint' => 'Punto di accettazione',
+            'separate' => 'Da staccare prima del versamento',
+            'payableBy' => 'Pagabile da',
+            'payableByName' => 'Pagabile da (nome/indirizzo)',
+            'inFavorOf' => 'A favore di'
         ],
 
         'en' => [
-            'paymentPart' => 'QR-bill payment part',
-            'supports' => 'Supports',
-            'creditTransfer' => 'Credit transfer',
-            'account' => 'Account',
-            'creditor' => 'Creditor',
-            'ultimateCreditor' => 'Ultimate creditor',
-            'referenceNumber' => 'Reference number',
+            'paymentPart' => 'Payment part',
+            'creditor' => 'Account / Payable to',
+            'reference' => 'Reference',
             'additionalInformation' => 'Additional information',
-            'debtor' => 'Debtor',
-            'dueDate' => 'Due date',
             'currency' => 'Currency',
-            'amount' => 'Amount'
+            'amount' => 'Amount',
+            'receipt' => 'Receipt',
+            'acceptancePoint' => 'Acceptance point',
+            'separate' => 'Separate before paying in',
+            'payableBy' => 'Payable by',
+            'payableByName' => 'Payable by (name/address)',
+            'inFavorOf' => 'In favour of'
         ]
     ];
 

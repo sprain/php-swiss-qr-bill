@@ -1,11 +1,11 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart\HtmlOutput;
+namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
-use Sprain\SwissQrBill\PaymentPart\AbstractOutput;
-use Sprain\SwissQrBill\PaymentPart\HtmlOutput\Template\ContentElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\HtmlOutput\Template\PaymentPartTemplate;
-use Sprain\SwissQrBill\PaymentPart\OutputInterface;
+use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\ContentElementTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 class HtmlOutput extends AbstractOutput implements OutputInterface
@@ -14,21 +14,13 @@ class HtmlOutput extends AbstractOutput implements OutputInterface
     {
         $paymentPart = PaymentPartTemplate::TEMPLATE;
 
-        $paymentPart = $this->addSchemeContent($paymentPart);
         $paymentPart = $this->addSwissQrCodeImage($paymentPart);
         $paymentPart = $this->addInformationContent($paymentPart);
+        $paymentPart = $this->addInformationContentReceipt($paymentPart);
         $paymentPart = $this->addCurrencyContent($paymentPart);
         $paymentPart = $this->addAmountContent($paymentPart);
 
         $paymentPart = $this->translateContents($paymentPart, $this->getLanguage());
-
-        return $paymentPart;
-    }
-
-    private function addSchemeContent(string $paymentPart) : string
-    {
-        $schemeContent = $this->getContentElement('{{ text.supports }}', '{{ text.creditTransfer }}');
-        $paymentPart = str_replace('{{ scheme-content }}', $schemeContent, $paymentPart);
 
         return $paymentPart;
     }
@@ -50,6 +42,20 @@ class HtmlOutput extends AbstractOutput implements OutputInterface
         }
 
         $paymentPart = str_replace('{{ information-content }}', $informationContent, $paymentPart);
+
+        return $paymentPart;
+    }
+
+    private function addInformationContentReceipt(string $paymentPart) : string
+    {
+        $informationContent = '';
+
+        foreach($this->getInformationElementsOfReceipt() as $key => $content) {
+            $informationContentPart = $this->getContentElement('{{ '.$key.' }}', $content);
+            $informationContent .= $informationContentPart;
+        }
+
+        $paymentPart = str_replace('{{ information-content-receipt }}', $informationContent, $paymentPart);
 
         return $paymentPart;
     }
@@ -83,7 +89,7 @@ class HtmlOutput extends AbstractOutput implements OutputInterface
         $contentElement = $contentElementTemplate;
 
         $contentElement = str_replace('{{ title }}', $title, $contentElement);
-        $contentElement = str_replace('{{ content }}', $content, $contentElement);
+        $contentElement = str_replace('{{ content }}', nl2br($content), $contentElement);
 
         return $contentElement;
     }

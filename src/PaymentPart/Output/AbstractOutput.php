@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart;
+namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 use Sprain\SwissQrBill\QrBill;
 
@@ -33,11 +33,10 @@ abstract class AbstractOutput
         $informationElements = [];
 
         $availableInformationElements =  [
-            'text.account' => $this->qrBill->getCreditorInformation()->getIban(),
-            'text.creditor' => $this->qrBill->getCreditor() ? nl2br($this->qrBill->getCreditor()->getFullAddress()) : null,
-            'text.referenceNumber' => $this->qrBill->getPaymentReference()->getReference(),
+            'text.creditor' => $this->qrBill->getCreditorInformation()->getIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress(),
+            'text.reference' => $this->qrBill->getPaymentReference()->getReference(),
             'text.additionalInformation' => $this->qrBill->getAdditionalInformation()->getMessage(),
-            'text.debtor' => $this->qrBill->getUltimateDebtor() ? nl2br($this->qrBill->getUltimateDebtor()->getFullAddress()) : null,
+            'text.payableBy' => $this->qrBill->getUltimateDebtor() ? $this->qrBill->getUltimateDebtor()->getFullAddress() : null,
         ];
 
         foreach($availableInformationElements as $key => $content) {
@@ -45,6 +44,14 @@ abstract class AbstractOutput
                 $informationElements[$key] = $content;
             }
         }
+
+        return $informationElements;
+    }
+
+    public function getInformationElementsOfReceipt() : array
+    {
+        $informationElements = $this->getInformationElements();
+        unset($informationElements['text.additionalInformation']);
 
         return $informationElements;
     }

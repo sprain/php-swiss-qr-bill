@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart;
+namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 use Sprain\SwissQrBill\QrBill;
 
