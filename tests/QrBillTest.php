@@ -16,6 +16,8 @@ use Zxing\QrReader;
 
 class QrBillTest extends TestCase
 {
+    protected $regenerateReferenceQrCodes = false;
+
     public function testMinimalSetup()
     {
         $qrBill = $this->createQrBill([
@@ -26,10 +28,9 @@ class QrBillTest extends TestCase
             'paymentReferenceQr'
         ]);
 
-        # $qrBill
-        #    ->setErrorCorrectionLevel(QrBill::ERROR_CORRECTION_LEVEL_MEDIUM) // due to limitations of QrReader class used in assert below
-        #    ->getQrCode()
-        #    ->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
+        }
 
         foreach ($qrBill->getViolations() as $violation) {
             print $violation->getMessage()."\n";
@@ -163,7 +164,9 @@ class QrBillTest extends TestCase
             'paymentReferenceQr'
         ]);
 
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-information-without-amount.png');
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-information-without-amount.png');
+        }
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-payment-information-without-amount.png'))->text(),
@@ -206,7 +209,9 @@ class QrBillTest extends TestCase
             'paymentReferenceScor'
         ]);
 
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-scor.png');
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-scor.png');
+        }
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-payment-reference-scor.png'))->text(),
@@ -224,9 +229,9 @@ class QrBillTest extends TestCase
             'paymentReferenceNon'
         ]);
 
-        # $qrBill
-        #     ->setErrorCorrectionLevel(QrBill::ERROR_CORRECTION_LEVEL_MEDIUM) // due to limitations of QrReader class used in assert below
-        #     ->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-non.png');
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-non.png');
+        }
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-payment-reference-non.png'))->text(),
@@ -258,7 +263,9 @@ class QrBillTest extends TestCase
             'ultimateDebtor'
         ]);
 
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-debtor.png');
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-debtor.png');
+        }
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-ultimate-debtor.png'))->text(),
@@ -293,7 +300,9 @@ class QrBillTest extends TestCase
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
 
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-alternative-schemes.png');
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-alternative-schemes.png');
+        }
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-alternative-schemes.png'))->text(),
@@ -366,7 +375,9 @@ class QrBillTest extends TestCase
             'additionalInformation'
         ]);
 
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-additional-information.png');
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-additional-information.png');
+        }
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-additional-information.png'))->text(),
@@ -389,7 +400,9 @@ class QrBillTest extends TestCase
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
 
-        # $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
+        }
 
         $this->assertSame(
             (new QrReader(__DIR__ . '/TestData/qr-full-set.png'))->text(),
@@ -551,7 +564,7 @@ class QrBillTest extends TestCase
 
     public function additionalInformation(QrBill &$qrBill)
     {
-        $additionalInformation = AdditionalInformation::create('Invoice 123456');
+        $additionalInformation = AdditionalInformation::create('Invoice 1234568');
         $qrBill->setAdditionalInformation($additionalInformation);
     }
 
