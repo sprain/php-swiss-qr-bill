@@ -205,7 +205,7 @@ class QrBill implements SelfValidatableInterface
         return $qrCode;
     }
 
-    public function getQrCodeContent(): string
+    private function getQrCodeContent(): string
     {
         $elements = [
             $this->getHeader(),
