@@ -27,6 +27,10 @@ class QrBill implements SelfValidatableInterface
 
     const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.png';
 
+    const ERROR_CORRECTION_LEVEL_HIGH = ErrorCorrectionLevel::HIGH;
+    const ERROR_CORRECTION_LEVEL_MEDIUM = ErrorCorrectionLevel::MEDIUM;
+    const ERROR_CORRECTION_LEVEL_LOW = ErrorCorrectionLevel::LOW;
+
     /** @var Header */
     private $header;
 
@@ -50,6 +54,9 @@ class QrBill implements SelfValidatableInterface
 
     /** @var AlternativeScheme[] */
     private $alternativeSchemes = [];
+
+    /** @var string  */
+    private $errorCorrectionLevel = self::ERROR_CORRECTION_LEVEL_MEDIUM;
 
     public static function create(): self
     {
@@ -168,6 +175,16 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
+    /**
+     * @deprecated Will be removed in v3. The specs require the error correction level to be fixed at medium.
+     */
+    public function setErrorCorrectionLevel(string $errorCorrectionLevel): self
+    {
+        $this->errorCorrectionLevel = $errorCorrectionLevel;
+
+        return $this;
+    }
+
     public function getQrCode(): QrCode
     {
         if (!$this->isValid()) {
@@ -183,7 +200,7 @@ class QrBill implements SelfValidatableInterface
         $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
         $qrCode->setRoundBlockSize(false);
         $qrCode->setMargin(0);
-        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM));
+        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel($this->errorCorrectionLevel));
 
         return $qrCode;
     }
