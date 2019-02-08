@@ -56,7 +56,7 @@ class QrBill implements SelfValidatableInterface
     private $alternativeSchemes = [];
 
     /** @var string  */
-    private $errorCorrectionLevel = self::ERROR_CORRECTION_LEVEL_HIGH;
+    private $errorCorrectionLevel = self::ERROR_CORRECTION_LEVEL_MEDIUM;
 
     public static function create(): self
     {
@@ -175,6 +175,9 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
+    /**
+     * @deprecated Will be removed in v3. The specs require the error correction level to be fixed at medium.
+     */
     public function setErrorCorrectionLevel(string $errorCorrectionLevel): self
     {
         $this->errorCorrectionLevel = $errorCorrectionLevel;
