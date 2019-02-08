@@ -194,7 +194,7 @@ class QrBill implements SelfValidatableInterface
         }
 
         $qrCode = new QrCode();
-        $qrCode->setText($this->getQrCodeData());
+        $qrCode->setText($this->getQrCodeContent());
         $qrCode->setSize(543); // recommended 46x46 mm in px @ 300dpi
         $qrCode->setLogoPath(self::SWISS_CROSS_LOGO_FILE);
         $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
@@ -205,7 +205,7 @@ class QrBill implements SelfValidatableInterface
         return $qrCode;
     }
 
-    private function getQrCodeData(): string
+    public function getQrCodeContent(): string
     {
         $elements = [
             $this->getHeader(),
