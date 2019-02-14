@@ -78,6 +78,28 @@ class PaymentReferenceTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider formattedReferenceProvider
+     */
+    public function testFormattedReference($type, $reference, $formattedReference)
+    {
+        $paymentReference = PaymentReference::create(
+            $type,
+            $reference
+        );
+
+        $this->assertSame($formattedReference, $paymentReference->getFormattedReference());
+    }
+
+    public function formattedReferenceProvider()
+    {
+        return [
+            [PaymentReference::TYPE_QR, '012345678901234567890123456', '01 23456 78901 23456 78901 23456'],
+            [PaymentReference::TYPE_SCOR, 'RF18539007547034', 'RF18 5390 0754 7034'],
+            [PaymentReference::TYPE_NON, null, null],
+        ];
+    }
+
     public function testQrCodeData()
     {
         $paymentReference = PaymentReference::create(
