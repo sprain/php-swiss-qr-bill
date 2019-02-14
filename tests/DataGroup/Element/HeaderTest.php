@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\DataGroup\Element;
+namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\Header;

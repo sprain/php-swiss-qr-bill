@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\Constraints;
+namespace Sprain\Tests\SwissQrBill\Constraints;
 
 use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
 use Sprain\SwissQrBill\Constraint\ValidCreditorReferenceValidator;

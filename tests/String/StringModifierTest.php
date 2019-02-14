@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\String;
+namespace Sprain\Tests\SwissQrBill\String;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\String\StringModifier;

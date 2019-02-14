@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\QrCode;
+namespace Sprain\Tests\SwissQrBill\QrCode;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\QrCode\QrCode;

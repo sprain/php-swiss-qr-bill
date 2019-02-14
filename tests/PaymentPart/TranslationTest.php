@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\PaymentPart;
+namespace Sprain\Tests\SwissQrBill\PaymentPart;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;

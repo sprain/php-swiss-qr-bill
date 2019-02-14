@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\Reference;
+namespace Sprain\Tests\SwissQrBill\Reference;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\Reference\QrPaymentReferenceGenerator;
