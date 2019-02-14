@@ -79,7 +79,7 @@ class Translation
         if ($translations = self::getAllByLanguage($language)) {
             if (array_key_exists($key, $translations)) {
 
-                return $language[$key];
+                return $translations[$key];
             }
         }
     }
