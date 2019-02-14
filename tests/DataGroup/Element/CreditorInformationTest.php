@@ -83,4 +83,31 @@ class CreditorInformationTest extends TestCase
             [true, 'CH4431999123000889012'],
         ];
     }
+
+
+    /**
+     * @dataProvider formattedIbanProvider
+     */
+    public function testFormattedIban($iban, $formattedIban)
+    {
+        $creditorInformation = CreditorInformation::create(
+            $iban
+        );
+
+        $this->assertSame($formattedIban, $creditorInformation->getFormattedIban());
+    }
+
+    public function formattedIbanProvider()
+    {
+        return [
+            ['CH93 0076 2011 6238 5295 7', 'CH93 0076 2011 6238 5295 7'],
+            ['CH9300762011623852957', 'CH93 0076 2011 6238 5295 7'],
+            ['LI21 0881 0000 2324 013A A','LI21 0881 0000 2324 013A A'],
+            ['LI21088100002324013AA', 'LI21 0881 0000 2324 013A A'],
+
+            ['AAA', 'AAA'],
+            ['AAAA', 'AAAA'],
+            ['AAAAA', 'AAAA A']
+        ];
+    }
 }
