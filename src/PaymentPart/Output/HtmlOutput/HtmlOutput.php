@@ -8,7 +8,7 @@ use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplat
 use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
-class HtmlOutput extends AbstractOutput implements OutputInterface
+final class HtmlOutput extends AbstractOutput implements OutputInterface
 {
     public function getPaymentPart() : string
     {

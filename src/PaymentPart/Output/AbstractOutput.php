@@ -28,7 +28,7 @@ abstract class AbstractOutput
         return $this->language;
     }
 
-    public function getInformationElements() : array
+    protected function getInformationElements() : array
     {
         $informationElements = [];
 
@@ -48,7 +48,7 @@ abstract class AbstractOutput
         return $informationElements;
     }
 
-    public function getInformationElementsOfReceipt() : array
+    protected function getInformationElementsOfReceipt() : array
     {
         $informationElements = $this->getInformationElements();
         unset($informationElements['text.additionalInformation']);
