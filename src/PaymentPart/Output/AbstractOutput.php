@@ -33,8 +33,8 @@ abstract class AbstractOutput
         $informationElements = [];
 
         $availableInformationElements =  [
-            'text.creditor' => $this->qrBill->getCreditorInformation()->getIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress(),
-            'text.reference' => $this->qrBill->getPaymentReference()->getReference(),
+            'text.creditor' => $this->qrBill->getCreditorInformation()->getFormattedIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress(),
+            'text.reference' => $this->qrBill->getPaymentReference()->getFormattedReference(),
             'text.additionalInformation' => $this->qrBill->getAdditionalInformation()->getMessage(),
             'text.payableBy' => $this->qrBill->getUltimateDebtor() ? $this->qrBill->getUltimateDebtor()->getFullAddress() : null,
         ];
