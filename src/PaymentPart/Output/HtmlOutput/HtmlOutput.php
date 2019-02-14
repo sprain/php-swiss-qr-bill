@@ -70,14 +70,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
 
     private function addAmountContent(string $paymentPart) : string
     {
-        $amountString = number_format(
-            $this->qrBill->getPaymentAmountInformation()->getAmount(),
-            2,
-            '.',
-            ' '
-        );
-
-        $amountContent = $this->getContentElement('{{ text.amount }}', $amountString);
+        $amountContent = $this->getContentElement('{{ text.amount }}', $this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
         $paymentPart = str_replace('{{ amount-content }}', $amountContent, $paymentPart);
 
         return $paymentPart;
