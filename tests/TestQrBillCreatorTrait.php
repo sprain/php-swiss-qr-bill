@@ -14,6 +14,109 @@ use Sprain\SwissQrBill\QrBill;
 
 trait TestQrBillCreatorTrait
 {
+
+    public function validQrBillsProvider()
+    {
+        return [
+            ['qr-minimal-setup',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformation',
+                    'paymentReferenceQr'
+                ])
+            ],
+            ['qr-payment-information-without-amount',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformationWithoutAmount',
+                    'paymentReferenceQr'
+                ])
+            ],
+            ['qr-payment-reference-scor',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationIban',
+                    'creditor',
+                    'paymentAmountInformation',
+                    'paymentReferenceScor'
+                ])
+            ],
+            ['qr-payment-reference-non',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationIban',
+                    'creditor',
+                    'paymentAmountInformation',
+                    'paymentReferenceNon'
+                ])
+            ],
+            ['qr-ultimate-debtor',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformation',
+                    'paymentReferenceQr',
+                    'ultimateDebtor'
+                ])
+            ],
+            ['qr-additional-information',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformation',
+                    'paymentReferenceQr',
+                    'additionalInformation'
+                ])
+            ],
+            ['qr-full-set',
+                $this->getQrBillFullSet()
+            ],
+            ['qr-alternative-schemes',
+                $this->getQrBillWithAdditonalSchemes()
+            ]
+        ];
+    }
+
+    protected function getQrBillWithAdditonalSchemes()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReferenceQr',
+        ]);
+
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+
+        return $qrBill;
+    }
+
+    protected function getQrBillFullSet()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditor',
+            'paymentAmountInformation',
+            'ultimateDebtor',
+            'paymentReferenceQr',
+            'additionalInformation'
+        ]);
+
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+
+        return $qrBill;
+    }
+
     public function createQrBill(array $elements)
     {
         $qrBill = new QrBill();
@@ -155,7 +258,7 @@ trait TestQrBillCreatorTrait
 
     public function additionalInformation(QrBill &$qrBill)
     {
-        $additionalInformation = AdditionalInformation::create('Invoice 123456');
+        $additionalInformation = AdditionalInformation::create('Invoice 1234568');
         $qrBill->setAdditionalInformation($additionalInformation);
     }
 

@@ -12,26 +12,42 @@ class QrBillTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
-    public function testMinimalSetup()
+    private $regenerateReferenceQrCodes = false;
+
+    /**
+     * @dataProvider validQrBillsProvider
+     */
+    public function testValidQrBills(string $name, QrBill $qrBill)
+    {
+        $file = __DIR__ . '/TestData/QrCodes/' . $name . '.png';
+
+        if ($this->regenerateReferenceQrCodes) {
+            $qrBill->getQrCode()->writeFile($file);
+        }
+
+        $this->assertSame(
+            (new QrReader($file))->text(),
+            $qrBill->getQrCode()->getText()
+        );
+    }
+
+    public function testAlternativeSchemesCanBeSetAtOnce()
     {
         $qrBill = $this->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
             'paymentAmountInformation',
-            'paymentReferenceQr'
+            'paymentReferenceQr',
         ]);
 
-        if ($this->regenerateReferenceQrCodes) {
-            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-minimal-setup.png');
-        }
-
-        foreach ($qrBill->getViolations() as $violation) {
-            print $violation->getMessage()."\n";
-        }
+        $qrBill->setAlternativeSchemes([
+            AlternativeScheme::create('foo'),
+            AlternativeScheme::create('foo')
+        ]);
 
         $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-minimal-setup.png'))->text(),
+            (new QrReader(__DIR__ . '/TestData/QrCodes/qr-alternative-schemes.png'))->text(),
             $qrBill->getQrCode()->getText()
         );
     }
@@ -148,26 +164,6 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
-    public function testPaymentAmountInformationWithoutAmount()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformationQrIban',
-            'creditor',
-            'paymentAmountInformationWithoutAmount',
-            'paymentReferenceQr'
-        ]);
-
-        if ($this->regenerateReferenceQrCodes) {
-            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-information-without-amount.png');
-        }
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-payment-information-without-amount.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
-    }
-
     public function testPaymentReferenceIsRequired()
     {
         $qrBill = $this->createQrBill([
@@ -193,46 +189,6 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
-    public function testPaymentReferenceScor()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformationIban',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceScor'
-        ]);
-
-        if ($this->regenerateReferenceQrCodes) {
-            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-scor.png');
-        }
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-payment-reference-scor.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
-    }
-
-    public function testPaymentReferenceNon()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformationIban',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceNon'
-        ]);
-
-        if ($this->regenerateReferenceQrCodes) {
-            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-payment-reference-non.png');
-        }
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-payment-reference-non.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
-    }
-
     public function testNonMatchingAccountAndReference()
     {
         $qrBill = $this->createQrBill([
@@ -244,27 +200,6 @@ class QrBillTest extends TestCase
         ]);
 
         $this->assertFalse($qrBill->isValid());
-    }
-
-    public function testOptionalUltimateDebtorCanBeSet()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformationQrIban',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceQr',
-            'ultimateDebtor'
-        ]);
-
-        if ($this->regenerateReferenceQrCodes) {
-            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-ultimate-debtor.png');
-        }
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-ultimate-debtor.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
     }
 
     public function testOptionalUltimateDebtorMustBeValid()
@@ -279,50 +214,6 @@ class QrBillTest extends TestCase
         ]);
 
         $this->assertFalse($qrBill->isValid());
-    }
-
-    public function testAlternativeSchemesCanBeAdded()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformationQrIban',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceQr',
-        ]);
-
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-
-        if ($this->regenerateReferenceQrCodes) {
-            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-alternative-schemes.png');
-        }
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-alternative-schemes.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
-    }
-
-    public function testAlternativeSchemesCanBeSetAtOnce()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformationQrIban',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceQr',
-        ]);
-
-        $qrBill->setAlternativeSchemes([
-            AlternativeScheme::create('foo'),
-            AlternativeScheme::create('foo')
-        ]);
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-alternative-schemes.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
     }
 
     public function testAlternativeSchemesMustBeValid()
@@ -356,52 +247,6 @@ class QrBillTest extends TestCase
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
 
         $this->assertFalse($qrBill->isValid());
-    }
-
-    public function testAdditionalInformationCanBeAdded()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformationQrIban',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceQr',
-            'additionalInformation'
-        ]);
-
-        if ($this->regenerateReferenceQrCodes) {
-            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-additional-information.png');
-        }
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-additional-information.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
-    }
-
-    public function testFullQrCodeSet()
-    {
-        $qrBill = $this->createQrBill([
-            'header',
-            'creditorInformationQrIban',
-            'creditor',
-            'paymentAmountInformation',
-            'ultimateDebtor',
-            'paymentReferenceQr',
-            'additionalInformation'
-        ]);
-
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-
-        if ($this->regenerateReferenceQrCodes) {
-            $qrBill->getQrCode()->writeFile(__DIR__ . '/TestData/qr-full-set.png');
-        }
-
-        $this->assertSame(
-            (new QrReader(__DIR__ . '/TestData/qr-full-set.png'))->text(),
-            $qrBill->getQrCode()->getText()
-        );
     }
 
     /**
