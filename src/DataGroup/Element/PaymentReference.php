@@ -65,6 +65,7 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
                 return null;
         }
     }
+
     public function getQrCodeData(): array
     {
         return [
