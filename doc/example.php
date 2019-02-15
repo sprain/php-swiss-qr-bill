@@ -19,7 +19,7 @@ $qrBill->setCreditor(
 
 $qrBill->setCreditorInformation(
     QrBill\DataGroup\Element\CreditorInformation::create(
-        'CH9300762011623852957'
+        'CH4431999123000889012'
     ));
 
 
@@ -30,12 +30,12 @@ $qrBill->setCreditorInformation(
 // They are interchangeable for creditor as well as debtor.
 $qrBill->setUltimateDebtor(
     QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
-    'Thomas LeClaire',
-    'Rue examplaire',
-    '22a',
-    '1000',
-    'Lausanne',
-    'CH'
+        'Thomas LeClaire',
+        'Rue examplaire',
+        '22a',
+        '1000',
+        'Lausanne',
+        'CH'
     ));
 
 // Add payment amount information
