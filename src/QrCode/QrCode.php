@@ -24,12 +24,6 @@ class QrCode extends BaseQrCode implements QrCodeInterface
             ));
         }
 
-        // This block becomes obsolete when the following pull request gets merged:
-        // https://github.com/endroid/qr-code/pull/191
-        $writerRegistry = new WriterRegistry();
-        $writerRegistry->loadDefaultWriters();
-        $this->setWriterRegistry($writerRegistry);
-
         $this->setWriterByExtension($extension);
         parent::writeFile($path);
     }
