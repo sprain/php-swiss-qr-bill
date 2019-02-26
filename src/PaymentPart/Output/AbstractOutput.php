@@ -2,6 +2,10 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output;
 
+use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
 use Sprain\SwissQrBill\QrBill;
 
 abstract class AbstractOutput
@@ -32,17 +36,25 @@ abstract class AbstractOutput
     {
         $informationElements = [];
 
-        $availableInformationElements =  [
-            'text.creditor' => $this->qrBill->getCreditorInformation()->getFormattedIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress(),
-            'text.reference' => $this->qrBill->getPaymentReference()->getFormattedReference(),
-            'text.additionalInformation' => $this->qrBill->getAdditionalInformation() ? $this->qrBill->getAdditionalInformation()->getMessage() : null,
-            'text.payableBy' => $this->qrBill->getUltimateDebtor() ? $this->qrBill->getUltimateDebtor()->getFullAddress() : null,
-        ];
+        $informationElements[] = Title::create('text.creditor');
+        $informationElements[] = Text::create($this->qrBill->getCreditorInformation()->getFormattedIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress());
 
-        foreach($availableInformationElements as $key => $content) {
-            if ($content) {
-                $informationElements[$key] = $content;
-            }
+        if ($this->qrBill->getPaymentReference()->getType() !== PaymentReference::TYPE_NON) {
+            $informationElements[] = Title::create('text.reference');
+            $informationElements[] = Text::create($this->qrBill->getPaymentReference()->getFormattedReference());
+        }
+
+        if ($this->qrBill->getAdditionalInformation()) {
+            $informationElements[] = Title::create('text.additionalInformation');
+            $informationElements[] = Text::create($this->qrBill->getAdditionalInformation()->getMessage());
+        }
+
+        if ($this->qrBill->getUltimateDebtor()) {
+            $informationElements[] = Title::create('text.payableBy');
+            $informationElements[] = Text::create($this->qrBill->getUltimateDebtor()->getFullAddress());
+        } else {
+            $informationElements[] = Title::create('text.payableByName');
+            $informationElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY);
         }
 
         return $informationElements;
@@ -50,8 +62,23 @@ abstract class AbstractOutput
 
     protected function getInformationElementsOfReceipt() : array
     {
-        $informationElements = $this->getInformationElements();
-        unset($informationElements['text.additionalInformation']);
+        $informationElements = [];
+
+        $informationElements[] = Title::create('text.creditor');
+        $informationElements[] = Text::create($this->qrBill->getCreditorInformation()->getFormattedIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress());
+
+        if ($this->qrBill->getPaymentReference()->getType() !== PaymentReference::TYPE_NON) {
+            $informationElements[] = Title::create('text.reference');
+            $informationElements[] = Text::create($this->qrBill->getPaymentReference()->getFormattedReference());
+        }
+
+        if ($this->qrBill->getUltimateDebtor()) {
+            $informationElements[] = Title::create('text.payableBy');
+            $informationElements[] = Text::create($this->qrBill->getUltimateDebtor()->getFullAddress());
+        } else {
+            $informationElements[] = Title::create('text.payableByName');
+            $informationElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT);
+        }
 
         return $informationElements;
     }

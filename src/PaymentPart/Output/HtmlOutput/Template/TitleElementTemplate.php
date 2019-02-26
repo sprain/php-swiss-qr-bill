@@ -2,10 +2,9 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template;
 
-class ContentElementTemplate
+class TitleElementTemplate
 {
     public const TEMPLATE = <<<EOT
-<h2>{{ title }}</h2>
-<p>{{ content }}</p>
+<h2>{{ {{ title }} }}</h2>
 EOT;
 }
