@@ -13,6 +13,7 @@ class PaymentPartTemplate
 	border: 0.2mm solid black;
 	font-family: Arial, Frutiger, Helvetica, "Liberation Sans";
 	border-collapse: collapse;
+	color: #000;
 }
 
 #qr-bill h1 {
@@ -20,10 +21,7 @@ class PaymentPartTemplate
 	font-weight: bold;
 	margin: 0;
 	padding: 0;
-}
-
-#qr-bill-receipt h1 {
-	margin-bottom: 5mm;
+	height: 7mm;
 }
 
 #qr-bill h2 {
@@ -53,23 +51,25 @@ class PaymentPartTemplate
 	vertical-align: top;
 }
 
-#qr-bill-receipt p {
-	font-size: 8pt;
-}
-
 #qr-bill-receipt h2 {
 	font-size: 6pt;
 }
 
+#qr-bill-receipt p {
+	font-size: 8pt;
+}
+
 #qr-bill-information-receipt {
-    height: 51mm;
+    height: 56mm;
+}
+
+#qr-bill-amount-area-receipt {
+    height: 14mm;
 }
 
 #qr-bill-acceptance-point {
-    font-size: 8pt;
-    font-weight: bold;
+    height: 18mm;
     text-align: right;
-    margin-top: 5mm;
 }
 
 #qr-bill-payment-part {
@@ -89,12 +89,15 @@ class PaymentPartTemplate
 
 #qr-bill-payment-part-left {
     float: left;
+    box-sizing: border-box;
+    width: 51mm;
 }
 
 #qr-bill-swiss-qr-image {
 	width: 46mm;
 	height: 46mm;
 	margin: 5mm;
+	margin-left: 0;
 }
 
 #qr-bill-amount {
@@ -115,7 +118,7 @@ class PaymentPartTemplate
 	        <div id="qr-bill-information-receipt">
                 {{ information-content-receipt }}
             </div>
-            <div id="qr-bill-amount">
+            <div id="qr-bill-amount-area-receipt">
                 <div id="qr-bill-currency">
                     {{ currency-content }}
                 </div>
@@ -124,7 +127,7 @@ class PaymentPartTemplate
                 </div>
             </div>
             <div id="qr-bill-acceptance-point">
-                {{ text.acceptancePoint }}
+                <h2>{{ text.acceptancePoint }}</h2>
             </div>
         </td>
 
@@ -132,7 +135,7 @@ class PaymentPartTemplate
             <div id="qr-bill-payment-part-left">
                 <h1>{{ text.paymentPart }}</h1>
                 <img src="{{ swiss-qr-image }}" id="qr-bill-swiss-qr-image">
-                <div id="qr-bill-amount">
+                <div id="qr-bill-amount-area">
                     <div id="qr-bill-currency">
                         {{ currency-content }}
                     </div>
