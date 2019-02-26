@@ -1,11 +1,10 @@
 <?php
 
-namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
+namespace Sprain\Tests\SwissQrBill;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
 use Sprain\SwissQrBill\QrBill;
-use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
 use Zxing\QrReader;
 
 class QrBillTest extends TestCase
