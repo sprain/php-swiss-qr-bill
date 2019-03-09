@@ -10,10 +10,14 @@ class PaymentPartTemplate
 	box-sizing: border-box;
 	width: 210mm;
 	height: 105mm;
-	border: 0.2mm solid black;
+	border-top: 0.75pt solid black;
 	font-family: Arial, Frutiger, Helvetica, "Liberation Sans";
 	border-collapse: collapse;
 	color: #000;
+}
+
+#qr-bill img.qr-bill-placeholder {
+    margin-top: 1pt;
 }
 
 /* h1 / h2 */
@@ -93,7 +97,12 @@ class PaymentPartTemplate
 }
 
 #qr-bill-amount-area-receipt {
-    height: 13mm;
+    height: 14mm;
+}
+
+#qr-bill-currency-receipt {
+	float: left;
+	margin-right: 2mm;
 }
 
 #qr-bill-acceptance-point {
@@ -102,9 +111,10 @@ class PaymentPartTemplate
     margin-right: 5mm;
 }
 
-img#placeholder_amount_receipt {
+#qr-bill img#placeholder_amount_receipt {
     float: right;
-    margin-top: -10pt;
+    margin-top: -9pt;
+    margin-right: 5mm;
 }
 
 /* Main part */
@@ -142,9 +152,9 @@ img#placeholder_amount_receipt {
     clear: both;
 }
 
-img#placeholder_amount {
+#qr-bill img#placeholder_amount {
     margin-left: 11mm;
-    margin-top: -4mm;
+    margin-top: -11pt;
 }
 
 </style>
@@ -157,10 +167,10 @@ img#placeholder_amount {
                 {{ information-content-receipt }}
             </div>
             <div id="qr-bill-amount-area-receipt">
-                <div id="qr-bill-currency">
+                <div id="qr-bill-currency-receipt">
                     {{ currency-content }}
                 </div>
-                <div id="qr-bill-amount">
+                <div id="qr-bill-amount-receipt">
                     {{ amount-content-receipt }}
                 </div>
             </div>
