@@ -3,7 +3,6 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
-use Sprain\SwissQrBill\PaymentPart\Output\Element\AbstractElement;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
