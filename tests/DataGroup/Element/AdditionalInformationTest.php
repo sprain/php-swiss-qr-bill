@@ -47,6 +47,15 @@ class AdditionalInformationTest extends TestCase
         ];
     }
 
+    public function testFormattedString()
+    {
+        $additionalInformation = AdditionalInformation::create('message');
+        $this->assertSame("message", $additionalInformation->getFormattedString());
+
+        $additionalInformation = AdditionalInformation::create('message', 'billInformation');
+        $this->assertSame("message\nbillInformation", $additionalInformation->getFormattedString());
+    }
+
     public function testQrCodeData()
     {
         $additionalInformation = AdditionalInformation::create('message', 'billInformation');

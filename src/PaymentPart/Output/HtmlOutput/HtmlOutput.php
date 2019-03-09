@@ -26,6 +26,8 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         $paymentPart = $this->addInformationContentReceipt($paymentPart);
         $paymentPart = $this->addCurrencyContent($paymentPart);
         $paymentPart = $this->addAmountContent($paymentPart);
+        $paymentPart = $this->addAmountContentReceipt($paymentPart);
+        $paymentPart = $this->addFurtherInformationContent($paymentPart);
 
         $paymentPart = $this->translateContents($paymentPart, $this->getLanguage());
 
@@ -61,8 +63,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         $informationContent = '';
 
         foreach($this->getInformationElementsOfReceipt() as $informationElement) {
-            $informationContentPart = $this->getContentElement($informationElement);
-            $informationContent .= $informationContentPart;
+            $informationContent .= $this->getContentElement($informationElement);
         }
 
         $paymentPart = str_replace('{{ information-content-receipt }}', $informationContent, $paymentPart);
@@ -72,7 +73,12 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
 
     private function addCurrencyContent(string $paymentPart) : string
     {
-        $currencyContent = $this->getContentElement(new Text('text.currency', $this->qrBill->getPaymentAmountInformation()->getCurrency()));
+        $currencyContent = '';
+
+        foreach($this->getCurrencyElements() as $currencyElement) {
+            $currencyContent .= $this->getContentElement($currencyElement);
+        }
+
         $paymentPart = str_replace('{{ currency-content }}', $currencyContent, $paymentPart);
 
         return $paymentPart;
@@ -80,8 +86,39 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
 
     private function addAmountContent(string $paymentPart) : string
     {
-        $amountContent = $this->getContentElement( new Text('text.amount', $this->qrBill->getPaymentAmountInformation()->getFormattedAmount()));
+        $amountContent = '';
+
+        foreach($this->getAmountElements() as $amountElement) {
+            $amountContent .= $this->getContentElement($amountElement);
+        }
+
         $paymentPart = str_replace('{{ amount-content }}', $amountContent, $paymentPart);
+
+        return $paymentPart;
+    }
+
+    private function addAmountContentReceipt(string $paymentPart) : string
+    {
+        $amountContent = '';
+
+        foreach($this->getAmountElementsReceipt() as $amountElement) {
+            $amountContent .= $this->getContentElement($amountElement);
+        }
+
+        $paymentPart = str_replace('{{ amount-content-receipt }}', $amountContent, $paymentPart);
+
+        return $paymentPart;
+    }
+
+    private function addFurtherInformationContent(string $paymentPart) : string
+    {
+        $furtherInformationContent = '';
+
+        foreach($this->getFurtherInformationElements() as $furtherInformationElement) {
+            $furtherInformationContent .= $this->getContentElement($furtherInformationElement);
+        }
+
+        $paymentPart = str_replace('{{ further-information-content }}', $furtherInformationContent, $paymentPart);
 
         return $paymentPart;
     }

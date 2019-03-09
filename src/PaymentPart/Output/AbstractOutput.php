@@ -46,7 +46,7 @@ abstract class AbstractOutput
 
         if ($this->qrBill->getAdditionalInformation()) {
             $informationElements[] = Title::create('text.additionalInformation');
-            $informationElements[] = Text::create($this->qrBill->getAdditionalInformation()->getMessage());
+            $informationElements[] = Text::create($this->qrBill->getAdditionalInformation()->getFormattedString());
         }
 
         if ($this->qrBill->getUltimateDebtor()) {
@@ -81,5 +81,58 @@ abstract class AbstractOutput
         }
 
         return $informationElements;
+    }
+
+    protected function getCurrencyElements() : array
+    {
+        $currencyElements = [];
+
+        $currencyElements[] = Title::create('text.currency');
+        $currencyElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getCurrency());
+
+        return $currencyElements;
+    }
+
+    protected function getAmountElements() : array
+    {
+        $amountElements = [];
+
+        $amountElements[] = Title::create('text.amount');
+
+        if ($this->qrBill->getPaymentAmountInformation()->getAmount()) {
+            $amountElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
+        } else {
+            $amountElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_AMOUNT);
+        }
+
+        return $amountElements;
+    }
+
+    protected function getAmountElementsReceipt() : array
+    {
+        $amountElements = [];
+
+        $amountElements[] = Title::create('text.amount');
+
+        if ($this->qrBill->getPaymentAmountInformation()->getAmount()) {
+            $amountElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
+        } else {
+            $amountElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT);
+        }
+
+        return $amountElements;
+    }
+
+    protected function getFurtherInformationElements() : array
+    {
+        $furtherInformationElements = [];
+
+        $furtherInformationLines= [];
+        foreach($this->qrBill->getAlternativeSchemes() as $alternativeScheme) {
+            $furtherInformationLines[] = $alternativeScheme->getParameter();
+        }
+        $furtherInformationElements[] = Text::create(implode("\n", $furtherInformationLines));
+
+        return $furtherInformationElements;
     }
 }
