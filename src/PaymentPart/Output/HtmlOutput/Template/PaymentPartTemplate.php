@@ -157,6 +157,7 @@ class PaymentPartTemplate
     margin-top: -11pt;
 }
 
+{{ printable-content }}
 </style>
 
 <table id="qr-bill">

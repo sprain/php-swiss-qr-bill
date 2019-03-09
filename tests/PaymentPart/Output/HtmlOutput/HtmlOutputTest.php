@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
-use Symfony\Component\DomCrawler\Crawler;
 
 class HtmlOutputTest extends TestCase
 {
@@ -19,20 +18,33 @@ class HtmlOutputTest extends TestCase
      */
     public function testValidQrBills(string $name, QrBill $qrBill)
     {
-        $file = __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.html';
+        $variations = [
+            [
+                'printable' => false,
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.html'
+            ],
+            [
+                'printable' => true,
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.print.html'
+            ]
+        ];
 
-        $output = (new HtmlOutput($qrBill, 'en'))->getPaymentPart();
+        foreach ($variations as $variation) {
 
-        if ($this->regenerateReferenceHtmlOutputs) {
-           file_put_contents($file, $output);
+            $file = $variation['file'];
+
+            $htmlOutput = (new HtmlOutput($qrBill, 'en'));
+            $htmlOutput->setPrintable($variation['printable']);
+            $output = $htmlOutput->getPaymentPart();
+
+            if ($this->regenerateReferenceHtmlOutputs) {
+               file_put_contents($file, $output);
+            }
+
+            $this->assertSame(
+                file_get_contents($file),
+                $output
+            );
         }
-
-        $crawler = new Crawler($output);
-        $this->assertEquals(1, $crawler->filter('td#qr-bill-payment-part')->count());
-
-        $this->assertSame(
-            file_get_contents($file),
-            $output
-        );
     }
 }

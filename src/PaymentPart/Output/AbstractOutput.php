@@ -16,10 +16,14 @@ abstract class AbstractOutput
     /** @var  string */
     protected $language;
 
+    /** @var bool */
+    protected $printable;
+
     public function __construct(QrBill $qrBill, string $language)
     {
         $this->qrBill = $qrBill;
         $this->language = $language;
+        $this->printable = false;
     }
 
     public function getQrBill() : ?QrBill
@@ -30,6 +34,18 @@ abstract class AbstractOutput
     public function getLanguage(): ?string
     {
         return $this->language;
+    }
+
+    public function setPrintable(bool $printable) : self
+    {
+        $this->printable = $printable;
+
+        return $this;
+    }
+
+    public function isPrintable() : bool
+    {
+        return $this->printable;
     }
 
     protected function getInformationElements() : array

@@ -9,6 +9,7 @@ use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PlaceholderElementTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableStylesTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TextElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
@@ -28,6 +29,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         $paymentPart = $this->addAmountContent($paymentPart);
         $paymentPart = $this->addAmountContentReceipt($paymentPart);
         $paymentPart = $this->addFurtherInformationContent($paymentPart);
+        $paymentPart = $this->addPrintableContent($paymentPart);
 
         $paymentPart = $this->translateContents($paymentPart, $this->getLanguage());
 
@@ -119,6 +121,18 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         }
 
         $paymentPart = str_replace('{{ further-information-content }}', $furtherInformationContent, $paymentPart);
+
+        return $paymentPart;
+    }
+
+    private function addPrintableContent(string $paymentPart) : string
+    {
+        $printableStyles = '';
+        if ($this->isPrintable()) {
+            $printableStyles = PrintableStylesTemplate::TEMPLATE;
+        }
+
+        $paymentPart = str_replace('{{ printable-content }}', $printableStyles, $paymentPart);
 
         return $paymentPart;
     }
