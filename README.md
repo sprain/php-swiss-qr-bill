@@ -8,7 +8,7 @@ A PHP library to create Swiss QR Bill payment parts, a new standard which will r
 [You are welcome to contribute.](https://github.com/sprain/php-swiss-qr-bill/issues)
 
 
-![Image of Swiss QR Bill example](doc/example-payment-part.png)
+![Image of Swiss QR Bill example](docs/assets/example-payment-part.png)
 
 ## Official docs
 
@@ -28,4 +28,4 @@ composer require sprain/swiss-qr-bill
 
 
 ## Usage
-See [doc/example.php](doc/example.php).
+See [example/example.php](example/example.php).
