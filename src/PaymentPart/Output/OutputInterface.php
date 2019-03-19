@@ -12,7 +12,7 @@ interface OutputInterface
 
     public function getPaymentPart();
 
-    public function setPrintable(bool $printable): self;
+    public function setPrintable(bool $printable);
 
     public function isPrintable(): bool;
 }
