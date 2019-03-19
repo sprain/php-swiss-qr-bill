@@ -11,4 +11,8 @@ interface OutputInterface
     public function getLanguage(): ?string;
 
     public function getPaymentPart();
+
+    public function setPrintable(bool $printable) : self;
+
+    public function isPrintable() : bool;
 }
