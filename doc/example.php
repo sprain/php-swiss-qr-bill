@@ -67,4 +67,4 @@ $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
 
 // … or output a full payment part
 $output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
-print $output->getPaymentPart();
+print $output->setPrintable(false)->getPaymentPart();

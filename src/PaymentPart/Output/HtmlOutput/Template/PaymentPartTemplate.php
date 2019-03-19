@@ -10,7 +10,6 @@ class PaymentPartTemplate
 	box-sizing: border-box;
 	width: 210mm;
 	height: 105mm;
-	border-top: 0.75pt solid black;
 	font-family: Arial, Frutiger, Helvetica, "Liberation Sans";
 	border-collapse: collapse;
 	color: #000;
@@ -18,6 +17,15 @@ class PaymentPartTemplate
 
 #qr-bill img.qr-bill-placeholder {
     margin-top: 1pt;
+}
+
+#qr-bill-separate-info {
+    text-align: center;
+    font-size: 8pt;
+    line-height: 9pt;
+	border-bottom: 0.75pt solid black;
+	height: 5mm;
+	vertical-align: middle;
 }
 
 /* h1 / h2 */
@@ -161,6 +169,9 @@ class PaymentPartTemplate
 </style>
 
 <table id="qr-bill">
+    <tr id="qr-bill-separate-info">
+        <td colspan="99"><span id="qr-bill-separate-info-text">{{ text.separate }}</span></td>
+    </tr>
 	<tr>
 	    <td id="qr-bill-receipt">
 	        <h1>{{ text.receipt }}</h1>
