@@ -1,0 +1,5 @@
+site_name: PhpSwissQrBill documentation
+repo_url: https://github.com/sprain/php-swiss-qr-bill
+edit_uri: edit/master/docs/
+
+theme: readthedocs
