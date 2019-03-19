@@ -16,14 +16,8 @@ For more official information about the new standards see
 - [https://www.paymentstandards.ch/en/home/roadmap/payment-slips.html](https://www.paymentstandards.ch/en/home/roadmap/payment-slips.html)
 - [https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html](https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html)
 
-## Prerequisites
-This library supports PHP 7.1 – 7.3
+## Support
 
-## Installation
-
-```sh
-composer require sprain/swiss-qr-bill
-```
-
-## Quick start example
-See [example/example.php](https://github.com/sprain/php-swiss-qr-bill/tree/master/example/example.php).
+- For general questions or support requests, ask your question [on StackOverflow](https://stackoverflow.com/questions/tagged/phpswissqrbill).
+- For bugs reports or feature requests, [open an issue on Github](https://github.com/sprain/php-swiss-qr-bill/issues).
+- You may also contact [@sprain on Twitter](https://twitter.com/sprain).
