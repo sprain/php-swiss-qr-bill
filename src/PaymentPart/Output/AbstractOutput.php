@@ -26,7 +26,7 @@ abstract class AbstractOutput
         $this->printable = false;
     }
 
-    public function getQrBill() : ?QrBill
+    public function getQrBill(): ?QrBill
     {
         return $this->qrBill;
     }
@@ -36,19 +36,19 @@ abstract class AbstractOutput
         return $this->language;
     }
 
-    public function setPrintable(bool $printable) : self
+    public function setPrintable(bool $printable): self
     {
         $this->printable = $printable;
 
         return $this;
     }
 
-    public function isPrintable() : bool
+    public function isPrintable(): bool
     {
         return $this->printable;
     }
 
-    protected function getInformationElements() : array
+    protected function getInformationElements(): array
     {
         $informationElements = [];
 
@@ -76,7 +76,7 @@ abstract class AbstractOutput
         return $informationElements;
     }
 
-    protected function getInformationElementsOfReceipt() : array
+    protected function getInformationElementsOfReceipt(): array
     {
         $informationElements = [];
 
@@ -99,7 +99,7 @@ abstract class AbstractOutput
         return $informationElements;
     }
 
-    protected function getCurrencyElements() : array
+    protected function getCurrencyElements(): array
     {
         $currencyElements = [];
 
@@ -109,7 +109,7 @@ abstract class AbstractOutput
         return $currencyElements;
     }
 
-    protected function getAmountElements() : array
+    protected function getAmountElements(): array
     {
         $amountElements = [];
 
@@ -124,7 +124,7 @@ abstract class AbstractOutput
         return $amountElements;
     }
 
-    protected function getAmountElementsReceipt() : array
+    protected function getAmountElementsReceipt(): array
     {
         $amountElements = [];
 
@@ -139,7 +139,7 @@ abstract class AbstractOutput
         return $amountElements;
     }
 
-    protected function getFurtherInformationElements() : array
+    protected function getFurtherInformationElements(): array
     {
         $furtherInformationElements = [];
 

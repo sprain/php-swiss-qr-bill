@@ -17,7 +17,7 @@ use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 final class HtmlOutput extends AbstractOutput implements OutputInterface
 {
-    public function getPaymentPart() : string
+    public function getPaymentPart(): string
     {
         $paymentPart = PaymentPartTemplate::TEMPLATE;
 
@@ -35,7 +35,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addSwissQrCodeImage(string $paymentPart) : string
+    private function addSwissQrCodeImage(string $paymentPart): string
     {
         $qrCode = $this->qrBill->getQrCode();
         $qrCode->setWriterByExtension('svg');
@@ -45,7 +45,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addInformationContent(string $paymentPart) : string
+    private function addInformationContent(string $paymentPart): string
     {
         $informationContent = '';
 
@@ -59,7 +59,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addInformationContentReceipt(string $paymentPart) : string
+    private function addInformationContentReceipt(string $paymentPart): string
     {
         $informationContent = '';
 
@@ -72,7 +72,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addCurrencyContent(string $paymentPart) : string
+    private function addCurrencyContent(string $paymentPart): string
     {
         $currencyContent = '';
 
@@ -85,7 +85,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addAmountContent(string $paymentPart) : string
+    private function addAmountContent(string $paymentPart): string
     {
         $amountContent = '';
 
@@ -98,7 +98,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addAmountContentReceipt(string $paymentPart) : string
+    private function addAmountContentReceipt(string $paymentPart): string
     {
         $amountContent = '';
 
@@ -111,7 +111,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addFurtherInformationContent(string $paymentPart) : string
+    private function addFurtherInformationContent(string $paymentPart): string
     {
         $furtherInformationContent = '';
 
@@ -124,7 +124,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addPrintableContent(string $paymentPart) : string
+    private function addPrintableContent(string $paymentPart): string
     {
         $printableStyles = '';
         if ($this->isPrintable()) {
@@ -136,7 +136,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function getContentElement(OutputElementInterface $element) : string
+    private function getContentElement(OutputElementInterface $element): string
     {
         if ($element instanceof Title) {
             $elementTemplate = TitleElementTemplate::TEMPLATE;
