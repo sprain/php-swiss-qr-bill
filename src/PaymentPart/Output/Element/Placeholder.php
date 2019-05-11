@@ -44,7 +44,7 @@ class Placeholder implements OutputElementInterface
     /** @var int */
     private $height;
 
-    public static function create(array $type)
+    public static function create(array $type): self
     {
         $placeholder = new self();
         $placeholder->type = $type['type'];
