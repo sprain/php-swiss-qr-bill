@@ -9,7 +9,7 @@ A PHP library to create Swiss QR Bill payment parts, a new standard which will r
 
 ## Documentation
 
-You can [find the documentation on ReadTheDocs](https://php-swiss-qr-bill.readthedocs.io/en/latest/).
+You can [find the documentation on ReadTheDocs](https://php-swiss-qr-bill.readthedocs.io/en/stable/).
 
 
 ## Quick start
