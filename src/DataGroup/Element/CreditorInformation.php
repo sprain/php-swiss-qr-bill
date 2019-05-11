@@ -34,6 +34,11 @@ class CreditorInformation implements QrCodeableInterface, SelfValidatableInterfa
 
     public function getFormattedIban(): ?string
     {
+        if (null === $this->iban) {
+
+            return null;
+        }
+
         return trim(chunk_split($this->iban, 4, ' '));
     }
 
