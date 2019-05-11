@@ -6,7 +6,7 @@ class Title implements OutputElementInterface
 {
     private $title;
 
-    public static function create(string $title)
+    public static function create(string $title): self
     {
         $element = new self();
         $element->title = $title;

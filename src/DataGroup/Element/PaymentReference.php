@@ -57,10 +57,8 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
         switch ($this->type) {
             case self::TYPE_QR:
                 return trim(strrev(chunk_split(strrev($this->reference), 5, ' ')));
-                break;
             case self::TYPE_SCOR:
                 return trim(chunk_split($this->reference, 4, ' '));
-                break;
             default:
                 return null;
         }

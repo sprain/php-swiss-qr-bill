@@ -6,7 +6,7 @@ class Text implements OutputElementInterface
 {
     private $text;
 
-    public static function create(string $text)
+    public static function create(string $text): self
     {
         $element = new self();
         $element->text = $text;
