@@ -52,6 +52,16 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
         return $this->billInformation;
     }
 
+    public function getFormattedString(): ?string
+    {
+        $string = $this->getMessage();
+        if ($this->getBillInformation()) {
+            $string .= "\n".$this->getBillInformation();
+        }
+
+        return $string;
+    }
+
     public function getQrCodeData(): array
     {
         return [

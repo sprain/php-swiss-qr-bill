@@ -52,6 +52,18 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
         return $this->reference;
     }
 
+    public function getFormattedReference(): ?string
+    {
+        switch ($this->type) {
+            case self::TYPE_QR:
+                return trim(strrev(chunk_split(strrev($this->reference), 5, ' ')));
+            case self::TYPE_SCOR:
+                return trim(chunk_split($this->reference, 4, ' '));
+            default:
+                return null;
+        }
+    }
+
     public function getQrCodeData(): array
     {
         return [

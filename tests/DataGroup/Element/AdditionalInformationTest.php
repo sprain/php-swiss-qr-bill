@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\DataGroup\Element;
+namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
@@ -45,6 +45,15 @@ class AdditionalInformationTest extends TestCase
             [0, '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'],
             [1, '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901'], // too long
         ];
+    }
+
+    public function testFormattedString()
+    {
+        $additionalInformation = AdditionalInformation::create('message');
+        $this->assertSame("message", $additionalInformation->getFormattedString());
+
+        $additionalInformation = AdditionalInformation::create('message', 'billInformation');
+        $this->assertSame("message\nbillInformation", $additionalInformation->getFormattedString());
     }
 
     public function testQrCodeData()

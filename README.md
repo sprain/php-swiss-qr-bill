@@ -5,8 +5,6 @@
 
 A PHP library to create Swiss QR Bill payment parts, a new standard which will replace the existing inpayment slips starting on June 30, 2020.
 
-Please note that the current state of the library only creates the qr code, but not yet full payment parts. This will be a next step of development.
-
 [You are welcome to contribute.](https://github.com/sprain/php-swiss-qr-bill/issues)
 
 

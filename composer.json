@@ -11,9 +11,13 @@
         "endroid/qr-code": "^3.5.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.4|^7.0"
+        "phpunit/phpunit": "^6.4|^7.0",
+        "symfony/css-selector": "^4.2"
     },
     "autoload": {
-        "psr-4": { "Sprain\\SwissQrBill\\": "src" }
+        "psr-4": {
+            "Sprain\\SwissQrBill\\": "src",
+            "Sprain\\Tests\\SwissQrBill\\": "tests"
+        }
     }
 }

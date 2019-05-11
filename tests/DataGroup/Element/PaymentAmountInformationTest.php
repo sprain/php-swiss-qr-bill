@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\Tests\DataGroup\Element;
+namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
@@ -58,6 +58,31 @@ class PaymentAmountInformationTest extends TestCase
             [1, 'PLN'],
             [1, ' chf '],
             [1, ' EUR']
+        ];
+    }
+
+    /**
+     * @dataProvider formattedAmountProvider
+     */
+    public function testFormattedAmount($amount, $formattedAmount)
+    {
+        $paymentAmountInformation = PaymentAmountInformation::create(
+            'CHF',
+            $amount
+        );
+
+        $this->assertSame($formattedAmount, $paymentAmountInformation->getFormattedAmount());
+    }
+
+    public function formattedAmountProvider()
+    {
+        return [
+            [0, '0.00'],
+            [25, '25.00'],
+            [1234.5, '1 234.50'],
+            [1234.55, '1 234.55'],
+            [12345.60, '12 345.60'],
+            [1234567, '1 234 567.00'],
         ];
     }
 
