@@ -22,7 +22,6 @@ $qrBill->setCreditorInformation(
         'CH4431999123000889012' // Note that this is a special QR-IBAN which are currently not yet available in real life (as of June 2019)
     ));
 
-
 // Add debtor information
 // Who has to pay the invoice? This part is optional.
 //

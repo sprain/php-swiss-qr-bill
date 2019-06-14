@@ -22,7 +22,6 @@ $qrBill->setCreditorInformation(
         'CH9300762011623852957'
     ));
 
-
 // Add debtor information
 // Who has to pay the invoice? This part is optional.
 //
@@ -71,6 +70,7 @@ try {
 	}
 	exit;
 }
+
 // … or output a full payment part
 $output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
 print $output->setPrintable(false)->getPaymentPart();
