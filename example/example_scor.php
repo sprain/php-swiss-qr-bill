@@ -19,7 +19,7 @@ $qrBill->setCreditor(
 
 $qrBill->setCreditorInformation(
     QrBill\DataGroup\Element\CreditorInformation::create(
-        'CH4431999123000889012' // Note that this is a special QR-IBAN which are currently not yet available in real life (as of June 2019)
+        'CH9300762011623852957'
     ));
 
 
@@ -55,8 +55,8 @@ $referenceNumber = QrBill\Reference\QrPaymentReferenceGenerator::generate(
 
 $qrBill->setPaymentReference(
     QrBill\DataGroup\Element\PaymentReference::create(
-        QrBill\DataGroup\Element\PaymentReference::TYPE_QR,
-        $referenceNumber
+        QrBill\DataGroup\Element\PaymentReference::TYPE_SCOR,
+        'RF18539007547034'
     ));
 
 // Time to output something!
@@ -71,7 +71,6 @@ try {
 	}
 	exit;
 }
-
 // … or output a full payment part
 $output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
 print $output->setPrintable(false)->getPaymentPart();
