@@ -72,5 +72,15 @@ try {
 }
 
 // … or output a full payment part
-$output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
-print $output->setPrintable(false)->getPaymentPart();
+//$output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
+//print $output->setPrintable(false)->getPaymentPart();
+
+//dd($qrBill->getPaymentAmountInformation()->getAmount());
+
+/**
+ * Fpdf footer output
+ */
+$pdf = new QrBill\PaymentPart\FpdfOutput\BillFooter($qrBill);
+$pdf->AddPage();
+$pdf->billFooter();
+$pdf->Output('test.pdf', 'I');

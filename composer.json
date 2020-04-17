@@ -4,15 +4,17 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.4",
         "symfony/validator": "^3.4|^4.2",
         "symfony/intl": "^3.4|^4.2",
         "kmukku/php-iso11649": "^1.4",
-        "endroid/qr-code": "^3.5.3"
+        "endroid/qr-code": "^3.5.3",
+        "fpdf/fpdf": "^1.82"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4|^7.0",
-        "symfony/css-selector": "^4.2"
+        "symfony/css-selector": "^4.2",
+        "symfony/var-dumper": "^5.0"
     },
     "autoload": {
         "psr-4": {
