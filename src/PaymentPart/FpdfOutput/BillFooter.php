@@ -11,10 +11,10 @@ use Sprain\SwissQrBill\QrBill;
 class BillFooter extends Fpdf
 {
     /** @var  string */
-    private ?string $language;
+    private $language;
 
     /** @var QrBill */
-    private QrBill $qrBill;
+    private $qrBill;
 
     /**
      * BillFooter constructor.
