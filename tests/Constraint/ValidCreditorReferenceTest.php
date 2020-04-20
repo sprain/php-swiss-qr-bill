@@ -64,6 +64,7 @@ class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
         return [
             ['RF43 1234 5123 45'],
             ['RF431234512345'],
+            ['RF431234512345Ä'],
             ['foo']
         ];
     }
