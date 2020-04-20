@@ -43,6 +43,8 @@ class QrPaymentReferenceGeneratorTest extends TestCase
             ['1234567890', '11223344', '123456789000000000112233444'],
             ['1234', '11223344', '123400000000000000112233449'],
             ['000000', '11223344', '000000000000000000112233442'],
+            ['', '11223344', '000000000000000000112233442'],
+            [null, '11223344', '000000000000000000112233442'],
 
             // Handle it as numerics as well
             [310014, 18310019779911119, '310014000183100197799111196'],
@@ -70,6 +72,7 @@ class QrPaymentReferenceGeneratorTest extends TestCase
             ['1234', '12345678901234567890123'], // too long in total
             ['123456', '123456789012345678901'], // too long in total
             ['12345678901', '1234567890123456'], // too long in total
+            [null, '123456789012345678901234567'], // too long in total
         ];
     }
 
@@ -88,11 +91,9 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     public function invalidCustomerIdentificationNumberProvider()
     {
         return [
-            ['123'], // too short
             ['123456789012'], // too long
             ['12345A'],  // non-digits
             ['1234.5'],  // non-digits
-            ['']
         ];
     }
 

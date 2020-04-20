@@ -19,10 +19,13 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
     /** @var string */
     private $referenceNumber;
 
-    public static function generate(string $customerIdentificationNumber, string $referenceNumber)
+    public static function generate(?string $customerIdentificationNumber, string $referenceNumber)
     {
         $qrPaymentReferenceGenerator = new self();
-        $qrPaymentReferenceGenerator->customerIdentificationNumber = $qrPaymentReferenceGenerator->removeWhitespace($customerIdentificationNumber);
+
+        if (null !== $customerIdentificationNumber) {
+            $qrPaymentReferenceGenerator->customerIdentificationNumber = $qrPaymentReferenceGenerator->removeWhitespace($customerIdentificationNumber);
+        }
         $qrPaymentReferenceGenerator->referenceNumber = $qrPaymentReferenceGenerator->removeWhitespace($referenceNumber);
 
         return $qrPaymentReferenceGenerator->doGenerate();
@@ -62,10 +65,8 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
                 'match' => true
             ]),
             new Assert\Length([
-                'max' => 11,
-                'min' => 4
+                'max' => 11
             ]),
-            new Assert\NotBlank()
         ]);
 
         $metadata->addPropertyConstraints('referenceNumber', [
