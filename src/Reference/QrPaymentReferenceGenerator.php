@@ -6,6 +6,7 @@ use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class QrPaymentReferenceGenerator implements SelfValidatableInterface
@@ -37,7 +38,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $this->referenceNumber;
     }
 
-    public function doGenerate()
+    private function doGenerate()
     {
         if (!$this->isValid()) {
             throw new InvalidQrPaymentReferenceException(
@@ -45,8 +46,8 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
             );
         }
 
-        $completeReferenceNumber  = str_pad($this->getCustomerIdentificationNumber(), 6, '0', STR_PAD_RIGHT);
-        $completeReferenceNumber .= str_pad($this->getReferenceNumber(), 20, '0', STR_PAD_LEFT);
+        $completeReferenceNumber  = $this->getCustomerIdentificationNumber();
+        $completeReferenceNumber .= str_pad($this->getReferenceNumber(), 26 - strlen($completeReferenceNumber), '0', STR_PAD_LEFT);
         $completeReferenceNumber .= $this->modulo10($completeReferenceNumber);
 
         return $completeReferenceNumber;
@@ -61,7 +62,8 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
                 'match' => true
             ]),
             new Assert\Length([
-                'max' => 6
+                'max' => 11,
+                'min' => 4
             ]),
             new Assert\NotBlank()
         ]);
@@ -72,11 +74,18 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
                 'pattern' => '/^\d*$/',
                 'match' => true
             ]),
-            new Assert\Length([
-                'max' => 20
-            ]),
             new Assert\NotBlank()
         ]);
+
+        $metadata->addConstraint(new Assert\Callback('validateFullReference'));
+    }
+
+    public function validateFullReference(ExecutionContextInterface $context, $payload)
+    {
+        if (strlen($this->customerIdentificationNumber) + strlen($this->referenceNumber) > 26) {
+            $context->buildViolation('The length of customer identification number + reference number may not exceed 26 characters in total.')
+                ->addViolation();
+        }
     }
 
     private function removeWhitespace(string $string): string
