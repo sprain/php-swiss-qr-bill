@@ -47,11 +47,6 @@ $qrBill->setPaymentAmountInformation(
 
 // Add payment reference
 // This is what you will need to identify incoming payments.
-$referenceNumber = QrBill\Reference\QrPaymentReferenceGenerator::generate(
-    '210000',  // you receive this number from your bank
-    '313947143000901' // a number to match the payment with your other data, e.g. an invoice number
-);
-
 $qrBill->setPaymentReference(
     QrBill\DataGroup\Element\PaymentReference::create(
         QrBill\DataGroup\Element\PaymentReference::TYPE_SCOR,
