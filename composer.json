@@ -8,7 +8,7 @@
         "symfony/validator": "^3.4|^4.2|^5.0",
         "symfony/intl": "^3.4|^4.2|^5.0",
         "khanamiryan/qrcode-detector-decoder": "^1.0.3",
-        "kmukku/php-iso11649": "^1.4",
+        "kmukku/php-iso11649": "^1.5",
         "endroid/qr-code": "^3.5.3"
     },
     "require-dev": {
