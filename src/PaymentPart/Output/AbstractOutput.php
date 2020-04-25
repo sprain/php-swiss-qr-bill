@@ -7,6 +7,8 @@ use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
 use Sprain\SwissQrBill\QrBill;
+use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
+use Sprain\SwissQrBill\QrCode\QrCode;
 
 abstract class AbstractOutput
 {
@@ -19,11 +21,15 @@ abstract class AbstractOutput
     /** @var bool */
     protected $printable;
 
+    /** @var string */
+    private $qrCodeImageFormat;
+
     public function __construct(QrBill $qrBill, string $language)
     {
         $this->qrBill = $qrBill;
         $this->language = $language;
         $this->printable = false;
+        $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }
 
     public function getQrBill(): ?QrBill
@@ -46,6 +52,26 @@ abstract class AbstractOutput
     public function isPrintable(): bool
     {
         return $this->printable;
+    }
+
+    public function setQrCodeImageFormat(string $imageFormat): self
+    {
+        if (!in_array($imageFormat, QrCode::SUPPORTED_FILE_FORMATS)) {
+            throw new UnsupportedFileExtensionException(sprintf(
+                'The qr code in your payment part cannot be created. Only these file extensions are supported: %s. You provided: %s.',
+                implode(', ', QrCode::SUPPORTED_FILE_FORMATS),
+                $imageFormat
+            ));
+        }
+
+        $this->qrCodeImageFormat = $imageFormat;
+
+        return $this;
+    }
+
+    public function getQrCodeImageFormat(): string
+    {
+        return $this->qrCodeImageFormat;
     }
 
     protected function getInformationElements(): array

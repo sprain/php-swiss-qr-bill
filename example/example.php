@@ -73,4 +73,8 @@ try {
 
 // … or output a full payment part
 $output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
-print $output->setPrintable(false)->getPaymentPart();
+
+print $output
+    ->setPrintable(false)
+    ->setQrCodeImageFormat(QrBill\QrCode\QrCode::FILE_FORMAT_SVG)
+    ->getPaymentPart();
