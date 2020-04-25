@@ -29,17 +29,10 @@ class HtmlOutputTest extends TestCase
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.print.html'
-            ],
-            [
-                'printable' => false,
-                'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.png.html'
-            ],
-            [
-                'printable' => true,
-                'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.print.png.html'
             ]
+
+            // Note: Testing the exact output with a png qr code is not possible, as the png contents are
+            // not always exactly the same on each server configuration.
         ];
 
         foreach ($variations as $variation) {
