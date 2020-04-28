@@ -7,7 +7,6 @@ use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
 use Sprain\SwissQrBill\QrBill;
-use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 use Sprain\SwissQrBill\QrCode\QrCode;
 
 abstract class AbstractOutput
@@ -54,17 +53,9 @@ abstract class AbstractOutput
         return $this->printable;
     }
 
-    public function setQrCodeImageFormat(string $imageFormat): self
+    public function setQrCodeImageFormat(string $fileExtension): self
     {
-        if (!in_array($imageFormat, QrCode::SUPPORTED_FILE_FORMATS)) {
-            throw new UnsupportedFileExtensionException(sprintf(
-                'The qr code in your payment part cannot be created. Only these file extensions are supported: %s. You provided: %s.',
-                implode(', ', QrCode::SUPPORTED_FILE_FORMATS),
-                $imageFormat
-            ));
-        }
-
-        $this->qrCodeImageFormat = $imageFormat;
+        $this->qrCodeImageFormat = $fileExtension;
 
         return $this;
     }
@@ -176,5 +167,13 @@ abstract class AbstractOutput
         $furtherInformationElements[] = Text::create(implode("\n", $furtherInformationLines));
 
         return $furtherInformationElements;
+    }
+
+    protected function getQrCode(): QrCode
+    {
+        $qrCode = $this->qrBill->getQrCode();
+        $qrCode->setWriterByExtension($this->getQrCodeImageFormat());
+
+        return $qrCode;
     }
 }
