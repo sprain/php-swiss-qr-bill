@@ -37,9 +37,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
 
     private function addSwissQrCodeImage(string $paymentPart): string
     {
-        $qrCode = $this->qrBill->getQrCode();
-        $qrCode->setWriterByExtension('svg');
-
+        $qrCode = $this->getQrCode();
         $paymentPart = str_replace('{{ swiss-qr-image }}', $qrCode->writeDataUri(), $paymentPart);
 
         return $paymentPart;

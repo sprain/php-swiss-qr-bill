@@ -15,4 +15,8 @@ interface OutputInterface
     public function setPrintable(bool $printable);
 
     public function isPrintable(): bool;
+
+    public function setQrCodeImageFormat(string $imageFormat);
+
+    public function getQrCodeImageFormat(): string;
 }
