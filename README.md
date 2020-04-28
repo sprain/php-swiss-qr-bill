@@ -19,3 +19,10 @@ composer require sprain/swiss-qr-bill
 ```
 
 Then have a look at [example/example.php](example/example.php).
+
+
+## Support the project
+
+* Do you like this project? [Consider a Github sponsorship.](https://github.com/sponsors/sprain)
+* Would you like to contribute? [Have a look at the open issues.](https://github.com/sprain/php-swiss-qr-bill/issues) Be nice to each other.
+* Spread the word!
