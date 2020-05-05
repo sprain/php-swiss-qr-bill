@@ -10,6 +10,10 @@ env:
   matrix:
     - PREFER_LOWEST="--prefer-lowest"
     - PREFER_LOWEST=""
+    - php: 7.3
+      script:
+        - vendor/bin/php-cs-fixer --no-interaction --dry-run --diff -v fix src/
+        - vendor/bin/phpstan analyse
 
 install:
   - composer validate --strict
@@ -17,6 +21,4 @@ install:
 
 script:
   - find lib/ -type f -name '*.php' -print0 | xargs -0 -L1 -P4 -- php -l
-  - vendor/bin/php-cs-fixer --no-interaction --dry-run --diff -v fix src/
-  - vendor/bin/phpstan analyse
   - vendor/bin/phpunit
