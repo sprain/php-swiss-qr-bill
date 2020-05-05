@@ -47,7 +47,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     {
         $informationContent = '';
 
-        foreach($this->getInformationElements() as $informationElement) {
+        foreach ($this->getInformationElements() as $informationElement) {
             $informationContentPart = $this->getContentElement($informationElement);
             $informationContent .= $informationContentPart;
         }
@@ -61,7 +61,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     {
         $informationContent = '';
 
-        foreach($this->getInformationElementsOfReceipt() as $informationElement) {
+        foreach ($this->getInformationElementsOfReceipt() as $informationElement) {
             $informationContent .= $this->getContentElement($informationElement);
         }
 
@@ -74,7 +74,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     {
         $currencyContent = '';
 
-        foreach($this->getCurrencyElements() as $currencyElement) {
+        foreach ($this->getCurrencyElements() as $currencyElement) {
             $currencyContent .= $this->getContentElement($currencyElement);
         }
 
@@ -87,7 +87,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     {
         $amountContent = '';
 
-        foreach($this->getAmountElements() as $amountElement) {
+        foreach ($this->getAmountElements() as $amountElement) {
             $amountContent .= $this->getContentElement($amountElement);
         }
 
@@ -100,7 +100,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     {
         $amountContent = '';
 
-        foreach($this->getAmountElementsReceipt() as $amountElement) {
+        foreach ($this->getAmountElementsReceipt() as $amountElement) {
             $amountContent .= $this->getContentElement($amountElement);
         }
 
@@ -113,7 +113,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     {
         $furtherInformationContent = '';
 
-        foreach($this->getFurtherInformationElements() as $furtherInformationElement) {
+        foreach ($this->getFurtherInformationElements() as $furtherInformationElement) {
             $furtherInformationContent .= $this->getContentElement($furtherInformationElement);
         }
 
@@ -134,7 +134,10 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function getContentElement(OutputElementInterface $element): string
+    /**
+     * @param Title|Text|Placeholder $element Instance of OutputElementInterface.
+     */
+    private function getContentElement($element): string
     {
         if ($element instanceof Title) {
             $elementTemplate = TitleElementTemplate::TEMPLATE;
@@ -171,7 +174,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     private function translateContents($paymentPart, $language)
     {
         $translations = Translation::getAllByLanguage($language);
-        foreach($translations as $key => $text) {
+        foreach ($translations as $key => $text) {
             $paymentPart = str_replace('{{ text.' . $key . ' }}', $text, $paymentPart);
         }
 

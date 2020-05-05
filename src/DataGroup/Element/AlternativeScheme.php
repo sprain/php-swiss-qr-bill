@@ -14,7 +14,7 @@ class AlternativeScheme implements QrCodeableInterface, SelfValidatableInterface
 
     /**
      * Parameter character chain of the alternative scheme
-     * 
+     *
      * @var string
      */
     private $parameter;

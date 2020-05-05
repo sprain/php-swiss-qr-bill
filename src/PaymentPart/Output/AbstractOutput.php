@@ -161,7 +161,7 @@ abstract class AbstractOutput
         $furtherInformationElements = [];
 
         $furtherInformationLines= [];
-        foreach($this->qrBill->getAlternativeSchemes() as $alternativeScheme) {
+        foreach ($this->qrBill->getAlternativeSchemes() as $alternativeScheme) {
             $furtherInformationLines[] = $alternativeScheme->getParameter();
         }
         $furtherInformationElements[] = Text::create(implode("\n", $furtherInformationLines));

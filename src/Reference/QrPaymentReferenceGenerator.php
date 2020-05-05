@@ -99,7 +99,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         $table = array(0, 9, 4, 6, 8, 2, 7, 1, 3, 5);
         $next = 0;
         for ($i = 0; $i < strlen($number); $i++) {
-            $next =  $table[($next + substr($number, $i, 1)) % 10];
+            $next =  $table[($next + intval(substr($number, $i, 1))) % 10];
         }
 
         return (10 - $next) % 10;
