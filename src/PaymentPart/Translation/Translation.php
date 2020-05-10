@@ -68,19 +68,20 @@ class Translation
 
     public static function getAllByLanguage($language): ?array
     {
-        if (array_key_exists($language, self::TRANSLATIONS)) {
-
-            return self::TRANSLATIONS[$language];
+        if (! array_key_exists($language, self::TRANSLATIONS)) {
+            return null;
         }
+
+        return self::TRANSLATIONS[$language];
     }
 
     public static function get(string $key, string $language): ?string
     {
-        if ($translations = self::getAllByLanguage($language)) {
-            if (array_key_exists($key, $translations)) {
-
-                return $translations[$key];
-            }
+        $translations = self::getAllByLanguage($language);
+        if (! is_array($translations) || ! array_key_exists($key, $translations)) {
+            return null;
         }
+
+        return $translations[$key];
     }
 }

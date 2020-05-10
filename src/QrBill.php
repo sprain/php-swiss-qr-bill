@@ -236,7 +236,7 @@ class QrBill implements SelfValidatableInterface
             }
         }
 
-        array_walk($qrCodeElements, function(&$string){
+        array_walk($qrCodeElements, function (&$string) {
             $string = StringModifier::replaceLineBreaksWithString($string);
             $string = StringModifier::replaceMultipleSpacesWithOne($string);
             $string = trim($string);

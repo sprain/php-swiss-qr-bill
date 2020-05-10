@@ -2,11 +2,11 @@
 
 namespace Sprain\SwissQrBill\Constraint;
 
-use kmukku\phpIso11649\phpIso11649;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\QrBill;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ValidCreditorInformationPaymentReferenceCombinationValidator extends ConstraintValidator
 {
@@ -18,6 +18,10 @@ class ValidCreditorInformationPaymentReferenceCombinationValidator extends Const
 
     public function validate($qrBill, Constraint $constraint)
     {
+        if (!$constraint instanceof ValidCreditorInformationPaymentReferenceCombination) {
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\ValidCreditorInformationPaymentReferenceCombination');
+        }
+
         if (!$qrBill instanceof QrBill) {
             return;
         }
