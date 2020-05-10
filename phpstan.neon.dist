@@ -1,8 +1,4 @@
 parameters:
-#    level: max
-    level: 4
+    level: 5
     paths:
         - src/
-    ignoreErrors:
-        # Symfony __get()
-        - '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint::\$message\.$#'
