@@ -163,15 +163,15 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
             $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
 
             $elementString = str_replace('{{ file }}', $dataUri, $elementString);
-            $elementString = str_replace('{{ width }}', $element->getWidth(), $elementString);
-            $elementString = str_replace('{{ height }}', $element->getHeight(), $elementString);
+            $elementString = str_replace('{{ width }}', (string) $element->getWidth(), $elementString);
+            $elementString = str_replace('{{ height }}', (string) $element->getHeight(), $elementString);
             $elementString = str_replace('{{ id }}', $element->getType(), $elementString);
 
             return $elementString;
         }
     }
 
-    private function translateContents($paymentPart, $language)
+    private function translateContents(string $paymentPart, string $language): string
     {
         $translations = Translation::getAllByLanguage($language);
         foreach ($translations as $key => $text) {

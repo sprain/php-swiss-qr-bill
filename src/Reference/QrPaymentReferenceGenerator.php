@@ -19,7 +19,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
     /** @var string */
     private $referenceNumber;
 
-    public static function generate(?string $customerIdentificationNumber, string $referenceNumber)
+    public static function generate(?string $customerIdentificationNumber, string $referenceNumber): string
     {
         $qrPaymentReferenceGenerator = new self();
 
@@ -41,7 +41,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $this->referenceNumber;
     }
 
-    private function doGenerate()
+    private function doGenerate(): string
     {
         if (!$this->isValid()) {
             throw new InvalidQrPaymentReferenceException(
@@ -81,7 +81,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         $metadata->addConstraint(new Assert\Callback('validateFullReference'));
     }
 
-    public function validateFullReference(ExecutionContextInterface $context, $payload)
+    public function validateFullReference(ExecutionContextInterface $context): void
     {
         if (strlen($this->customerIdentificationNumber) + strlen($this->referenceNumber) > 26) {
             $context->buildViolation('The length of customer identification number + reference number may not exceed 26 characters in total.')
@@ -94,7 +94,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return preg_replace('/\s+/', '', $string);
     }
 
-    private function modulo10($number)
+    private function modulo10(string $number): int
     {
         $table = array(0, 9, 4, 6, 8, 2, 7, 1, 3, 5);
         $next = 0;
