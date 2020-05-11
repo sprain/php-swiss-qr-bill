@@ -17,7 +17,7 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
     /**
      * Unstructured information can be used to indicate the payment purpose
      * or for additional textual information about payments with a structured reference.
-     * 
+     *
      * @var string
      */
     private $message;
@@ -33,8 +33,7 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
     public static function create(
         ?string $message,
         ?string $billInformation = null
-    ): self
-    {
+    ): self {
         $additionalInformation = new self();
         $additionalInformation->message = $message;
         $additionalInformation->billInformation = $billInformation;

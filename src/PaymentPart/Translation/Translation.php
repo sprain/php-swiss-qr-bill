@@ -9,8 +9,8 @@ class Translation
             'paymentPart' => 'Zahlteil',
             'creditor' => 'Konto / Zahlbar an',
             'reference' => 'Referenz',
-            'additionalInformation' => 'Zusätzliche Informationen',
-            'currency' => 'Währung',
+            'additionalInformation' => 'Zusätzliche Informationen',
+            'currency' => 'Währung',
             'amount' => 'Betrag',
             'receipt' => 'Empfangsschein',
             'acceptancePoint' => 'Annahmestelle',
@@ -22,14 +22,14 @@ class Translation
 
         'fr' => [
             'paymentPart' => 'Section paiement',
-            'creditor' => 'Compte / Payable à',
-            'reference' => 'Référence',
-            'additionalInformation' => 'Informations supplémentaires',
+            'creditor' => 'Compte / Payable à',
+            'reference' => 'Référence',
+            'additionalInformation' => 'Informations supplémentaires',
             'currency' => 'Monnaie',
             'amount' => 'Montant',
-            'receipt' => 'Récépissé',
-            'acceptancePoint' => 'Point de dépôt',
-            'separate' => 'A détacher avant le versement',
+            'receipt' => 'Récépissé',
+            'acceptancePoint' => 'Point de dépôt',
+            'separate' => 'A détacher avant le versement',
             'payableBy' => 'Payable par',
             'payableByName' => 'Payable par (nom/adresse)',
             'inFavorOf' => 'En faveur de'
@@ -68,19 +68,20 @@ class Translation
 
     public static function getAllByLanguage($language): ?array
     {
-        if (array_key_exists($language, self::TRANSLATIONS)) {
-
-            return self::TRANSLATIONS[$language];
+        if (! array_key_exists($language, self::TRANSLATIONS)) {
+            return null;
         }
+
+        return self::TRANSLATIONS[$language];
     }
 
     public static function get(string $key, string $language): ?string
     {
-        if ($translations = self::getAllByLanguage($language)) {
-            if (array_key_exists($key, $translations)) {
-
-                return $translations[$key];
-            }
+        $translations = self::getAllByLanguage($language);
+        if (! is_array($translations) || ! array_key_exists($key, $translations)) {
+            return null;
         }
+
+        return $translations[$key];
     }
 }

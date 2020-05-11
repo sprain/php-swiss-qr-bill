@@ -1,3 +1,4 @@
 /vendor
 /example/qr.png
 /example/qr.svg
+/.php_cs.cache

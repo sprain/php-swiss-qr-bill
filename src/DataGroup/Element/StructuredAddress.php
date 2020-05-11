@@ -23,7 +23,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
     private $name;
 
     /**
-     * Street / P.O. box 
+     * Street / P.O. box
      *
      * May not include building or house number.
      *
@@ -32,7 +32,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
     private $street;
 
     /**
-     * Building number 
+     * Building number
      *
      * @var string
      */
@@ -64,8 +64,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         string $postalCode,
         string $city,
         string $country
-    ): self
-    {
+    ): self {
         $structuredAddress = new self();
         $structuredAddress->name = $name;
         $structuredAddress->postalCode = $postalCode;
@@ -82,8 +81,7 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         string $postalCode,
         string $city,
         string $country
-    ): self
-    {
+    ): self {
         $structuredAddress = new self();
         $structuredAddress->name = $name;
         $structuredAddress->street = $street;

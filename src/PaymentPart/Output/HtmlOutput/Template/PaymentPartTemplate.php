@@ -10,9 +10,12 @@ class PaymentPartTemplate
 	box-sizing: border-box;
 	width: 210mm;
 	height: 105mm;
-	font-family: Arial, Frutiger, Helvetica, "Liberation Sans";
 	border-collapse: collapse;
 	color: #000;
+}
+
+#qr-bill * {
+	font-family: Arial, Frutiger, Helvetica, "Liberation Sans";
 }
 
 #qr-bill img.qr-bill-placeholder {

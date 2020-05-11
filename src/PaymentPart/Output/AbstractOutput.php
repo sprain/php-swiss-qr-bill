@@ -7,6 +7,7 @@ use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
 use Sprain\SwissQrBill\QrBill;
+use Sprain\SwissQrBill\QrCode\QrCode;
 
 abstract class AbstractOutput
 {
@@ -19,11 +20,15 @@ abstract class AbstractOutput
     /** @var bool */
     protected $printable;
 
+    /** @var string */
+    private $qrCodeImageFormat;
+
     public function __construct(QrBill $qrBill, string $language)
     {
         $this->qrBill = $qrBill;
         $this->language = $language;
         $this->printable = false;
+        $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }
 
     public function getQrBill(): ?QrBill
@@ -46,6 +51,18 @@ abstract class AbstractOutput
     public function isPrintable(): bool
     {
         return $this->printable;
+    }
+
+    public function setQrCodeImageFormat(string $fileExtension): self
+    {
+        $this->qrCodeImageFormat = $fileExtension;
+
+        return $this;
+    }
+
+    public function getQrCodeImageFormat(): string
+    {
+        return $this->qrCodeImageFormat;
     }
 
     protected function getInformationElements(): array
@@ -144,11 +161,19 @@ abstract class AbstractOutput
         $furtherInformationElements = [];
 
         $furtherInformationLines= [];
-        foreach($this->qrBill->getAlternativeSchemes() as $alternativeScheme) {
+        foreach ($this->qrBill->getAlternativeSchemes() as $alternativeScheme) {
             $furtherInformationLines[] = $alternativeScheme->getParameter();
         }
         $furtherInformationElements[] = Text::create(implode("\n", $furtherInformationLines));
 
         return $furtherInformationElements;
+    }
+
+    protected function getQrCode(): QrCode
+    {
+        $qrCode = $this->qrBill->getQrCode();
+        $qrCode->setWriterByExtension($this->getQrCodeImageFormat());
+
+        return $qrCode;
     }
 }

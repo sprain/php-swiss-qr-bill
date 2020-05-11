@@ -25,7 +25,6 @@ trait SelfValidatableTrait
     public function isValid(): bool
     {
         if (0 == $this->getViolations()->count()) {
-
             return true;
         }
 

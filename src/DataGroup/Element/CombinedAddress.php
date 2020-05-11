@@ -52,8 +52,7 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         ?string $addressLine1,
         string $addressLine2,
         string $country
-    ): self
-    {
+    ): self {
         $combinedAddress = new self();
         $combinedAddress->name = $name;
         $combinedAddress->addressLine1 = $addressLine1;
