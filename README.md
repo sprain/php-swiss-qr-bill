@@ -7,12 +7,8 @@ A PHP library to create Swiss QR Bill payment parts (_QR-Rechnung_), a new stand
 
 ![Image of Swiss QR Bill example](docs/assets/example-payment-part.png)
 
-## Documentation
 
-You can [find the documentation on ReadTheDocs](https://php-swiss-qr-bill.readthedocs.io/en/stable/).
-
-
-## Quick start
+## Getting started
 
 ```
 composer require sprain/swiss-qr-bill
