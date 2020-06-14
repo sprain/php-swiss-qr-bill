@@ -36,6 +36,15 @@ trait TestQrBillCreatorTrait
                     'paymentReferenceQr'
                 ])
             ],
+            ['qr-payment-information-zero-amount',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformationZeroAmount',
+                    'paymentReferenceQr'
+                ])
+            ],
             ['qr-payment-reference-scor',
                 $this->createQrBill([
                     'header',
@@ -184,6 +193,12 @@ trait TestQrBillCreatorTrait
     public function paymentAmountInformationWithoutAmount(QrBill &$qrBill)
     {
         $paymentAmountInformation = PaymentAmountInformation::create('EUR');
+        $qrBill->setPaymentAmountInformation($paymentAmountInformation);
+    }
+
+    public function paymentAmountInformationZeroAmount(QrBill &$qrBill)
+    {
+        $paymentAmountInformation = PaymentAmountInformation::create('EUR', 0);
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
