@@ -1,6 +1,7 @@
 <?php
 
 use Sprain\SwissQrBill as QrBill;
+use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -57,6 +58,9 @@ $qrBill->setPaymentReference(
         QrBill\DataGroup\Element\PaymentReference::TYPE_QR,
         $referenceNumber
     ));
+
+$additionalInformation = AdditionalInformation::create('Invoice 1234568');
+$qrBill->setAdditionalInformation($additionalInformation);
 
 // Time to output something!
 //
