@@ -17,7 +17,8 @@ class Translation
             'separate' => 'Vor der Einzahlung abzutrennen',
             'payableBy' => 'Zahlbar durch',
             'payableByName' => 'Zahlbar durch (Name/Adresse)',
-            'inFavorOf' => 'Zugunsten'
+            'inFavorOf' => 'Zugunsten',
+            'doNotUseForPayment' => 'NICHT ZUR ZAHLUNG VERWENDEN',
         ],
 
         'fr' => [
@@ -32,7 +33,8 @@ class Translation
             'separate' => 'A détacher avant le versement',
             'payableBy' => 'Payable par',
             'payableByName' => 'Payable par (nom/adresse)',
-            'inFavorOf' => 'En faveur de'
+            'inFavorOf' => 'En faveur de',
+            'doNotUseForPayment' => 'NE PAS UTILISER POUR LE PAIEMENT',
         ],
 
         'it' => [
@@ -47,7 +49,8 @@ class Translation
             'separate' => 'Da staccare prima del versamento',
             'payableBy' => 'Pagabile da',
             'payableByName' => 'Pagabile da (nome/indirizzo)',
-            'inFavorOf' => 'A favore di'
+            'inFavorOf' => 'A favore di',
+            'doNotUseForPayment' => 'NON UTILIZZARE PER IL PAGAMENTO',
         ],
 
         'en' => [
@@ -62,7 +65,8 @@ class Translation
             'separate' => 'Separate before paying in',
             'payableBy' => 'Payable by',
             'payableByName' => 'Payable by (name/address)',
-            'inFavorOf' => 'In favour of'
+            'inFavorOf' => 'In favour of',
+            'doNotUseForPayment' => 'DO NOT USE FOR PAYMENT'
         ]
     ];
 
