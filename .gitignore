@@ -2,3 +2,7 @@
 /example/qr.png
 /example/qr.svg
 /.php_cs.cache
+*.pdf
+*.svg
+*.html
+/.idea/
