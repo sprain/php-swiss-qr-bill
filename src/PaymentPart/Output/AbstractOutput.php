@@ -132,10 +132,10 @@ abstract class AbstractOutput
 
         $amountElements[] = Title::create('text.amount');
 
-        if ($this->qrBill->getPaymentAmountInformation()->getAmount()) {
-            $amountElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
-        } else {
+        if (null === $this->qrBill->getPaymentAmountInformation()->getAmount()) {
             $amountElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_AMOUNT);
+        } else {
+            $amountElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
         }
 
         return $amountElements;
@@ -147,10 +147,10 @@ abstract class AbstractOutput
 
         $amountElements[] = Title::create('text.amount');
 
-        if ($this->qrBill->getPaymentAmountInformation()->getAmount()) {
-            $amountElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
-        } else {
+        if (null === $this->qrBill->getPaymentAmountInformation()->getAmount()) {
             $amountElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT);
+        } else {
+            $amountElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
         }
 
         return $amountElements;

@@ -28,11 +28,12 @@ class TestDataTest extends TestCase
             [__DIR__ . '/qr-full-set.png', 'c0607307841dc5cbdf2c1c5499f869f7'],
             [__DIR__ . '/qr-minimal-setup.png', '86fb5a62d7a87d7e31ea91bb5c93bbf9'],
             [__DIR__ . '/qr-payment-information-without-amount.png', '0a22b900adc3f65e3aac674c1e891e2d'],
+            [__DIR__ . '/qr-payment-information-zero-amount.png', 'b22b78c16c79dc84a4d890fb95e8d0c9'],
             [__DIR__ . '/qr-payment-reference-non.png', '92dd161c4cbecc1fdd00222d346f29d8'],
             [__DIR__ . '/qr-payment-reference-scor.png', '51113e54434835e0e628fbe9edc8f333'],
             [__DIR__ . '/qr-ultimate-debtor.png', '826e89dbbea4e48ce0b88fb708e7f990'],
 
-            [__DIR__ . '/proof-of-validation.png', 'e7fa81322868506a5bec4e428f10758d'],
+            [__DIR__ . '/proof-of-validation.png', '9c3a93e49237973c16a9c90b3a4844fd'],
         ];
     }
 }
