@@ -2,3 +2,5 @@
 /example/qr.png
 /example/qr.svg
 /.php_cs.cache
+/example/example_tcpdf.php
+/example/tcpdf_example.pdf
