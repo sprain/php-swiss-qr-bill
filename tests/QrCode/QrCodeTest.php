@@ -13,6 +13,8 @@ class QrCodeTest extends TestCase
     public function testSupportedFileExtensions($extension)
     {
         $qrCode = new QrCode('This is a test code');
+        $qrCode->setLogoHeight(10);
+        $qrCode->setLogoWidth(10);
         $testfile = __DIR__ . '/../TestData/testfile.' . $extension;
 
         if (!is_writable(dirname($testfile))) {

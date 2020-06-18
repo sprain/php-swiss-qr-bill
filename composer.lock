@@ -103,12 +103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sprain/qr-code.git",
-                "reference": "530e6ccb8e17d1e9fbef180bed8c25f579b56c81"
+                "reference": "8696f51ae5a676f59d941a28d35e17760e20d09f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sprain/qr-code/zipball/530e6ccb8e17d1e9fbef180bed8c25f579b56c81",
-                "reference": "530e6ccb8e17d1e9fbef180bed8c25f579b56c81",
+                "url": "https://api.github.com/repos/sprain/qr-code/zipball/8696f51ae5a676f59d941a28d35e17760e20d09f",
+                "reference": "8696f51ae5a676f59d941a28d35e17760e20d09f",
                 "shasum": ""
             },
             "require": {
@@ -165,7 +165,7 @@
             "support": {
                 "source": "https://github.com/sprain/qr-code/tree/force-xlink-href"
             },
-            "time": "2020-06-18T14:59:33+00:00"
+            "time": "2020-06-18T15:51:30+00:00"
         },
         {
             "name": "khanamiryan/qrcode-detector-decoder",

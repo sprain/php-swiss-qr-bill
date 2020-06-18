@@ -25,8 +25,6 @@ class QrBill implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.png';
-
     const ERROR_CORRECTION_LEVEL_HIGH = ErrorCorrectionLevel::HIGH;
     const ERROR_CORRECTION_LEVEL_MEDIUM = ErrorCorrectionLevel::MEDIUM;
     const ERROR_CORRECTION_LEVEL_LOW = ErrorCorrectionLevel::LOW;
@@ -196,10 +194,8 @@ class QrBill implements SelfValidatableInterface
         $qrCode = new QrCode();
         $qrCode->setText($this->getQrCodeContent());
         $qrCode->setSize(543); // recommended 46x46 mm in px @ 300dpi
-        $qrCode->setLogoPath(self::SWISS_CROSS_LOGO_FILE);
         $qrCode->setLogoHeight(83); // recommended 7x7 mm in px @ 300dpi
         $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
-        $qrCode->setLogoForceXlinkHref(true);
         $qrCode->setRoundBlockSize(false);
         $qrCode->setMargin(0);
         $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel($this->errorCorrectionLevel));
