@@ -18,9 +18,6 @@ class QrCode extends BaseQrCode implements QrCodeInterface
         self::FILE_FORMAT_SVG
     ];
 
-    private const SWISS_CROSS_LOGO_FILE_PNG = __DIR__ . '/../../assets/swiss-cross.png';
-    private const SWISS_CROSS_LOGO_FILE_SVG = __DIR__ . '/../../assets/swiss-cross.svg';
-
     public function writeFile(string $path): void
     {
         $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
@@ -53,10 +50,7 @@ class QrCode extends BaseQrCode implements QrCodeInterface
 
     private function addLogoInMatchingFileFormat(): void
     {
-        $this->setLogoPath(self::SWISS_CROSS_LOGO_FILE_PNG);
-
         if ($this->getWriter()->supportsExtension(self::FILE_FORMAT_SVG)) {
-            $this->setLogoPath(self::SWISS_CROSS_LOGO_FILE_SVG);
             $this->setWriterOptions([
                 'force_xlink_href' => true
             ]);
