@@ -29,7 +29,7 @@ class QrBill implements SelfValidatableInterface
     const ERROR_CORRECTION_LEVEL_MEDIUM = ErrorCorrectionLevel::MEDIUM;
     const ERROR_CORRECTION_LEVEL_LOW = ErrorCorrectionLevel::LOW;
 
-    private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.png';
+    private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.optimized.png';
 
     /** @var Header */
     private $header;
