@@ -25,7 +25,7 @@ class QrBill implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.png';
+    const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.optimized.png';
 
     const ERROR_CORRECTION_LEVEL_HIGH = ErrorCorrectionLevel::HIGH;
     const ERROR_CORRECTION_LEVEL_MEDIUM = ErrorCorrectionLevel::MEDIUM;
