@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19c54d782530438acb55f569b425732f",
+    "content-hash": "b8d2ceea27462528c72db360f8471343",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -99,16 +99,16 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "dev-force-xlink-href",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sprain/qr-code.git",
-                "reference": "8696f51ae5a676f59d941a28d35e17760e20d09f"
+                "url": "https://github.com/endroid/qr-code.git",
+                "reference": "1616778c697238b16e1b7592ea824bafcf7d108c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sprain/qr-code/zipball/8696f51ae5a676f59d941a28d35e17760e20d09f",
-                "reference": "8696f51ae5a676f59d941a28d35e17760e20d09f",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/1616778c697238b16e1b7592ea824bafcf7d108c",
+                "reference": "1616778c697238b16e1b7592ea824bafcf7d108c",
                 "shasum": ""
             },
             "require": {
@@ -138,11 +138,7 @@
                     "Endroid\\QrCode\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Endroid\\QrCode\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -162,10 +158,7 @@
                 "qr",
                 "qrcode"
             ],
-            "support": {
-                "source": "https://github.com/sprain/qr-code/tree/force-xlink-href"
-            },
-            "time": "2020-06-18T15:51:30+00:00"
+            "time": "2020-06-19T08:57:37+00:00"
         },
         {
             "name": "khanamiryan/qrcode-detector-decoder",
@@ -3983,18 +3976,9 @@
             "time": "2020-06-16T10:16:42+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "3.9",
-            "alias_normalized": "3.9.0.0",
-            "version": "dev-force-xlink-href",
-            "package": "endroid/qr-code"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "endroid/qr-code": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
