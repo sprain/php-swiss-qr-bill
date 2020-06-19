@@ -22,7 +22,17 @@ class QrCode extends BaseQrCode implements QrCodeInterface
     {
         $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
         $this->setWriterByExtension($extension);
+
+        $this->addLogoInMatchingFileFormat();
+
         parent::writeFile($path);
+    }
+
+    public function writeDataUri(): string
+    {
+        $this->addLogoInMatchingFileFormat();
+
+        return parent::writeDataUri();
     }
 
     public function setWriterByExtension(string $extension): void
@@ -36,5 +46,14 @@ class QrCode extends BaseQrCode implements QrCodeInterface
         }
 
         parent::setWriterByExtension($extension);
+    }
+
+    private function addLogoInMatchingFileFormat(): void
+    {
+        if ($this->getWriter()->supportsExtension(self::FILE_FORMAT_SVG)) {
+            $this->setWriterOptions([
+                'force_xlink_href' => true
+            ]);
+        }
     }
 }
