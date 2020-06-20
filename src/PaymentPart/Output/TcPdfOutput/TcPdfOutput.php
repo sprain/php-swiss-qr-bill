@@ -66,7 +66,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $this->tcPdf = $tcPdf;
         $this->offsetX = $offsetX;
         $this->offsetY = $offsetY;
-        $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
+        $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG);
     }
 
     public function getPaymentPart(): void
@@ -90,9 +90,10 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     {
         $qrCode = $this->getQrCode();
 
-        switch($this->getQrCodeImageFormat()) {
+        switch ($this->getQrCodeImageFormat()) {
             case QrCode::FILE_FORMAT_SVG:
-                throw new UnsupportedFileExtensionException("SVG is not supported in TcPdfOutput");
+                $format = QrCode::FILE_FORMAT_SVG;
+                $method = "ImageSVG";
                 break;
             case QrCode::FILE_FORMAT_PNG:
             default:
@@ -100,10 +101,12 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
                 $method = "Image";
         }
 
+        $yPosQrCode = 209.5 + $this->offsetY;
+        $xPosQrCode = self::TCPDF_RIGHT_PART_X + 1 + $this->offsetX;
+
         $qrCode->setWriterByExtension($format);
         $img = base64_decode(preg_replace('#^data:image/[^;]+;base64,#', '', $qrCode->writeDataUri()));
-        $this->tcPdf->$method("@".$img, self::TCPDF_RIGHT_PART_X + 1 + $this->offsetX, 209.5 + $this->offsetY, 46, 46);
-
+        $this->tcPdf->$method("@".$img, $xPosQrCode, $yPosQrCode, 46, 46);
     }
 
     private function addInformationContentReceipt(): void
