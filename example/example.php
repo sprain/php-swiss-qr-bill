@@ -4,6 +4,8 @@ use Sprain\SwissQrBill as QrBill;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+// This example shows how to create a classic qr bill.
+
 // Create a new instance of QrBill, containing default headers with fixed values
 $qrBill = QrBill\QrBill::create();
 
@@ -19,7 +21,7 @@ $qrBill->setCreditor(
 
 $qrBill->setCreditorInformation(
     QrBill\DataGroup\Element\CreditorInformation::create(
-        'CH4431999123000889012' // Note that this is a special QR-IBAN which are currently not yet available in real life (as of June 2019)
+        'CH4431999123000889012' // This is a special QR-IBAN. Classic IBANs will not be valid here.
     ));
 
 // Add debtor information
@@ -49,7 +51,7 @@ $qrBill->setPaymentAmountInformation(
 // This is what you will need to identify incoming payments.
 $referenceNumber = QrBill\Reference\QrPaymentReferenceGenerator::generate(
     '210000',  // you receive this number from your bank
-    '313947143000901' // a number to match the payment with your other data, e.g. an invoice number
+    '313947143000901' // a number to match the payment with your internal data, e.g. an invoice number
 );
 
 $qrBill->setPaymentReference(
@@ -58,9 +60,15 @@ $qrBill->setPaymentReference(
         $referenceNumber
     ));
 
-// Time to output something!
-//
-// Get the QR code image  …
+// Optionally, add some human-readable information about what the bill is for.
+// This information is only for the person who will pay the invoice.
+$qrBill->setAdditionalInformation(
+    QrBill\DataGroup\Element\AdditionalInformation::create(
+        'Invoice 123456, Gardening work'
+    )
+);
+
+// Now get the QR code image and save it as a file.
 try {
     $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
     $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
@@ -71,10 +79,7 @@ try {
 	exit;
 }
 
-// … or output a full payment part
-$output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
-
-print $output
-    ->setPrintable(false)
-    ->setQrCodeImageFormat(QrBill\QrCode\QrCode::FILE_FORMAT_SVG)
-    ->getPaymentPart();
+// Next: Output full payment parts, depending on the format you want to use:
+//
+// - HtmlOutput/html-example.php
+// - TcPdfOutput/tcpdf-example.php

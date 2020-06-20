@@ -4,3 +4,5 @@
 /.php_cs.cache
 /example/example_tcpdf.php
 /example/tcpdf_example.pdf
+/example/TcPdfOutput/tcpdf_example.pdf
+/example/HtmlOutput/html-example.htm

@@ -4,6 +4,8 @@ use Sprain\SwissQrBill as QrBill;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+// This is an example of how to create a qr bill with a reference in SCOR format.
+
 // Create a new instance of QrBill, containing default headers with fixed values
 $qrBill = QrBill\QrBill::create();
 
@@ -19,7 +21,7 @@ $qrBill->setCreditor(
 
 $qrBill->setCreditorInformation(
     QrBill\DataGroup\Element\CreditorInformation::create(
-        'CH9300762011623852957'
+        'CH9300762011623852957' // With SCOR, this is a classic iban. QR-IBANs will not be valid here.
     ));
 
 // Add debtor information
@@ -65,11 +67,3 @@ try {
 	}
 	exit;
 }
-
-// … or output a full payment part
-$output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
-
-print $output
-    ->setPrintable(false)
-    ->setQrCodeImageFormat(QrBill\QrCode\QrCode::FILE_FORMAT_SVG)
-    ->getPaymentPart();
