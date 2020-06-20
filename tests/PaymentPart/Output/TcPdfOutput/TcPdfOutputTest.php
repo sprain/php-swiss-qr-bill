@@ -66,7 +66,7 @@ class TcPdfOutputTest extends TestCase
 
     private function cleanFileContents(string $fileContents): string
     {
-        // Remove ids from files which are newly created in each pdf and make them non-comparable
+        // Remove ids which are newly created in each pdf and make them non-comparable
         $pattern = '@<xmpMM:DocumentID>(.*)</xmpMM:DocumentID>@';
         $fileContents = preg_replace($pattern, '', $fileContents);
 
@@ -75,6 +75,13 @@ class TcPdfOutputTest extends TestCase
 
         $pattern = '@<< /Size 12 /Root 11 0 R /Info 9 0 R /ID(.*)>>@';
         $fileContents = preg_replace($pattern, '', $fileContents);
+
+        // Replace timezone in timestamps which TcPDF seems to always take from the server settings
+        $pattern = '@2020-06-30T00:00:00(\+\d\d:\d\d)@';
+        $fileContents = preg_replace($pattern, '2020-06-30T00:00:00+00:00', $fileContents);
+
+        $pattern = '@D:20200630000000(\+\d\d\'\d\d\')@';
+        $fileContents = preg_replace($pattern, '20200630000000+00\'00\'', $fileContents);
 
         return $fileContents;
     }
