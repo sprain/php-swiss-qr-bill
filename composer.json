@@ -9,14 +9,17 @@
         "symfony/intl": "^3.4|^4.2|^5.0",
         "khanamiryan/qrcode-detector-decoder": "^1.0.3",
         "kmukku/php-iso11649": "^1.5",
-        "endroid/qr-code": "^3.8.2",
-        "tecnickcom/tcpdf": "^6.3"
+        "endroid/qr-code": "^3.8.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4|^7.0",
         "symfony/css-selector": "^4.2",
         "phpstan/phpstan": "^0.12.23",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "tecnickcom/tcpdf": "^6.3"
+    },
+    "suggest": {
+        "tecnickcom/tcpdf": "Needed to create pdfs with TcPdfOutput"
     },
     "autoload": {
         "psr-4": {
