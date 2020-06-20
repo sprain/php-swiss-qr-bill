@@ -4,12 +4,12 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": ">=7.1",
+        "php": "^7.2",
         "symfony/validator": "^3.4|^4.2|^5.0",
         "symfony/intl": "^3.4|^4.2|^5.0",
         "khanamiryan/qrcode-detector-decoder": "^1.0.3",
         "kmukku/php-iso11649": "^1.5",
-        "endroid/qr-code": "^3.5.3",
+        "endroid/qr-code": "^3.8.2",
         "tecnickcom/tcpdf": "^6.3"
     },
     "require-dev": {
