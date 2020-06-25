@@ -242,7 +242,6 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         }
 
         if ($element instanceof Placeholder) {
-
             $type = $element->getType();
 
             if ($type === Placeholder::PLACEHOLDER_TYPE_AMOUNT['type']) {
