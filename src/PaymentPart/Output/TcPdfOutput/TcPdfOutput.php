@@ -74,7 +74,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     {
         $this->tcPdf->SetAutoPageBreak(false);
 
-        $this->addPrintableContent();
+        $this->addSeparatorContentIfNotPrintable();
 
         $this->addInformationContentReceipt();
         $this->addCurrencyContentReceipt();
@@ -210,7 +210,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         }
     }
 
-    private function addPrintableContent(): void
+    private function addSeparatorContentIfNotPrintable(): void
     {
         if (!$this->isPrintable()) {
             $this->tcPdf->SetLineStyle(array('width' => 0.1, 'dash' => 4, 'color' => array(0, 0, 0)));
