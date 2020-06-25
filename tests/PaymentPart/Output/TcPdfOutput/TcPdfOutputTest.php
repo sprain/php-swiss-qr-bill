@@ -13,7 +13,7 @@ class TcPdfOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
-    private $regenerateReferenceTcPdfOutputs = false;
+    private $regenerateReferenceTcPdfOutputs = true;
 
     /**
      * @dataProvider validQrBillsProvider
