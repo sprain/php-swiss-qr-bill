@@ -13,7 +13,7 @@ class TcPdfOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
-    private $regenerateReferenceTcPdfOutputs = true;
+    private $regenerateReferenceTcPdfOutputs = false;
 
     /**
      * @dataProvider validQrBillsProvider
@@ -57,32 +57,23 @@ class TcPdfOutputTest extends TestCase
                 $tcPdf->Output($file, 'F');
             }
 
-            $this->assertSame(
-                $this->cleanFileContents(file_get_contents($file)),
-                $this->cleanFileContents($tcPdf->Output($file, 'S'))
-            );
+            $contents = $this->getActualPdfContents($tcPdf->Output($file, 'S'));
+
+            $this->assertNotNull($contents);
+            $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
         }
     }
 
-    private function cleanFileContents(string $fileContents): string
+    private function getActualPdfContents(string $fileContents): ?string
     {
-        // Remove ids which are newly created in each pdf and make them non-comparable
-        $pattern = '@<xmpMM:DocumentID>(.*)</xmpMM:DocumentID>@';
-        $fileContents = preg_replace($pattern, '', $fileContents);
+        // Extract actual pdf content and ignore all meta data which may differ in different versions of TcPdf
+        $pattern = '/stream(.*?)endstream/s';
+        preg_match($pattern, $fileContents, $matches);
 
-        $pattern = '@<xmpMM:InstanceID>(.*)</xmpMM:InstanceID>@';
-        $fileContents = preg_replace($pattern, '', $fileContents);
+        if (isset($matches[1])) {
+            return $matches[1];
+        }
 
-        $pattern = '@<< /Size 12 /Root 11 0 R /Info 9 0 R /ID(.*)>>@';
-        $fileContents = preg_replace($pattern, '', $fileContents);
-
-        // Replace timezone in timestamps which TcPDF seems to always take from the server settings
-        $pattern = '@2020-06-30T00:00:00(\+\d\d:\d\d)@';
-        $fileContents = preg_replace($pattern, '2020-06-30T00:00:00+00:00', $fileContents);
-
-        $pattern = '@D:20200630000000(\+\d\d\'\d\d\')@';
-        $fileContents = preg_replace($pattern, '20200630000000+00\'00\'', $fileContents);
-
-        return $fileContents;
+        return null;
     }
 }
