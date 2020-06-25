@@ -159,6 +159,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $x = self::TCPDF_LEFT_PART_X;
         $this->tcPdf->setCellHeightRatio(self::TCPDF_LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
         $this->SetY(self::TCPDF_CURRENCY_AMOUNT_Y);
+
         foreach ($this->getCurrencyElements() as $currencyElement) {
             $this->SetX($x);
             $this->setContentElement($currencyElement, true);
@@ -170,6 +171,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $x = 16;
         $this->tcPdf->setCellHeightRatio(self::TCPDF_LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
         $this->SetY(self::TCPDF_CURRENCY_AMOUNT_Y);
+
         foreach ($this->getAmountElementsReceipt() as $amountElement) {
             $this->SetX($x);
             $this->setContentElement($amountElement, true);
@@ -181,6 +183,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $x = self::TCPDF_RIGHT_PART_X;
         $this->tcPdf->setCellHeightRatio(self::TCPDF_RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
         $this->SetY(self::TCPDF_CURRENCY_AMOUNT_Y);
+
         foreach ($this->getCurrencyElements() as $currencyElement) {
             $this->SetX($x);
             $this->setContentElement($currencyElement, false);
@@ -192,6 +195,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $x = 80;
         $this->tcPdf->setCellHeightRatio(self::TCPDF_RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
         $this->SetY(self::TCPDF_CURRENCY_AMOUNT_Y);
+
         foreach ($this->getAmountElements() as $amountElement) {
             $this->SetX($x);
             $this->setContentElement($amountElement, false);
@@ -204,6 +208,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $this->tcPdf->setCellHeightRatio(self::TCPDF_RIGHT_CELL_HEIGHT_RATIO_COMMON);
         $this->SetY(286);
         $this->tcPdf->SetFont(self::TCPDF_FONT, '', 7);
+
         foreach ($this->getFurtherInformationElements() as $furtherInformationElement) {
             $this->SetX($x);
             $this->setContentElement($furtherInformationElement, true);
@@ -227,7 +232,12 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     {
         if ($element instanceof Title) {
             $this->tcPdf->SetFont(self::TCPDF_FONT, 'B', $isReceiptPart ? 6 : 8);
-            $this->printCell(Translation::get(str_replace("text.", "", $element->getTitle()), $this->language), 0, 0, self::TCPDF_ALIGN_BELOW);
+            $this->printCell(
+                Translation::get(str_replace("text.", "", $element->getTitle()), $this->language),
+                0,
+                0,
+                self::TCPDF_ALIGN_BELOW
+            );
         }
 
         if ($element instanceof Text) {
@@ -245,15 +255,20 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         if ($element instanceof Placeholder) {
             $type = $element->getType();
 
-            if ($type === Placeholder::PLACEHOLDER_TYPE_AMOUNT['type']) {
-                $y = $this->tcPdf->GetY() + 1;
-                $x = $this->tcPdf->GetX() - 2;
-            } elseif ($type === Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT['type']) {
-                $y = $this->tcPdf->GetY() - 2;
-                $x = $this->tcPdf->GetX() + 11;
-            } else {
-                $y = $this->tcPdf->GetY() + 1;
-                $x = $this->tcPdf->GetX() + 1;
+            switch ($type) {
+                case Placeholder::PLACEHOLDER_TYPE_AMOUNT['type']:
+                    $y = $this->tcPdf->GetY() + 1;
+                    $x = $this->tcPdf->GetX() - 2;
+                    break;
+                case Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT['type']:
+                    $y = $this->tcPdf->GetY() - 2;
+                    $x = $this->tcPdf->GetX() + 11;
+                    break;
+                case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY['type']:
+                case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT['type']:
+                default:
+                    $y = $this->tcPdf->GetY() + 1;
+                    $x = $this->tcPdf->GetX() + 1;
             }
 
             $this->tcPdf->ImageSVG(
