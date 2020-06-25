@@ -233,7 +233,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
             $this->tcPdf->SetFont(self::TCPDF_FONT, '', $isReceiptPart ? 8 : 10);
             $this->printMultiCell(
                 str_replace("text.", "", $element->getText()),
-                0,
+                $isReceiptPart ? 54 : 0,
                 0,
                 self::TCPDF_ALIGN_BELOW,
                 self::TCPDF_ALIGN_LEFT
@@ -242,48 +242,27 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         }
 
         if ($element instanceof Placeholder) {
-            $this->tcPdf->SetLineStyle(array('width' => 0.3, 'dash' => 0, 'color' => array(0, 0, 0)));
 
-            $lineLength = 3;
+            $type = $element->getType();
 
-            // Not implemented
-            if ($isReceiptPart) {
-                $boxLeftPos = 27;
-                $boxHeightPos = self::TCPDF_CURRENCY_AMOUNT_Y+2;
-                $boxHeight = 10;
-                $boxWidth = 30;
-                $boxRightPos = $boxLeftPos+$boxWidth;
+            if ($type === Placeholder::PLACEHOLDER_TYPE_AMOUNT['type']) {
+                $y = $this->tcPdf->GetY() + 1;
+                $x = $this->tcPdf->GetX() - 2;
+            } elseif ($type === Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT['type']) {
+                $y = $this->tcPdf->GetY() - 2;
+                $x = $this->tcPdf->GetX() + 11;
             } else {
-                $boxLeftPos = 77;
-                $boxHeightPos = 265;
-                $boxHeight = 15;
-                $boxWidth = 40;
-                $boxRightPos = $boxLeftPos+$boxWidth;
+                $y = $this->tcPdf->GetY() + 1;
+                $x = $this->tcPdf->GetX() + 1;
             }
 
-            // Top left
-            $tlx = $boxLeftPos;
-            $tly = $boxHeightPos;
-            $this->printLine($tlx, $tly, $tlx+$lineLength, $tly);
-            $this->printLine($tlx, $tly, $tlx, $tly+$lineLength);
-
-            // Top right
-            $trx = $boxRightPos;
-            $try = $boxHeightPos;
-            $this->printLine($trx, $try, $trx-$lineLength, $try);
-            $this->printLine($trx, $try, $trx, $try+$lineLength);
-
-            // Bottom left
-            $blx = $boxLeftPos;
-            $bly = $boxHeightPos+$boxHeight;
-            $this->printLine($blx, $bly, $blx+$lineLength, $bly);
-            $this->printLine($blx, $bly, $blx, $bly-$lineLength);
-
-            // Bottom right
-            $brx = $boxRightPos;
-            $bry = $boxHeightPos+$boxHeight;
-            $this->printLine($brx, $bry, $brx-$lineLength, $bry);
-            $this->printLine($brx, $bry, $brx, $bry-$lineLength);
+            $this->tcPdf->ImageSVG(
+                $element->getFile(),
+                $x,
+                $y,
+                $element->getWidth(),
+                $element->getHeight()
+            );
         }
     }
 
