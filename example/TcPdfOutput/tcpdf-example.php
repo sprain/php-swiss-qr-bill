@@ -16,7 +16,7 @@ $tcPdf->AddPage();
 // 3. Create a full payment part for TcPDF
 $output = new QrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput($qrBill, 'en', $tcPdf);
 $output
-    ->setPrintable(true)
+    ->setPrintable(false)
     ->getPaymentPart();
 
 // 4. For demo purposes, let's save the generated example in a file

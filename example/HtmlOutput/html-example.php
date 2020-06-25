@@ -12,7 +12,6 @@ $output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
 
 $html = $output
     ->setPrintable(false)
-    ->setQrCodeImageFormat(QrBill\QrCode\QrCode::FILE_FORMAT_SVG)
     ->getPaymentPart();
 
 // 3. For demo purposes, let's save the generated example in a file
