@@ -239,7 +239,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         }
 
         if ($element instanceof Placeholder) {
-            $this->setPlaceholderElement($element, $isReceiptPart);
+            $this->setPlaceholderElement($element);
         }
     }
 
