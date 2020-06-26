@@ -231,54 +231,69 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private function setContentElement(OutputElementInterface $element, bool $isReceiptPart): void
     {
         if ($element instanceof Title) {
-            $this->tcPdf->SetFont(self::TCPDF_FONT, 'B', $isReceiptPart ? 6 : 8);
-            $this->printCell(
-                Translation::get(str_replace("text.", "", $element->getTitle()), $this->language),
-                0,
-                0,
-                self::TCPDF_ALIGN_BELOW
-            );
+            $this->setTitleElement($element, $isReceiptPart);
         }
 
         if ($element instanceof Text) {
-            $this->tcPdf->SetFont(self::TCPDF_FONT, '', $isReceiptPart ? 8 : 10);
-            $this->printMultiCell(
-                str_replace("text.", "", $element->getText()),
-                $isReceiptPart ? 54 : 0,
-                0,
-                self::TCPDF_ALIGN_BELOW,
-                self::TCPDF_ALIGN_LEFT
-            );
-            $this->tcPdf->Ln($isReceiptPart ? self::TCPDF_9PT : self::TCPDF_11PT);
+            $this->setTextElement($element, $isReceiptPart);
         }
 
         if ($element instanceof Placeholder) {
-            $type = $element->getType();
-
-            switch ($type) {
-                case Placeholder::PLACEHOLDER_TYPE_AMOUNT['type']:
-                    $y = $this->tcPdf->GetY() + 1;
-                    $x = $this->tcPdf->GetX() - 2;
-                    break;
-                case Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT['type']:
-                    $y = $this->tcPdf->GetY() - 2;
-                    $x = $this->tcPdf->GetX() + 11;
-                    break;
-                case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY['type']:
-                case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT['type']:
-                default:
-                    $y = $this->tcPdf->GetY() + 1;
-                    $x = $this->tcPdf->GetX() + 1;
-            }
-
-            $this->tcPdf->ImageSVG(
-                $element->getFile(),
-                $x,
-                $y,
-                $element->getWidth(),
-                $element->getHeight()
-            );
+            $this->setPlaceholderElement($element, $isReceiptPart);
         }
+    }
+
+    private function setTitleElement(Title $element, bool $isReceiptPart): void
+    {
+        $this->tcPdf->SetFont(self::TCPDF_FONT, 'B', $isReceiptPart ? 6 : 8);
+        $this->printCell(
+            Translation::get(str_replace("text.", "", $element->getTitle()), $this->language),
+            0,
+            0,
+            self::TCPDF_ALIGN_BELOW
+        );
+    }
+
+    private function setTextElement(Text $element, bool $isReceiptPart): void
+    {
+        $this->tcPdf->SetFont(self::TCPDF_FONT, '', $isReceiptPart ? 8 : 10);
+        $this->printMultiCell(
+            str_replace("text.", "", $element->getText()),
+            $isReceiptPart ? 54 : 0,
+            0,
+            self::TCPDF_ALIGN_BELOW,
+            self::TCPDF_ALIGN_LEFT
+        );
+        $this->tcPdf->Ln($isReceiptPart ? self::TCPDF_9PT : self::TCPDF_11PT);
+    }
+
+    private function setPlaceholderElement(Placeholder $element): void
+    {
+        $type = $element->getType();
+
+        switch ($type) {
+            case Placeholder::PLACEHOLDER_TYPE_AMOUNT['type']:
+                $y = $this->tcPdf->GetY() + 1;
+                $x = $this->tcPdf->GetX() - 2;
+                break;
+            case Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT['type']:
+                $y = $this->tcPdf->GetY() - 2;
+                $x = $this->tcPdf->GetX() + 11;
+                break;
+            case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY['type']:
+            case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT['type']:
+            default:
+                $y = $this->tcPdf->GetY() + 1;
+                $x = $this->tcPdf->GetX() + 1;
+        }
+
+        $this->tcPdf->ImageSVG(
+            $element->getFile(),
+            $x,
+            $y,
+            $element->getWidth(),
+            $element->getHeight()
+        );
     }
 
     private function setX(int $x) : void
