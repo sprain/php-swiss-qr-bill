@@ -28,7 +28,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         $paymentPart = $this->addAmountContent($paymentPart);
         $paymentPart = $this->addAmountContentReceipt($paymentPart);
         $paymentPart = $this->addFurtherInformationContent($paymentPart);
-        $paymentPart = $this->addPrintableContent($paymentPart);
+        $paymentPart = $this->hideSeparatorContentIfPrintable($paymentPart);
 
         $paymentPart = $this->translateContents($paymentPart, $this->getLanguage());
 
@@ -122,7 +122,7 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function addPrintableContent(string $paymentPart): string
+    private function hideSeparatorContentIfPrintable(string $paymentPart): string
     {
         $printableStyles = '';
         if ($this->isPrintable()) {

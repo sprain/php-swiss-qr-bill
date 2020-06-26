@@ -36,6 +36,16 @@ trait TestQrBillCreatorTrait
                     'paymentReferenceQr'
                 ])
             ],
+            ['qr-payment-information-without-amount-but-debtor',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformationWithoutAmount',
+                    'paymentReferenceQr',
+                    'ultimateDebtor'
+                ])
+            ],
             ['qr-payment-information-zero-amount',
                 $this->createQrBill([
                     'header',
