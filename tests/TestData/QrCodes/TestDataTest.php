@@ -23,18 +23,18 @@ class TestDataTest extends TestCase
     public function qrFileProvider()
     {
         return [
-            [__DIR__ . '/qr-additional-information.png', '837d81343c5f88e9848bdf2d693daccb'],
-            [__DIR__ . '/qr-alternative-schemes.png', '72a10b79c4d6011abe784c556caf5e61'],
-            [__DIR__ . '/qr-full-set.png', 'c0607307841dc5cbdf2c1c5499f869f7'],
-            [__DIR__ . '/qr-minimal-setup.png', '86fb5a62d7a87d7e31ea91bb5c93bbf9'],
-            [__DIR__ . '/qr-payment-information-without-amount.png', '0a22b900adc3f65e3aac674c1e891e2d'],
-            [__DIR__ . '/qr-payment-information-without-amount-but-debtor.png', 'd3be7875b26b4c9f9f92434a947c5f5d'],
-            [__DIR__ . '/qr-payment-information-zero-amount.png', 'b22b78c16c79dc84a4d890fb95e8d0c9'],
-            [__DIR__ . '/qr-payment-reference-non.png', '92dd161c4cbecc1fdd00222d346f29d8'],
-            [__DIR__ . '/qr-payment-reference-scor.png', '51113e54434835e0e628fbe9edc8f333'],
-            [__DIR__ . '/qr-ultimate-debtor.png', '826e89dbbea4e48ce0b88fb708e7f990'],
+            [__DIR__ . '/qr-additional-information.png', 'fb9c45f2bc0bf92e941abc64ba50bebb'],
+            [__DIR__ . '/qr-alternative-schemes.png', '138ac88c4f5d9d127fb11326daa9292a'],
+            [__DIR__ . '/qr-full-set.png', '969b870f49362a611f62235190fcf03a'],
+            [__DIR__ . '/qr-minimal-setup.png', '8ed64ec5a2c7a02b1e07aa5eb8e3a7a0'],
+            [__DIR__ . '/qr-payment-information-without-amount.png', '831b0edb4aca22f5df5f8dec530461dc'],
+            [__DIR__ . '/qr-payment-information-without-amount-but-debtor.png', '9d4db076385276242cc4a362ee29b58d'],
+            [__DIR__ . '/qr-payment-information-zero-amount.png', '1e35e396920f07fd0933ecdaabe910f9'],
+            [__DIR__ . '/qr-payment-reference-non.png', 'abb3ace7ea9f3ef848a335eba98a2375'],
+            [__DIR__ . '/qr-payment-reference-scor.png', '7e3389311c54ff27e1537d1083656a07'],
+            [__DIR__ . '/qr-ultimate-debtor.png', 'ac5d8f4155c1d10460de5a0aaea35767'],
 
-            [__DIR__ . '/proof-of-validation.png', 'f539fb9c08472ac1f3d74598052e9e5b'],
+            [__DIR__ . '/proof-of-validation.png', '6bf37bad5b10f54971068a90de36fd0e'],
         ];
     }
 }

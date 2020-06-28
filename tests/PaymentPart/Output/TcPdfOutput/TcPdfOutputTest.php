@@ -13,8 +13,6 @@ class TcPdfOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
-    private $regenerateReferenceTcPdfOutputs = false;
-
     /**
      * @dataProvider validQrBillsProvider
      */
@@ -53,7 +51,7 @@ class TcPdfOutputTest extends TestCase
             $tcPdfOutput->setQrCodeImageFormat($variation['format']);
             $tcPdfOutput->getPaymentPart();
 
-            if ($this->regenerateReferenceTcPdfOutputs) {
+            if ($this->regenerateReferenceFiles) {
                 $tcPdf->Output($file, 'F');
             }
 

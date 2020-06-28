@@ -222,7 +222,7 @@ class QrBill implements SelfValidatableInterface
 
         $qrCodeStringElements = $this->extractQrCodeDataFromElements($elements);
 
-        return implode("\r\n", $qrCodeStringElements);
+        return implode("\n", $qrCodeStringElements);
     }
 
     private function extractQrCodeDataFromElements(array $elements): array
