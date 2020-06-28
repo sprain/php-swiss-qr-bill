@@ -11,21 +11,21 @@ class QrBillTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
-    private $regenerateReferenceQrCodes = false;
-
     /**
      * @dataProvider validQrBillsProvider
      */
     public function testValidQrBills(string $name, QrBill $qrBill)
     {
         $file = __DIR__ . '/TestData/QrCodes/' . $name . '.png';
+        $textFile = __DIR__ . '/TestData/QrCodes/' . $name . '.txt';
 
-        if ($this->regenerateReferenceQrCodes) {
+        if ($this->regenerateReferenceFiles) {
             $qrBill->getQrCode()->writeFile($file);
+            file_put_contents($textFile, $qrBill->getQrCode()->getText());
         }
 
         $this->assertSame(
-            (new QrReader($file))->text(),
+            file_get_contents($textFile),
             $qrBill->getQrCode()->getText()
         );
     }

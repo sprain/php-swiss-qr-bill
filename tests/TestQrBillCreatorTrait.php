@@ -14,6 +14,7 @@ use Sprain\SwissQrBill\QrBill;
 
 trait TestQrBillCreatorTrait
 {
+    protected $regenerateReferenceFiles = false;
 
     public function validQrBillsProvider()
     {
@@ -283,7 +284,7 @@ trait TestQrBillCreatorTrait
 
     public function additionalInformation(QrBill &$qrBill)
     {
-        $additionalInformation = AdditionalInformation::create('Invoice 1234568');
+        $additionalInformation = AdditionalInformation::create("Invoice 1234568\nGardening work", 'Bill Information');
         $qrBill->setAdditionalInformation($additionalInformation);
     }
 
