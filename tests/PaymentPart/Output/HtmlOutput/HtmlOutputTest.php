@@ -12,8 +12,6 @@ class HtmlOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
-    private $regenerateReferenceHtmlOutputs = false;
-
     /**
      * @dataProvider validQrBillsProvider
      */
@@ -44,7 +42,7 @@ class HtmlOutputTest extends TestCase
             $htmlOutput->setQrCodeImageFormat($variation['format']);
             $output = $htmlOutput->getPaymentPart();
 
-            if ($this->regenerateReferenceHtmlOutputs) {
+            if ($this->regenerateReferenceFiles) {
                file_put_contents($file, $output);
             }
 

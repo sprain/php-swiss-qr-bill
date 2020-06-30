@@ -134,6 +134,7 @@ class PaymentPartTemplate
     width: 148mm;
 	padding-left: 5mm;
 	padding-top: 5mm;
+	padding-right: 5mm;
 	vertical-align: top;
 }
 

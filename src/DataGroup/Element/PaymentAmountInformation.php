@@ -64,8 +64,14 @@ class PaymentAmountInformation implements QrCodeableInterface, SelfValidatableIn
 
     public function getQrCodeData(): array
     {
+        if (null !== $this->getAmount()) {
+            $amountOutput = number_format($this->getAmount(), 2, '.', '');
+        } else {
+            $amountOutput = null;
+        }
+
         return [
-            $this->getAmount() ? number_format($this->getAmount(), 2, '.', ''): null,
+            $amountOutput,
             $this->getCurrency()
         ];
     }

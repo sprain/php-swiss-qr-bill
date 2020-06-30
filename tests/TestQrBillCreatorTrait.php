@@ -14,6 +14,7 @@ use Sprain\SwissQrBill\QrBill;
 
 trait TestQrBillCreatorTrait
 {
+    protected $regenerateReferenceFiles = false;
 
     public function validQrBillsProvider()
     {
@@ -33,6 +34,25 @@ trait TestQrBillCreatorTrait
                     'creditorInformationQrIban',
                     'creditor',
                     'paymentAmountInformationWithoutAmount',
+                    'paymentReferenceQr'
+                ])
+            ],
+            ['qr-payment-information-without-amount-but-debtor',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformationWithoutAmount',
+                    'paymentReferenceQr',
+                    'ultimateDebtor'
+                ])
+            ],
+            ['qr-payment-information-zero-amount',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformationZeroAmount',
                     'paymentReferenceQr'
                 ])
             ],
@@ -187,6 +207,12 @@ trait TestQrBillCreatorTrait
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
+    public function paymentAmountInformationZeroAmount(QrBill &$qrBill)
+    {
+        $paymentAmountInformation = PaymentAmountInformation::create('EUR', 0);
+        $qrBill->setPaymentAmountInformation($paymentAmountInformation);
+    }
+
     public function invalidPaymentAmountInformation(QrBill &$qrBill)
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
@@ -258,7 +284,7 @@ trait TestQrBillCreatorTrait
 
     public function additionalInformation(QrBill &$qrBill)
     {
-        $additionalInformation = AdditionalInformation::create('Invoice 1234568');
+        $additionalInformation = AdditionalInformation::create("Invoice 1234568\nGardening work", 'Bill Information');
         $qrBill->setAdditionalInformation($additionalInformation);
     }
 
