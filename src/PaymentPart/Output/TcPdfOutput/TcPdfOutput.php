@@ -37,9 +37,16 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private const TCPDF_RIGHT_PAR_X_INFO = 117;
     private const TCPDF_TITLE_Y = 195;
 
+    // Font constants
+    private const TCPDF_FONT_SIZE_TITLE_RECEIPT = 6;
+    private const TCPDF_FONT_SIZE_RECEIPT = 8;
+
+    private const TCPDF_FONT_SIZE_TITLE_PAYMENT_PART = 8;
+    private const TCPDF_FONT_SIZE_PAYMENT_PART = 10;
+
     // Line spacing constants
-    private const TCPDF_9PT = 3.5;
-    private const TCPDF_11PT = 4.8;
+    private const TCPDF_LINE_SPACING_RECEIPT = 3.5;
+    private const TCPDF_LINE_SPACING_PAYMENT_PART = 4.8;
 
     /** @var  string */
     protected $language;
@@ -249,7 +256,11 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function setTitleElement(Title $element, bool $isReceiptPart): void
     {
-        $this->tcPdf->SetFont(self::TCPDF_FONT, 'B', $isReceiptPart ? 6 : 8);
+        $this->tcPdf->SetFont(
+            self::TCPDF_FONT,
+            'B',
+            $isReceiptPart ? self::TCPDF_FONT_SIZE_TITLE_RECEIPT : self::TCPDF_FONT_SIZE_TITLE_PAYMENT_PART
+        );
         $this->printCell(
             Translation::get(str_replace("text.", "", $element->getTitle()), $this->language),
             0,
@@ -260,7 +271,12 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function setTextElement(Text $element, bool $isReceiptPart): void
     {
-        $this->tcPdf->SetFont(self::TCPDF_FONT, '', $isReceiptPart ? 8 : 10);
+        $this->tcPdf->SetFont(
+            self::TCPDF_FONT,
+            '',
+            $isReceiptPart ? self::TCPDF_FONT_SIZE_RECEIPT : self::TCPDF_FONT_SIZE_PAYMENT_PART
+        );
+
         $this->printMultiCell(
             str_replace("text.", "", $element->getText()),
             $isReceiptPart ? 54 : 0,
@@ -268,7 +284,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
             self::TCPDF_ALIGN_BELOW,
             self::TCPDF_ALIGN_LEFT
         );
-        $this->tcPdf->Ln($isReceiptPart ? self::TCPDF_9PT : self::TCPDF_11PT);
+        $this->tcPdf->Ln($isReceiptPart ? self::TCPDF_LINE_SPACING_RECEIPT : self::TCPDF_LINE_SPACING_PAYMENT_PART);
     }
 
     private function setPlaceholderElement(Placeholder $element): void
