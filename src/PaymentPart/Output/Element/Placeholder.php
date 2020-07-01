@@ -60,8 +60,12 @@ class Placeholder implements OutputElementInterface
         return $this->type;
     }
 
-    public function getFile(): ?string
+    // TODO: Not tested, need to create an example_non to test Placeholders
+    public function getFile(?string $ext = 'svg'): ?string
     {
+        if ($ext === 'png') {
+            $this->file = str_replace('.svg', '.png', $this->file);
+        }
         return $this->file;
     }
 
