@@ -72,6 +72,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     public function getPaymentPart(): void
     {
+        $retainCellHeightRatio = $this->tcPdf->getCellHeightRatio();
+
         $this->tcPdf->SetAutoPageBreak(false);
 
         $this->addSeparatorContentIfNotPrintable();
@@ -85,6 +87,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $this->addCurrencyContent();
         $this->addAmountContent();
         $this->addFurtherInformationContent();
+        
+        $this->tcPdf->setCellHeightRatio($retainCellHeightRatio);
     }
 
     private function addSwissQrCodeImage(): void
