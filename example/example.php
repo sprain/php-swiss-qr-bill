@@ -61,7 +61,6 @@ $qrBill->setPaymentReference(
     ));
 
 // Optionally, add some human-readable information about what the bill is for.
-// This information is only for the person who will pay the invoice.
 $qrBill->setAdditionalInformation(
     QrBill\DataGroup\Element\AdditionalInformation::create(
         'Invoice 123456, Gardening work'
