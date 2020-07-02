@@ -12,7 +12,7 @@ $fpdf = new QrBillFooter('P', 'mm', 'A4');
 $fpdf->AddPage();
 
 // 3. Create a full payment part for FPDF
-$output = new Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\fpdfOutput($qrBill, 'en', $fpdf);
+$output = new Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput($qrBill, 'en', $fpdf);
 $output
     ->setPrintable(false)
     ->getPaymentPart();

@@ -12,8 +12,9 @@ use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\Template\QrBillFooter;
 use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
+use Sprain\SwissQrBill\QrCode\QrCode;
 
-final class fpdfOutput extends AbstractOutput implements OutputInterface
+final class FpdfOutput extends AbstractOutput implements OutputInterface
 {
     const EXAMPLE_PATH = __DIR__ . '../../../../../example/';
 
@@ -31,6 +32,7 @@ final class fpdfOutput extends AbstractOutput implements OutputInterface
     ) {
         parent::__construct($qrBill, $language);
         $this->fpdf = $fpdf;
+        $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
     }
 
     public function getPaymentPart()
@@ -98,7 +100,9 @@ final class fpdfOutput extends AbstractOutput implements OutputInterface
         $this->fpdf->MultiCell(48, 7, utf8_decode(Translation::get('paymentPart', $this->language)));
 
         // QRCode
-        $this->fpdf->Image(self::EXAMPLE_PATH . 'qr.png', 67, 209.5, 46, 46);
+        $image = $this->getPngImage();
+
+        $this->fpdf->Image($image[0], 67, 209.5, 46, 46, $image[1]);
 
         // Information Section
         $this->fpdf->SetY(197.3);
@@ -190,11 +194,23 @@ final class fpdfOutput extends AbstractOutput implements OutputInterface
         }
 
         $this->fpdf->Image(
-            $element->getFile(),
+            $element->getFile('png'),
             $x,
             $y,
             $element->getWidth(),
             $element->getHeight()
         );
+    }
+
+    private function getPngImage()
+    {
+        $qrCode = $this->getQrCode();
+        $format = QrCode::FILE_FORMAT_PNG;
+        $qrCode->setWriterByExtension($format);
+        $image64 = explode(',', $qrCode->writeDataUri(), 2);
+        $image = 'data://text/plain;base64,' . $image64[1];
+        $type = 'png';
+
+        return [$image, $type];
     }
 }
