@@ -3,7 +3,6 @@
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -35,7 +34,6 @@ class TcPdfOutputTest extends TestCase
         ];
 
         foreach ($variations as $variation) {
-
             $file = $variation['file'];
 
             $tcPdf = new \TCPDF('P', 'mm', 'A4', true, 'ISO-8859-1');
@@ -50,6 +48,10 @@ class TcPdfOutputTest extends TestCase
             $tcPdfOutput->setPrintable($variation['printable']);
             $tcPdfOutput->setQrCodeImageFormat($variation['format']);
             $tcPdfOutput->getPaymentPart();
+
+            if (!file_exists($file)) {
+                $this->regenerateReferenceFiles = true;
+            }
 
             if ($this->regenerateReferenceFiles) {
                 $tcPdf->Output($file, 'F');

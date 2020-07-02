@@ -23,13 +23,13 @@ class FpdfOutputTest extends TestCase
         $variations = [
             [
                 'printable' => false,
-                'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.pdf'
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.pdf'
             ],
             [
                 'printable' => true,
-                'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.print.pdf'
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
             ]
 
             // Note: Testing the exact output with a png qr code is not possible, as the png contents are
@@ -48,11 +48,14 @@ class FpdfOutputTest extends TestCase
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
+            if (!file_exists($file)) {
+                $this->regenerateReferenceFiles = true;
+            }
+
             if ($this->regenerateReferenceFiles) {
                 $fpdf->Output($file, 'F');
             }
-
-            $contents = $this->getActualPdfContents($fpdf->Output($file, 'F'));
+            $contents = $this->getActualPdfContents($fpdf->Output($file, 'S'));
 
             $this->assertNotNull($contents);
             $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
