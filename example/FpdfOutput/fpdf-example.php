@@ -21,9 +21,4 @@ $output
 $examplePath = __DIR__ . "/fpdf_example.pdf";
 $fpdf->Output($examplePath, 'F');
 
-if (file_exists(dirname(__DIR__) . '/qr.svg')) {
-    unlink(dirname(__DIR__) . '/qr.svg');
-    unlink(dirname(__DIR__) . '/qr.png');
-}
-
 print "PDF example created here : " . $examplePath;
