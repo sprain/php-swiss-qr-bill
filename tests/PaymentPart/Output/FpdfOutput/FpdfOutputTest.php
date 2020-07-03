@@ -48,10 +48,6 @@ class FpdfOutputTest extends TestCase
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
-            if (!file_exists($file)) {
-                $this->regenerateReferenceFiles = true;
-            }
-
             if ($this->regenerateReferenceFiles) {
                 $fpdf->Output($file, 'F');
             }
@@ -64,7 +60,7 @@ class FpdfOutputTest extends TestCase
 
     private function getActualPdfContents(string $fileContents): ?string
     {
-        // Extract actual pdf content and ignore all meta data which may differ in different versions of TcPdf
+        // Extract actual pdf content and ignore all meta data which may differ in different versions of Fpdf
         $pattern = '/stream(.*?)endstream/s';
         preg_match($pattern, $fileContents, $matches);
 
