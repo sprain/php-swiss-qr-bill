@@ -2,7 +2,7 @@
 
 namespace Sprain\SwissQrBill\Exception;
 
-class InvalidQrBillDataException extends \Exception
+class InvalidFpdfImageFormat extends \Exception
 {
 
 }

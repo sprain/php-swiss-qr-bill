@@ -3,8 +3,8 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
-use Exception;
 use Fpdf\Fpdf;
+use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
@@ -75,9 +75,8 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     {
         $this->qrCodeImageFormat = $fileExtension;
         if ($fileExtension === 'svg') {
-            throw new Exception('SVG images are not allowed by FPDF.');
+            throw new InvalidFpdfImageFormat('SVG images are not allowed by FPDF.');
         }
-
         return $this;
     }
 
@@ -238,17 +237,17 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         );
     }
 
-    private function setX(int $x) : void
+    private function setX(float $x) : void
     {
         $this->fpdf->SetX($x + $this->offsetX);
     }
 
-    private function setY(int $y) : void
+    private function setY(float $y) : void
     {
         $this->fpdf->SetY($y + $this->offsetY);
     }
 
-    private function SetXY(int $x, int $y) : void
+    private function SetXY(float $x, float $y) : void
     {
         $this->fpdf->SetXY($x + $this->offsetX, $y + $this->offsetY);
     }
