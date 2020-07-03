@@ -1,14 +1,12 @@
 <?php
 
-use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\Template\QrBillFooter;
-
 require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 // 1. Let's load the base example to define the qr bill contents
 require dirname(__DIR__) . '/example.php';
 
 // 2. Create a FPDF instance (or use an existing one from your project)
-$fpdf = new QrBillFooter('P', 'mm', 'A4');
+$fpdf = new \Fpdf\Fpdf('P', 'mm', 'A4');
 $fpdf->AddPage();
 
 // 3. Create a full payment part for FPDF

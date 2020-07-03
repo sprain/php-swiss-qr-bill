@@ -2,9 +2,9 @@
 
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
+use Fpdf\Fpdf;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput;
-use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\Template\QrBillFooter;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
@@ -31,15 +31,12 @@ class FpdfOutputTest extends TestCase
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
             ]
-
-            // Note: Testing the exact output with a png qr code is not possible, as the png contents are
-            // not always exactly the same on each server configuration.
         ];
 
         foreach ($variations as $variation) {
             $file = $variation['file'];
 
-            $fpdf = new QrBillFooter('P', 'mm', 'A4');
+            $fpdf = new Fpdf('P', 'mm', 'A4');
             $fpdf->AddPage();
 
             $output = new FpdfOutput($qrBill, 'en', $fpdf);
@@ -67,7 +64,6 @@ class FpdfOutputTest extends TestCase
         if (isset($matches[1])) {
             return $matches[1];
         }
-
         return null;
     }
 }
