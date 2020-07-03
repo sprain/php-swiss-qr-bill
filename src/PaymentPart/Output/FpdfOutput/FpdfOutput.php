@@ -71,7 +71,12 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->addPaymentPart();
     }
 
-    public function setQrCodeImageFormat(string $fileExtension): self
+    /**
+     * @param string $fileExtension
+     * @return $this
+     * @throws InvalidFpdfImageFormat
+     */
+    public function setQrCodeImageFormat(string $fileExtension): AbstractOutput
     {
         $this->qrCodeImageFormat = $fileExtension;
         if ($fileExtension === 'svg') {
