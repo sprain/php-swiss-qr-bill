@@ -16,13 +16,10 @@ use Sprain\SwissQrBill\QrCode\QrCode;
 
 final class FpdfOutput extends AbstractOutput implements OutputInterface
 {
-    const EXAMPLE_PATH = __DIR__ . '../../../../../example/';
-
     /** @var QrBillFooter */
     private $fpdf;
-    /**
-     * @var float
-     */
+
+    /** @var float */
     private $amountLS = 0;
 
     public function __construct(
@@ -38,12 +35,12 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     public function getPaymentPart()
     {
         $this->fpdf->SetAutoPageBreak(false);
-        $this->getLinesIfNotPrintable();
-        $this->getReceiptPart();
-        $this->getPaymentSide();
+        $this->addSeparatorContentIfNotPrintable();
+        $this->addReceiptPart();
+        $this->addPaymentPart();
     }
 
-    private function getLinesIfNotPrintable()
+    private function addSeparatorContentIfNotPrintable()
     {
         if (!$this->isPrintable()) {
             $this->fpdf->SetLineWidth(0.1);
@@ -56,7 +53,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         }
     }
 
-    private function getReceiptPart()
+    private function addReceiptPart()
     {
         // Title
         $this->fpdf->SetFont('helvetica', 'B', 11);
@@ -70,7 +67,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
             $this->setContentElement($receiptInformationElement, true);
         }
 
-        // Amount section
+        // Amount
         $this->fpdf->SetY(259.3);
         foreach ($this->getCurrencyElements() as $receiptCurrencyElement) {
             $this->amountLS = 0.6;
@@ -92,7 +89,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->fpdf->Cell(54, 0, utf8_decode(Translation::get('acceptancePoint', $this->language)), '', '', 'R');
     }
 
-    private function getPaymentSide()
+    private function addPaymentPart()
     {
         // Title
         $this->fpdf->SetFont('helvetica', 'B', 11);
@@ -101,7 +98,6 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
         // QRCode
         $image = $this->getPngImage();
-
         $this->fpdf->Image($image[0], 67, 209.5, 46, 46, $image[1]);
 
         // Information Section
@@ -172,7 +168,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         );
         $this->fpdf->Ln($isReceiptPart ? 3.4 : 4.8);
     }
-    // TODO: Create an example_non.php to test placeholders
+
     private function setPlaceholderElement(Placeholder $element): void
     {
         $type = $element->getType();
