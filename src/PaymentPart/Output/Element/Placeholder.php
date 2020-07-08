@@ -76,7 +76,6 @@ class Placeholder implements OutputElementInterface
         switch ($type) {
             case self::FILE_TYPE_PNG:
                 return $this->filePng;
-                break;
             case self::FILE_TYPE_SVG:
             default:
                 return $this->fileSvg;
