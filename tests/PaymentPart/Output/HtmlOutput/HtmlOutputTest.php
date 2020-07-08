@@ -21,26 +21,33 @@ class HtmlOutputTest extends TestCase
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.html'
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.html'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.print.html'
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.print.html'
+            ],
+            [
+                'printable' => false,
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.png.html'
+            ],
+            [
+                'printable' => true,
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.png.print.html'
             ]
-
-            // Note: Testing the exact output with a png qr code is not possible, as the png contents are
-            // not always exactly the same on each server configuration.
         ];
 
         foreach ($variations as $variation) {
-
             $file = $variation['file'];
 
-            $htmlOutput = (new HtmlOutput($qrBill, 'en'));
-            $htmlOutput->setPrintable($variation['printable']);
-            $htmlOutput->setQrCodeImageFormat($variation['format']);
-            $output = $htmlOutput->getPaymentPart();
+            $output = (new HtmlOutput($qrBill, 'en'));
+            $output
+                ->setPrintable($variation['printable'])
+                ->setQrCodeImageFormat($variation['format'])
+                ->getPaymentPart();
 
             if ($this->regenerateReferenceFiles) {
                file_put_contents($file, $output);

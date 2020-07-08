@@ -47,6 +47,7 @@ class FpdfOutputTest extends TestCase
             if ($this->regenerateReferenceFiles) {
                 $fpdf->Output($file, 'F');
             }
+            
             $contents = $this->getActualPdfContents($fpdf->Output($file, 'S'));
 
             $this->assertNotNull($contents);
