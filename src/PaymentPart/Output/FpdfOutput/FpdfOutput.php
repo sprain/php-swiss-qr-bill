@@ -238,7 +238,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         }
 
         $this->fpdf->Image(
-            $element->getFile('png'),
+            $element->getFile(Placeholder::FILE_TYPE_PNG),
             $x,
             $y,
             $element->getWidth(),
