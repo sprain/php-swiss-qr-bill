@@ -28,8 +28,6 @@ class HtmlOutputTest extends TestCase
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.print.html'
             ],
-
-            /* PNG tests fail on Travis for unclear reasons.
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_PNG,
@@ -40,14 +38,13 @@ class HtmlOutputTest extends TestCase
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.png.print.html'
             ]
-            */
         ];
 
         foreach ($variations as $variation) {
             $file = $variation['file'];
 
-            $output = (new HtmlOutput($qrBill, 'en'));
-            $output
+            $htmlOutput = (new HtmlOutput($qrBill, 'en'));
+            $output = $htmlOutput
                 ->setPrintable($variation['printable'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
