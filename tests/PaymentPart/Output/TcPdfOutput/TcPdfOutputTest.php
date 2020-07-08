@@ -3,7 +3,6 @@
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -22,20 +21,26 @@ class TcPdfOutputTest extends TestCase
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.pdf'
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.pdf'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.print.pdf'
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.print.pdf'
+            ],
+            [
+                'printable' => false,
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.png.pdf'
+            ],
+            [
+                'printable' => true,
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.png.print.pdf'
             ]
-
-            // Note: Testing the exact output with a png qr code is not possible, as the png contents are
-            // not always exactly the same on each server configuration.
         ];
 
         foreach ($variations as $variation) {
-
             $file = $variation['file'];
 
             $tcPdf = new \TCPDF('P', 'mm', 'A4', true, 'ISO-8859-1');
@@ -43,13 +48,11 @@ class TcPdfOutputTest extends TestCase
             $tcPdf->setPrintFooter(false);
             $tcPdf->AddPage();
 
-            $tcPdf->setDocCreationTimestamp(strtotime('2020-06-30 00:00'));
-            $tcPdf->setDocModificationTimestamp(strtotime('2020-06-30 00:00'));
-
-            $tcPdfOutput = (new TcPdfOutput($qrBill, 'en', $tcPdf));
-            $tcPdfOutput->setPrintable($variation['printable']);
-            $tcPdfOutput->setQrCodeImageFormat($variation['format']);
-            $tcPdfOutput->getPaymentPart();
+            $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
+            $output
+                ->setPrintable($variation['printable'])
+                ->setQrCodeImageFormat($variation['format'])
+                ->getPaymentPart();
 
             if ($this->regenerateReferenceFiles) {
                 $tcPdf->Output($file, 'F');

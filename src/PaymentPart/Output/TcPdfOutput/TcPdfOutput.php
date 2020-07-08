@@ -17,43 +17,51 @@ use TCPDF;
 final class TcPdfOutput extends AbstractOutput implements OutputInterface
 {
     // TCPDF constants
-    private const TCPDF_BORDER = 0;
-    private const TCPDF_ALIGN_BELOW = 2;
-    private const TCPDF_ALIGN_LEFT = 'L';
-    private const TCPDF_ALIGN_RIGHT = 'R';
-    private const TCPDF_ALIGN_CENTER = 'C';
-    private const TCPDF_FONT = 'Helvetica';
+    private const BORDER = 0;
+    private const ALIGN_BELOW = 2;
+    private const ALIGN_LEFT = 'L';
+    private const ALIGN_RIGHT = 'R';
+    private const ALIGN_CENTER = 'C';
+    private const FONT = 'Helvetica';
 
     // Ratio constants
-    private const TCPDF_LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
-    private const TCPDF_RIGHT_CELL_HEIGHT_RATIO_COMMON = 1.1;
-    private const TCPDF_LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
-    private const TCPDF_RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
+    private const LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
+    private const RIGHT_CELL_HEIGHT_RATIO_COMMON = 1.1;
+    private const LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
+    private const RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
 
     // Location constants
-    private const TCPDF_CURRENCY_AMOUNT_Y = 259;
-    private const TCPDF_LEFT_PART_X = 4;
-    private const TCPDF_RIGHT_PART_X = 66;
-    private const TCPDF_RIGHT_PAR_X_INFO = 117;
-    private const TCPDF_TITLE_Y = 195;
+    private const CURRENCY_AMOUNT_Y = 259;
+    private const LEFT_PART_X = 4;
+    private const RIGHT_PART_X = 66;
+    private const RIGHT_PART_X_INFO = 117;
+    private const TITLE_Y = 195;
+
+    // Font constants
+    private const FONT_SIZE_MAIN_TITLE = 11;
+    private const FONT_SIZE_TITLE_RECEIPT = 6;
+    private const FONT_SIZE_RECEIPT = 8;
+    private const FONT_SIZE_TITLE_PAYMENT_PART = 8;
+    private const FONT_SIZE_PAYMENT_PART = 10;
+    private const FONT_SIZE_FURTHER_INFORMATION = 7;
 
     // Line spacing constants
-    private const TCPDF_9PT = 3.5;
-    private const TCPDF_11PT = 4.8;
+    private const LINE_SPACING_RECEIPT = 3.5;
+    private const LINE_SPACING_PAYMENT_PART = 4.8;
 
-    /** @var  string */
+    /** @var string */
     protected $language;
 
     /** @var QrBill */
     protected $qrBill;
 
-    /* @var TCPDF $tcPdf */
+    /* @var TCPDF */
     private $tcPdf;
 
-    /* @var int $offsetX */
+    /* @var int */
     private $offsetX;
 
-    /* @var int $offsetY */
+    /* @var int */
     private $offsetY;
 
     public function __construct(
@@ -72,6 +80,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     public function getPaymentPart(): void
     {
+        $retainCellHeightRatio = $this->tcPdf->getCellHeightRatio();
+
         $this->tcPdf->SetAutoPageBreak(false);
 
         $this->addSeparatorContentIfNotPrintable();
@@ -85,6 +95,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $this->addCurrencyContent();
         $this->addAmountContent();
         $this->addFurtherInformationContent();
+
+        $this->tcPdf->setCellHeightRatio($retainCellHeightRatio);
     }
 
     private function addSwissQrCodeImage(): void
@@ -103,7 +115,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         }
 
         $yPosQrCode = 209.5 + $this->offsetY;
-        $xPosQrCode = self::TCPDF_RIGHT_PART_X + 1 + $this->offsetX;
+        $xPosQrCode = self::RIGHT_PART_X + 1 + $this->offsetX;
 
         $qrCode->setWriterByExtension($format);
         $img = base64_decode(preg_replace('#^data:image/[^;]+;base64,#', '', $qrCode->writeDataUri()));
@@ -112,12 +124,12 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function addInformationContentReceipt(): void
     {
-        $x = self::TCPDF_LEFT_PART_X;
-        $this->tcPdf->setCellHeightRatio(self::TCPDF_LEFT_CELL_HEIGHT_RATIO_COMMON);
+        $x = self::LEFT_PART_X;
+        $this->tcPdf->setCellHeightRatio(self::LEFT_CELL_HEIGHT_RATIO_COMMON);
 
         // Title
-        $this->tcPdf->SetFont(self::TCPDF_FONT, 'B', 11);
-        $this->SetY(self::TCPDF_TITLE_Y);
+        $this->tcPdf->SetFont(self::FONT, 'B', self::FONT_SIZE_MAIN_TITLE);
+        $this->SetY(self::TITLE_Y);
         $this->SetX($x);
         $this->printCell(Translation::get('receipt', $this->language), 0, 7);
 
@@ -129,21 +141,21 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         }
 
         // Acceptance section
-        $this->tcPdf->SetFont(self::TCPDF_FONT, 'B', 6);
+        $this->tcPdf->SetFont(self::FONT, 'B', 6);
         $this->SetY(273);
         $this->SetX($x);
-        $this->printCell(Translation::get('acceptancePoint', $this->language), 54, 0, self::TCPDF_ALIGN_BELOW, self::TCPDF_ALIGN_RIGHT);
+        $this->printCell(Translation::get('acceptancePoint', $this->language), 54, 0, self::ALIGN_BELOW, self::ALIGN_RIGHT);
     }
 
     private function addInformationContent(): void
     {
-        $x = self::TCPDF_RIGHT_PAR_X_INFO;
-        $this->tcPdf->setCellHeightRatio(self::TCPDF_RIGHT_CELL_HEIGHT_RATIO_COMMON);
+        $x = self::RIGHT_PART_X_INFO;
+        $this->tcPdf->setCellHeightRatio(self::RIGHT_CELL_HEIGHT_RATIO_COMMON);
 
         // Title
-        $this->tcPdf->SetFont(self::TCPDF_FONT, 'B', 11);
-        $this->SetY(self::TCPDF_TITLE_Y);
-        $this->SetX(self::TCPDF_RIGHT_PART_X);
+        $this->tcPdf->SetFont(self::FONT, 'B', self::FONT_SIZE_MAIN_TITLE);
+        $this->SetY(self::TITLE_Y);
+        $this->SetX(self::RIGHT_PART_X);
         $this->printCell(Translation::get('paymentPart', $this->language), 48, 7);
 
         // Elements
@@ -156,9 +168,9 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function addCurrencyContentReceipt(): void
     {
-        $x = self::TCPDF_LEFT_PART_X;
-        $this->tcPdf->setCellHeightRatio(self::TCPDF_LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
-        $this->SetY(self::TCPDF_CURRENCY_AMOUNT_Y);
+        $x = self::LEFT_PART_X;
+        $this->tcPdf->setCellHeightRatio(self::LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
+        $this->SetY(self::CURRENCY_AMOUNT_Y);
 
         foreach ($this->getCurrencyElements() as $currencyElement) {
             $this->SetX($x);
@@ -169,8 +181,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private function addAmountContentReceipt(): void
     {
         $x = 16;
-        $this->tcPdf->setCellHeightRatio(self::TCPDF_LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
-        $this->SetY(self::TCPDF_CURRENCY_AMOUNT_Y);
+        $this->tcPdf->setCellHeightRatio(self::LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
+        $this->SetY(self::CURRENCY_AMOUNT_Y);
 
         foreach ($this->getAmountElementsReceipt() as $amountElement) {
             $this->SetX($x);
@@ -180,9 +192,9 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function addCurrencyContent(): void
     {
-        $x = self::TCPDF_RIGHT_PART_X;
-        $this->tcPdf->setCellHeightRatio(self::TCPDF_RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
-        $this->SetY(self::TCPDF_CURRENCY_AMOUNT_Y);
+        $x = self::RIGHT_PART_X;
+        $this->tcPdf->setCellHeightRatio(self::RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
+        $this->SetY(self::CURRENCY_AMOUNT_Y);
 
         foreach ($this->getCurrencyElements() as $currencyElement) {
             $this->SetX($x);
@@ -193,8 +205,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private function addAmountContent(): void
     {
         $x = 80;
-        $this->tcPdf->setCellHeightRatio(self::TCPDF_RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
-        $this->SetY(self::TCPDF_CURRENCY_AMOUNT_Y);
+        $this->tcPdf->setCellHeightRatio(self::RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT);
+        $this->SetY(self::CURRENCY_AMOUNT_Y);
 
         foreach ($this->getAmountElements() as $amountElement) {
             $this->SetX($x);
@@ -204,10 +216,10 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function addFurtherInformationContent(): void
     {
-        $x = self::TCPDF_RIGHT_PART_X;
-        $this->tcPdf->setCellHeightRatio(self::TCPDF_RIGHT_CELL_HEIGHT_RATIO_COMMON);
+        $x = self::RIGHT_PART_X;
+        $this->tcPdf->setCellHeightRatio(self::RIGHT_CELL_HEIGHT_RATIO_COMMON);
         $this->SetY(286);
-        $this->tcPdf->SetFont(self::TCPDF_FONT, '', 7);
+        $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
 
         foreach ($this->getFurtherInformationElements() as $furtherInformationElement) {
             $this->SetX($x);
@@ -218,13 +230,13 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private function addSeparatorContentIfNotPrintable(): void
     {
         if (!$this->isPrintable()) {
-            $this->tcPdf->SetLineStyle(array('width' => 0.1, 'dash' => 4, 'color' => array(0, 0, 0)));
-            $this->printLine(2, 193, 208, 193);
-            $this->printLine(62, 193, 62, 296);
-            $this->tcPdf->SetFont(self::TCPDF_FONT, '', 7);
+            $this->tcPdf->SetLineStyle(array('width' => 0.1, 'color' => array(0, 0, 0)));
+            $this->printLine(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
+            $this->printLine(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
+            $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
             $this->SetY(188);
             $this->SetX(5);
-            $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::TCPDF_ALIGN_CENTER);
+            $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::ALIGN_CENTER);
         }
     }
 
@@ -245,26 +257,35 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function setTitleElement(Title $element, bool $isReceiptPart): void
     {
-        $this->tcPdf->SetFont(self::TCPDF_FONT, 'B', $isReceiptPart ? 6 : 8);
+        $this->tcPdf->SetFont(
+            self::FONT,
+            'B',
+            $isReceiptPart ? self::FONT_SIZE_TITLE_RECEIPT : self::FONT_SIZE_TITLE_PAYMENT_PART
+        );
         $this->printCell(
             Translation::get(str_replace("text.", "", $element->getTitle()), $this->language),
             0,
             0,
-            self::TCPDF_ALIGN_BELOW
+            self::ALIGN_BELOW
         );
     }
 
     private function setTextElement(Text $element, bool $isReceiptPart): void
     {
-        $this->tcPdf->SetFont(self::TCPDF_FONT, '', $isReceiptPart ? 8 : 10);
+        $this->tcPdf->SetFont(
+            self::FONT,
+            '',
+            $isReceiptPart ? self::FONT_SIZE_RECEIPT : self::FONT_SIZE_PAYMENT_PART
+        );
+
         $this->printMultiCell(
             str_replace("text.", "", $element->getText()),
             $isReceiptPart ? 54 : 0,
             0,
-            self::TCPDF_ALIGN_BELOW,
-            self::TCPDF_ALIGN_LEFT
+            self::ALIGN_BELOW,
+            self::ALIGN_LEFT
         );
-        $this->tcPdf->Ln($isReceiptPart ? self::TCPDF_9PT : self::TCPDF_11PT);
+        $this->tcPdf->Ln($isReceiptPart ? self::LINE_SPACING_RECEIPT : self::LINE_SPACING_PAYMENT_PART);
     }
 
     private function setPlaceholderElement(Placeholder $element): void
@@ -311,9 +332,9 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         int $w = 0,
         int $h = 0,
         int $nextLineAlign = 0,
-        string $textAlign = self::TCPDF_ALIGN_LEFT
+        string $textAlign = self::ALIGN_LEFT
     ) : void {
-        $this->tcPdf->Cell($w, $h, $text, self::TCPDF_BORDER, $nextLineAlign, $textAlign);
+        $this->tcPdf->Cell($w, $h, $text, self::BORDER, $nextLineAlign, $textAlign);
     }
 
     private function printMultiCell(
@@ -321,9 +342,9 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         int $w = 0,
         int $h = 0,
         int $nextLineAlign = 0,
-        string $textAlign = self::TCPDF_ALIGN_LEFT
+        string $textAlign = self::ALIGN_LEFT
     ) : void {
-        $this->tcPdf->MultiCell($w, $h, $text, self::TCPDF_BORDER, $textAlign, false, $nextLineAlign);
+        $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, $textAlign, false, $nextLineAlign);
     }
 
     private function printLine(int $x1, int $y1, int $x2, int $y2) : void

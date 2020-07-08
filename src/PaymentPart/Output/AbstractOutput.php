@@ -21,7 +21,7 @@ abstract class AbstractOutput
     protected $printable;
 
     /** @var string */
-    private $qrCodeImageFormat;
+    protected $qrCodeImageFormat;
 
     public function __construct(QrBill $qrBill, string $language)
     {
