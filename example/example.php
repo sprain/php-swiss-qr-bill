@@ -50,8 +50,8 @@ $qrBill->setPaymentAmountInformation(
 // Add payment reference
 // This is what you will need to identify incoming payments.
 $referenceNumber = QrBill\Reference\QrPaymentReferenceGenerator::generate(
-    '210000',  // You receive this number from your bank (BESR-ID). Unless your bank is PostFinance, then use NULL.
-    '313947143000901'   // A number to match the payment with your internal data, e.g. an invoice number
+    '210000',  // You receive this number from your bank (BESR-ID). Unless your bank is PostFinance, in that case use NULL.
+    '313947143000901' // A number to match the payment with your internal data, e.g. an invoice number
 );
 
 $qrBill->setPaymentReference(
