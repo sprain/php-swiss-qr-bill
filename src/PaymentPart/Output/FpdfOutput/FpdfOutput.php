@@ -66,7 +66,9 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     public function getPaymentPart()
     {
         $this->fpdf->SetAutoPageBreak(false);
+
         $this->addSeparatorContentIfNotPrintable();
+
         $this->addReceiptPart();
         $this->addPaymentPart();
     }
@@ -78,10 +80,12 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
      */
     public function setQrCodeImageFormat(string $fileExtension): AbstractOutput
     {
-        $this->qrCodeImageFormat = $fileExtension;
         if ($fileExtension === 'svg') {
             throw new InvalidFpdfImageFormat('SVG images are not allowed by FPDF.');
         }
+
+        $this->qrCodeImageFormat = $fileExtension;
+
         return $this;
     }
 
