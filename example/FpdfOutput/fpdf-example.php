@@ -1,16 +1,18 @@
 <?php
 
-require dirname(dirname(__DIR__)) . '/vendor/autoload.php';
+use Sprain\SwissQrBill as QrBill;
+
+require __DIR__ . '/../../vendor/autoload.php';
 
 // 1. Let's load the base example to define the qr bill contents
-require dirname(__DIR__) . '/example.php';
+require __DIR__ . '/../example.php';
 
-// 2. Create a FPDF instance (or use an existing one from your project)
+// 2. Create an FPDF instance (or use an existing one from your project)
 $fpdf = new \Fpdf\Fpdf('P', 'mm', 'A4');
 $fpdf->AddPage();
 
 // 3. Create a full payment part for FPDF
-$output = new Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput($qrBill, 'en', $fpdf);
+$output = new QrBill\PaymentPart\Output\FpdfOutput\FpdfOutput($qrBill, 'en', $fpdf);
 $output
     ->setPrintable(false)
     ->getPaymentPart();

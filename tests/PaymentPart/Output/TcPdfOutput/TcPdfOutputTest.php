@@ -21,16 +21,23 @@ class TcPdfOutputTest extends TestCase
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.pdf'
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.pdf'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.print.pdf'
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.print.pdf'
+            ],
+            [
+                'printable' => false,
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.png.pdf'
+            ],
+            [
+                'printable' => true,
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.png.print.pdf'
             ]
-
-            // Note: Testing the exact output with a png qr code is not possible, as the png contents are
-            // not always exactly the same on each server configuration.
         ];
 
         foreach ($variations as $variation) {
@@ -44,14 +51,15 @@ class TcPdfOutputTest extends TestCase
             $tcPdf->setDocCreationTimestamp(strtotime('2020-06-30 00:00'));
             $tcPdf->setDocModificationTimestamp(strtotime('2020-06-30 00:00'));
 
-            $tcPdfOutput = (new TcPdfOutput($qrBill, 'en', $tcPdf));
-            $tcPdfOutput->setPrintable($variation['printable']);
-            $tcPdfOutput->setQrCodeImageFormat($variation['format']);
-            $tcPdfOutput->getPaymentPart();
+            $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
+            $output
+                ->setPrintable($variation['printable'])
+                ->setQrCodeImageFormat($variation['format'])
+                ->getPaymentPart();
 
-            if ($this->regenerateReferenceFiles) {
+            #if ($this->regenerateReferenceFiles) {
                 $tcPdf->Output($file, 'F');
-            }
+            #}
 
             $contents = $this->getActualPdfContents($tcPdf->Output($file, 'S'));
 
