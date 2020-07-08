@@ -16,10 +16,13 @@
         "symfony/css-selector": "^4.2",
         "phpstan/phpstan": "^0.12.23",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "tecnickcom/tcpdf": "^6.3.2"
+        "symfony/var-dumper": "^5.1",
+        "tecnickcom/tcpdf": "^6.3.2",
+        "fpdf/fpdf": "^1.82"
     },
     "suggest": {
-        "tecnickcom/tcpdf": "Needed to create pdfs with TcPdfOutput"
+        "tecnickcom/tcpdf": "Needed to create pdfs with TcPdfOutput",
+        "fpdf/fpdf": "Needed to create pdfs with FpdfOutput"
     },
     "autoload": {
         "psr-4": {

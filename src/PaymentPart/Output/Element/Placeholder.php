@@ -4,30 +4,37 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\Element;
 
 class Placeholder implements OutputElementInterface
 {
-    const PLACEHOLDER_TYPE_PAYABLE_BY = [
+    public const FILE_TYPE_SVG = 'svg';
+    public const FILE_TYPE_PNG = 'png';
+
+    public const PLACEHOLDER_TYPE_PAYABLE_BY = [
         'type' => 'placeholder_payable_by',
-        'file' => __DIR__ . '/../../../../assets/marks_65x25mm.svg',
+        'fileSvg' => __DIR__ . '/../../../../assets/marks_65x25mm.svg',
+        'filePng' => __DIR__ . '/../../../../assets/marks_65x25mm.png',
         'width' => 65,
         'height' => 25
     ];
 
-    const PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT = [
+    public const PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT = [
         'type' => 'placeholder_payable_by_receipt',
-        'file' => __DIR__ . '/../../../../assets/marks_52x20mm.svg',
+        'fileSvg' => __DIR__ . '/../../../../assets/marks_52x20mm.svg',
+        'filePng' => __DIR__ . '/../../../../assets/marks_52x20mm.png',
         'width' => 52,
         'height' => 20
     ];
 
-    const PLACEHOLDER_TYPE_AMOUNT = [
+    public const PLACEHOLDER_TYPE_AMOUNT = [
         'type' => 'placeholder_amount',
-        'file' => __DIR__ . '/../../../../assets/marks_40x15mm.svg',
+        'fileSvg' => __DIR__ . '/../../../../assets/marks_40x15mm.svg',
+        'filePng' => __DIR__ . '/../../../../assets/marks_40x15mm.png',
         'width' => 40,
         'height' => 15
     ];
 
-    const PLACEHOLDER_TYPE_AMOUNT_RECEIPT = [
+    public const PLACEHOLDER_TYPE_AMOUNT_RECEIPT = [
         'type' => 'placeholder_amount_receipt',
-        'file' => __DIR__ . '/../../../../assets/marks_30x10mm.svg',
+        'fileSvg' => __DIR__ . '/../../../../assets/marks_30x10mm.svg',
+        'filePng' => __DIR__ . '/../../../../assets/marks_30x10mm.png',
         'width' => 30,
         'height' => 10
     ];
@@ -36,7 +43,10 @@ class Placeholder implements OutputElementInterface
     private $type;
 
     /** @var string */
-    private $file;
+    private $fileSvg;
+
+    /** @var string */
+    private $filePng;
 
     /** @var int */
     private $width;
@@ -48,7 +58,8 @@ class Placeholder implements OutputElementInterface
     {
         $placeholder = new self();
         $placeholder->type = $type['type'];
-        $placeholder->file = $type['file'];
+        $placeholder->fileSvg = $type['fileSvg'];
+        $placeholder->filePng = $type['filePng'];
         $placeholder->width = $type['width'];
         $placeholder->height = $type['height'];
 
@@ -60,9 +71,15 @@ class Placeholder implements OutputElementInterface
         return $this->type;
     }
 
-    public function getFile(): ?string
+    public function getFile($type = self::FILE_TYPE_SVG): string
     {
-        return $this->file;
+        switch ($type) {
+            case self::FILE_TYPE_PNG:
+                return $this->filePng;
+            case self::FILE_TYPE_SVG:
+            default:
+                return $this->fileSvg;
+        }
     }
 
     public function getWidth(): ?int
