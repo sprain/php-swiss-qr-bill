@@ -49,19 +49,19 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private const LINE_SPACING_RECEIPT = 3.5;
     private const LINE_SPACING_PAYMENT_PART = 4.8;
 
-    /** @var  string */
+    /** @var string */
     protected $language;
 
     /** @var QrBill */
     protected $qrBill;
 
-    /* @var TCPDF $tcPdf */
+    /* @var TCPDF */
     private $tcPdf;
 
-    /* @var int $offsetX */
+    /* @var int */
     private $offsetX;
 
-    /* @var int $offsetY */
+    /* @var int */
     private $offsetY;
 
     public function __construct(
@@ -233,7 +233,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
             $this->tcPdf->SetLineStyle(array('width' => 0.1, 'dash' => 4, 'color' => array(0, 0, 0)));
             $this->printLine(2, 193, 208, 193);
             $this->printLine(62, 193, 62, 296);
-            $this->tcPdf->SetFont(self::FONT, '', 7);
+            $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
             $this->SetY(188);
             $this->SetX(5);
             $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::ALIGN_CENTER);
