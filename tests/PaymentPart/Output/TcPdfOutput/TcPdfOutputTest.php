@@ -48,9 +48,6 @@ class TcPdfOutputTest extends TestCase
             $tcPdf->setPrintFooter(false);
             $tcPdf->AddPage();
 
-            $tcPdf->setDocCreationTimestamp(strtotime('2020-06-30 00:00'));
-            $tcPdf->setDocModificationTimestamp(strtotime('2020-06-30 00:00'));
-
             $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
             $output
                 ->setPrintable($variation['printable'])
