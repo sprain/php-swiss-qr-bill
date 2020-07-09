@@ -4,7 +4,7 @@ use Sprain\SwissQrBill as QrBill;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// This is an example of how to create a qr bill with a reference in SCOR format.
+// This is an example of how to create a qr bill with a reference in SCOR format instead of TYPE_QR.
 
 // Create a new instance of QrBill, containing default headers with fixed values
 $qrBill = QrBill\QrBill::create();
@@ -54,6 +54,13 @@ $qrBill->setPaymentReference(
         QrBill\DataGroup\Element\PaymentReference::TYPE_SCOR,
         'RF18539007547034'
     ));
+
+// Optionally, add some human-readable information about what the bill is for.
+$qrBill->setAdditionalInformation(
+    QrBill\DataGroup\Element\AdditionalInformation::create(
+        'Invoice 123456, Gardening work'
+    )
+);
 
 // Time to output something!
 //
