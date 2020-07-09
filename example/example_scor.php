@@ -67,3 +67,9 @@ try {
 	}
 	exit;
 }
+
+// Next: Output full payment parts, depending on the format you want to use:
+//
+// - FpdfOutput/fpdf-example.php
+// - HtmlOutput/html-example.php
+// - TcPdfOutput/tcpdf-example.php

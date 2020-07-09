@@ -4,7 +4,7 @@ use Sprain\SwissQrBill as QrBill;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// This example shows how to create a classic qr bill.
+// This is an example how to create a classic qr bill with reference number and QR-IBAN.
 
 // Create a new instance of QrBill, containing default headers with fixed values
 $qrBill = QrBill\QrBill::create();
