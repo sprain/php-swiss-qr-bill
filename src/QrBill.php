@@ -31,6 +31,9 @@ class QrBill implements SelfValidatableInterface
 
     private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.optimized.png';
 
+    private const PX_QR_CODE = 543;    // recommended 46x46 mm in px @ 300dpi – in pixel based outputs, the final image size may be slightly different, depending on the qr code contents
+    private const PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
+
     /** @var Header */
     private $header;
 
@@ -195,11 +198,11 @@ class QrBill implements SelfValidatableInterface
 
         $qrCode = new QrCode();
         $qrCode->setText($this->getQrCodeContent());
-        $qrCode->setSize(543); // recommended 46x46 mm in px @ 300dpi
-        $qrCode->setLogoHeight(83); // recommended 7x7 mm in px @ 300dpi
-        $qrCode->setLogoWidth(83); // recommended 7x7 mm in px @ 300dpi
+        $qrCode->setSize(self::PX_QR_CODE);
+        $qrCode->setLogoHeight(self::PX_SWISS_CROSS);
+        $qrCode->setLogoWidth(self::PX_SWISS_CROSS);
         $qrCode->setLogoPath(self::SWISS_CROSS_LOGO_FILE);
-        $qrCode->setRoundBlockSize(false);
+        $qrCode->setRoundBlockSize(true, \Endroid\QrCode\QrCode::ROUND_BLOCK_SIZE_MODE_ENLARGE);
         $qrCode->setMargin(0);
         $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel($this->errorCorrectionLevel));
 
