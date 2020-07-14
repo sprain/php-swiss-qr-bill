@@ -26,6 +26,7 @@ class TestDataTest extends TestCase
             [__DIR__ . '/qr-additional-information.png', '3a23f70cc8cf519f66d27b73f002d828'],
             [__DIR__ . '/qr-alternative-schemes.png', '5bba5e41336c8e22fa50bea7627da41c'],
             [__DIR__ . '/qr-full-set.png', '766de4a121a49a7e88dacce508f1588f'],
+            [__DIR__ . '/qr-international-ultimate-debtor.png', 'fc074aaf23921f9e262c0cf101ba07bb'],
             [__DIR__ . '/qr-minimal-setup.png', '069e274f22816fcdd799acb1c0cc1dd9'],
             [__DIR__ . '/qr-payment-information-without-amount.png', '5705acaab9b9219884fdb2bc99c2cfce'],
             [__DIR__ . '/qr-payment-information-without-amount-but-debtor.png', '281316342f09a85af4ad137dc4d30998'],
@@ -34,7 +35,7 @@ class TestDataTest extends TestCase
             [__DIR__ . '/qr-payment-reference-scor.png', '03daab8e7c66094bbef308236882c739'],
             [__DIR__ . '/qr-ultimate-debtor.png', '5c359ee3333833a54a2076e5e83d2d20'],
 
-            [__DIR__ . '/proof-of-validation.png', '7d13a8739e490b3cdf13d7d86f66d6cb'],
+            [__DIR__ . '/proof-of-validation.png', '655b00b5181eef2c01c550fdc3465db5'],
         ];
     }
 }
