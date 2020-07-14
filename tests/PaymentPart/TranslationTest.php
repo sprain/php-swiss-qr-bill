@@ -20,8 +20,8 @@ class TranslationTest extends TestCase
     {
         return [
             ['de', ['paymentPart' => 'Zahlteil']],
-            ['fr', ['paymentPart' => 'Section paiement']],
-            ['it', ['paymentPart' => 'Sezione pagamento']],
+            ['fr', ['paymentPart' => 'Section de paiement']],
+            ['it', ['paymentPart' => 'Sezione di pagamento']],
             ['en', ['paymentPart' => 'Payment part']]
         ];
     }
@@ -38,8 +38,8 @@ class TranslationTest extends TestCase
     {
         return [
             ['de', 'paymentPart', 'Zahlteil'],
-            ['fr', 'paymentPart', 'Section paiement'],
-            ['it', 'paymentPart', 'Sezione pagamento'],
+            ['fr', 'paymentPart', 'Section de paiement'],
+            ['it', 'paymentPart', 'Sezione di pagamento'],
             ['en', 'paymentPart', 'Payment part']
         ];
     }
