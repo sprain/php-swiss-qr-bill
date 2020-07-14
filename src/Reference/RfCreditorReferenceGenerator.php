@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\Reference;
 
 use kmukku\phpIso11649\phpIso11649;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\Exception\InvalidCreditorReferenceException;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
@@ -39,7 +40,7 @@ class RfCreditorReferenceGenerator implements SelfValidatableInterface
      */
     public function __construct(string $reference)
     {
-        $this->reference = str_replace(' ', '', $reference);
+        $this->reference = StringModifier::stripWhitespace($reference);
     }
 
     /**
