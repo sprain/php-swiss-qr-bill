@@ -21,7 +21,7 @@ Then have a look at [example/example.php](example/example.php).
 
 [Semantic versioning](https://semver.org/) is used for this library.
 
-In addition, a minor version will always be published if anything on the output of the qr code or the payment part changes, even if it could be considered to be only a bugfix.
+In addition, a minor version will always be published if anything in the output of the qr code or the payment part changes, even if it could be considered to be only a bugfix.
 
 
 ## Support the project
