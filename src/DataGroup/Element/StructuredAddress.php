@@ -135,7 +135,11 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
             }
         }
 
-        $address .= sprintf("\n%s-%s %s", $this->getCountry(), $this->getPostalCode(), $this->getCity());
+        if (in_array($this->getCountry(), ['CH', 'FL'])) {
+            $address .= sprintf("\n%s %s", $this->getPostalCode(), $this->getCity());
+        } else {
+            $address .= sprintf("\n%s-%s %s", $this->getCountry(), $this->getPostalCode(), $this->getCity());
+        }
 
         return $address;
     }

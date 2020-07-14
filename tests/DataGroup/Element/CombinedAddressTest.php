@@ -161,7 +161,7 @@ class CombinedAddressTest extends TestCase
                     '1000 Lausanne',
                     'CH'
                 ),
-                "Thomas Mustermann\nMusterweg 22a\nCH-1000 Lausanne"
+                "Thomas Mustermann\nMusterweg 22a\n1000 Lausanne"
             ],
             [
                 CombinedAddress::create(
@@ -170,7 +170,25 @@ class CombinedAddressTest extends TestCase
                     '1000 Lausanne',
                     'CH'
                 ),
-                "Thomas Mustermann\nCH-1000 Lausanne"
+                "Thomas Mustermann\n1000 Lausanne"
+            ],
+            [
+                CombinedAddress::create(
+                    'Thomas Mustermann',
+                    'Musterweg 22a',
+                    '9490 Vaduz',
+                    'FL'
+                ),
+                "Thomas Mustermann\nMusterweg 22a\n9490 Vaduz"
+            ],
+            [
+                CombinedAddress::create(
+                    'Thomas Mustermann',
+                    'Musterweg 22a',
+                    '80331 München',
+                    'DE'
+                ),
+                "Thomas Mustermann\nMusterweg 22a\nDE-80331 München"
             ],
         ];
     }

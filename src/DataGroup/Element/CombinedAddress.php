@@ -90,7 +90,11 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
             $address .= "\n" . $this->getAddressLine1();
         }
 
-        $address .= sprintf("\n%s-%s", $this->getCountry(), $this->getAddressLine2());
+        if (in_array($this->getCountry(), ['CH', 'FL'])) {
+            $address .= "\n" . $this->getAddressLine2();
+        } else {
+            $address .= sprintf("\n%s-%s", $this->getCountry(), $this->getAddressLine2());
+        }
 
         return $address;
     }
