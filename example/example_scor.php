@@ -52,7 +52,7 @@ $qrBill->setPaymentAmountInformation(
 $qrBill->setPaymentReference(
     QrBill\DataGroup\Element\PaymentReference::create(
         QrBill\DataGroup\Element\PaymentReference::TYPE_SCOR,
-        'RF18539007547034'
+        QrBill\Reference\RfCreditorReferenceGenerator::generate('I20200631')
     ));
 
 // Optionally, add some human-readable information about what the bill is for.

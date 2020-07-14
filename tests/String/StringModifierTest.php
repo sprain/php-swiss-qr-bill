@@ -46,4 +46,26 @@ class StringModifierTest extends TestCase
             ["foo  bar  baz", "foo bar baz"],
         ];
     }
+
+    /**
+     * @dataProvider stripWhitespaceProvider
+     */
+    public function testStripWhitespace($string, $expectedResult)
+    {
+        $this->assertSame(
+            $expectedResult,
+            StringModifier::stripWhitespace($string)
+        );
+    }
+
+    public function stripWhitespaceProvider()
+    {
+        return [
+            ['1 ', '1'],
+            [' 2', '2'],
+            [' foo ', 'foo'],
+            ['   foo   ', 'foo'],
+            ['   foo   bar   ', 'foobar'],
+        ];
+    }
 }
