@@ -225,7 +225,7 @@ class StructuredAddressTest extends TestCase
                     'Lausanne',
                     'CH'
                 ),
-                "Thomas Mustermann\nMusterweg 22a\nCH-1000 Lausanne"
+                "Thomas Mustermann\nMusterweg 22a\n1000 Lausanne"
             ],
             [
                 $address = StructuredAddress::createWithStreet(
@@ -236,7 +236,7 @@ class StructuredAddressTest extends TestCase
                     'Lausanne',
                     'CH'
                 ),
-                "Thomas Mustermann\nMusterweg\nCH-1000 Lausanne"
+                "Thomas Mustermann\nMusterweg\n1000 Lausanne"
             ],
             [
                 $address = StructuredAddress::createWithoutStreet(
@@ -245,8 +245,27 @@ class StructuredAddressTest extends TestCase
                     'Lausanne',
                     'CH'
                 ),
-                "Thomas Mustermann\nCH-1000 Lausanne"
-            ]
+                "Thomas Mustermann\n1000 Lausanne"
+            ],
+            [
+                $address = StructuredAddress::createWithoutStreet(
+                    'Thomas Mustermann',
+                    '9490',
+                    'Vaduz',
+                    'FL'
+                ),
+                "Thomas Mustermann\n9490 Vaduz"
+            ],
+            [
+                $address = StructuredAddress::createWithoutStreet(
+                    'Thomas Mustermann',
+                    '80331',
+                    'München',
+                    'DE'
+                ),
+                "Thomas Mustermann\nDE-80331 München"
+            ],
+
         ];
     }
 }
