@@ -53,7 +53,7 @@ class RfCreditorReferenceGeneratorTest extends TestCase
     {
         $generator = new RfCreditorReferenceGenerator($input);
 
-        $this->assertCount(1, $generator->getViolations());
+        $this->assertGreaterThan(0, $generator->getViolations()->count());
     }
 
     public function invalidReferenceProvider()

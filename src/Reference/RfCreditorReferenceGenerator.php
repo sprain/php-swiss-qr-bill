@@ -75,7 +75,8 @@ class RfCreditorReferenceGenerator implements SelfValidatableInterface
             new Assert\Length([
                 'min' => 1,
                 'max' => 21 // 25 - 'RF' - CheckSum
-            ])
+            ]),
+            new Assert\NotBlank()
         ]);
     }
 }
