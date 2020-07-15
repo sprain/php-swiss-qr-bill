@@ -36,7 +36,7 @@ class RfCreditorReferenceGenerator implements SelfValidatableInterface
     /**
      * RfCreditorReferenceGenerator constructor.
      *
-     * @param $reference
+     * @param string $reference
      */
     public function __construct(string $reference)
     {
