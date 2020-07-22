@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
+namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\MarkupOutput;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;

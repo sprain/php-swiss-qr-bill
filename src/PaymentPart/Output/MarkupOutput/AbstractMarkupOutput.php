@@ -1,25 +1,28 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput;
+namespace Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput;
 
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
-use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PlaceholderElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableStylesTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TextElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
-final class HtmlOutput extends AbstractOutput implements OutputInterface
+abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInterface
 {
+    abstract function getPaymentPartTemplate(): string;
+    abstract function getPlaceholderElementTemplate(): string;
+    abstract function getPrintableStylesTemplate(): string;
+    abstract function getTextElementTemplate(): string;
+    abstract function getTitleElementTemplate(): string;
+
+    /**
+     * @return string
+     */
     public function getPaymentPart(): string
     {
-        $paymentPart = PaymentPartTemplate::TEMPLATE;
+        $paymentPart = $this->getPaymentPartTemplate();
 
         $paymentPart = $this->addSwissQrCodeImage($paymentPart);
         $paymentPart = $this->addInformationContent($paymentPart);
@@ -35,6 +38,10 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
     private function addSwissQrCodeImage(string $paymentPart): string
     {
         $qrCode = $this->getQrCode();
@@ -43,6 +50,10 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
     private function addInformationContent(string $paymentPart): string
     {
         $informationContent = '';
@@ -57,6 +68,10 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
     private function addInformationContentReceipt(string $paymentPart): string
     {
         $informationContent = '';
@@ -70,6 +85,10 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
     private function addCurrencyContent(string $paymentPart): string
     {
         $currencyContent = '';
@@ -83,6 +102,10 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
     private function addAmountContent(string $paymentPart): string
     {
         $amountContent = '';
@@ -96,6 +119,10 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
     private function addAmountContentReceipt(string $paymentPart): string
     {
         $amountContent = '';
@@ -109,6 +136,10 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
     private function addFurtherInformationContent(string $paymentPart): string
     {
         $furtherInformationContent = '';
@@ -122,11 +153,15 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
     private function hideSeparatorContentIfPrintable(string $paymentPart): string
     {
         $printableStyles = '';
         if ($this->isPrintable()) {
-            $printableStyles = PrintableStylesTemplate::TEMPLATE;
+            $printableStyles = $this->getPrintableStylesTemplate();
         }
 
         $paymentPart = str_replace('{{ printable-content }}', $printableStyles, $paymentPart);
@@ -136,25 +171,26 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
 
     /**
      * @param Title|Text|Placeholder $element Instance of OutputElementInterface.
+     * @return string
      */
     private function getContentElement($element): string
     {
         if ($element instanceof Title) {
-            $elementTemplate = TitleElementTemplate::TEMPLATE;
+            $elementTemplate = $this->getTitleElementTemplate();
             $elementString = str_replace('{{ title }}', $element->getTitle(), $elementTemplate);
 
             return $elementString;
         }
 
         if ($element instanceof Text) {
-            $elementTemplate = TextElementTemplate::TEMPLATE;
+            $elementTemplate = $this->getTextElementTemplate();
             $elementString = str_replace('{{ text }}', nl2br($element->getText()), $elementTemplate);
 
             return $elementString;
         }
 
         if ($element instanceof Placeholder) {
-            $elementTemplate = PlaceholderElementTemplate::TEMPLATE;
+            $elementTemplate = $this->getPlaceholderElementTemplate();
             $elementString = $elementTemplate;
 
             $svgDoc = new \DOMDocument();
@@ -171,6 +207,11 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         }
     }
 
+    /**
+     * @param string $paymentPart
+     * @param string $language
+     * @return string
+     */
     private function translateContents(string $paymentPart, string $language): string
     {
         $translations = Translation::getAllByLanguage($language);

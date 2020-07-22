@@ -1,9 +1,9 @@
 <?php
 
-namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
+namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\MarkupOutput;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\HtmlOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
