@@ -24,7 +24,6 @@ class PaymentPartTemplate
     text-align: center;
     font-size: 8pt;
     line-height: 9pt;
-	border-bottom: 0.75pt solid black;
 	height: 5mm;
 	vertical-align: middle;
 }
@@ -95,7 +94,6 @@ class PaymentPartTemplate
 #qr-bill-receipt {
     box-sizing: border-box;
     width: 62mm;
-	border-right: 0.2mm solid black;
 	padding-left: 5mm;
 	padding-top: 5mm;
 	vertical-align: top;
@@ -167,6 +165,10 @@ class PaymentPartTemplate
     margin-top: -11pt;
 }
 
+#qr-bill-separate-info-text {
+    display: none;
+}
+
 {{ printable-content }}
 </style>
 
@@ -182,7 +184,7 @@ class PaymentPartTemplate
             </div>
             <div id="qr-bill-amount-area-receipt">
                 <div id="qr-bill-currency-receipt">
-                    {{ currency-content }}
+                    {{ currency-content-receipt }}
                 </div>
                 <div id="qr-bill-amount-receipt">
                     {{ amount-content-receipt }}

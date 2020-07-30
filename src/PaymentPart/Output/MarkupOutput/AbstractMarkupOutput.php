@@ -16,6 +16,8 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
     abstract function getPrintableStylesTemplate(): string;
     abstract function getTextElementTemplate(): string;
     abstract function getTitleElementTemplate(): string;
+    abstract function getTitleElementReceiptTemplate(): string;
+    abstract function getNewlineElementTemplate(): string;
 
     /**
      * @return string
@@ -28,10 +30,11 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         $paymentPart = $this->addInformationContent($paymentPart);
         $paymentPart = $this->addInformationContentReceipt($paymentPart);
         $paymentPart = $this->addCurrencyContent($paymentPart);
+        $paymentPart = $this->addCurrencyContentReceipt($paymentPart);
         $paymentPart = $this->addAmountContent($paymentPart);
         $paymentPart = $this->addAmountContentReceipt($paymentPart);
         $paymentPart = $this->addFurtherInformationContent($paymentPart);
-        $paymentPart = $this->hideSeparatorContentIfPrintable($paymentPart);
+        $paymentPart = $this->addSeparatorContentIfNotPrintable($paymentPart);
 
         $paymentPart = $this->translateContents($paymentPart, $this->getLanguage());
 
@@ -77,7 +80,7 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         $informationContent = '';
 
         foreach ($this->getInformationElementsOfReceipt() as $informationElement) {
-            $informationContent .= $this->getContentElement($informationElement);
+            $informationContent .= $this->getContentElement($informationElement, true);
         }
 
         $paymentPart = str_replace('{{ information-content-receipt }}', $informationContent, $paymentPart);
@@ -98,6 +101,23 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         }
 
         $paymentPart = str_replace('{{ currency-content }}', $currencyContent, $paymentPart);
+
+        return $paymentPart;
+    }
+
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
+    private function addCurrencyContentReceipt(string $paymentPart): string
+    {
+        $currencyContent = '';
+
+        foreach ($this->getCurrencyElements() as $currencyElement) {
+            $currencyContent .= $this->getContentElement($currencyElement, true);
+        }
+
+        $paymentPart = str_replace('{{ currency-content-receipt }}', $currencyContent, $paymentPart);
 
         return $paymentPart;
     }
@@ -128,7 +148,7 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         $amountContent = '';
 
         foreach ($this->getAmountElementsReceipt() as $amountElement) {
-            $amountContent .= $this->getContentElement($amountElement);
+            $amountContent .= $this->getContentElement($amountElement, true);
         }
 
         $paymentPart = str_replace('{{ amount-content-receipt }}', $amountContent, $paymentPart);
@@ -157,10 +177,10 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
      * @param string $paymentPart
      * @return string
      */
-    private function hideSeparatorContentIfPrintable(string $paymentPart): string
+    private function addSeparatorContentIfNotPrintable(string $paymentPart): string
     {
         $printableStyles = '';
-        if ($this->isPrintable()) {
+        if (true !== $this->isPrintable()) {
             $printableStyles = $this->getPrintableStylesTemplate();
         }
 
@@ -171,12 +191,16 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
 
     /**
      * @param Title|Text|Placeholder $element Instance of OutputElementInterface.
+     * @param bool $isReceiptPart
      * @return string
      */
-    private function getContentElement($element): string
+    private function getContentElement($element, bool $isReceiptPart = false): string
     {
         if ($element instanceof Title) {
             $elementTemplate = $this->getTitleElementTemplate();
+            if(true === $isReceiptPart){
+                $elementTemplate = $this->getTitleElementReceiptTemplate();
+            }
             $elementString = str_replace('{{ title }}', $element->getTitle(), $elementTemplate);
 
             return $elementString;
@@ -184,7 +208,8 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
 
         if ($element instanceof Text) {
             $elementTemplate = $this->getTextElementTemplate();
-            $elementString = str_replace('{{ text }}', nl2br($element->getText()), $elementTemplate);
+            $elementTextString = str_replace(array("\r\n", "\r", "\n"), $this->getNewlineElementTemplate(), $element->getText());
+            $elementString = str_replace('{{ text }}', $elementTextString, $elementTemplate);
 
             return $elementString;
         }
@@ -216,6 +241,13 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
     {
         $translations = Translation::getAllByLanguage($language);
         foreach ($translations as $key => $text) {
+
+            if('separate' === $key && true === $this->isPrintable()){
+                // Do not display the separator text at all when printable is true.
+                $paymentPart = str_replace('{{ text.' . $key . ' }}', '', $paymentPart);
+                continue;
+            }
+
             $paymentPart = str_replace('{{ text.' . $key . ' }}', $text, $paymentPart);
         }
 

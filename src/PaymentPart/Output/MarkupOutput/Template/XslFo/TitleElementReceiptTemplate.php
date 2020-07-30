@@ -2,9 +2,9 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo;
 
-class PrintableStylesTemplate
+class TitleElementReceiptTemplate
 {
     public const TEMPLATE = <<<EOT
-0.2mm solid black
+<fo:block font-weight="bold" font-size="6pt">{{ {{ title }} }}</fo:block>
 EOT;
 }

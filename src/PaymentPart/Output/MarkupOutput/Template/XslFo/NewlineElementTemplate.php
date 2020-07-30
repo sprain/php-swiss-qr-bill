@@ -2,9 +2,9 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo;
 
-class PrintableStylesTemplate
+class NewlineElementTemplate
 {
     public const TEMPLATE = <<<EOT
-0.2mm solid black
+<fo:block>&#xD;</fo:block>
 EOT;
 }
