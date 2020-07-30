@@ -1,78 +1,118 @@
-<fo:block height="105mm" start-indent="0" end-indent="0" line-height="1pc" keep-together="always">
-<fo:table width="210mm" table-layout="fixed" border="1pt solid black" margin-top="0pc">
-<fo:table-column column-number="1" column-width="62mm" border="1pt solid blue" />
-<fo:table-column column-number="2" column-width="56mm" border="1pt solid green" />
-<fo:table-column column-number="3" column-width="92mm" border="1pt solid red" />
-<fo:table-body>
-    <fo:table-row>
-        <fo:table-cell column-number="1">
-            <fo:block font-family="Arial, Frutiger, Helvetica, Liberation Sans" font-weight="bold" font-size="11pt" line-height="normal" linefeed-treatment="preserve" margin-top="5mm" start-indent="5mm">
-                Receipt
-            </fo:block>
-        </fo:table-cell>
-        <fo:table-cell column-number="2">
-            <fo:block font-family="Arial, Frutiger, Helvetica, Liberation Sans" font-weight="bold" font-size="11pt" line-height="normal" linefeed-treatment="preserve" margin-top="5mm" start-indent="5mm">
-                Payment part
-            </fo:block>
-            <fo:block font-family="MiloB_TTF" margin-top="5mm" start-indent="5mm">
-                <!-- Here comes the QR code as data-uri / base64 string -->
-                <fo:external-graphic src="data:image/png;base64,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" content-height="46mm" content-width="46mm" />
-            </fo:block>
-        </fo:table-cell>
-        <fo:table-cell column-number="3"><fo:block /></fo:table-cell>
-    </fo:table-row>
-    <fo:table-row>
-        <fo:table-cell column-number="3">
-            <fo:block font-family="OcrB_TTF" font-size="11pt" font-weight="normal" letter-spacing="0pt" text-align="right" margin-right="8mm">
-                scösdcklöshdlkc
-            </fo:block>
-        </fo:table-cell>
-    </fo:table-row>
-    <fo:table-row>
-        <fo:table-cell column-number="1">
-            <fo:block  font-size="10pt" font-weight="bold" start-indent="1.2in">01-57518-1</fo:block>
-        </fo:table-cell>
-        <fo:table-cell column-number="2">
-            <fo:block  font-size="10pt" font-weight="bold" start-indent="1.2in">01-57518-1</fo:block>
-        </fo:table-cell>
-    </fo:table-row>
-    <fo:table-row>
-        <fo:table-cell column-number="1">
-            <fo:block font-family="Courier" font-size="12pt" font-weight="bold" letter-spacing="1pt" text-align="right" margin-right="6mm" margin-top="14.4pt">
-                sdlckjsdckj
-            </fo:block>
-        </fo:table-cell>
-        <fo:table-cell column-number="2">
-            <fo:block font-family="Courier" font-size="12pt" font-weight="bold" letter-spacing="1pt" text-align="right" margin-right="6mm" margin-top="14.4pt">
-                yljuchglkdjch,lchj
-            </fo:block>
-        </fo:table-cell>
-        <fo:table-cell column-number="3">
-            <fo:block-container width="80mm" overflow="hidden" wrap-option="no-wrap">
-                <fo:block font-family="OcrB_TTF" font-size="1pc" letter-spacing="-1pt" line-height="normal" linefeed-treatment="preserve" start-indent="0.3in" margin-top="0.1in">
-                    cdsacsdcghv
-                </fo:block>
-            </fo:block-container>
-        </fo:table-cell>
-    </fo:table-row>
-    <fo:table-row>
-        <fo:table-cell column-number="1">
-            <fo:block-container width="52.38mm" overflow="hidden" wrap-option="no-wrap">
-                <fo:block font-family="OcrB_TTF" font-size="0.65pc" letter-spacing="-1pt" line-height="normal" linefeed-treatment="preserve" start-indent="0.3in" margin-top="4pt">
-                    ,hjcd,jhcd
-                </fo:block>
-                <fo:block font-family="OcrB_TTF" font-size="0.7pc" letter-spacing="-1pt" line-height="normal" linefeed-treatment="preserve" start-indent="0.3in" margin-top="4pt">
-                    kasdgkjagdkjasgh
-                    <fo:block />
-                </fo:block>
-            </fo:block-container>
-        </fo:table-cell>
-    </fo:table-row>
-    <fo:table-row>
-        <fo:table-cell column-number="2" number-columns-spanned="2">
-            <fo:block font-family="OcrB_TTF" font-size="1pc" text-align="right" margin-right="7.7mm" margin-top="1pc">esr bottom code</fo:block>
-        </fo:table-cell>
-    </fo:table-row>
-</fo:table-body>
-</fo:table>
+<fo:block-container height="110mm" start-indent="0" end-indent="0" keep-together="always" font-family="Arial, Frutiger, Helvetica, Liberation Sans">
+    
+    <fo:block-container height="5mm">
+    <fo:block text-align="center" font-size="8pt">
+        Separate before paying in
+    </fo:block>
+</fo:block-container>
+
+    <fo:table width="210mm" table-layout="fixed" border="0.2mm solid black" margin-top="0">
+        <fo:table-column column-number="1" column-width="62mm" border-right="0.2mm solid black" />
+        <fo:table-column column-number="2" column-width="56mm" />
+        <fo:table-column column-number="3" column-width="92mm" />
+        <fo:table-body>
+        
+            <!-- 1st row: titles, receipt information, qr-code -->
+            <fo:table-row>
+            
+                <!-- 1st col: receipt (left) -->
+                <fo:table-cell column-number="1" padding="5mm" font-size="8pt">
+                      
+                    <fo:block-container height="7mm"> 
+                        <fo:block font-weight="bold" font-size="11pt">
+                            Receipt
+                        </fo:block>
+                    </fo:block-container>
+                    
+                    <fo:block-container height="56mm">
+                        <fo:block linefeed-treatment="preserve">
+                            <fo:block font-weight="bold" font-size="6pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
+<fo:block font-weight="bold" font-size="6pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
+<fo:block font-weight="bold" font-size="6pt">Payable by</fo:block><fo:block>Joachim Kraut<fo:block>&#xD;</fo:block>Ewigermeisterstrasse 20<fo:block>&#xD;</fo:block>DE-80331 München</fo:block>
+
+                        </fo:block>
+                    </fo:block-container>
+                        
+                    <fo:block-container height="14mm">
+                        <fo:table>
+                            <fo:table-body>
+                                <fo:table-row>
+                                    <fo:table-cell margin="0" width="15mm">
+                                        <fo:block><fo:block font-weight="bold" font-size="6pt">Currency</fo:block><fo:block>CHF</fo:block>
 </fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell margin="0">
+                                        <fo:block font-weight="bold" font-size="6pt">Amount</fo:block><fo:block>25.90</fo:block>
+
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </fo:table-body>
+                        </fo:table>
+                    </fo:block-container>
+                    
+                    <fo:block-container height="18mm">
+                        <fo:block font-weight="bold" font-size="6pt" text-align="right">
+                            Acceptance point
+                        </fo:block>
+                    </fo:block-container>
+                </fo:table-cell>
+                
+                <!-- 2nd col: payment part (middle) -->
+                <fo:table-cell column-number="2" padding="5mm 5mm 0 5mm" font-size="10pt">
+                
+                    <fo:block-container height="7mm">
+                        <fo:block font-weight="bold" font-size="11pt">
+                            Payment part
+                        </fo:block>
+                    </fo:block-container>
+                    
+                    <fo:block-container height="56mm">
+                        <fo:block padding-top="5mm" padding-bottom="5mm">
+                            <fo:external-graphic src="data:image/png;base64,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" content-height="46mm" content-width="46mm" />
+                        </fo:block>
+                    </fo:block-container>
+                    
+                    <fo:block-container height="22mm">
+                        <fo:table>
+                            <fo:table-body>
+                                <fo:table-row>
+                                    <fo:table-cell margin="0" width="20mm">
+                                        <fo:block><fo:block font-weight="bold" font-size="8pt">Currency</fo:block><fo:block>CHF</fo:block>
+</fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell margin="0">
+                                        <fo:block font-weight="bold" font-size="8pt">Amount</fo:block><fo:block>25.90</fo:block>
+
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </fo:table-body>
+                        </fo:table>
+                    </fo:block-container>
+                    
+                    <!-- Payment part further info (bottom middle to right) -->
+                    <fo:block-container height="10mm">
+                        <fo:block font-size="7pt">
+                            <fo:block></fo:block>
+
+                        </fo:block>
+                    </fo:block-container>
+                    
+                </fo:table-cell>
+                
+                <!-- 3rd col: payment part info (right) -->
+                <fo:table-cell column-number="3">
+                    <fo:block-container height="85mm">
+                        <fo:block font-size="10pt" linefeed-treatment="preserve" padding-top="1mm">
+                            <fo:block font-weight="bold" font-size="8pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
+<fo:block font-weight="bold" font-size="8pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
+<fo:block font-weight="bold" font-size="8pt">Payable by</fo:block><fo:block>Joachim Kraut<fo:block>&#xD;</fo:block>Ewigermeisterstrasse 20<fo:block>&#xD;</fo:block>DE-80331 München</fo:block>
+
+                        </fo:block>
+                    </fo:block-container>
+                </fo:table-cell>
+                
+            </fo:table-row>
+            
+        </fo:table-body>
+    </fo:table>
+</fo:block-container>
