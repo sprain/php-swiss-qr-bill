@@ -93,9 +93,8 @@ class PaymentPartTemplate
 /* Receipt */
 #qr-bill-receipt {
     box-sizing: border-box;
-    width: 62mm;
-	padding-left: 5mm;
-	padding-top: 5mm;
+    width: 52mm;
+	padding: 5mm;
 	vertical-align: top;
 }
 
@@ -121,7 +120,6 @@ class PaymentPartTemplate
 #qr-bill img#placeholder_amount_receipt {
     float: right;
     margin-top: -9pt;
-    margin-right: 5mm;
 }
 
 /* Main part */
