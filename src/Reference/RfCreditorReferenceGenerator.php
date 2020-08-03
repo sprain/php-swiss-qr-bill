@@ -33,7 +33,7 @@ class RfCreditorReferenceGenerator implements SelfValidatableInterface
     {
         if (!$this->isValid()) {
             throw new InvalidCreditorReferenceException(
-                'The provided data is not valid to generate a creditor reference. Use getViolations() to find details.'
+                'The provided data is not valid to generate a creditor reference.'
             );
         }
 

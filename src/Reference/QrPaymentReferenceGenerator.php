@@ -46,7 +46,7 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
     {
         if (!$this->isValid()) {
             throw new InvalidQrPaymentReferenceException(
-                'The provided data is not valid to generate a qr payment reference number. Use getViolations() to find details.'
+                'The provided data is not valid to generate a qr payment reference number.'
             );
         }
 
