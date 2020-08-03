@@ -84,6 +84,16 @@ trait TestQrBillCreatorTrait
                     'ultimateDebtor'
                 ])
             ],
+            ['qr-international-ultimate-debtor',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformation',
+                    'paymentReferenceQr',
+                    'internationalUltimateDebtor'
+                ])
+            ],
             ['qr-additional-information',
                 $this->createQrBill([
                     'header',
@@ -261,6 +271,16 @@ trait TestQrBillCreatorTrait
     public function ultimateDebtor(QrBill &$qrBill)
     {
         $qrBill->setUltimateDebtor($this->combinedAddress());
+    }
+
+    public function internationalUltimateDebtor(QrBill &$qrBill)
+    {
+        $qrBill->setUltimateDebtor(CombinedAddress::create(
+        'Joachim Kraut',
+        'Ewigermeisterstrasse 20',
+        '80331 München',
+        'DE'
+        ));
     }
 
     public function invalidUltimateDebtor(QrBill &$qrBill)

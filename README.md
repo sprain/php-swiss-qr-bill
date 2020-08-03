@@ -17,6 +17,13 @@ composer require sprain/swiss-qr-bill
 Then have a look at [example/example.php](example/example.php).
 
 
+## Versioning
+
+[Semantic versioning](https://semver.org/) is used for this library.
+
+In addition, a minor version will always be published if any visible change in the output of the qr code or the payment part takes place, even if it could be considered to be just a bugfix.
+
+
 ## Support the project
 
 * Do you like this project? [Consider a Github sponsorship.](https://github.com/sponsors/sprain)

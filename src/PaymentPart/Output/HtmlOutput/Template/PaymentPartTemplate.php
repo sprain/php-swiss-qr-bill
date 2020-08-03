@@ -8,8 +8,6 @@ class PaymentPartTemplate
 <style>
 #qr-bill {
 	box-sizing: border-box;
-	width: 210mm;
-	height: 105mm;
 	border-collapse: collapse;
 	color: #000;
 }
