@@ -8,10 +8,10 @@ class PaymentPartTemplate
 <fo:block-container height="110mm" start-indent="0" end-indent="0" keep-together="always" font-family="Arial, Frutiger, Helvetica, Liberation Sans">
     
     <fo:block-container height="5mm">
-    <fo:block text-align="center" font-size="8pt">
-        {{ text.separate }}
-    </fo:block>
-</fo:block-container>
+        <fo:block text-align="center" font-size="8pt">
+            {{ text.separate }}
+        </fo:block>
+    </fo:block-container>
 
     <fo:table width="210mm" table-layout="fixed" border="{{ printable-content }}" margin-top="0">
         <fo:table-column column-number="1" column-width="62mm" border-right="{{ printable-content }}" />
@@ -32,7 +32,7 @@ class PaymentPartTemplate
                     </fo:block-container>
                     
                     <fo:block-container height="56mm">
-                        <fo:block linefeed-treatment="preserve">
+                        <fo:block>
                             {{ information-content-receipt }}
                         </fo:block>
                     </fo:block-container>
@@ -41,7 +41,7 @@ class PaymentPartTemplate
                         <fo:table>
                             <fo:table-body>
                                 <fo:table-row>
-                                    <fo:table-cell margin="0" width="15mm">
+                                    <fo:table-cell margin="0" width="12mm">
                                         <fo:block>{{ currency-content-receipt }}</fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell margin="0">
@@ -60,7 +60,7 @@ class PaymentPartTemplate
                 </fo:table-cell>
                 
                 <!-- 2nd col: payment part (middle) -->
-                <fo:table-cell column-number="2" padding="5mm 5mm 0 5mm" font-size="10pt">
+                <fo:table-cell column-number="2" padding="5mm 0 0 5mm" font-size="10pt">
                 
                     <fo:block-container height="7mm">
                         <fo:block font-weight="bold" font-size="11pt">
@@ -78,7 +78,7 @@ class PaymentPartTemplate
                         <fo:table>
                             <fo:table-body>
                                 <fo:table-row>
-                                    <fo:table-cell margin="0" width="20mm">
+                                    <fo:table-cell margin="0" width="17mm">
                                         <fo:block>{{ currency-content }}</fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell margin="0">
@@ -101,14 +101,14 @@ class PaymentPartTemplate
                 <!-- 3rd col: payment part info (right) -->
                 <fo:table-cell column-number="3">
                     <fo:block-container height="85mm">
-                        <fo:block font-size="10pt" linefeed-treatment="preserve" padding-top="1mm">
+                        <fo:block font-size="10pt" padding="3mm 5mm">
                             {{ information-content }}
                         </fo:block>
                     </fo:block-container>
                 </fo:table-cell>
                 
             </fo:table-row>
-            
+           
         </fo:table-body>
     </fo:table>
 </fo:block-container>

@@ -218,15 +218,20 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
             $elementTemplate = $this->getPlaceholderElementTemplate();
             $elementString = $elementTemplate;
 
-            $svgDoc = new \DOMDocument();
-            $svgDoc->loadXML(file_get_contents($element->getFile()));
-            $svg = $svgDoc->getElementsByTagName('svg');
-            $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
+            $dataUri = 'data:image/png;base64,' .  base64_encode(file_get_contents($element->getFile(Placeholder::FILE_TYPE_PNG)));
 
-            $elementString = str_replace('{{ file }}', $dataUri, $elementString);
-            $elementString = str_replace('{{ width }}', (string) $element->getWidth(), $elementString);
-            $elementString = str_replace('{{ height }}', (string) $element->getHeight(), $elementString);
-            $elementString = str_replace('{{ id }}', $element->getType(), $elementString);
+            // The svg version works but the images have empty space on top and bottom which makes it unnecessary hard to correctly place them.
+//            $svgDoc = new \DOMDocument();
+//            $svgDoc->loadXML(file_get_contents($element->getFile(Placeholder::FILE_TYPE_SVG))); // Take the png version since the svgs have a bad
+//            $svg = $svgDoc->getElementsByTagName('svg');
+//            $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
+
+            $elementString = str_replace('{{ placeholder-file }}', $dataUri, $elementString);
+            $elementString = str_replace('{{ placeholder-width }}', (string) $element->getWidth(), $elementString);
+            $elementString = str_replace('{{ placeholder-height }}', (string) $element->getHeight(), $elementString);
+            $elementString = str_replace('{{ placeholder-id }}', $element->getType(), $elementString);
+            $elementString = str_replace('{{ placeholder-float }}', $element->getFloat(), $elementString);
+            $elementString = str_replace('{{ placeholder-margin-top }}', $element->getMarginTop(), $elementString);
 
             return $elementString;
         }
