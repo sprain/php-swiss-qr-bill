@@ -22,7 +22,20 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     /**
      * @dataProvider qrPaymentReferenceProvider
      */
-    public function testQrPaymentReference($customerIdentification, $referenceNumber, $expectedResult)
+    public function testMakesResultsViaConstructor($customerIdentification, $referenceNumber, $expectedResult)
+    {
+        $qrReference = new QrPaymentReferenceGenerator(
+            $customerIdentification,
+            $referenceNumber
+        );
+
+        $this->assertSame($expectedResult, $qrReference->doGenerate());
+    }
+
+    /**
+     * @dataProvider qrPaymentReferenceProvider
+     */
+    public function testMakesResultsViaFacade($customerIdentification, $referenceNumber, $expectedResult)
     {
         $qrReference = QrPaymentReferenceGenerator::generate(
             $customerIdentification,
