@@ -13,4 +13,9 @@ class StringModifier
     {
         return preg_replace('/ +/', ' ', $string);
     }
+
+    public static function stripWhitespace(?string $string): string
+    {
+        return preg_replace('/\s+/', '', $string);
+    }
 }

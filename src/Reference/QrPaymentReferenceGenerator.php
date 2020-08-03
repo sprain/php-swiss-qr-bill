@@ -2,6 +2,7 @@
 
 namespace Sprain\SwissQrBill\Reference;
 
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
@@ -24,9 +25,9 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         $qrPaymentReferenceGenerator = new self();
 
         if (null !== $customerIdentificationNumber) {
-            $qrPaymentReferenceGenerator->customerIdentificationNumber = $qrPaymentReferenceGenerator->removeWhitespace($customerIdentificationNumber);
+            $qrPaymentReferenceGenerator->customerIdentificationNumber = StringModifier::stripWhitespace($customerIdentificationNumber);
         }
-        $qrPaymentReferenceGenerator->referenceNumber = $qrPaymentReferenceGenerator->removeWhitespace($referenceNumber);
+        $qrPaymentReferenceGenerator->referenceNumber = StringModifier::stripWhitespace($referenceNumber);
 
         return $qrPaymentReferenceGenerator->doGenerate();
     }
@@ -87,11 +88,6 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
             $context->buildViolation('The length of customer identification number + reference number may not exceed 26 characters in total.')
                 ->addViolation();
         }
-    }
-
-    private function removeWhitespace(string $string): string
-    {
-        return preg_replace('/\s+/', '', $string);
     }
 
     private function modulo10(string $number): int
