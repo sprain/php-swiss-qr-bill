@@ -14,18 +14,9 @@ class RfCreditorReferenceGenerator implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $reference;
 
-    /**
-     * Transform a string to a valid CreditorReference.
-     *
-     * @param string $reference
-     * @return string
-     * @throws \Exception
-     */
     public static function generate(string $reference) : string
     {
         $generator = new self($reference);
@@ -33,22 +24,11 @@ class RfCreditorReferenceGenerator implements SelfValidatableInterface
         return $generator->doGenerate();
     }
 
-    /**
-     * RfCreditorReferenceGenerator constructor.
-     *
-     * @param string $reference
-     */
     public function __construct(string $reference)
     {
         $this->reference = StringModifier::stripWhitespace($reference);
     }
 
-    /**
-     * Run the generator.
-     *
-     * @return string
-     * @throws \Exception
-     */
     public function doGenerate() : string
     {
         if (!$this->isValid()) {
@@ -62,19 +42,16 @@ class RfCreditorReferenceGenerator implements SelfValidatableInterface
         return $generator->generateRfReference($this->reference, false);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('reference', [
             new Assert\Regex([
-                'pattern' => '~^[a-zA-Z0-9]*$~',
+                'pattern' => '/^[a-zA-Z0-9]*$/',
                 'match' => true
             ]),
             new Assert\Length([
                 'min' => 1,
-                'max' => 21 // 25 - 'RF' - CheckSum
+                'max' => 21 // 25 minus 'RF' prefix minus 2-digit check sum
             ]),
             new Assert\NotBlank()
         ]);
