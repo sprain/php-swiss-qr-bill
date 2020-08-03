@@ -12,7 +12,9 @@ class Placeholder implements OutputElementInterface
         'fileSvg' => __DIR__ . '/../../../../assets/marks_65x25mm.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_65x25mm.png',
         'width' => 65,
-        'height' => 25
+        'height' => 25,
+        'float' => 'left',
+        'marginTop' => 0, // In mm.
     ];
 
     public const PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT = [
@@ -20,7 +22,9 @@ class Placeholder implements OutputElementInterface
         'fileSvg' => __DIR__ . '/../../../../assets/marks_52x20mm.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_52x20mm.png',
         'width' => 52,
-        'height' => 20
+        'height' => 20,
+        'float' => 'right',
+        'marginTop' => 0, // In mm.
     ];
 
     public const PLACEHOLDER_TYPE_AMOUNT = [
@@ -28,7 +32,9 @@ class Placeholder implements OutputElementInterface
         'fileSvg' => __DIR__ . '/../../../../assets/marks_40x15mm.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_40x15mm.png',
         'width' => 40,
-        'height' => 15
+        'height' => 15,
+        'float' => 'right',
+        'marginTop' => -0.9 // In mm.
     ];
 
     public const PLACEHOLDER_TYPE_AMOUNT_RECEIPT = [
@@ -36,7 +42,9 @@ class Placeholder implements OutputElementInterface
         'fileSvg' => __DIR__ . '/../../../../assets/marks_30x10mm.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_30x10mm.png',
         'width' => 30,
-        'height' => 10
+        'height' => 10,
+        'float' => 'right',
+        'marginTop' => -3.175 // In mm.
     ];
 
     /** @var string */
@@ -54,6 +62,12 @@ class Placeholder implements OutputElementInterface
     /** @var int */
     private $height;
 
+    /** @var string */
+    private $float;
+
+    /** @var int */
+    private $marginTop;
+
     public static function create(array $type): self
     {
         $placeholder = new self();
@@ -62,6 +76,8 @@ class Placeholder implements OutputElementInterface
         $placeholder->filePng = $type['filePng'];
         $placeholder->width = $type['width'];
         $placeholder->height = $type['height'];
+        $placeholder->float = $type['float'];
+        $placeholder->marginTop = $type['marginTop'];
 
         return $placeholder;
     }
@@ -90,5 +106,15 @@ class Placeholder implements OutputElementInterface
     public function getHeight(): ?int
     {
         return $this->height;
+    }
+
+    public function getFloat(): ?string
+    {
+        return $this->float;
+    }
+
+    public function getMarginTop(): ?string
+    {
+        return $this->marginTop;
     }
 }
