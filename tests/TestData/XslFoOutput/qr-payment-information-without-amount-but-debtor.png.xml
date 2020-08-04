@@ -1,10 +1,10 @@
 <fo:block-container height="110mm" start-indent="0" end-indent="0" keep-together="always" font-family="Arial, Frutiger, Helvetica, Liberation Sans">
     
     <fo:block-container height="5mm">
-    <fo:block text-align="center" font-size="8pt">
-        Separate before paying in
-    </fo:block>
-</fo:block-container>
+        <fo:block text-align="center" font-size="8pt">
+            Separate before paying in
+        </fo:block>
+    </fo:block-container>
 
     <fo:table width="210mm" table-layout="fixed" border="0.2mm solid black" margin-top="0">
         <fo:table-column column-number="1" column-width="62mm" border-right="0.2mm solid black" />
@@ -25,10 +25,10 @@
                     </fo:block-container>
                     
                     <fo:block-container height="56mm">
-                        <fo:block linefeed-treatment="preserve">
-                            <fo:block font-weight="bold" font-size="6pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
-<fo:block font-weight="bold" font-size="6pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
-<fo:block font-weight="bold" font-size="6pt">Payable by</fo:block><fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
+                        <fo:block>
+                            <fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
+<fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
+<fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Payable by</fo:block><fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
 
                         </fo:block>
                     </fo:block-container>
@@ -37,12 +37,14 @@
                         <fo:table>
                             <fo:table-body>
                                 <fo:table-row>
-                                    <fo:table-cell margin="0" width="15mm">
-                                        <fo:block><fo:block font-weight="bold" font-size="6pt">Currency</fo:block><fo:block>EUR</fo:block>
+                                    <fo:table-cell margin="0" width="12mm">
+                                        <fo:block><fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Currency</fo:block><fo:block>EUR</fo:block>
 </fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell margin="0">
-                                        <fo:block font-weight="bold" font-size="6pt">Amount</fo:block><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBpZD0iRWJlbmVfMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgODUuMDQgMjguMzU7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4NS4wNCAyOC4zNSIgeD0iMHB4IiB5PSIwcHgiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtmaWxsOiMwMjAyMDM7fQo8L3N0eWxlPgo8cmVjdCBjbGFzcz0ic3QwIiBoZWlnaHQ9IjAuOCIgd2lkdGg9IjguNSIgeD0iMC4wNyIgeT0iMC4wMiI+PC9yZWN0Pgo8cmVjdCBjbGFzcz0ic3QwIiBoZWlnaHQ9IjguNSIgd2lkdGg9IjAuOCI+PC9yZWN0Pgo8cmVjdCBjbGFzcz0ic3QwIiBoZWlnaHQ9IjguNSIgd2lkdGg9IjAuOCIgeD0iMC4wNSIgeT0iMTkuODQiPjwvcmVjdD4KPHJlY3QgY2xhc3M9InN0MCIgaGVpZ2h0PSIwLjgiIHdpZHRoPSI4LjUiIHg9IjAuMDkiIHk9IjI3LjU1Ij48L3JlY3Q+CjxyZWN0IGNsYXNzPSJzdDAiIGhlaWdodD0iMC44IiB3aWR0aD0iOC41IiB4PSI3Ni41NCIgeT0iMjcuNTMiPjwvcmVjdD4KPHJlY3QgY2xhc3M9InN0MCIgaGVpZ2h0PSI4LjUiIHdpZHRoPSIwLjgiIHg9Ijg0LjIiIHk9IjE5Ljg0Ij48L3JlY3Q+CjxyZWN0IGNsYXNzPSJzdDAiIGhlaWdodD0iOC41IiB3aWR0aD0iMC44IiB4PSI4NC4xNyIgeT0iMC4wMSI+PC9yZWN0Pgo8cmVjdCBjbGFzcz0ic3QwIiBoZWlnaHQ9IjAuOCIgd2lkdGg9IjguNSIgeD0iNzYuNTQiIHk9Ii0wLjAxIj48L3JlY3Q+Cjwvc3ZnPg==" style="width:30mm; height:10mm;" class="qr-bill-placeholder" id="placeholder_amount_receipt">
+                                        <fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Amount</fo:block>    <fo:block margin-top="-3.175mm" text-align="right">
+        <fo:external-graphic vertical-align="top" id="placeholder_amount_receipt" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWYAAAB6CAYAAACMRflCAAAACXBIWXMAAC4jAAAuIwF4pT92AAAGU2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMC0wNC0xN1QxNToyMDo1OSswMjowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjAtMDctMDFUMjI6MTE6MzArMDI6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjAtMDctMDFUMjI6MTE6MzArMDI6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OWZlZDk2MjUtODQ4NS04ODQwLWE1N2MtNTJmMjRiOGRhYjE3IiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6ZGY4MjIyNTEtZjEzMy1jMDQwLWE2MjYtMWM5ZTU0Mjc3MWQ0IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6ZjA3ZWFhNjctYWNjMS0wZDRjLTliMGYtYzE2ZTYzNmZkNmJhIj4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpmMDdlYWE2Ny1hY2MxLTBkNGMtOWIwZi1jMTZlNjM2ZmQ2YmEiIHN0RXZ0OndoZW49IjIwMjAtMDQtMTdUMTU6MjA6NTkrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cykiLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImNvbnZlcnRlZCIgc3RFdnQ6cGFyYW1ldGVycz0iZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZyIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6OWZlZDk2MjUtODQ4NS04ODQwLWE1N2MtNTJmMjRiOGRhYjE3IiBzdEV2dDp3aGVuPSIyMDIwLTA3LTAxVDIyOjExOjMwKzAyOjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PtBVNrAAAAK4SURBVHic7djBbdtAEIbR4ZKFqBSnkqQTK50klcjpICWoEJObQyRBEuyr9of1HkBguBfO6cOCU++9AMjRRi8AwK3lPMzzknR1ftu29dvoJYCvrbV5X1Wvo/c4W9f3qcqNGSCOMAOEWT45P56eUf4O/DbwPN4Gf/97Ve1O8/Fy2nuv3nu1NverZ//4/QCeS2vz4aq7h0uPRy8GwC1hBggjzABhhBkgjDADhBFmgDDCDBBGmAHCCDNAGGEGCCPMAGGEGSCMMAOEEWaAMMIMEEaYAcIIM0AYYQYII8wAYYQZIIwwA4QRZoAwwgwQRpgBwggzQBhhBggjzABhhBkgjDADhBFmgDDL1fzzan578B4Az+h3Vf05zcfz4dR7/z9M0+NXAuDi3GO/MgDCCDNAGGEGCCPMAGGEGSCMMAOEEWaAMMIMEEaYAcIIM0AYYQYII8wAYYQZIIwwA4QRZoAwwgwQRpgBwggzQBhhBggjzABhhBkgjDADhBFmgDDCDBBGmAHCCDNAGGEGCCPMAGGEGSCMMAOEEWaAMMIMEEaYAcIIM0AYYQYII8wAYYQZIIwwA4QRZoAwwgwQRpgBwggzQBhhBggjzABhhBkgzHIeWpt/VNXu9HrctvXXgH0AnsZdd6uq9lVV1Xuv3nu1Nh9am/vpOTx+RYDnctfdfunx6MUAuCXMAGGEGSCMMAOEEWaAMMIMEEaYAcIIM0AYYQYII8wAYYQZIIwwA4QRZoAwwgwQRpgBwggzQBhhBggjzABhhBkgjDADhBFmgDDCDBBGmAHCCDNAGGEGCCPMAGGEGSCMMAOEEWaAMMIMEGb55HzX2rx/5CL3tm0d+n3g62ttfqmql4Er7D46nHrvVVU1z8uhxi54Y9vWafQOwNd2uoC+jt7jbF3fpyq/MgDiCDNAmMuvDAAyuDEDhPkH595adBeoSV4AAAAASUVORK5CYII=" height="10mm" width="30mm" content-width="scale-to-fit"/>
+    </fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
                             </fo:table-body>
@@ -57,7 +59,7 @@
                 </fo:table-cell>
                 
                 <!-- 2nd col: payment part (middle) -->
-                <fo:table-cell column-number="2" padding="5mm 5mm 0 5mm" font-size="10pt">
+                <fo:table-cell column-number="2" padding="5mm 0 0 5mm" font-size="10pt">
                 
                     <fo:block-container height="7mm">
                         <fo:block font-weight="bold" font-size="11pt">
@@ -75,12 +77,14 @@
                         <fo:table>
                             <fo:table-body>
                                 <fo:table-row>
-                                    <fo:table-cell margin="0" width="20mm">
-                                        <fo:block><fo:block font-weight="bold" font-size="8pt">Currency</fo:block><fo:block>EUR</fo:block>
+                                    <fo:table-cell margin="0" width="17mm">
+                                        <fo:block><fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Currency</fo:block><fo:block>EUR</fo:block>
 </fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell margin="0">
-                                        <fo:block font-weight="bold" font-size="8pt">Amount</fo:block><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBpZD0iRWJlbmVfMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTEzLjQgNDIuNTsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMy40IDQyLjUiIHg9IjBweCIgeT0iMHB4IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cmVjdCBoZWlnaHQ9IjAuOCIgd2lkdGg9IjguNSIgeD0iMCI+PC9yZWN0PgoJPC9nPgoJPGc+CgkJPHJlY3QgaGVpZ2h0PSI4LjUiIHdpZHRoPSIwLjgiPjwvcmVjdD4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxyZWN0IGhlaWdodD0iMC44IiB3aWR0aD0iOC41IiB4PSIwIiB5PSI0MS44Ij48L3JlY3Q+Cgk8L2c+Cgk8Zz4KCQk8cmVjdCBoZWlnaHQ9IjguNSIgd2lkdGg9IjAuOCIgeT0iMzQiPjwvcmVjdD4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxyZWN0IGhlaWdodD0iMC44IiB3aWR0aD0iOC41IiB4PSIxMDQuOSI+PC9yZWN0PgoJPC9nPgoJPGc+CgkJPHJlY3QgaGVpZ2h0PSI4LjUiIHdpZHRoPSIwLjgiIHg9IjExMi42IiB5PSIwIj48L3JlY3Q+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cmVjdCBoZWlnaHQ9IjAuOCIgd2lkdGg9IjguNSIgeD0iMTA0LjkiIHk9IjQxLjgiPjwvcmVjdD4KCTwvZz4KCTxnPgoJCTxyZWN0IGhlaWdodD0iOC41IiB3aWR0aD0iMC44IiB4PSIxMTIuNiIgeT0iMzQiPjwvcmVjdD4KCTwvZz4KPC9nPgo8L3N2Zz4=" style="width:40mm; height:15mm;" class="qr-bill-placeholder" id="placeholder_amount">
+                                        <fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Amount</fo:block>    <fo:block margin-top="-0.9mm" text-align="right">
+        <fo:external-graphic vertical-align="top" id="placeholder_amount" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeUAAAC+CAYAAAALDhfiAAAACXBIWXMAAC4jAAAuIwF4pT92AAAGU2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMC0wNC0xN1QxNToyMDo1OSswMjowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjAtMDctMDFUMjI6MTI6MTMrMDI6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjAtMDctMDFUMjI6MTI6MTMrMDI6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDYxOGFlNmMtN2Y4NC1kODQxLWJkOWYtMDcyMmZjMDY0NmFjIiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6MGJhZjNmMTItZTBiNS05ZTQyLTgxZjgtN2ZjNzA3YzdkM2Q5IiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6Y2JlZDg4NjItODFiYy04ZjQ4LWExNGQtZjQ4ZTcyNTQ0OWI5Ij4gPHhtcE1NOkhpc3Rvcnk+IDxyZGY6U2VxPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0iY3JlYXRlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpjYmVkODg2Mi04MWJjLThmNDgtYTE0ZC1mNDhlNzI1NDQ5YjkiIHN0RXZ0OndoZW49IjIwMjAtMDQtMTdUMTU6MjA6NTkrMDI6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cykiLz4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImNvbnZlcnRlZCIgc3RFdnQ6cGFyYW1ldGVycz0iZnJvbSBhcHBsaWNhdGlvbi92bmQuYWRvYmUucGhvdG9zaG9wIHRvIGltYWdlL3BuZyIvPiA8cmRmOmxpIHN0RXZ0OmFjdGlvbj0ic2F2ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6NDYxOGFlNmMtN2Y4NC1kODQxLWJkOWYtMDcyMmZjMDY0NmFjIiBzdEV2dDp3aGVuPSIyMDIwLTA3LTAxVDIyOjEyOjEzKzAyOjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiBzdEV2dDpjaGFuZ2VkPSIvIi8+IDwvcmRmOlNlcT4gPC94bXBNTTpIaXN0b3J5PiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqtMMTYAAAPZSURBVHic7dnRaRtBFEDRp6ACXIpKSEupJCUpJWwp7mDyYUMSkGzFRNkrcw4MCHZgHvq57OxhrTUAwP6+7D0AAPBClAEgQpQBIEKUASBClAGgYq11cc3MeWZWZJ3v+icA8NmVmrautdebMgBEiDIARBxv3Pc8M9v9xnjXnmcD8Pi2nc8/zczTu7tu/Kbsmy4AfNwf37R9UwaAOFEGgAhRBoAIUQaACFEGgAhRBoAIUQaACFEGgAhRBoAIUQaACFEGgAhRBoAIUQaACFEGgAhRBoAIUQaACFEGgAhRBoAIUQaACFEGgAhRBoAIUQaACFEGgAhRBoAIUQaACFEGgAhRBoAIUQaACFEGgAhRBoCI4xvPtiu/AYC/s92y6bDWuvzgcPiXwwAAr6611/U1AESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEHN94dpqZp9ffzzOz3XcUAPi0TvOrqTMzPy7uWmtdXDNznpn1us53HRUAPrffm7qutdf1NQBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEiDIARIgyAESIMgBEHG/cd5qZ8x3neM82M992PB+Ax/Z9Xlq2l5vOvjXKTzPz9YODAMDeTvMAHXN9DQARb70pb/9riBtsew8AwEPb9h7gFoe11t4zAADj+hoAMkQZACJEGQAiRBkAIkQZACJ+AurJ3dLkaTEZAAAAAElFTkSuQmCC" height="15mm" width="40mm" content-width="scale-to-fit"/>
+    </fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
                             </fo:table-body>
@@ -100,17 +104,17 @@
                 <!-- 3rd col: payment part info (right) -->
                 <fo:table-cell column-number="3">
                     <fo:block-container height="85mm">
-                        <fo:block font-size="10pt" linefeed-treatment="preserve" padding-top="1mm">
-                            <fo:block font-weight="bold" font-size="8pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
-<fo:block font-weight="bold" font-size="8pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
-<fo:block font-weight="bold" font-size="8pt">Payable by</fo:block><fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
+                        <fo:block font-size="10pt" padding="3mm 5mm">
+                            <fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
+<fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
+<fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Payable by</fo:block><fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
 
                         </fo:block>
                     </fo:block-container>
                 </fo:table-cell>
                 
             </fo:table-row>
-            
+           
         </fo:table-body>
     </fo:table>
 </fo:block-container>

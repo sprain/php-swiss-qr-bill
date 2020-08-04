@@ -1,10 +1,10 @@
 <fo:block-container height="110mm" start-indent="0" end-indent="0" keep-together="always" font-family="Arial, Frutiger, Helvetica, Liberation Sans">
     
     <fo:block-container height="5mm">
-    <fo:block text-align="center" font-size="8pt">
-        Separate before paying in
-    </fo:block>
-</fo:block-container>
+        <fo:block text-align="center" font-size="8pt">
+            Separate before paying in
+        </fo:block>
+    </fo:block-container>
 
     <fo:table width="210mm" table-layout="fixed" border="0.2mm solid black" margin-top="0">
         <fo:table-column column-number="1" column-width="62mm" border-right="0.2mm solid black" />
@@ -25,10 +25,10 @@
                     </fo:block-container>
                     
                     <fo:block-container height="56mm">
-                        <fo:block linefeed-treatment="preserve">
-                            <fo:block font-weight="bold" font-size="6pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
-<fo:block font-weight="bold" font-size="6pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
-<fo:block font-weight="bold" font-size="6pt">Payable by</fo:block><fo:block>Joachim Kraut<fo:block>&#xD;</fo:block>Ewigermeisterstrasse 20<fo:block>&#xD;</fo:block>DE-80331 München</fo:block>
+                        <fo:block>
+                            <fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
+<fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
+<fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Payable by</fo:block><fo:block>Joachim Kraut<fo:block>&#xD;</fo:block>Ewigermeisterstrasse 20<fo:block>&#xD;</fo:block>DE-80331 München</fo:block>
 
                         </fo:block>
                     </fo:block-container>
@@ -37,12 +37,12 @@
                         <fo:table>
                             <fo:table-body>
                                 <fo:table-row>
-                                    <fo:table-cell margin="0" width="15mm">
-                                        <fo:block><fo:block font-weight="bold" font-size="6pt">Currency</fo:block><fo:block>CHF</fo:block>
+                                    <fo:table-cell margin="0" width="12mm">
+                                        <fo:block><fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Currency</fo:block><fo:block>CHF</fo:block>
 </fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell margin="0">
-                                        <fo:block font-weight="bold" font-size="6pt">Amount</fo:block><fo:block>25.90</fo:block>
+                                        <fo:block margin-top="1.5mm" font-weight="bold" font-size="6pt">Amount</fo:block><fo:block>25.90</fo:block>
 
                                     </fo:table-cell>
                                 </fo:table-row>
@@ -58,7 +58,7 @@
                 </fo:table-cell>
                 
                 <!-- 2nd col: payment part (middle) -->
-                <fo:table-cell column-number="2" padding="5mm 5mm 0 5mm" font-size="10pt">
+                <fo:table-cell column-number="2" padding="5mm 0 0 5mm" font-size="10pt">
                 
                     <fo:block-container height="7mm">
                         <fo:block font-weight="bold" font-size="11pt">
@@ -76,12 +76,12 @@
                         <fo:table>
                             <fo:table-body>
                                 <fo:table-row>
-                                    <fo:table-cell margin="0" width="20mm">
-                                        <fo:block><fo:block font-weight="bold" font-size="8pt">Currency</fo:block><fo:block>CHF</fo:block>
+                                    <fo:table-cell margin="0" width="17mm">
+                                        <fo:block><fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Currency</fo:block><fo:block>CHF</fo:block>
 </fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell margin="0">
-                                        <fo:block font-weight="bold" font-size="8pt">Amount</fo:block><fo:block>25.90</fo:block>
+                                        <fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Amount</fo:block><fo:block>25.90</fo:block>
 
                                     </fo:table-cell>
                                 </fo:table-row>
@@ -102,17 +102,17 @@
                 <!-- 3rd col: payment part info (right) -->
                 <fo:table-cell column-number="3">
                     <fo:block-container height="85mm">
-                        <fo:block font-size="10pt" linefeed-treatment="preserve" padding-top="1mm">
-                            <fo:block font-weight="bold" font-size="8pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
-<fo:block font-weight="bold" font-size="8pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
-<fo:block font-weight="bold" font-size="8pt">Payable by</fo:block><fo:block>Joachim Kraut<fo:block>&#xD;</fo:block>Ewigermeisterstrasse 20<fo:block>&#xD;</fo:block>DE-80331 München</fo:block>
+                        <fo:block font-size="10pt" padding="3mm 5mm">
+                            <fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Account / Payable to</fo:block><fo:block>CH44 3199 9123 0008 8901 2<fo:block>&#xD;</fo:block>Thomas LeClaire<fo:block>&#xD;</fo:block>Rue examplaire 22a<fo:block>&#xD;</fo:block>1000 Lausanne</fo:block>
+<fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Reference</fo:block><fo:block>12 34567 89012 34567 89012 34567</fo:block>
+<fo:block margin-top="2mm" font-weight="bold" font-size="8pt">Payable by</fo:block><fo:block>Joachim Kraut<fo:block>&#xD;</fo:block>Ewigermeisterstrasse 20<fo:block>&#xD;</fo:block>DE-80331 München</fo:block>
 
                         </fo:block>
                     </fo:block-container>
                 </fo:table-cell>
                 
             </fo:table-row>
-            
+           
         </fo:table-body>
     </fo:table>
 </fo:block-container>
