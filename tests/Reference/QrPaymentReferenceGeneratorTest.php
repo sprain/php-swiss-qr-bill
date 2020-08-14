@@ -75,6 +75,7 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     public function testInvalidQrPaymentReference($customerIdentification, $referenceNumber)
     {
         $this->expectException(InvalidQrPaymentReferenceException::class);
+
         QrPaymentReferenceGenerator::generate(
             $customerIdentification,
             $referenceNumber
@@ -98,6 +99,7 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     public function testInvalidCustomerIdentificationNumber($value)
     {
         $this->expectException(InvalidQrPaymentReferenceException::class);
+
         QrPaymentReferenceGenerator::generate(
             $value,
             '18310019779911119'
@@ -120,6 +122,7 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     public function testInvalidReferenceNumber($value)
     {
         $this->expectException(InvalidQrPaymentReferenceException::class);
+        
         QrPaymentReferenceGenerator::generate(
             '123456',
             $value

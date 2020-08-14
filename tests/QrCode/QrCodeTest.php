@@ -42,6 +42,7 @@ class QrCodeTest extends TestCase
     public function testUnsupportedFileExtensions($extension)
     {
         $this->expectException(UnsupportedFileExtensionException::class);
+
         $qrCode = new QrCode('This is a test code');
         $this->assertNull($qrCode->writeFile(__DIR__ . '/../TestData/testfile.' . $extension));
     }

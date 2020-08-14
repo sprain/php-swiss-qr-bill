@@ -252,6 +252,7 @@ class QrBillTest extends TestCase
     public function testCatchInvalidData()
     {
         $this->expectException(InvalidQrBillDataException::class);
+
         $qrBill = QrBill::create();
         $qrBill->getQrCode();
     }
