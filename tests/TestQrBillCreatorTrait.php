@@ -316,8 +316,7 @@ trait TestQrBillCreatorTrait
             '22a',
             '1000',
             'Lausanne',
-            'CH',
-            ''
+            'CH'
         );
     }
 
