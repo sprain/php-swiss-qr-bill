@@ -53,6 +53,7 @@ class TcPdfOutputTest extends TestCase
                 ->setPrintable($variation['printable'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
+
             if ($this->regenerateReferenceFiles) {
                 $tcPdf->Output($file, 'F');
             }
