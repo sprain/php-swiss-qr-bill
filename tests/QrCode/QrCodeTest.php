@@ -37,7 +37,6 @@ class QrCodeTest extends TestCase
 
     /**
      * @dataProvider unsupportedExtensionsProvider
-     *
      */
     public function testUnsupportedFileExtensions($extension)
     {

@@ -70,7 +70,6 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
     /**
      * @dataProvider invalidQrPaymentReferenceProvider
-     *
      */
     public function testInvalidQrPaymentReference($customerIdentification, $referenceNumber)
     {
@@ -94,7 +93,6 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
     /**
      * @dataProvider invalidCustomerIdentificationNumberProvider
-     *
      */
     public function testInvalidCustomerIdentificationNumber($value)
     {
@@ -117,7 +115,6 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
     /**
      * @dataProvider invalidReferenceNumberProvider
-     *
      */
     public function testInvalidReferenceNumber($value)
     {
