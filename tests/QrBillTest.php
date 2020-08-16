@@ -4,6 +4,7 @@ namespace Sprain\Tests\SwissQrBill;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
+use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\QrBill;
 use Zxing\QrReader;
 
@@ -24,7 +25,7 @@ class QrBillTest extends TestCase
             file_put_contents($textFile, $qrBill->getQrCode()->getText());
         }
 
-        $this->assertSame(
+        $this->assertEquals(
             file_get_contents($textFile),
             $qrBill->getQrCode()->getText()
         );
@@ -248,11 +249,10 @@ class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
-    /**
-     * @expectedException \Sprain\SwissQrBill\Exception\InvalidQrBillDataException
-     */
     public function testCatchInvalidData()
     {
+        $this->expectException(InvalidQrBillDataException::class);
+
         $qrBill = QrBill::create();
         $qrBill->getQrCode();
     }
