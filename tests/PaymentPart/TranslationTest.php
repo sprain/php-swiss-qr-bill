@@ -2,12 +2,14 @@
 
 namespace Sprain\Tests\SwissQrBill\PaymentPart;
 
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 class TranslationTest extends TestCase
 {
+    use ArraySubsetAsserts;
+
     /**
      * @dataProvider allTranslationsProvider
      */

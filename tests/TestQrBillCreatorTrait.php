@@ -151,7 +151,7 @@ trait TestQrBillCreatorTrait
     {
         $qrBill = new QrBill();
 
-        foreach($elements as $element) {
+        foreach ($elements as $element) {
             $this->$element($qrBill);
         }
 
@@ -276,10 +276,10 @@ trait TestQrBillCreatorTrait
     public function internationalUltimateDebtor(QrBill &$qrBill)
     {
         $qrBill->setUltimateDebtor(CombinedAddress::create(
-        'Joachim Kraut',
-        'Ewigermeisterstrasse 20',
-        '80331 München',
-        'DE'
+            'Joachim Kraut',
+            'Ewigermeisterstrasse 20',
+            '80331 München',
+            'DE'
         ));
     }
 
@@ -316,7 +316,8 @@ trait TestQrBillCreatorTrait
             '22a',
             '1000',
             'Lausanne',
-            'CH',''
+            'CH',
+            ''
         );
     }
 

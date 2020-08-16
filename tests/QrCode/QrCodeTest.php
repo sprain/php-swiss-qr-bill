@@ -3,6 +3,7 @@
 namespace Sprain\Tests\SwissQrBill\QrCode;
 
 use PHPUnit\Framework\TestCase;
+use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 use Sprain\SwissQrBill\QrCode\QrCode;
 
 class QrCodeTest extends TestCase
@@ -36,10 +37,11 @@ class QrCodeTest extends TestCase
 
     /**
      * @dataProvider unsupportedExtensionsProvider
-     * @expectedException Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException
+     *
      */
     public function testUnsupportedFileExtensions($extension)
     {
+        $this->expectException(UnsupportedFileExtensionException::class);
         $qrCode = new QrCode('This is a test code');
         $this->assertNull($qrCode->writeFile(__DIR__ . '/../TestData/testfile.' . $extension));
     }

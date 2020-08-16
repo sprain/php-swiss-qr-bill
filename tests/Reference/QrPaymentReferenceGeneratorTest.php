@@ -4,6 +4,7 @@ namespace Sprain\Tests\SwissQrBill\Reference;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\Reference\QrPaymentReferenceGenerator;
+use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -12,7 +13,7 @@ class QrPaymentReferenceGeneratorTest extends TestCase
     /** @var  ValidatorInterface */
     private $validator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->validator = Validation::createValidatorBuilder()
             ->addMethodMapping('loadValidatorMetadata')
@@ -69,10 +70,11 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
     /**
      * @dataProvider invalidQrPaymentReferenceProvider
-     * @expectedException Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException
+     *
      */
     public function testInvalidQrPaymentReference($customerIdentification, $referenceNumber)
     {
+        $this->expectException(InvalidQrPaymentReferenceException::class);
         QrPaymentReferenceGenerator::generate(
             $customerIdentification,
             $referenceNumber
@@ -91,10 +93,11 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
     /**
      * @dataProvider invalidCustomerIdentificationNumberProvider
-     * @expectedException Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException
+     *
      */
     public function testInvalidCustomerIdentificationNumber($value)
     {
+        $this->expectException(InvalidQrPaymentReferenceException::class);
         QrPaymentReferenceGenerator::generate(
             $value,
             '18310019779911119'
@@ -112,10 +115,11 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
     /**
      * @dataProvider invalidReferenceNumberProvider
-     * @expectedException Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException
+     *
      */
     public function testInvalidReferenceNumber($value)
     {
+        $this->expectException(InvalidQrPaymentReferenceException::class);
         QrPaymentReferenceGenerator::generate(
             '123456',
             $value
