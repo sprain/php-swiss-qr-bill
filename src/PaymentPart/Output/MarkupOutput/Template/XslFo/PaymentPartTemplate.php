@@ -5,7 +5,7 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo;
 class PaymentPartTemplate
 {
     public const TEMPLATE = <<<EOT
-<fo:block-container height="110mm" start-indent="0" end-indent="0" keep-together="always" font-family="Arial, Frutiger, Helvetica, Liberation Sans">
+<fo:block-container height="110mm" start-indent="0" end-indent="0" keep-together="always" font-family="Arial,Frutiger,Helvetica,'Liberation Sans'">
     
     <fo:block-container height="5mm">
         <fo:block text-align="center" font-size="8pt">
