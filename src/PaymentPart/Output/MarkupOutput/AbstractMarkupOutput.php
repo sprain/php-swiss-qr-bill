@@ -11,13 +11,19 @@ use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInterface
 {
-    abstract function getPaymentPartTemplate(): string;
-    abstract function getPlaceholderElementTemplate(): string;
-    abstract function getPrintableStylesTemplate(): string;
-    abstract function getTextElementTemplate(): string;
-    abstract function getTitleElementTemplate(): string;
-    abstract function getTitleElementReceiptTemplate(): string;
-    abstract function getNewlineElementTemplate(): string;
+    abstract public function getPaymentPartTemplate(): string;
+
+    abstract public function getPlaceholderElementTemplate(): string;
+
+    abstract public function getPrintableStylesTemplate(): string;
+
+    abstract public function getTextElementTemplate(): string;
+
+    abstract public function getTitleElementTemplate(): string;
+
+    abstract public function getTitleElementReceiptTemplate(): string;
+
+    abstract public function getNewlineElementTemplate(): string;
 
     /**
      * @return string
@@ -198,7 +204,7 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
     {
         if ($element instanceof Title) {
             $elementTemplate = $this->getTitleElementTemplate();
-            if(true === $isReceiptPart){
+            if (true === $isReceiptPart) {
                 $elementTemplate = $this->getTitleElementReceiptTemplate();
             }
             $elementString = str_replace('{{ title }}', $element->getTitle(), $elementTemplate);
@@ -218,7 +224,7 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
             $elementTemplate = $this->getPlaceholderElementTemplate();
             $elementString = $elementTemplate;
 
-            $dataUri = 'data:image/png;base64,' .  base64_encode(file_get_contents($element->getFile(Placeholder::FILE_TYPE_PNG)));
+            $dataUri = 'data:image/png;base64,' . base64_encode(file_get_contents($element->getFile(Placeholder::FILE_TYPE_PNG)));
 
             // The svg version works but the images have empty space on top and bottom which makes it unnecessary hard to correctly place them.
 //            $svgDoc = new \DOMDocument();
@@ -227,8 +233,8 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
 //            $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
 
             $elementString = str_replace('{{ placeholder-file }}', $dataUri, $elementString);
-            $elementString = str_replace('{{ placeholder-width }}', (string) $element->getWidth(), $elementString);
-            $elementString = str_replace('{{ placeholder-height }}', (string) $element->getHeight(), $elementString);
+            $elementString = str_replace('{{ placeholder-width }}', (string)$element->getWidth(), $elementString);
+            $elementString = str_replace('{{ placeholder-height }}', (string)$element->getHeight(), $elementString);
             $elementString = str_replace('{{ placeholder-id }}', $element->getType(), $elementString);
             $elementString = str_replace('{{ placeholder-float }}', $element->getFloat(), $elementString);
             $elementString = str_replace('{{ placeholder-margin-top }}', $element->getMarginTop(), $elementString);
@@ -247,7 +253,7 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         $translations = Translation::getAllByLanguage($language);
         foreach ($translations as $key => $text) {
 
-            if('separate' === $key && true === $this->isPrintable()){
+            if ('separate' === $key && true === $this->isPrintable()) {
                 // Do not display the separator text at all when printable is true.
                 $paymentPart = str_replace('{{ text.' . $key . ' }}', '', $paymentPart);
                 continue;

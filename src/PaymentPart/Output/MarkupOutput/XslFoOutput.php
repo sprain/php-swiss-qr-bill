@@ -15,7 +15,7 @@ final class XslFoOutput extends AbstractMarkupOutput
     /**
      * @return string
      */
-    function getPaymentPartTemplate(): string
+    public function getPaymentPartTemplate(): string
     {
         return PaymentPartTemplate::TEMPLATE;
     }
@@ -23,7 +23,7 @@ final class XslFoOutput extends AbstractMarkupOutput
     /**
      * @return string
      */
-    function getPlaceholderElementTemplate(): string
+    public function getPlaceholderElementTemplate(): string
     {
         return PlaceholderElementTemplate::TEMPLATE;
     }
@@ -31,7 +31,7 @@ final class XslFoOutput extends AbstractMarkupOutput
     /**
      * @return string
      */
-    function getPrintableStylesTemplate(): string
+    public function getPrintableStylesTemplate(): string
     {
         return PrintableStylesTemplate::TEMPLATE;
     }
@@ -39,7 +39,7 @@ final class XslFoOutput extends AbstractMarkupOutput
     /**
      * @return string
      */
-    function getTextElementTemplate(): string
+    public function getTextElementTemplate(): string
     {
         return TextElementTemplate::TEMPLATE;
     }
@@ -47,7 +47,7 @@ final class XslFoOutput extends AbstractMarkupOutput
     /**
      * @return string
      */
-    function getTitleElementTemplate(): string
+    public function getTitleElementTemplate(): string
     {
         return TitleElementTemplate::TEMPLATE;
     }
@@ -55,7 +55,7 @@ final class XslFoOutput extends AbstractMarkupOutput
     /**
      * @return string
      */
-    function getTitleElementReceiptTemplate(): string
+    public function getTitleElementReceiptTemplate(): string
     {
         return TitleElementReceiptTemplate::TEMPLATE;
     }
@@ -63,7 +63,7 @@ final class XslFoOutput extends AbstractMarkupOutput
     /**
      * @return string
      */
-    function getNewlineElementTemplate(): string
+    public function getNewlineElementTemplate(): string
     {
         return NewlineElementTemplate::TEMPLATE;
     }
