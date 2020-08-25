@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\Html;
+namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template;
 
 class PaymentPartTemplate
 {

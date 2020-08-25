@@ -1,6 +1,6 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo;
+namespace Sprain\SwissQrBill\PaymentPart\Output\XslFoOutput\Template;
 
 class PlaceholderElementTemplate
 {

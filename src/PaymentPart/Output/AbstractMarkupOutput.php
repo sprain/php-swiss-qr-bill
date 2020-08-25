@@ -1,12 +1,10 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput;
+namespace Sprain\SwissQrBill\PaymentPart\Output;
 
-use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
-use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInterface

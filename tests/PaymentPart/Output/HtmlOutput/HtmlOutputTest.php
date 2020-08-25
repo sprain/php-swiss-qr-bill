@@ -1,14 +1,14 @@
 <?php
 
-namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\MarkupOutput;
+namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\XslFoOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
 
-class XslFoOutputTest extends TestCase
+class HtmlOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
@@ -21,35 +21,33 @@ class XslFoOutputTest extends TestCase
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/XslFoOutput/' . $name . '.svg.xml'
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.html'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/XslFoOutput/' . $name . '.svg.print.xml'
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.print.html'
             ],
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/XslFoOutput/' . $name . '.png.xml'
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.png.html'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/XslFoOutput/' . $name . '.png.print.xml'
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.png.print.html'
             ]
         ];
 
         foreach ($variations as $variation) {
             $file = $variation['file'];
 
-            $xslFoOutput = (new XslFoOutput($qrBill, 'en'));
-            $output = $xslFoOutput
+            $htmlOutput = (new HtmlOutput($qrBill, 'en'));
+            $output = $htmlOutput
                 ->setPrintable($variation['printable'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
-
-            $this->assertNotEmpty($output);
 
             if ($this->regenerateReferenceFiles) {
                file_put_contents($file, $output);

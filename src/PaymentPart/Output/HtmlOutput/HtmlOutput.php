@@ -1,16 +1,17 @@
 <?php
 
-namespace Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput;
+namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
-use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo\PlaceholderElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo\PrintableStylesTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo\TextElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo\PaymentPartTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo\TitleElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo\TitleElementReceiptTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\MarkupOutput\Template\XslFo\NewlineElementTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\AbstractMarkupOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\NewlineElementTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PlaceholderElementTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableStylesTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TextElementTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementReceiptTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
 
-final class XslFoOutput extends AbstractMarkupOutput
+final class HtmlOutput extends AbstractMarkupOutput
 {
     /**
      * @return string
