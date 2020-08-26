@@ -5,11 +5,12 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractMarkupOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\NewlineElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PlaceholderElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableStylesTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableBordersTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TextElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementReceiptTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\HideInPrintableTemplate;
 
 final class HtmlOutput extends AbstractMarkupOutput
 {
@@ -32,9 +33,17 @@ final class HtmlOutput extends AbstractMarkupOutput
     /**
      * @return string
      */
-    public function getPrintableStylesTemplate(): string
+    public function getPrintableBordersTemplate(): string
     {
-        return PrintableStylesTemplate::TEMPLATE;
+        return PrintableBordersTemplate::TEMPLATE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHideInPrintableTemplate(): string
+    {
+        return HideInPrintableTemplate::TEMPLATE;
     }
 
     /**

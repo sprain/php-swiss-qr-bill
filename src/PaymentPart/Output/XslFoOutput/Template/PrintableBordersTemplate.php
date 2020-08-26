@@ -2,7 +2,7 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\XslFoOutput\Template;
 
-class PrintableStylesTemplate
+class PrintableBordersTemplate
 {
     public const TEMPLATE = <<<EOT
 0.2mm solid black

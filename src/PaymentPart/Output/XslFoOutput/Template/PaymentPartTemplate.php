@@ -8,12 +8,12 @@ class PaymentPartTemplate
 <fo:block-container height="110mm" start-indent="0" end-indent="0" keep-together="always" font-family="Arial,Frutiger,Helvetica,'Liberation Sans'">
     
     <fo:block-container height="5mm">
-        <fo:block text-align="center" font-size="8pt">
+        <fo:block text-align="center" font-size="8pt" {{ hide-in-printable }}>
             {{ text.separate }}
         </fo:block>
     </fo:block-container>
 
-    <fo:table width="210mm" table-layout="fixed" border="{{ printable-content }}" margin-top="0">
+    <fo:table width="210mm" table-layout="fixed" margin-top="0" border="{{ printable-content }}">
         <fo:table-column column-number="1" column-width="62mm" border-right="{{ printable-content }}" />
         <fo:table-column column-number="2" column-width="56mm" />
         <fo:table-column column-number="3" column-width="92mm" />

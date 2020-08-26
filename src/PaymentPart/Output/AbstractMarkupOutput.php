@@ -13,7 +13,9 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
 
     abstract public function getPlaceholderElementTemplate(): string;
 
-    abstract public function getPrintableStylesTemplate(): string;
+    abstract public function getPrintableBordersTemplate(): string;
+
+    abstract public function getHideInPrintableTemplate(): string;
 
     abstract public function getTextElementTemplate(): string;
 
@@ -39,6 +41,7 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         $paymentPart = $this->addAmountContentReceipt($paymentPart);
         $paymentPart = $this->addFurtherInformationContent($paymentPart);
         $paymentPart = $this->addSeparatorContentIfNotPrintable($paymentPart);
+        $paymentPart = $this->hideInPrintable($paymentPart);
 
         $paymentPart = $this->translateContents($paymentPart, $this->getLanguage());
 
@@ -183,12 +186,28 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
      */
     private function addSeparatorContentIfNotPrintable(string $paymentPart): string
     {
-        $printableStyles = '';
+        $printableBorders = '';
         if (true !== $this->isPrintable()) {
-            $printableStyles = $this->getPrintableStylesTemplate();
+            $printableBorders = $this->getPrintableBordersTemplate();
         }
 
-        $paymentPart = str_replace('{{ printable-content }}', $printableStyles, $paymentPart);
+        $paymentPart = str_replace('{{ printable-content }}', $printableBorders, $paymentPart);
+
+        return $paymentPart;
+    }
+
+    /**
+     * @param string $paymentPart
+     * @return string
+     */
+    private function hideInPrintable(string $paymentPart): string
+    {
+        $hideInPrintableContent = '';
+        if (true === $this->isPrintable()) {
+            $hideInPrintableContent = $this->getHideInPrintableTemplate();
+        }
+
+        $paymentPart = str_replace('{{ hide-in-printable }}', $hideInPrintableContent, $paymentPart);
 
         return $paymentPart;
     }
@@ -250,13 +269,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
     {
         $translations = Translation::getAllByLanguage($language);
         foreach ($translations as $key => $text) {
-
-            if ('separate' === $key && true === $this->isPrintable()) {
-                // Do not display the separator text at all when printable is true.
-                $paymentPart = str_replace('{{ text.' . $key . ' }}', '', $paymentPart);
-                continue;
-            }
-
             $paymentPart = str_replace('{{ text.' . $key . ' }}', $text, $paymentPart);
         }
 

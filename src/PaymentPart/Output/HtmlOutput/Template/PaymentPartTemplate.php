@@ -164,7 +164,7 @@ class PaymentPartTemplate
 }
 
 #qr-bill-separate-info-text {
-    display: none;
+    {{ hide-in-printable }}
 }
 
 {{ printable-content }}
