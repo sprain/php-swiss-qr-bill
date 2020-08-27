@@ -113,7 +113,7 @@ class Placeholder implements OutputElementInterface
         return $this->float;
     }
 
-    public function getMarginTop(): int
+    public function getMarginTop(): float
     {
         return $this->marginTop ?: 0;
     }
