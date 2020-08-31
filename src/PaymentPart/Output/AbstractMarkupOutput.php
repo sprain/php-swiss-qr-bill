@@ -253,8 +253,8 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
             $elementString = str_replace('{{ placeholder-width }}', (string)$element->getWidth(), $elementString);
             $elementString = str_replace('{{ placeholder-height }}', (string)$element->getHeight(), $elementString);
             $elementString = str_replace('{{ placeholder-id }}', $element->getType(), $elementString);
-            $elementString = str_replace('{{ placeholder-float }}', (string) $element->getFloat(), $elementString);
-            $elementString = str_replace('{{ placeholder-margin-top }}', $element->getMarginTop(), $elementString);
+            $elementString = str_replace('{{ placeholder-float }}', $element->getFloat(), $elementString);
+            $elementString = str_replace('{{ placeholder-margin-top }}', (string) $element->getMarginTop(), $elementString);
 
             return $elementString;
         }
