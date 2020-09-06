@@ -8,7 +8,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/../example.php';
 
 // 2. Create a full payment part in HTML
-$output = new QrBill\PaymentPart\Output\MarkupOutput\HtmlOutput($qrBill, 'en');
+$output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
 
 $html = $output
     ->setPrintable(false)
