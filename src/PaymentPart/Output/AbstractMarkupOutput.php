@@ -25,9 +25,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
 
     abstract public function getNewlineElementTemplate(): string;
 
-    /**
-     * @return string
-     */
     public function getPaymentPart(): string
     {
         $paymentPart = $this->getPaymentPartTemplate();
@@ -48,10 +45,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addSwissQrCodeImage(string $paymentPart): string
     {
         $qrCode = $this->getQrCode();
@@ -60,10 +53,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addInformationContent(string $paymentPart): string
     {
         $informationContent = '';
@@ -78,10 +67,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addInformationContentReceipt(string $paymentPart): string
     {
         $informationContent = '';
@@ -95,10 +80,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addCurrencyContent(string $paymentPart): string
     {
         $currencyContent = '';
@@ -112,10 +93,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addCurrencyContentReceipt(string $paymentPart): string
     {
         $currencyContent = '';
@@ -129,10 +106,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addAmountContent(string $paymentPart): string
     {
         $amountContent = '';
@@ -146,10 +119,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addAmountContentReceipt(string $paymentPart): string
     {
         $amountContent = '';
@@ -163,10 +132,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addFurtherInformationContent(string $paymentPart): string
     {
         $furtherInformationContent = '';
@@ -180,10 +145,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function addSeparatorContentIfNotPrintable(string $paymentPart): string
     {
         $printableBorders = '';
@@ -196,10 +157,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         return $paymentPart;
     }
 
-    /**
-     * @param string $paymentPart
-     * @return string
-     */
     private function hideInPrintable(string $paymentPart): string
     {
         $hideInPrintableContent = '';
@@ -260,11 +217,6 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
         }
     }
 
-    /**
-     * @param string $paymentPart
-     * @param string $language
-     * @return string
-     */
     private function translateContents(string $paymentPart, string $language): string
     {
         $translations = Translation::getAllByLanguage($language);
