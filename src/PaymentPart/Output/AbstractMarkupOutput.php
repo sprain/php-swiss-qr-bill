@@ -204,8 +204,8 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
             $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
 
             $elementString = str_replace('{{ placeholder-file }}', $dataUri, $elementString);
-            $elementString = str_replace('{{ placeholder-width }}', (string)$element->getWidth(), $elementString);
-            $elementString = str_replace('{{ placeholder-height }}', (string)$element->getHeight(), $elementString);
+            $elementString = str_replace('{{ placeholder-width }}', (string) $element->getWidth(), $elementString);
+            $elementString = str_replace('{{ placeholder-height }}', (string) $element->getHeight(), $elementString);
             $elementString = str_replace('{{ placeholder-id }}', $element->getType(), $elementString);
             $elementString = str_replace('{{ placeholder-float }}', $element->getFloat(), $elementString);
             $elementString = str_replace('{{ placeholder-margin-top }}', (string) $element->getMarginTop(), $elementString);
