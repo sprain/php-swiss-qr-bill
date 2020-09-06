@@ -198,13 +198,10 @@ abstract class AbstractMarkupOutput extends AbstractOutput implements OutputInte
             $elementTemplate = $this->getPlaceholderElementTemplate();
             $elementString = $elementTemplate;
 
-            $dataUri = 'data:image/png;base64,' . base64_encode(file_get_contents($element->getFile(Placeholder::FILE_TYPE_PNG)));
-
-            // The svg version works but the images have empty space on top and bottom which makes it unnecessary hard to correctly place them.
-//            $svgDoc = new \DOMDocument();
-//            $svgDoc->loadXML(file_get_contents($element->getFile(Placeholder::FILE_TYPE_SVG))); // Take the png version since the svgs have a bad
-//            $svg = $svgDoc->getElementsByTagName('svg');
-//            $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
+            $svgDoc = new \DOMDocument();
+            $svgDoc->loadXML(file_get_contents($element->getFile(Placeholder::FILE_TYPE_SVG)));
+            $svg = $svgDoc->getElementsByTagName('svg');
+            $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
 
             $elementString = str_replace('{{ placeholder-file }}', $dataUri, $elementString);
             $elementString = str_replace('{{ placeholder-width }}', (string)$element->getWidth(), $elementString);
