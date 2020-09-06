@@ -9,7 +9,7 @@ class Placeholder implements OutputElementInterface
 
     public const PLACEHOLDER_TYPE_PAYABLE_BY = [
         'type' => 'placeholder_payable_by',
-        'fileSvg' => __DIR__ . '/../../../../assets/marks_65x25mm.svg',
+        'fileSvg' => __DIR__ . '/../../../../assets/marks_65x25mm.optimized.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_65x25mm.png',
         'width' => 65,
         'height' => 25,
@@ -19,7 +19,7 @@ class Placeholder implements OutputElementInterface
 
     public const PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT = [
         'type' => 'placeholder_payable_by_receipt',
-        'fileSvg' => __DIR__ . '/../../../../assets/marks_52x20mm.svg',
+        'fileSvg' => __DIR__ . '/../../../../assets/marks_52x20mm.optimized.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_52x20mm.png',
         'width' => 52,
         'height' => 20,
@@ -29,7 +29,7 @@ class Placeholder implements OutputElementInterface
 
     public const PLACEHOLDER_TYPE_AMOUNT = [
         'type' => 'placeholder_amount',
-        'fileSvg' => __DIR__ . '/../../../../assets/marks_40x15mm.svg',
+        'fileSvg' => __DIR__ . '/../../../../assets/marks_40x15mm.optimized.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_40x15mm.png',
         'width' => 40,
         'height' => 15,
@@ -39,7 +39,7 @@ class Placeholder implements OutputElementInterface
 
     public const PLACEHOLDER_TYPE_AMOUNT_RECEIPT = [
         'type' => 'placeholder_amount_receipt',
-        'fileSvg' => __DIR__ . '/../../../../assets/marks_30x10mm.svg',
+        'fileSvg' => __DIR__ . '/../../../../assets/marks_30x10mm.optimized.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_30x10mm.png',
         'width' => 30,
         'height' => 10,
