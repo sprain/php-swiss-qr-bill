@@ -4,6 +4,7 @@ namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,6 +39,14 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
         $paymentReference = new self();
         $paymentReference->type = $type;
         $paymentReference->reference = $reference;
+
+        if (null !== $paymentReference->reference) {
+            $paymentReference->reference = StringModifier::stripWhitespace($paymentReference->reference);
+        }
+
+        if ('' === ($paymentReference->reference)) {
+            $paymentReference->reference = null;
+        }
 
         return $paymentReference;
     }
