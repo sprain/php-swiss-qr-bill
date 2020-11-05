@@ -73,8 +73,7 @@ class PaymentReferenceTest extends TestCase
         return [
             [0, null],
             [1, 'anything-non-empty'],
-            [1, ' '],
-            [1, 0]
+            [1, ' ']
         ];
     }
 

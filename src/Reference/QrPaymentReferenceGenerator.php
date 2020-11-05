@@ -54,7 +54,9 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
         }
 
         $completeReferenceNumber  = $this->getCustomerIdentificationNumber();
-        $completeReferenceNumber .= str_pad($this->getReferenceNumber(), 26 - strlen($completeReferenceNumber), '0', STR_PAD_LEFT);
+
+        $strlen = $completeReferenceNumber ? strlen($completeReferenceNumber) : 0;
+        $completeReferenceNumber .= str_pad($this->getReferenceNumber(), 26 - $strlen, '0', STR_PAD_LEFT);
         $completeReferenceNumber .= $this->modulo10($completeReferenceNumber);
 
         return $completeReferenceNumber;
@@ -87,7 +89,9 @@ class QrPaymentReferenceGenerator implements SelfValidatableInterface
 
     public function validateFullReference(ExecutionContextInterface $context): void
     {
-        if (strlen($this->customerIdentificationNumber) + strlen($this->referenceNumber) > 26) {
+        $strlenCustomerIdentificationNumber = $this->customerIdentificationNumber ? strlen($this->customerIdentificationNumber) : 0;
+
+        if ($strlenCustomerIdentificationNumber + strlen($this->referenceNumber) > 26) {
             $context->buildViolation('The length of customer identification number + reference number may not exceed 26 characters in total.')
                 ->addViolation();
         }
