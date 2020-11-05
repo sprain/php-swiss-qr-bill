@@ -21,6 +21,7 @@ class StringModifierTest extends TestCase
     public function lineBreaksProvider()
     {
         return [
+            [null, ''],
             ["foo\nbar\rbaz\r\n", "foo bar baz  "],
             ["\n\nfoo\nbar\nbaz\n\n", "  foo bar baz  "],
             ["\n\nfoo\n\nbar\n\nbaz\n\n", "  foo  bar  baz  "],
@@ -41,6 +42,7 @@ class StringModifierTest extends TestCase
     public function multipleSpacesProvider()
     {
         return [
+            [null, ''],
             [" foo bar baz ", " foo bar baz "],
             ["  foo  bar  baz  ", " foo bar baz "],
             ["foo  bar  baz", "foo bar baz"],
@@ -61,6 +63,7 @@ class StringModifierTest extends TestCase
     public function stripWhitespaceProvider()
     {
         return [
+            [null, ''],
             ['1 ', '1'],
             [' 2', '2'],
             [' foo ', 'foo'],
