@@ -58,18 +58,18 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     /* @var TCPDF */
     private $tcPdf;
 
-    /* @var int */
+    /* @var float */
     private $offsetX;
 
-    /* @var int */
+    /* @var float */
     private $offsetY;
 
     public function __construct(
         QrBill $qrBill,
         string $language,
         TCPDF $tcPdf,
-        int $offsetX = 0,
-        int $offsetY = 0
+        float $offsetX = 0,
+        float $offsetY = 0
     ) {
         parent::__construct($qrBill, $language);
         $this->tcPdf = $tcPdf;
@@ -347,7 +347,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, $textAlign, false, $nextLineAlign);
     }
 
-    private function printLine(int $x1, int $y1, int $x2, int $y2) : void
+    private function printLine(float $x1, float $y1, float $x2, float $y2) : void
     {
         $this->tcPdf->Line($x1+$this->offsetX, $y1+$this->offsetY, $x2+$this->offsetX, $y2+$this->offsetY);
     }

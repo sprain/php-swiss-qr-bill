@@ -51,18 +51,18 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     /** @var float */
     private $amountLS = 0;
 
-    /* @var int */
+    /* @var float */
     private $offsetX;
 
-    /* @var int */
+    /* @var float */
     private $offsetY;
 
     public function __construct(
         QrBill $qrBill,
         string $language,
         Fpdf $fpdf,
-        int $offsetX = 0,
-        int $offsetY = 0
+        float $offsetX = 0,
+        float $offsetY = 0
     ) {
         parent::__construct($qrBill, $language);
         $this->fpdf = $fpdf;
