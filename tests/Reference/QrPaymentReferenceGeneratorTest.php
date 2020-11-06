@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Sprain\Tests\SwissQrBill\Reference;
 
@@ -59,9 +59,6 @@ class QrPaymentReferenceGeneratorTest extends TestCase
             ['000000', '11223344', '000000000000000000112233442'],
             ['', '11223344', '000000000000000000112233442'],
             [null, '11223344', '000000000000000000112233442'],
-
-            // Handle it as numerics as well
-            [310014, 18310019779911119, '310014000183100197799111196'],
 
             // Correct handling of whitespace
             [' 310 014 ', ' 1831001 9779911119 ', '310014000183100197799111196'],

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Sprain\SwissQrBill;
 
@@ -241,9 +241,11 @@ class QrBill implements SelfValidatableInterface
         }
 
         array_walk($qrCodeElements, function (&$string) {
-            $string = StringModifier::replaceLineBreaksWithString($string);
-            $string = StringModifier::replaceMultipleSpacesWithOne($string);
-            $string = trim($string);
+            if (is_string($string)) {
+                $string = StringModifier::replaceLineBreaksWithString($string);
+                $string = StringModifier::replaceMultipleSpacesWithOne($string);
+                $string = trim($string);
+            }
         });
 
         return $qrCodeElements;

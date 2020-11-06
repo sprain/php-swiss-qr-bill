@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
@@ -80,8 +80,7 @@ class PaymentReferenceTest extends TestCase
             [0, null],
             [0, ''],
             [0, ' '],
-            [1, 'anything-non-empty'],
-            [1, 0]
+            [1, 'anything-non-empty']
         ];
     }
 
