@@ -58,18 +58,18 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     /* @var TCPDF */
     private $tcPdf;
 
-    /* @var int */
+    /* @var float */
     private $offsetX;
 
-    /* @var int */
+    /* @var float */
     private $offsetY;
 
     public function __construct(
         QrBill $qrBill,
         string $language,
         TCPDF $tcPdf,
-        int $offsetX = 0,
-        int $offsetY = 0
+        float $offsetX = 0,
+        float $offsetY = 0
     ) {
         parent::__construct($qrBill, $language);
         $this->tcPdf = $tcPdf;
@@ -231,8 +231,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     {
         if (!$this->isPrintable()) {
             $this->tcPdf->SetLineStyle(['width' => 0.1, 'color' => [0, 0, 0]]);
-            $this->printLine(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
-            $this->printLine(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
+            $this->printLine(2, 193, 208, 193);
+            $this->printLine(62, 193, 62, 296);
             $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
             $this->SetY(188);
             $this->SetX(5);
