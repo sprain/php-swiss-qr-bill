@@ -230,7 +230,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private function addSeparatorContentIfNotPrintable(): void
     {
         if (!$this->isPrintable()) {
-            $this->tcPdf->SetLineStyle(array('width' => 0.1, 'color' => array(0, 0, 0)));
+            $this->tcPdf->SetLineStyle(['width' => 0.1, 'color' => [0, 0, 0]]);
             $this->printLine(2, 193, 208, 193);
             $this->printLine(62, 193, 62, 296);
             $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
