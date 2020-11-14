@@ -10,7 +10,7 @@ class CreditorInformationTest extends TestCase
     /**
      * @dataProvider ibanProvider
      */
-    public function testIban($numberOfViolations, $value)
+    public function testIban(int $numberOfViolations, string $value)
     {
         $creditorInformation = CreditorInformation::create(
             $value
@@ -19,7 +19,7 @@ class CreditorInformationTest extends TestCase
         $this->assertSame($numberOfViolations, $creditorInformation->getViolations()->count());
     }
 
-    public function ibanProvider()
+    public function ibanProvider(): array
     {
         return [
             [0, 'CH93 0076 2011 6238 5295 7'],
@@ -58,7 +58,7 @@ class CreditorInformationTest extends TestCase
     /**
      * @dataProvider qrIbanCheckProvider
      */
-    public function testContainsQrIban($isQrIban, $value)
+    public function testContainsQrIban(bool $isQrIban, string $value): void
     {
         $creditorInformation = CreditorInformation::create(
             $value
@@ -67,7 +67,7 @@ class CreditorInformationTest extends TestCase
         $this->assertSame($isQrIban, $creditorInformation->containsQrIban());
     }
 
-    public function qrIbanCheckProvider()
+    public function qrIbanCheckProvider(): array
     {
         return [
             // normal valid IBANs
@@ -88,7 +88,7 @@ class CreditorInformationTest extends TestCase
     /**
      * @dataProvider formattedIbanProvider
      */
-    public function testFormattedIban($iban, $formattedIban)
+    public function testFormattedIban(string $iban, string $formattedIban): void
     {
         $creditorInformation = CreditorInformation::create(
             $iban
@@ -97,7 +97,7 @@ class CreditorInformationTest extends TestCase
         $this->assertSame($formattedIban, $creditorInformation->getFormattedIban());
     }
 
-    public function formattedIbanProvider()
+    public function formattedIbanProvider(): array
     {
         return [
             ['CH93 0076 2011 6238 5295 7', 'CH93 0076 2011 6238 5295 7'],

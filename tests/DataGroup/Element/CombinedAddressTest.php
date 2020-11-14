@@ -10,7 +10,7 @@ class CombinedAddressTest extends TestCase
     /**
      * @dataProvider nameProvider
      */
-    public function testName($numberOfValidations, $value)
+    public function testName($numberOfValidations, $value): void
     {
         $address = CombinedAddress::create(
             $value,
@@ -22,7 +22,7 @@ class CombinedAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function nameProvider()
+    public function nameProvider(): array
     {
         return [
             [0, 'A'],
@@ -38,7 +38,7 @@ class CombinedAddressTest extends TestCase
     /**
      * @dataProvider addressLine1Provider
      */
-    public function testAddressLine1($numberOfValidations, $value)
+    public function testAddressLine1(int $numberOfValidations, ?string $value): void
     {
         $address = CombinedAddress::create(
             'Thomas Mustermann',
@@ -50,7 +50,7 @@ class CombinedAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function addressLine1Provider()
+    public function addressLine1Provider(): array
     {
         return [
             [0, null],
@@ -66,7 +66,7 @@ class CombinedAddressTest extends TestCase
     /**
      * @dataProvider addressLine2Provider
      */
-    public function testAddressLine2($numberOfValidations, $value)
+    public function testAddressLine2(int $numberOfValidations, string $value): void
     {
         $address = CombinedAddress::create(
             'Thomas Mustermann',
@@ -78,7 +78,7 @@ class CombinedAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function addressLine2Provider()
+    public function addressLine2Provider(): array
     {
         return [
             [0, 'A'],
@@ -90,7 +90,7 @@ class CombinedAddressTest extends TestCase
         ];
     }
 
-    public function testQrCodeData()
+    public function testQrCodeData(): void
     {
         $address = CombinedAddress::create(
             'Thomas Mustermann',
@@ -115,7 +115,7 @@ class CombinedAddressTest extends TestCase
     /**
      * @dataProvider countryProvider
      */
-    public function testCountry($numberOfValidations, $value)
+    public function testCountry(int $numberOfValidations, string $value): void
     {
         $address = CombinedAddress::create(
             'Thomas Mustermann',
@@ -127,7 +127,7 @@ class CombinedAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function countryProvider()
+    public function countryProvider(): array
     {
         return [
             [0, 'CH'],
@@ -146,12 +146,12 @@ class CombinedAddressTest extends TestCase
     /**
      * @dataProvider addressProvider
      */
-    public function testFullAddressString(CombinedAddress $address, $expected)
+    public function testFullAddressString(CombinedAddress $address, string $expected): void
     {
         $this->assertSame($expected, $address->getFullAddress());
     }
 
-    public function addressProvider()
+    public function addressProvider(): array
     {
         return [
             [

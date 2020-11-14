@@ -10,7 +10,7 @@ class HeaderTest extends TestCase
     /**
      * @dataProvider qrTypeProvider
      */
-    public function testQrType($numberOfViolations, $value)
+    public function testQrType(int $numberOfViolations, string $value): void
     {
         $header = Header::create(
             $value,
@@ -21,7 +21,7 @@ class HeaderTest extends TestCase
         $this->assertSame($numberOfViolations, $header->getViolations()->count());
     }
 
-    public function qrTypeProvider()
+    public function qrTypeProvider(): array
     {
         return [
             [0, 'SPC'],
@@ -45,7 +45,7 @@ class HeaderTest extends TestCase
     /**
      * @dataProvider versionProvider
      */
-    public function testVersionIsValid($numberOfViolations, $value)
+    public function testVersionIsValid(int $numberOfViolations, string $value): void
     {
         $header = Header::create(
             'SPC',
@@ -56,7 +56,7 @@ class HeaderTest extends TestCase
         $this->assertSame($numberOfViolations, $header->getViolations()->count());
     }
 
-    public function versionProvider()
+    public function versionProvider(): array
     {
         return [
             [0, '0200'],
@@ -77,7 +77,7 @@ class HeaderTest extends TestCase
     /**
      * @dataProvider codingProvider
      */
-    public function testCodingIsValid($numberOfViolations, $value)
+    public function testCodingIsValid(int $numberOfViolations, int $value): void
     {
         $header = Header::create(
             'SPC',
@@ -106,7 +106,7 @@ class HeaderTest extends TestCase
         ];
     }
 
-    public function testQrCodeData()
+    public function testQrCodeData(): void
     {
         $header = Header::create(
             'SPC',
