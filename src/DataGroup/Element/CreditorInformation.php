@@ -14,30 +14,26 @@ class CreditorInformation implements QrCodeableInterface, SelfValidatableInterfa
 
     /**
      * IBAN or QR-IBAN of the creditor
-     *
-     * @var string
      */
-    private $iban;
+    private string $iban;
+
+    private function __construct(string $iban)
+    {
+        $this->iban = (string) preg_replace('/\s+/', '', $iban);
+    }
 
     public static function create(string $iban): self
     {
-        $creditorInformation = new self();
-        $creditorInformation->iban = preg_replace('/\s+/', '', $iban);
-
-        return $creditorInformation;
+        return new self($iban);
     }
 
-    public function getIban(): ?string
+    public function getIban(): string
     {
         return $this->iban;
     }
 
-    public function getFormattedIban(): ?string
+    public function getFormattedIban(): string
     {
-        if (null === $this->iban) {
-            return null;
-        }
-
         return trim(chunk_split($this->iban, 4, ' '));
     }
 

@@ -10,7 +10,7 @@ class PaymentReferenceTest extends TestCase
     /**
      * @dataProvider qrReferenceProvider
      */
-    public function testQrReference($numberOfViolations, $value)
+    public function testQrReference(int $numberOfViolations, ?string $value)
     {
         $paymentReference = PaymentReference::create(
             PaymentReference::TYPE_QR,
@@ -20,7 +20,7 @@ class PaymentReferenceTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function qrReferenceProvider()
+    public function qrReferenceProvider(): array
     {
         return [
             [0, '012345678901234567890123456'],

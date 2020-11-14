@@ -227,7 +227,7 @@ class QrBillTest extends TestCase
         ]);
 
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme((new AlternativeScheme()));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create(''));
 
         $this->assertFalse($qrBill->isValid());
     }

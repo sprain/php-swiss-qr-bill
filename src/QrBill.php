@@ -8,6 +8,8 @@ use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
+use Sprain\SwissQrBill\DataGroup\Element\EmptyAdditionalInformation;
+use Sprain\SwissQrBill\DataGroup\Element\EmptyAddress;
 use Sprain\SwissQrBill\DataGroup\Element\Header;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
@@ -215,11 +217,11 @@ class QrBill implements SelfValidatableInterface
             $this->getHeader(),
             $this->getCreditorInformation(),
             $this->getCreditor(),
-            new StructuredAddress(), # Placeholder for ultimateCreditor, which is currently not yet allowed to be used by the implementation guidelines
+            new EmptyAddress(), # Placeholder for ultimateCreditor, which is currently not yet allowed to be used by the implementation guidelines
             $this->getPaymentAmountInformation(),
-            $this->getUltimateDebtor() ?: new StructuredAddress(),
+            $this->getUltimateDebtor() ?: new EmptyAddress(),
             $this->getPaymentReference(),
-            $this->getAdditionalInformation() ?: new AdditionalInformation(),
+            $this->getAdditionalInformation() ?: new EmptyAdditionalInformation(),
             $this->getAlternativeSchemes()
         ];
 
