@@ -46,7 +46,8 @@ class QrBill implements SelfValidatableInterface
     private array $alternativeSchemes;
     private string $errorCorrectionLevel;
 
-    private function __construct(Header $header) {
+    private function __construct(Header $header)
+    {
         $this->header = $header;
         $this->creditorInformation = null;
         $this->creditor = null;
