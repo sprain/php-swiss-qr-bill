@@ -149,7 +149,7 @@ trait TestQrBillCreatorTrait
 
     public function createQrBill(array $elements)
     {
-        $qrBill = new QrBill();
+        $qrBill = QrBill::create();
 
         foreach ($elements as $element) {
             $this->$element($qrBill);
