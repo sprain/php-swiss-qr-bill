@@ -1,8 +1,6 @@
 language: php
 
 php:
-  - 7.2
-  - 7.3
   - 7.4
 
 env:
@@ -14,12 +12,12 @@ jobs:
   include:
     - stage: "Integrate"
       name: "Coding standard"
-      php: 7.3
+      php: 7.4
       env:
         - PREFER_LOWEST=""
       script: vendor/bin/php-cs-fixer --no-interaction --dry-run --diff -v fix src/
     - name: "Static analysis"
-      php: 7.3
+      php: 7.4
       env:
         - PREFER_LOWEST=""
       script: vendor/bin/phpstan analyse
