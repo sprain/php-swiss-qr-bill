@@ -70,7 +70,7 @@ class QrBill implements SelfValidatableInterface
         return new self($header);
     }
 
-    public function getHeader(): ?Header
+    public function getHeader(): Header
     {
         return $this->header;
     }
