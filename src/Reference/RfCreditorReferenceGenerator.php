@@ -14,8 +14,7 @@ class RfCreditorReferenceGenerator implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    /** @var string */
-    protected $reference;
+    private string $reference;
 
     public static function generate(string $reference) : string
     {
