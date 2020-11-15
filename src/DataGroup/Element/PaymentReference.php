@@ -115,12 +115,10 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
 
     public function getGroupSequence()
     {
-        $groups = [
+        return [
             'default',
             $this->getType()
         ];
-
-        return $groups;
     }
 
     private function handleWhiteSpaceInReference(): void
