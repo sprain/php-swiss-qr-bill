@@ -273,17 +273,17 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         );
     }
 
-    private function setX(float $x) : void
+    private function setX(float $x): void
     {
         $this->fpdf->SetX($x + $this->offsetX);
     }
 
-    private function setY(float $y) : void
+    private function setY(float $y): void
     {
         $this->fpdf->SetY($y + $this->offsetY);
     }
 
-    private function SetXY(float $x, float $y) : void
+    private function SetXY(float $x, float $y): void
     {
         $this->fpdf->SetXY($x + $this->offsetX, $y + $this->offsetY);
     }

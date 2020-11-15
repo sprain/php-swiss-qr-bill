@@ -305,12 +305,12 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         );
     }
 
-    private function setX(int $x) : void
+    private function setX(int $x): void
     {
         $this->tcPdf->SetX($x+$this->offsetX);
     }
 
-    private function setY(int $y) : void
+    private function setY(int $y): void
     {
         $this->tcPdf->SetY($y+$this->offsetY);
     }
@@ -321,7 +321,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         int $h = 0,
         int $nextLineAlign = 0,
         string $textAlign = self::ALIGN_LEFT
-    ) : void {
+    ): void {
         $this->tcPdf->Cell($w, $h, $text, self::BORDER, $nextLineAlign, $textAlign);
     }
 
@@ -331,11 +331,11 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         int $h = 0,
         int $nextLineAlign = 0,
         string $textAlign = self::ALIGN_LEFT
-    ) : void {
+    ): void {
         $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, $textAlign, false, $nextLineAlign);
     }
 
-    private function printLine(int $x1, int $y1, int $x2, int $y2) : void
+    private function printLine(int $x1, int $y1, int $x2, int $y2): void
     {
         $this->tcPdf->Line($x1+$this->offsetX, $y1+$this->offsetY, $x2+$this->offsetX, $y2+$this->offsetY);
     }
