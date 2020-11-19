@@ -10,7 +10,7 @@ class PaymentReferenceTest extends TestCase
     /**
      * @dataProvider qrReferenceProvider
      */
-    public function testQrReference($numberOfViolations, $value)
+    public function testQrReference(int $numberOfViolations, ?string $value): void
     {
         $paymentReference = PaymentReference::create(
             PaymentReference::TYPE_QR,
@@ -20,7 +20,7 @@ class PaymentReferenceTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function qrReferenceProvider()
+    public function qrReferenceProvider(): array
     {
         return [
             [0, '012345678901234567890123456'],
@@ -37,7 +37,7 @@ class PaymentReferenceTest extends TestCase
     /**
      * @dataProvider scorReferenceProvider
      */
-    public function testScorReference($numberOfViolations, $value)
+    public function testScorReference(int $numberOfViolations, ?string $value): void
     {
         $paymentReference = PaymentReference::create(
             PaymentReference::TYPE_SCOR,
@@ -47,7 +47,7 @@ class PaymentReferenceTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function scorReferenceProvider()
+    public function scorReferenceProvider(): array
     {
         return [
             [0, 'RF18539007547034'],
@@ -64,7 +64,7 @@ class PaymentReferenceTest extends TestCase
     /**
      * @dataProvider nonReferenceProvider
      */
-    public function testNonReference($numberOfViolations, $value)
+    public function testNonReference(int $numberOfViolations, ?string $value): void
     {
         $paymentReference = PaymentReference::create(
             PaymentReference::TYPE_NON,
@@ -87,7 +87,7 @@ class PaymentReferenceTest extends TestCase
     /**
      * @dataProvider formattedReferenceProvider
      */
-    public function testFormattedReference($type, $reference, $formattedReference)
+    public function testFormattedReference(string $type, ?string  $reference, ?string  $formattedReference): void
     {
         $paymentReference = PaymentReference::create(
             $type,
@@ -97,7 +97,7 @@ class PaymentReferenceTest extends TestCase
         $this->assertSame($formattedReference, $paymentReference->getFormattedReference());
     }
 
-    public function formattedReferenceProvider()
+    public function formattedReferenceProvider(): array
     {
         return [
             [PaymentReference::TYPE_QR, '012345678901234567890123456', '01 23456 78901 23456 78901 23456'],
@@ -110,7 +110,7 @@ class PaymentReferenceTest extends TestCase
         ];
     }
 
-    public function testQrCodeData()
+    public function testQrCodeData(): void
     {
         $paymentReference = PaymentReference::create(
             PaymentReference::TYPE_QR,

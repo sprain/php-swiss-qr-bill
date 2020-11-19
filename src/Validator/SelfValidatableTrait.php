@@ -8,8 +8,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 trait SelfValidatableTrait
 {
-    /** @var ValidatorInterface */
-    private $validator;
+    private ?ValidatorInterface $validator = null;
 
     public function getViolations(): ConstraintViolationListInterface
     {

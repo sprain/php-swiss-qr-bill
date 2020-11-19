@@ -11,7 +11,7 @@ class QrCodeTest extends TestCase
     /**
      * @dataProvider supportedExtensionsProvider
      */
-    public function testSupportedFileExtensions($extension)
+    public function testSupportedFileExtensions(string $extension): void
     {
         $qrCode = new QrCode('This is a test code');
         $qrCode->setLogoHeight(10);
@@ -23,11 +23,12 @@ class QrCodeTest extends TestCase
             return;
         }
 
-        $this->assertNull($qrCode->writeFile($testfile));
+        $qrCode->writeFile($testfile);
+        $this->assertTrue(file_exists($testfile));
         unlink($testfile);
     }
 
-    public function supportedExtensionsProvider()
+    public function supportedExtensionsProvider(): array
     {
         return [
             ['svg'],
@@ -38,15 +39,15 @@ class QrCodeTest extends TestCase
     /**
      * @dataProvider unsupportedExtensionsProvider
      */
-    public function testUnsupportedFileExtensions($extension)
+    public function testUnsupportedFileExtensions(?string $extension): void
     {
         $this->expectException(UnsupportedFileExtensionException::class);
 
         $qrCode = new QrCode('This is a test code');
-        $this->assertNull($qrCode->writeFile(__DIR__ . '/../TestData/testfile.' . $extension));
+        $qrCode->writeFile(__DIR__ . '/../TestData/testfile.' . $extension);
     }
 
-    public function unsupportedExtensionsProvider()
+    public function unsupportedExtensionsProvider(): array
     {
         return [
             ['eps'],

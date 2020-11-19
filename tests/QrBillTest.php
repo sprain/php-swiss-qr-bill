@@ -52,18 +52,6 @@ class QrBillTest extends TestCase
         );
     }
 
-    public function testHeaderIsRequired()
-    {
-        $qrBill = $this->createQrBill([
-            'creditorInformationQrIban',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceQr'
-        ]);
-
-        $this->assertSame(1, $qrBill->getViolations()->count());
-    }
-
     public function testHeaderMustBeValid()
     {
         $qrBill = $this->createQrBill([
@@ -227,7 +215,7 @@ class QrBillTest extends TestCase
         ]);
 
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme((new AlternativeScheme()));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create(''));
 
         $this->assertFalse($qrBill->isValid());
     }

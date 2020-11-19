@@ -33,10 +33,6 @@ class ValidCreditorInformationPaymentReferenceCombinationValidator extends Const
             return;
         }
 
-        if (null === $creditorInformation->getIban() || null === $paymentReference->getType()) {
-            return;
-        }
-
         if (self::QR_IBAN_IS_ALLOWED[$paymentReference->getType()] !== $creditorInformation->containsQrIban()) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ referenceType }}', $paymentReference->getType())

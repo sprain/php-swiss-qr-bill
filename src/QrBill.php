@@ -8,10 +8,11 @@ use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
 use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
+use Sprain\SwissQrBill\DataGroup\Element\EmptyAdditionalInformation;
+use Sprain\SwissQrBill\DataGroup\Element\EmptyAddress;
 use Sprain\SwissQrBill\DataGroup\Element\Header;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
-use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -25,41 +26,38 @@ class QrBill implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    const ERROR_CORRECTION_LEVEL_HIGH = ErrorCorrectionLevel::HIGH;
-    const ERROR_CORRECTION_LEVEL_MEDIUM = ErrorCorrectionLevel::MEDIUM;
-    const ERROR_CORRECTION_LEVEL_LOW = ErrorCorrectionLevel::LOW;
+    public const ERROR_CORRECTION_LEVEL_HIGH = ErrorCorrectionLevel::HIGH;
+    public const ERROR_CORRECTION_LEVEL_MEDIUM = ErrorCorrectionLevel::MEDIUM;
+    public const ERROR_CORRECTION_LEVEL_LOW = ErrorCorrectionLevel::LOW;
 
     private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.optimized.png';
 
     private const PX_QR_CODE = 543;    // recommended 46x46 mm in px @ 300dpi – in pixel based outputs, the final image size may be slightly different, depending on the qr code contents
     private const PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
 
-    /** @var Header */
-    private $header;
-
-    /** @var CreditorInformation */
-    private $creditorInformation;
-
-    /** @var AddressInterface*/
-    private $creditor;
-
-    /** @var PaymentAmountInformation */
-    private $paymentAmountInformation;
-
-    /** @var AddressInterface*/
-    private $ultimateDebtor;
-
-    /** @var PaymentReference */
-    private $paymentReference;
-
-    /** @var AdditionalInformation */
-    private $additionalInformation;
-
+    private Header $header;
+    private ?CreditorInformation $creditorInformation;
+    private ?AddressInterface $creditor;
+    private ?PaymentAmountInformation $paymentAmountInformation;
+    private ?AddressInterface $ultimateDebtor;
+    private ?PaymentReference $paymentReference;
+    private ?AdditionalInformation $additionalInformation;
     /** @var AlternativeScheme[] */
-    private $alternativeSchemes = [];
+    private array $alternativeSchemes;
+    private string $errorCorrectionLevel;
 
-    /** @var string  */
-    private $errorCorrectionLevel = self::ERROR_CORRECTION_LEVEL_MEDIUM;
+    private function __construct(Header $header)
+    {
+        $this->header = $header;
+        $this->creditorInformation = null;
+        $this->creditor = null;
+        $this->paymentAmountInformation = null;
+        $this->ultimateDebtor = null;
+        $this->paymentReference = null;
+        $this->additionalInformation = null;
+        $this->alternativeSchemes = [];
+        $this->errorCorrectionLevel = self::ERROR_CORRECTION_LEVEL_MEDIUM;
+    }
 
     public static function create(): self
     {
@@ -69,13 +67,10 @@ class QrBill implements SelfValidatableInterface
             Header::CODING_LATIN
         );
 
-        $qrBill = new self();
-        $qrBill->header = $header;
-
-        return $qrBill;
+        return new self($header);
     }
 
-    public function getHeader(): ?Header
+    public function getHeader(): Header
     {
         return $this->header;
     }
@@ -188,6 +183,9 @@ class QrBill implements SelfValidatableInterface
         return $this;
     }
 
+    /**
+     * @throws InvalidQrBillDataException
+     */
     public function getQrCode(): QrCode
     {
         if (!$this->isValid()) {
@@ -215,11 +213,11 @@ class QrBill implements SelfValidatableInterface
             $this->getHeader(),
             $this->getCreditorInformation(),
             $this->getCreditor(),
-            new StructuredAddress(), # Placeholder for ultimateCreditor, which is currently not yet allowed to be used by the implementation guidelines
+            new EmptyAddress(), # Placeholder for ultimateCreditor, which is currently not yet allowed to be used by the implementation guidelines
             $this->getPaymentAmountInformation(),
-            $this->getUltimateDebtor() ?: new StructuredAddress(),
+            $this->getUltimateDebtor() ?: new EmptyAddress(),
             $this->getPaymentReference(),
-            $this->getAdditionalInformation() ?: new AdditionalInformation(),
+            $this->getAdditionalInformation() ?: new EmptyAdditionalInformation(),
             $this->getAlternativeSchemes()
         ];
 

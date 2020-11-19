@@ -12,33 +12,33 @@ class AdditionalInformation implements QrCodeableInterface, SelfValidatableInter
 {
     use SelfValidatableTrait;
 
-    const TRAILER_EPD = 'EPD';
+    public const TRAILER_EPD = 'EPD';
 
     /**
      * Unstructured information can be used to indicate the payment purpose
      * or for additional textual information about payments with a structured reference.
-     *
-     * @var string
      */
-    private $message;
+    private ?string $message;
 
     /**
      * Bill information contains coded information for automated booking of the payment.
      * The data is not forwarded with the payment.
-     *
-     * @var string
      */
-    private $billInformation;
+    private ?string $billInformation;
+
+    private function __construct(
+        ?string $message,
+        ?string $billInformation
+    ) {
+        $this->message = $message;
+        $this->billInformation = $billInformation;
+    }
 
     public static function create(
         ?string $message,
         ?string $billInformation = null
     ): self {
-        $additionalInformation = new self();
-        $additionalInformation->message = $message;
-        $additionalInformation->billInformation = $billInformation;
-
-        return $additionalInformation;
+        return new self($message, $billInformation);
     }
 
     public function getMessage(): ?string

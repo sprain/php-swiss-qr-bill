@@ -13,39 +13,43 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
 {
     use SelfValidatableTrait;
 
-    const ADDRESS_TYPE = 'K';
+    public const ADDRESS_TYPE = 'K';
 
     /**
      * Name or company
-     *
-     * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * Address line 1
      *
      * Street and building number or P.O. Box
-     *
-     * @var string
      */
-    private $addressLine1;
+    private ?string $addressLine1;
 
     /**
      * Address line 2
      *
      * Postal code and town
-     *
-     * @var string
      */
-    private $addressLine2;
+    private string $addressLine2;
 
     /**
      * Country (ISO 3166-1 alpha-2)
-     *
-     * @var string
      */
-    private $country;
+    private string $country;
+
+    private function __construct(
+        string $name,
+        ?string $addressLine1,
+        string $addressLine2,
+        string $country
+    ) {
+        $this->name = $name;
+        $this->addressLine1 = $addressLine1;
+        $this->addressLine2 = $addressLine2;
+        $this->country = strtoupper($country);
+    }
 
     public static function create(
         string $name,
@@ -53,16 +57,15 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         string $addressLine2,
         string $country
     ): self {
-        $combinedAddress = new self();
-        $combinedAddress->name = $name;
-        $combinedAddress->addressLine1 = $addressLine1;
-        $combinedAddress->addressLine2 = $addressLine2;
-        $combinedAddress->country = strtoupper($country);
-
-        return $combinedAddress;
+        return new self(
+            $name,
+            $addressLine1,
+            $addressLine2,
+            $country
+        );
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -72,12 +75,12 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         return $this->addressLine1;
     }
 
-    public function getAddressLine2(): ?string
+    public function getAddressLine2(): string
     {
         return $this->addressLine2;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): string
     {
         return $this->country;
     }

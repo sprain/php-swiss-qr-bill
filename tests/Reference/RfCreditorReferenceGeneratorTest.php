@@ -11,7 +11,7 @@ class RfCreditorReferenceGeneratorTest extends TestCase
     /**
      * @dataProvider rfCreditorReferenceProvider
      */
-    public function testMakesResultsViaConstructor($input)
+    public function testMakesResultsViaConstructor(string $input): void
     {
         $generator = new RfCreditorReferenceGenerator($input);
 
@@ -26,7 +26,7 @@ class RfCreditorReferenceGeneratorTest extends TestCase
     /**
      * @dataProvider rfCreditorReferenceProvider
      */
-    public function testMakesResultsViaFacade($input)
+    public function testMakesResultsViaFacade(string $input): void
     {
         $output = RfCreditorReferenceGenerator::generate($input);
 
@@ -36,7 +36,7 @@ class RfCreditorReferenceGeneratorTest extends TestCase
         );
     }
 
-    public function rfCreditorReferenceProvider()
+    public function rfCreditorReferenceProvider(): array
     {
         return [
             ['1'],
@@ -49,14 +49,14 @@ class RfCreditorReferenceGeneratorTest extends TestCase
     /**
      * @dataProvider invalidReferenceProvider
      */
-    public function testInvalidReference($input)
+    public function testInvalidReference(string $input): void
     {
         $generator = new RfCreditorReferenceGenerator($input);
 
         $this->assertGreaterThan(0, $generator->getViolations()->count());
     }
 
-    public function invalidReferenceProvider()
+    public function invalidReferenceProvider(): array
     {
         return [
             ['aBcD eFgH iJkL mNoP qR12 34'], // to long

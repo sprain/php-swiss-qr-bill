@@ -17,7 +17,7 @@ class FpdfOutputTest extends TestCase
     /**
      * @dataProvider validQrBillsProvider
      */
-    public function testValidQrBills(string $name, QrBill $qrBill)
+    public function testValidQrBills(string $name, QrBill $qrBill): void
     {
         $variations = [
             [
@@ -55,7 +55,7 @@ class FpdfOutputTest extends TestCase
         }
     }
 
-    public function testItThrowsSvgNotSupportedException()
+    public function testItThrowsSvgNotSupportedException(): void
     {
         $this->expectException(InvalidFpdfImageFormat::class);
 

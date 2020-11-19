@@ -33,21 +33,17 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
     /**
      * @dataProvider emptyQrBillMocksProvider
      */
-    public function testEmptyQrBillValuesAreValid($qrBillMock)
+    public function testEmptyQrBillValuesAreValid(QrBill $qrBillMock)
     {
         $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination());
 
         $this->assertNoViolation();
     }
 
-    public function emptyQrBillMocksProvider()
+    public function emptyQrBillMocksProvider(): array
     {
         return [
             [$this->getQrBillMock()],
-            [$this->getQrBillMock(
-                $this->getCreditorInformationMock(),
-                $this->getPaymentReferenceMock()
-            )],
             [$this->getQrBillMock(
                 $this->getCreditorInformationMock(),
                 null
@@ -55,29 +51,21 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
             [$this->getQrBillMock(
                 null,
                 $this->getPaymentReferenceMock()
-            )],
-            [$this->getQrBillMock(
-                $this->getCreditorInformationMock('any-iban'),
-                $this->getPaymentReferenceMock()
-            )],
-            [$this->getQrBillMock(
-                $this->getCreditorInformationMock(),
-                $this->getPaymentReferenceMock(PaymentReference::TYPE_QR)
-            )],
+            )]
         ];
     }
 
     /**
      * @dataProvider validCombinationsQrBillMocksProvider
      */
-    public function testValidCombinations($qrBillMock)
+    public function testValidCombinations(QrBill $qrBillMock)
     {
         $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination());
 
         $this->assertNoViolation();
     }
 
-    public function validCombinationsQrBillMocksProvider()
+    public function validCombinationsQrBillMocksProvider(): array
     {
         return [
             [$this->getQrBillMock(
@@ -98,7 +86,7 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
     /**
      * @dataProvider invalidCombinationsQrBillMocksProvider
      */
-    public function testInvalidCombinations($qrBillMock)
+    public function testInvalidCombinations(QrBill $qrBillMock)
     {
         $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination([
             'message' => 'myMessage',
@@ -110,7 +98,7 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
             ->assertRaised();
     }
 
-    public function invalidCombinationsQrBillMocksProvider()
+    public function invalidCombinationsQrBillMocksProvider(): array
     {
         return [
             [$this->getQrBillMock(
@@ -128,7 +116,7 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
         ];
     }
 
-    public function getQrBillMock($creditorInformation = null, $paymentReference = null)
+    public function getQrBillMock(?CreditorInformation $creditorInformation = null, ?PaymentReference $paymentReference = null)
     {
         $qrBill = $this->createMock(QrBill::class);
 
@@ -141,7 +129,7 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
         return $qrBill;
     }
 
-    public function getCreditorInformationMock($iban = null, $containsQrIban = false)
+    public function getCreditorInformationMock(string $iban = '', bool $containsQrIban = false)
     {
         $creditorInformation = $this->createMock(CreditorInformation::class);
 
@@ -154,7 +142,7 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
         return $creditorInformation;
     }
 
-    public function getPaymentReferenceMock($paymentReferenceType = null)
+    public function getPaymentReferenceMock(string $paymentReferenceType = '')
     {
         $paymentReference = $this->createMock(PaymentReference::class);
 

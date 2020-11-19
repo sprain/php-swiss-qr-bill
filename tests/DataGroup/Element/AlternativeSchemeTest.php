@@ -10,14 +10,14 @@ class AlternativeSchemeTest extends TestCase
     /**
      * @dataProvider parameterProvider
      */
-    public function testParameter($numberOfValidations, $value)
+    public function testParameter(int $numberOfValidations, string $value): void
     {
         $alternativeScheme = AlternativeScheme::create($value);
 
         $this->assertSame($numberOfValidations, $alternativeScheme->getViolations()->count());
     }
 
-    public function parameterProvider()
+    public function parameterProvider(): array
     {
         return [
             [0, '1'],

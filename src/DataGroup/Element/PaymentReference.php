@@ -15,43 +15,35 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
 {
     use SelfValidatableTrait;
 
-    const TYPE_QR = 'QRR';
-    const TYPE_SCOR = 'SCOR';
-    const TYPE_NON = 'NON';
+    public const TYPE_QR = 'QRR';
+    public const TYPE_SCOR = 'SCOR';
+    public const TYPE_NON = 'NON';
 
     /**
      * Reference type
-     *
-     * @var string
      */
-    private $type;
+    private string $type;
 
     /**
      * Structured reference number
      * Either a QR reference or a Creditor Reference (ISO 11649)
-     *
-     * @var string|null
      */
-    private $reference;
+    private ?string $reference;
+
+    private function __construct(string $type, ?string $reference)
+    {
+        $this->type = $type;
+        $this->reference = $reference;
+
+        $this->handleWhiteSpaceInReference();
+    }
 
     public static function create(string $type, ?string $reference = null): self
     {
-        $paymentReference = new self();
-        $paymentReference->type = $type;
-        $paymentReference->reference = $reference;
-
-        if (null !== $paymentReference->reference) {
-            $paymentReference->reference = StringModifier::stripWhitespace($paymentReference->reference);
-        }
-
-        if ('' === ($paymentReference->reference)) {
-            $paymentReference->reference = null;
-        }
-
-        return $paymentReference;
+        return new self($type, $reference);
     }
 
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -123,11 +115,20 @@ class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInte
 
     public function getGroupSequence()
     {
-        $groups = [
+        return [
             'default',
             $this->getType()
         ];
+    }
 
-        return $groups;
+    private function handleWhiteSpaceInReference(): void
+    {
+        if (null !== $this->reference) {
+            $this->reference = StringModifier::stripWhitespace($this->reference);
+        }
+
+        if ('' === ($this->reference)) {
+            $this->reference = null;
+        }
     }
 }

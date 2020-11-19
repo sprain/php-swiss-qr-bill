@@ -8,12 +8,12 @@ use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 
 class QrCode extends BaseQrCode implements QrCodeInterface
 {
-    const FILE_FORMAT_PNG = 'png';
-    const FILE_FORMAT_SVG = 'svg';
+    public const FILE_FORMAT_PNG = 'png';
+    public const FILE_FORMAT_SVG = 'svg';
 
     // A file extension is supported if the underlying library supports it,
     // including the possibility to add a logo in the center of the qr code.
-    const SUPPORTED_FILE_FORMATS = [
+    private const SUPPORTED_FILE_FORMATS = [
         self::FILE_FORMAT_PNG,
         self::FILE_FORMAT_SVG
     ];

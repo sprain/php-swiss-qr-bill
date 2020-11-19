@@ -8,7 +8,6 @@ use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
 use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
-use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
@@ -16,7 +15,7 @@ use TCPDF;
 
 final class TcPdfOutput extends AbstractOutput implements OutputInterface
 {
-    // TCPDF constants
+    // TCPDF
     private const BORDER = 0;
     private const ALIGN_BELOW = 2;
     private const ALIGN_LEFT = 'L';
@@ -24,20 +23,20 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private const ALIGN_CENTER = 'C';
     private const FONT = 'Helvetica';
 
-    // Ratio constants
+    // Ratio
     private const LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
     private const RIGHT_CELL_HEIGHT_RATIO_COMMON = 1.1;
     private const LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
     private const RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
 
-    // Location constants
+    // Location
     private const CURRENCY_AMOUNT_Y = 259;
     private const LEFT_PART_X = 4;
     private const RIGHT_PART_X = 66;
     private const RIGHT_PART_X_INFO = 117;
     private const TITLE_Y = 195;
 
-    // Font constants
+    // Font
     private const FONT_SIZE_MAIN_TITLE = 11;
     private const FONT_SIZE_TITLE_RECEIPT = 6;
     private const FONT_SIZE_RECEIPT = 8;
@@ -45,24 +44,13 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private const FONT_SIZE_PAYMENT_PART = 10;
     private const FONT_SIZE_FURTHER_INFORMATION = 7;
 
-    // Line spacing constants
+    // Line spacing
     private const LINE_SPACING_RECEIPT = 3.5;
     private const LINE_SPACING_PAYMENT_PART = 4.8;
 
-    /** @var string */
-    protected $language;
-
-    /** @var QrBill */
-    protected $qrBill;
-
-    /* @var TCPDF */
-    private $tcPdf;
-
-    /* @var float */
-    private $offsetX;
-
-    /* @var float */
-    private $offsetY;
+    private TCPDF $tcPdf;
+    private float $offsetX;
+    private float $offsetY;
 
     public function __construct(
         QrBill $qrBill,
@@ -317,12 +305,12 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         );
     }
 
-    private function setX(int $x) : void
+    private function setX(int $x): void
     {
         $this->tcPdf->SetX($x+$this->offsetX);
     }
 
-    private function setY(int $y) : void
+    private function setY(int $y): void
     {
         $this->tcPdf->SetY($y+$this->offsetY);
     }
@@ -333,7 +321,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         int $h = 0,
         int $nextLineAlign = 0,
         string $textAlign = self::ALIGN_LEFT
-    ) : void {
+    ): void {
         $this->tcPdf->Cell($w, $h, $text, self::BORDER, $nextLineAlign, $textAlign);
     }
 
@@ -343,11 +331,11 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         int $h = 0,
         int $nextLineAlign = 0,
         string $textAlign = self::ALIGN_LEFT
-    ) : void {
+    ): void {
         $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, $textAlign, false, $nextLineAlign);
     }
 
-    private function printLine(int $x1, int $y1, int $x2, int $y2) : void
+    private function printLine(int $x1, int $y1, int $x2, int $y2): void
     {
         $this->tcPdf->Line($x1+$this->offsetX, $y1+$this->offsetY, $x2+$this->offsetX, $y2+$this->offsetY);
     }

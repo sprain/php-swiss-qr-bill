@@ -15,7 +15,7 @@ class TcPdfOutputTest extends TestCase
     /**
      * @dataProvider validQrBillsProvider
      */
-    public function testValidQrBills(string $name, QrBill $qrBill)
+    public function testValidQrBills(string $name, QrBill $qrBill): void
     {
         $variations = [
             [
