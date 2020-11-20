@@ -26,12 +26,7 @@ class QrBill implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    public const ERROR_CORRECTION_LEVEL_HIGH = ErrorCorrectionLevel::HIGH;
-    public const ERROR_CORRECTION_LEVEL_MEDIUM = ErrorCorrectionLevel::MEDIUM;
-    public const ERROR_CORRECTION_LEVEL_LOW = ErrorCorrectionLevel::LOW;
-
     private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.optimized.png';
-
     private const PX_QR_CODE = 543;    // recommended 46x46 mm in px @ 300dpi – in pixel based outputs, the final image size may be slightly different, depending on the qr code contents
     private const PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
 
@@ -44,7 +39,6 @@ class QrBill implements SelfValidatableInterface
     private ?AdditionalInformation $additionalInformation;
     /** @var AlternativeScheme[] */
     private array $alternativeSchemes;
-    private string $errorCorrectionLevel;
 
     private function __construct(Header $header)
     {
@@ -56,7 +50,6 @@ class QrBill implements SelfValidatableInterface
         $this->paymentReference = null;
         $this->additionalInformation = null;
         $this->alternativeSchemes = [];
-        $this->errorCorrectionLevel = self::ERROR_CORRECTION_LEVEL_MEDIUM;
     }
 
     public static function create(): self
@@ -174,16 +167,6 @@ class QrBill implements SelfValidatableInterface
     }
 
     /**
-     * @deprecated Will be removed in v3. The specs require the error correction level to be fixed at medium.
-     */
-    public function setErrorCorrectionLevel(string $errorCorrectionLevel): self
-    {
-        $this->errorCorrectionLevel = $errorCorrectionLevel;
-
-        return $this;
-    }
-
-    /**
      * @throws InvalidQrBillDataException
      */
     public function getQrCode(): QrCode
@@ -202,7 +185,7 @@ class QrBill implements SelfValidatableInterface
         $qrCode->setLogoPath(self::SWISS_CROSS_LOGO_FILE);
         $qrCode->setRoundBlockSize(true, \Endroid\QrCode\QrCode::ROUND_BLOCK_SIZE_MODE_ENLARGE);
         $qrCode->setMargin(0);
-        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel($this->errorCorrectionLevel));
+        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM));
 
         return $qrCode;
     }
