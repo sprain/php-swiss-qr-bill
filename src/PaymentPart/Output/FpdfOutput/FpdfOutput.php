@@ -206,8 +206,8 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     {
         if (!$this->isPrintable()) {
             $this->fpdf->SetLineWidth(0.1);
-            $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
-            $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
+            $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 - $this->offsetX, 193 + $this->offsetY);
+            $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 - $this->offsetY);
             $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
             $this->SetY(189.6);
             $this->fpdf->MultiCell(0, 0, utf8_decode(Translation::get('separate', $this->language)), self::BORDER, self::ALIGN_CENTER);
