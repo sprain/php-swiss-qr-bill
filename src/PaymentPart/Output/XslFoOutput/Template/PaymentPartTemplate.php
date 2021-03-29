@@ -31,7 +31,7 @@ class PaymentPartTemplate
                         </fo:block>
                     </fo:block-container>
                     
-                    <fo:block-container height="56mm">
+                    <fo:block-container height="56mm" keep-together="auto">
                         <fo:block>
                             {{ information-content-receipt }}
                         </fo:block>
@@ -100,7 +100,7 @@ class PaymentPartTemplate
                 
                 <!-- 3rd col: payment part info (right) -->
                 <fo:table-cell column-number="3">
-                    <fo:block-container height="85mm">
+                    <fo:block-container height="85mm" keep-together="auto">
                         <fo:block font-size="10pt" padding="3mm 5mm">
                             {{ information-content }}
                         </fo:block>
