@@ -2,6 +2,9 @@
 
 namespace Sprain\SwissQrBill\DataGroup;
 
+/**
+ * @internal
+ */
 interface AddressInterface
 {
     public function getName(): ?string;

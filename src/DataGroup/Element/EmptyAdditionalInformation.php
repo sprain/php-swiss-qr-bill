@@ -4,6 +4,9 @@ namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 
+/**
+ * @internal
+ */
 final class EmptyAdditionalInformation implements QrCodeableInterface
 {
     public const TRAILER_EPD = 'EPD';

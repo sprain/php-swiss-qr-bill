@@ -6,6 +6,9 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * @internal
+ */
 trait SelfValidatableTrait
 {
     private ?ValidatorInterface $validator = null;
