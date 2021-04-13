@@ -22,7 +22,7 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class QrBill implements SelfValidatableInterface
+final class QrBill implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 

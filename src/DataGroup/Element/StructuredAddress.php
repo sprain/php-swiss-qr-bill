@@ -9,7 +9,7 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class StructuredAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
+final class StructuredAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
     use SelfValidatableTrait;
 

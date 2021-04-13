@@ -6,7 +6,7 @@ use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
 use Sprain\SwissQrBill\Constraint\ValidCreditorReferenceValidator;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
+final class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
 {
     protected function createValidator()
     {

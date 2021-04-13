@@ -8,7 +8,7 @@ use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class QrPaymentReferenceGeneratorTest extends TestCase
+final class QrPaymentReferenceGeneratorTest extends TestCase
 {
     /** @var  ValidatorInterface */
     private $validator;

@@ -5,7 +5,7 @@ namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\Header;
 
-class HeaderTest extends TestCase
+final class HeaderTest extends TestCase
 {
     /**
      * @dataProvider qrTypeProvider

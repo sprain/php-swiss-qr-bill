@@ -8,7 +8,7 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class AlternativeScheme implements QrCodeableInterface, SelfValidatableInterface
+final class AlternativeScheme implements QrCodeableInterface, SelfValidatableInterface
 {
     use SelfValidatableTrait;
 

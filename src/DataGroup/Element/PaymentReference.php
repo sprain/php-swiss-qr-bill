@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInterface, SelfValidatableInterface
+final class PaymentReference implements GroupSequenceProviderInterface, QrCodeableInterface, SelfValidatableInterface
 {
     use SelfValidatableTrait;
 

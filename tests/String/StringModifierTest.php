@@ -5,7 +5,7 @@ namespace Sprain\Tests\SwissQrBill\String;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\String\StringModifier;
 
-class StringModifierTest extends TestCase
+final class StringModifierTest extends TestCase
 {
     /**
      * @dataProvider lineBreaksProvider

@@ -5,7 +5,7 @@ namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
 
-class AlternativeSchemeTest extends TestCase
+final class AlternativeSchemeTest extends TestCase
 {
     /**
      * @dataProvider parameterProvider

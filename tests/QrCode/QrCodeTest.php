@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 use Sprain\SwissQrBill\QrCode\QrCode;
 
-class QrCodeTest extends TestCase
+final class QrCodeTest extends TestCase
 {
     /**
      * @dataProvider supportedExtensionsProvider

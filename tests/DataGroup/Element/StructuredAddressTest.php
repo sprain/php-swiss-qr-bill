@@ -5,7 +5,7 @@ namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
 
-class StructuredAddressTest extends TestCase
+final class StructuredAddressTest extends TestCase
 {
     /**
      * @dataProvider nameProvider
