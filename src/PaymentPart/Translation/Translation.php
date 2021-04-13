@@ -22,7 +22,7 @@ final class Translation
         ],
 
         'fr' => [
-            'paymentPart' => 'Section de paiement',
+            'paymentPart' => 'Section paiement',
             'creditor' => 'Compte / Payable à',
             'reference' => 'Référence',
             'additionalInformation' => 'Informations supplémentaires',
@@ -38,7 +38,7 @@ final class Translation
         ],
 
         'it' => [
-            'paymentPart' => 'Sezione di pagamento',
+            'paymentPart' => 'Sezione pagamento',
             'creditor' => 'Conto / Pagabile a',
             'reference' => 'Riferimento',
             'additionalInformation' => 'Informazioni supplementari',
