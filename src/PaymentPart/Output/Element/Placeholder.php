@@ -2,6 +2,9 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\Element;
 
+/**
+ * @internal
+ */
 final class Placeholder implements OutputElementInterface
 {
     public const FILE_TYPE_SVG = 'svg';

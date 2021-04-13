@@ -2,6 +2,9 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\Element;
 
+/**
+ * @internal
+ */
 final class Text implements OutputElementInterface
 {
     private string $text;
