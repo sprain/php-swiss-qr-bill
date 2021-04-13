@@ -2,6 +2,7 @@
 
 namespace Sprain\Tests\SwissQrBill\Constraints;
 
+use DG\BypassFinals;
 use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombination;
 use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombinationValidator;
 use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
@@ -9,7 +10,7 @@ use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\QrBill;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
-class ValidCreditorInformationPaymentReferenceCombinationTest extends ConstraintValidatorTestCase
+final class ValidCreditorInformationPaymentReferenceCombinationTest extends ConstraintValidatorTestCase
 {
     protected function createValidator()
     {
@@ -42,6 +43,8 @@ class ValidCreditorInformationPaymentReferenceCombinationTest extends Constraint
 
     public function emptyQrBillMocksProvider(): array
     {
+        BypassFinals::enable();
+
         return [
             [$this->getQrBillMock()],
             [$this->getQrBillMock(

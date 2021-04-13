@@ -2,6 +2,6 @@
 
 namespace Sprain\SwissQrBill\Exception;
 
-class InvalidFpdfImageFormat extends \Exception
+final class InvalidFpdfImageFormat extends \Exception
 {
 }

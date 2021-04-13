@@ -10,7 +10,7 @@ use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
 
-class FpdfOutputTest extends TestCase
+final class FpdfOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 

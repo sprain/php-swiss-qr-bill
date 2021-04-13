@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class ValidCreditorInformationPaymentReferenceCombinationValidator extends ConstraintValidator
+final class ValidCreditorInformationPaymentReferenceCombinationValidator extends ConstraintValidator
 {
     private const QR_IBAN_IS_ALLOWED = [
         PaymentReference::TYPE_QR   => true,

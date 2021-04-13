@@ -4,7 +4,7 @@ namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 
-class EmptyAddress implements QrCodeableInterface
+final class EmptyAddress implements QrCodeableInterface
 {
     public const ADDRESS_TYPE = '';
 

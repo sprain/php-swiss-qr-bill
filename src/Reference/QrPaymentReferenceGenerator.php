@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class QrPaymentReferenceGenerator implements SelfValidatableInterface
+final class QrPaymentReferenceGenerator implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 

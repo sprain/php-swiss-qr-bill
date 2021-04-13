@@ -5,7 +5,7 @@ namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 
-class PaymentReferenceTest extends TestCase
+final class PaymentReferenceTest extends TestCase
 {
     /**
      * @dataProvider qrReferenceProvider

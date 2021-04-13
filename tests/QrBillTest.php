@@ -8,7 +8,7 @@ use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\QrBill;
 use Zxing\QrReader;
 
-class QrBillTest extends TestCase
+final class QrBillTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 

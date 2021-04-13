@@ -6,7 +6,7 @@ use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
-class TranslationTest extends TestCase
+final class TranslationTest extends TestCase
 {
     use ArraySubsetAsserts;
 

@@ -5,7 +5,7 @@ namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 
-class AdditionalInformationTest extends TestCase
+final class AdditionalInformationTest extends TestCase
 {
     /**
      * @dataProvider messageProvider

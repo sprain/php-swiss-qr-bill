@@ -6,7 +6,7 @@ use Sprain\SwissQrBill\Reference\RfCreditorReferenceGenerator;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\String\StringModifier;
 
-class RfCreditorReferenceGeneratorTest extends TestCase
+final class RfCreditorReferenceGeneratorTest extends TestCase
 {
     /**
      * @dataProvider rfCreditorReferenceProvider

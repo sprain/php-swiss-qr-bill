@@ -5,7 +5,7 @@ namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
 
-class CreditorInformationTest extends TestCase
+final class CreditorInformationTest extends TestCase
 {
     /**
      * @dataProvider ibanProvider

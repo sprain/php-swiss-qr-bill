@@ -9,7 +9,7 @@ require __DIR__ . '/../vendor/autoload.php';
 // - with known debtor
 // - with specified amount
 // - with human-readable additional information
-// - using your brandnew QR-IBAN
+// - using your QR-IBAN
 //
 // Likely the most common use-case in the business world.
 
