@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Sprain\SwissQrBill\DataGroup\Element;
+namespace Sprain\SwissQrBill\DataGroup\EmptyElement;
 
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 
