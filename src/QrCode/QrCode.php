@@ -6,9 +6,6 @@ use Endroid\QrCode\QrCode as BaseQrCode;
 use Endroid\QrCode\QrCodeInterface;
 use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 
-/**
- * @internal
- */
 final class QrCode extends BaseQrCode implements QrCodeInterface
 {
     public const FILE_FORMAT_PNG = 'png';
