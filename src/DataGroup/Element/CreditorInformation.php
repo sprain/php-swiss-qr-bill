@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,7 +20,7 @@ final class CreditorInformation implements QrCodeableInterface, SelfValidatableI
 
     private function __construct(string $iban)
     {
-        $this->iban = (string) preg_replace('/\s+/', '', $iban);
+        $this->iban = StringModifier::stripWhitespace($iban);
     }
 
     public static function create(string $iban): self
