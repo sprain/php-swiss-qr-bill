@@ -33,7 +33,7 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
     private ?string $buildingNumber;
 
     /**
-     * Postal code without county code
+     * Postal code without country code
      */
     private string $postalCode;
 
