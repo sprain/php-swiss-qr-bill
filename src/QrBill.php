@@ -31,25 +31,18 @@ final class QrBill implements SelfValidatableInterface
     private const PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
 
     private Header $header;
-    private ?CreditorInformation $creditorInformation;
-    private ?AddressInterface $creditor;
-    private ?PaymentAmountInformation $paymentAmountInformation;
-    private ?AddressInterface $ultimateDebtor;
-    private ?PaymentReference $paymentReference;
-    private ?AdditionalInformation $additionalInformation;
+    private ?CreditorInformation $creditorInformation = null;
+    private ?AddressInterface $creditor = null;
+    private ?PaymentAmountInformation $paymentAmountInformation = null;
+    private ?AddressInterface $ultimateDebtor = null;
+    private ?PaymentReference $paymentReference = null;
+    private ?AdditionalInformation $additionalInformation = null;
     /** @var AlternativeScheme[] */
-    private array $alternativeSchemes;
+    private array $alternativeSchemes = [];
 
     private function __construct(Header $header)
     {
         $this->header = $header;
-        $this->creditorInformation = null;
-        $this->creditor = null;
-        $this->paymentAmountInformation = null;
-        $this->ultimateDebtor = null;
-        $this->paymentReference = null;
-        $this->additionalInformation = null;
-        $this->alternativeSchemes = [];
     }
 
     public static function create(): self
