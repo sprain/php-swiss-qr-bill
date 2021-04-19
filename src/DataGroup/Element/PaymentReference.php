@@ -123,11 +123,13 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
 
     private function handleWhiteSpaceInReference(): void
     {
-        if (null !== $this->reference) {
-            $this->reference = StringModifier::stripWhitespace($this->reference);
+        if (null === $this->reference) {
+            return;
         }
 
-        if ('' === ($this->reference)) {
+        $this->reference = StringModifier::stripWhitespace($this->reference);
+
+        if ('' === $this->reference) {
             $this->reference = null;
         }
     }
