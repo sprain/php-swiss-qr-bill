@@ -8,59 +8,55 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class Header implements QrCodeableInterface, SelfValidatableInterface
+final class Header implements QrCodeableInterface, SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    const QRTYPE_SPC = 'SPC';
-    const VERSION_0200 = '0200';
-    const CODING_LATIN = 1;
+    public const QRTYPE_SPC = 'SPC';
+    public const VERSION_0200 = '0200';
+    public const CODING_LATIN = 1;
 
     /**
      * Unambiguous indicator for the Swiss QR code.
-     *
-     * @var string
      */
-    private $qrType;
+    private string $qrType;
 
     /**
      * Version of the specifications (Implementation Guidelines) in use on
      * the date on which the Swiss QR code was created.
      * The first two positions indicate the main version, the following the
      * two positions the sub-version ("0200" for version 2.0).
-     *
-     * @var string
      */
-    private $version;
+    private string $version;
 
     /**
      * Character set code
-     *
-     * @var int
      */
-    private $coding;
+    private int $coding;
+
+    private function __construct(string $qrType, string $version, int $coding)
+    {
+        $this->qrType = $qrType;
+        $this->version = $version;
+        $this->coding = $coding;
+    }
 
     public static function create(string $qrType, string $version, int $coding): self
     {
-        $header = new self();
-        $header->coding = $coding;
-        $header->qrType = $qrType;
-        $header->version = $version;
-
-        return $header;
+        return new self($qrType, $version, $coding);
     }
 
-    public function getQrType(): ?string
+    public function getQrType(): string
     {
         return $this->qrType;
     }
 
-    public function getVersion(): ?string
+    public function getVersion(): string
     {
         return $this->version;
     }
 
-    public function getCoding(): ?int
+    public function getCoding(): int
     {
         return $this->coding;
     }

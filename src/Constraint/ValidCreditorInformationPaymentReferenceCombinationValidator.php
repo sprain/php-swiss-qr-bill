@@ -8,7 +8,10 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class ValidCreditorInformationPaymentReferenceCombinationValidator extends ConstraintValidator
+/**
+ * @internal
+ */
+final class ValidCreditorInformationPaymentReferenceCombinationValidator extends ConstraintValidator
 {
     private const QR_IBAN_IS_ALLOWED = [
         PaymentReference::TYPE_QR   => true,
@@ -30,10 +33,6 @@ class ValidCreditorInformationPaymentReferenceCombinationValidator extends Const
         $paymentReference = $qrBill->getPaymentReference();
 
         if (null === $creditorInformation || null === $paymentReference) {
-            return;
-        }
-
-        if (null === $creditorInformation->getIban() || null === $paymentReference->getType()) {
             return;
         }
 

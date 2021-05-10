@@ -5,12 +5,12 @@ namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 
-class PaymentAmountInformationTest extends TestCase
+final class PaymentAmountInformationTest extends TestCase
 {
     /**
      * @dataProvider amountProvider
      */
-    public function testAmount($numberOfViolations, $value)
+    public function testAmount(int $numberOfViolations, ?float $value): void
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
             'CHF',
@@ -20,7 +20,7 @@ class PaymentAmountInformationTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentAmountInformation->getViolations()->count());
     }
 
-    public function amountProvider()
+    public function amountProvider(): array
     {
         return [
             [0, null],
@@ -37,7 +37,7 @@ class PaymentAmountInformationTest extends TestCase
     /**
      * @dataProvider currencyProvider
      */
-    public function testCurrency($numberOfViolations, $value)
+    public function testCurrency(int $numberOfViolations, string $value): void
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
             $value,
@@ -47,7 +47,7 @@ class PaymentAmountInformationTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentAmountInformation->getViolations()->count());
     }
 
-    public function currencyProvider()
+    public function currencyProvider(): array
     {
         return [
             [0, 'CHF'],
@@ -64,7 +64,7 @@ class PaymentAmountInformationTest extends TestCase
     /**
      * @dataProvider formattedAmountProvider
      */
-    public function testFormattedAmount($amount, $formattedAmount)
+    public function testFormattedAmount(float $amount, string $formattedAmount)
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
             'CHF',
@@ -74,7 +74,7 @@ class PaymentAmountInformationTest extends TestCase
         $this->assertSame($formattedAmount, $paymentAmountInformation->getFormattedAmount());
     }
 
-    public function formattedAmountProvider()
+    public function formattedAmountProvider(): array
     {
         return [
             [0, '0.00'],
@@ -86,7 +86,7 @@ class PaymentAmountInformationTest extends TestCase
         ];
     }
 
-    public function testQrCodeData()
+    public function testQrCodeData(): void
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
             'CHF',

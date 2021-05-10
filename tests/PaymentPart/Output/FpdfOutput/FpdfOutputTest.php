@@ -10,14 +10,14 @@ use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
 
-class FpdfOutputTest extends TestCase
+final class FpdfOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
     /**
      * @dataProvider validQrBillsProvider
      */
-    public function testValidQrBills(string $name, QrBill $qrBill)
+    public function testValidQrBills(string $name, QrBill $qrBill): void
     {
         $variations = [
             [
@@ -55,7 +55,7 @@ class FpdfOutputTest extends TestCase
         }
     }
 
-    public function testItThrowsSvgNotSupportedException()
+    public function testItThrowsSvgNotSupportedException(): void
     {
         $this->expectException(InvalidFpdfImageFormat::class);
 

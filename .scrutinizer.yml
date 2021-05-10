@@ -6,6 +6,8 @@ filter:
     - tests/*
 
 build:
+  environment:
+    php: 7.4.16
   nodes:
     analysis:
       tests:

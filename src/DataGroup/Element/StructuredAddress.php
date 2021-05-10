@@ -9,55 +9,59 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class StructuredAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
+final class StructuredAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
     use SelfValidatableTrait;
 
-    const ADDRESS_TYPE = 'S';
+    public const ADDRESS_TYPE = 'S';
 
     /**
      * Name or company
-     *
-     * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * Street / P.O. box
      *
      * May not include building or house number.
-     *
-     * @var string
      */
-    private $street;
+    private ?string $street;
 
     /**
      * Building number
-     *
-     * @var string
      */
-    private $buildingNumber;
+    private ?string $buildingNumber;
 
     /**
-     * Postal code without county code
-     *
-     * @var string
+     * Postal code without country code
      */
-    private $postalCode;
+    private string $postalCode;
 
     /**
      * City
-     *
-     * @var string
      */
-    private $city;
+    private string $city;
 
     /**
      * Country (ISO 3166-1 alpha-2)
-     *
-     * @var string
      */
-    private $country;
+    private string $country;
+
+    private function __construct(
+        string $name,
+        ?string $street,
+        ?string $buildingNumber,
+        string $postalCode,
+        string $city,
+        string $country
+    ) {
+        $this->name = $name;
+        $this->street = $street;
+        $this->buildingNumber = $buildingNumber;
+        $this->postalCode = $postalCode;
+        $this->city = $city;
+        $this->country = strtoupper($country);
+    }
 
     public static function createWithoutStreet(
         string $name,
@@ -65,13 +69,14 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         string $city,
         string $country
     ): self {
-        $structuredAddress = new self();
-        $structuredAddress->name = $name;
-        $structuredAddress->postalCode = $postalCode;
-        $structuredAddress->city = $city;
-        $structuredAddress->country = strtoupper($country);
-
-        return $structuredAddress;
+        return new self(
+            $name,
+            null,
+            null,
+            $postalCode,
+            $city,
+            $country
+        );
     }
 
     public static function createWithStreet(
@@ -82,18 +87,17 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         string $city,
         string $country
     ): self {
-        $structuredAddress = new self();
-        $structuredAddress->name = $name;
-        $structuredAddress->street = $street;
-        $structuredAddress->buildingNumber = $buildingNumber;
-        $structuredAddress->postalCode = $postalCode;
-        $structuredAddress->city = $city;
-        $structuredAddress->country = strtoupper($country);
-
-        return $structuredAddress;
+        return new self(
+            $name,
+            $street,
+            $buildingNumber,
+            $postalCode,
+            $city,
+            $country
+        );
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -108,17 +112,17 @@ class StructuredAddress implements AddressInterface, SelfValidatableInterface, Q
         return $this->buildingNumber;
     }
 
-    public function getPostalCode(): ?string
+    public function getPostalCode(): string
     {
         return $this->postalCode;
     }
 
-    public function getCity(): ?string
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): string
     {
         return $this->country;
     }

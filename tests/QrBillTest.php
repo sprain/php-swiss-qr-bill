@@ -8,7 +8,7 @@ use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\QrBill;
 use Zxing\QrReader;
 
-class QrBillTest extends TestCase
+final class QrBillTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
@@ -50,18 +50,6 @@ class QrBillTest extends TestCase
             (new QrReader(__DIR__ . '/TestData/QrCodes/qr-alternative-schemes.png'))->text(),
             $qrBill->getQrCode()->getText()
         );
-    }
-
-    public function testHeaderIsRequired()
-    {
-        $qrBill = $this->createQrBill([
-            'creditorInformationQrIban',
-            'creditor',
-            'paymentAmountInformation',
-            'paymentReferenceQr'
-        ]);
-
-        $this->assertSame(1, $qrBill->getViolations()->count());
     }
 
     public function testHeaderMustBeValid()
@@ -227,7 +215,7 @@ class QrBillTest extends TestCase
         ]);
 
         $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme((new AlternativeScheme()));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create(''));
 
         $this->assertFalse($qrBill->isValid());
     }

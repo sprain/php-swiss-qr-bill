@@ -2,7 +2,10 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\Element;
 
-class Placeholder implements OutputElementInterface
+/**
+ * @internal
+ */
+final class Placeholder implements OutputElementInterface
 {
     public const FILE_TYPE_SVG = 'svg';
     public const FILE_TYPE_PNG = 'png';
@@ -39,20 +42,11 @@ class Placeholder implements OutputElementInterface
         'height' => 10
     ];
 
-    /** @var string */
-    private $type;
-
-    /** @var string */
-    private $fileSvg;
-
-    /** @var string */
-    private $filePng;
-
-    /** @var int */
-    private $width;
-
-    /** @var int */
-    private $height;
+    private string $type;
+    private string $fileSvg;
+    private string $filePng;
+    private int $width;
+    private int $height;
 
     public static function create(array $type): self
     {

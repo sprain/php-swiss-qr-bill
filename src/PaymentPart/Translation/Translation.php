@@ -2,7 +2,7 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Translation;
 
-class Translation
+final class Translation
 {
     private const TRANSLATIONS = [
         'de' => [

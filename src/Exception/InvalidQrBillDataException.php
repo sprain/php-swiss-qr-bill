@@ -2,6 +2,6 @@
 
 namespace Sprain\SwissQrBill\Exception;
 
-class InvalidQrBillDataException extends \Exception
+final class InvalidQrBillDataException extends \Exception
 {
 }

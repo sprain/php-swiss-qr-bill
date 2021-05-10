@@ -8,14 +8,14 @@ use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
 
-class TcPdfOutputTest extends TestCase
+final class TcPdfOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 
     /**
      * @dataProvider validQrBillsProvider
      */
-    public function testValidQrBills(string $name, QrBill $qrBill)
+    public function testValidQrBills(string $name, QrBill $qrBill): void
     {
         $variations = [
             [

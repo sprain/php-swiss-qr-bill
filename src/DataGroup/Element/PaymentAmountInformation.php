@@ -8,34 +8,32 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class PaymentAmountInformation implements QrCodeableInterface, SelfValidatableInterface
+final class PaymentAmountInformation implements QrCodeableInterface, SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    const CURRENCY_CHF = 'CHF';
-    const CURRENCY_EUR = 'EUR';
+    public const CURRENCY_CHF = 'CHF';
+    public const CURRENCY_EUR = 'EUR';
 
     /**
      * The payment amount due
-     *
-     * @var float
      */
-    private $amount;
+    private ?float $amount;
 
     /**
      * Payment currency code (ISO 4217)
-     *
-     * @var string
      */
-    private $currency;
+    private string $currency;
+
+    private function __construct(string $currency, ?float $amount)
+    {
+        $this->currency = strtoupper($currency);
+        $this->amount = $amount;
+    }
 
     public static function create(string $currency, ?float $amount = null): self
     {
-        $paymentInformation = new self();
-        $paymentInformation->currency = strtoupper($currency);
-        $paymentInformation->amount = $amount;
-
-        return $paymentInformation;
+        return new self($currency, $amount);
     }
 
     public function getAmount(): ?float
@@ -57,7 +55,7 @@ class PaymentAmountInformation implements QrCodeableInterface, SelfValidatableIn
         );
     }
 
-    public function getCurrency(): ?string
+    public function getCurrency(): string
     {
         return $this->currency;
     }

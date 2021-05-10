@@ -10,15 +10,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class QrPaymentReferenceGenerator implements SelfValidatableInterface
+final class QrPaymentReferenceGenerator implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    /** @var string */
-    private $customerIdentificationNumber;
-
-    /** @var string */
-    private $referenceNumber;
+    private ?string $customerIdentificationNumber = null;
+    private string $referenceNumber;
 
     public static function generate(?string $customerIdentificationNumber, string $referenceNumber): string
     {

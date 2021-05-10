@@ -135,9 +135,9 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     }
 
     /**
-     * @param Title|Text|Placeholder $element Instance of OutputElementInterface.
+     * @param Title|Text|Placeholder $element
      */
-    private function getContentElement($element): string
+    private function getContentElement(OutputElementInterface $element): string
     {
         if ($element instanceof Title) {
             $elementTemplate = TitleElementTemplate::TEMPLATE;

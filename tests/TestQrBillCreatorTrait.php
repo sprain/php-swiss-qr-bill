@@ -149,7 +149,7 @@ trait TestQrBillCreatorTrait
 
     public function createQrBill(array $elements)
     {
-        $qrBill = new QrBill();
+        $qrBill = QrBill::create();
 
         foreach ($elements as $element) {
             $this->$element($qrBill);
@@ -171,7 +171,7 @@ trait TestQrBillCreatorTrait
     public function invalidHeader(QrBill &$qrBill)
     {
         // INVALID EMPTY HEADER
-        $qrBill->setHeader(new Header());
+        $qrBill->setHeader(Header::create('', '', 5));
     }
 
     public function creditorInformationIban(QrBill &$qrBill)
@@ -297,7 +297,7 @@ trait TestQrBillCreatorTrait
 
     public function invalidAlternativeScheme(QrBill &$qrBill)
     {
-        $alternativeScheme = (new AlternativeScheme());
+        $alternativeScheme = (AlternativeScheme::create(''));
 
         $qrBill->addAlternativeScheme($alternativeScheme);
     }
@@ -332,6 +332,11 @@ trait TestQrBillCreatorTrait
 
     public function invalidAddress()
     {
-        return new CombinedAddress();
+        return CombinedAddress::create(
+            '',
+            '',
+            '',
+            ''
+        );
     }
 }

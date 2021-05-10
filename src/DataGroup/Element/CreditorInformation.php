@@ -3,41 +3,38 @@
 namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class CreditorInformation implements QrCodeableInterface, SelfValidatableInterface
+final class CreditorInformation implements QrCodeableInterface, SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
     /**
      * IBAN or QR-IBAN of the creditor
-     *
-     * @var string
      */
-    private $iban;
+    private string $iban;
+
+    private function __construct(string $iban)
+    {
+        $this->iban = StringModifier::stripWhitespace($iban);
+    }
 
     public static function create(string $iban): self
     {
-        $creditorInformation = new self();
-        $creditorInformation->iban = preg_replace('/\s+/', '', $iban);
-
-        return $creditorInformation;
+        return new self($iban);
     }
 
-    public function getIban(): ?string
+    public function getIban(): string
     {
         return $this->iban;
     }
 
-    public function getFormattedIban(): ?string
+    public function getFormattedIban(): string
     {
-        if (null === $this->iban) {
-            return null;
-        }
-
         return trim(chunk_split($this->iban, 4, ' '));
     }
 

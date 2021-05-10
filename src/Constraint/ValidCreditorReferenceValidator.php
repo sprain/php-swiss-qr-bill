@@ -7,9 +7,12 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class ValidCreditorReferenceValidator extends ConstraintValidator
+/**
+ * @internal
+ */
+final class ValidCreditorReferenceValidator extends ConstraintValidator
 {
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ValidCreditorReference) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\ValidCreditorReference');

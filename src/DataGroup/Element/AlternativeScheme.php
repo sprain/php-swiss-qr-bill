@@ -8,26 +8,26 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class AlternativeScheme implements QrCodeableInterface, SelfValidatableInterface
+final class AlternativeScheme implements QrCodeableInterface, SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
     /**
      * Parameter character chain of the alternative scheme
-     *
-     * @var string
      */
-    private $parameter;
+    private string $parameter;
+
+    private function __construct(string $parameter)
+    {
+        $this->parameter = $parameter;
+    }
 
     public static function create(string $parameter): self
     {
-        $alternativeScheme = new self();
-        $alternativeScheme->parameter = $parameter;
-
-        return $alternativeScheme;
+        return new self($parameter);
     }
 
-    public function getParameter(): ?string
+    public function getParameter(): string
     {
         return $this->parameter;
     }

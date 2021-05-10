@@ -8,7 +8,7 @@ use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
 
-class HtmlOutputTest extends TestCase
+final class HtmlOutputTest extends TestCase
 {
     use TestQrBillCreatorTrait;
 

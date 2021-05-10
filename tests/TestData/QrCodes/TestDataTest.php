@@ -12,7 +12,7 @@ class TestDataTest extends TestCase
     /**
      * @dataProvider qrFileProvider
      */
-    public function testQrFile($file, $hash)
+    public function testQrFile(string $file, string $hash): void
     {
         $this->assertSame(
             $hash,
@@ -20,7 +20,7 @@ class TestDataTest extends TestCase
         );
     }
 
-    public function qrFileProvider()
+    public function qrFileProvider(): array
     {
         return [
             [__DIR__ . '/qr-additional-information.png', '3a23f70cc8cf519f66d27b73f002d828'],

@@ -17,14 +17,14 @@ use Sprain\SwissQrBill\QrCode\QrCode;
 
 final class FpdfOutput extends AbstractOutput implements OutputInterface
 {
-    // FPDF constants
+    // FPDF
     private const BORDER = 0;
     private const ALIGN_LEFT = 'L';
     private const ALIGN_RIGHT = 'R';
     private const ALIGN_CENTER = 'C';
     private const FONT = 'Helvetica';
 
-    // Location constants
+    // Location
     private const CURRENCY_AMOUNT_Y = 259.3;
     private const AMOUNT_LINE_SPACING = 1.2;
     private const AMOUNT_LINE_SPACING_RCPT = 0.6;
@@ -33,7 +33,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private const RIGHT_PART_X_INFO = 117;
     private const TITLE_Y = 195.2;
 
-    // Font constants
+    // Font size
     private const FONT_SIZE_MAIN_TITLE = 11;
     private const FONT_SIZE_TITLE_RECEIPT = 6;
     private const FONT_SIZE_RECEIPT = 8;
@@ -41,21 +41,14 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private const FONT_SIZE_PAYMENT_PART = 10;
     private const FONT_SIZE_FURTHER_INFORMATION = 7;
 
-    // Line spacing constants
+    // Line spacing
     private const LINE_SPACING_RECEIPT = 3.4;
     private const LINE_SPACING_PAYMENT_PART = 4.8;
+    private float $amountLS = 0;
 
-    /** @var Fpdf */
-    private $fpdf;
-
-    /** @var float */
-    private $amountLS = 0;
-
-    /* @var float */
-    private $offsetX;
-
-    /* @var float */
-    private $offsetY;
+    private Fpdf $fpdf;
+    private float $offsetX;
+    private float $offsetY;
 
     public function __construct(
         QrBill $qrBill,
@@ -280,17 +273,17 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         );
     }
 
-    private function setX(float $x) : void
+    private function setX(float $x): void
     {
         $this->fpdf->SetX($x + $this->offsetX);
     }
 
-    private function setY(float $y) : void
+    private function setY(float $y): void
     {
         $this->fpdf->SetY($y + $this->offsetY);
     }
 
-    private function SetXY(float $x, float $y) : void
+    private function SetXY(float $x, float $y): void
     {
         $this->fpdf->SetXY($x + $this->offsetX, $y + $this->offsetY);
     }

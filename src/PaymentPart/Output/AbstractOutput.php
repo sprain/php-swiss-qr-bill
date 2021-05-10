@@ -11,17 +11,10 @@ use Sprain\SwissQrBill\QrCode\QrCode;
 
 abstract class AbstractOutput
 {
-    /** @var QrBill */
-    protected $qrBill;
-
-    /** @var  string */
-    protected $language;
-
-    /** @var bool */
-    protected $printable;
-
-    /** @var string */
-    protected $qrCodeImageFormat;
+    protected QrBill $qrBill;
+    protected string $language;
+    protected bool $printable;
+    protected string $qrCodeImageFormat;
 
     public function __construct(QrBill $qrBill, string $language)
     {

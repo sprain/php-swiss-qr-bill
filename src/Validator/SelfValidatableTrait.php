@@ -6,10 +6,12 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * @internal
+ */
 trait SelfValidatableTrait
 {
-    /** @var ValidatorInterface */
-    private $validator;
+    private ?ValidatorInterface $validator = null;
 
     public function getViolations(): ConstraintViolationListInterface
     {
