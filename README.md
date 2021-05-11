@@ -1,6 +1,6 @@
 # Swiss QR Bill
 
-[![Build Status](https://github.com/sprain/php-swiss-qr-bill/actions/workflows/tests.yml/badge.svg)
+[![Build Status](https://github.com/sprain/php-swiss-qr-bill/actions/workflows/tests.yml/badge.svg)](https://github.com/sprain/php-swiss-qr-bill/actions)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sprain/php-swiss-qr-bill/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sprain/php-swiss-qr-bill/?branch=master)
 
 A PHP library to create Swiss QR Bill payment parts (_QR-Rechnung_), a new standard which replaces the existing inpayment slips since June 30, 2020.
