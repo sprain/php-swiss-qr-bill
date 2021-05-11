@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "312d3d2c98d2b6cdea0a67fb61d8a4f4",
+    "content-hash": "db2d4add05dc9d2da171913e24b466c7",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -413,16 +413,16 @@
         },
         {
             "name": "symfony/intl",
-            "version": "v5.2.4",
+            "version": "v5.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/intl.git",
-                "reference": "11b4217e394c80a2e313d3a4a37262fbe65a7add"
+                "reference": "6d40be5e4331041aa14add5633986d95667ae624"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/intl/zipball/11b4217e394c80a2e313d3a4a37262fbe65a7add",
-                "reference": "11b4217e394c80a2e313d3a4a37262fbe65a7add",
+                "url": "https://api.github.com/repos/symfony/intl/zipball/6d40be5e4331041aa14add5633986d95667ae624",
+                "reference": "6d40be5e4331041aa14add5633986d95667ae624",
                 "shasum": ""
             },
             "require": {
@@ -481,7 +481,7 @@
                 "localization"
             ],
             "support": {
-                "source": "https://github.com/symfony/intl/tree/v5.2.4"
+                "source": "https://github.com/symfony/intl/tree/v5.2.7"
             },
             "funding": [
                 {
@@ -497,7 +497,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-18T22:42:36+00:00"
+            "time": "2021-04-24T14:39:13+00:00"
         },
         {
             "name": "symfony/options-resolver",
