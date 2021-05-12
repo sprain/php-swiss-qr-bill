@@ -9,16 +9,22 @@ final class StringModifier
 {
     public static function replaceLineBreaksWithString(?string $string): string
     {
-        return str_replace(["\r", "\n"], ' ', $string);
+        return is_null($string)
+            ? ''
+            : str_replace(["\r", "\n"], ' ', $string);
     }
 
     public static function replaceMultipleSpacesWithOne(?string $string): string
     {
-        return preg_replace('/ +/', ' ', $string);
+        return is_null($string)
+            ? ''
+            :  preg_replace('/ +/', ' ', $string);
     }
 
     public static function stripWhitespace(?string $string): string
     {
-        return preg_replace('/\s+/', '', $string);
+        return is_null($string)
+            ? ''
+            : preg_replace('/\s+/', '', $string);
     }
 }
