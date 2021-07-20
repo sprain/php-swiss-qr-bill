@@ -59,8 +59,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         float $offsetX = 0,
         float $offsetY = 0,
         string $font = 'Helvetica'
-    )
-    {
+    ) {
         parent::__construct($qrBill, $language);
         $this->tcPdf = $tcPdf;
         $this->offsetX = $offsetX;
@@ -324,8 +323,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         int $h = 0,
         int $nextLineAlign = 0,
         string $textAlign = self::ALIGN_LEFT
-    ): void
-    {
+    ): void {
         $this->tcPdf->Cell($w, $h, $text, self::BORDER, $nextLineAlign, $textAlign);
     }
 
@@ -335,8 +333,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         int $h = 0,
         int $nextLineAlign = 0,
         string $textAlign = self::ALIGN_LEFT
-    ): void
-    {
+    ): void {
         $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, $textAlign, false, $nextLineAlign);
     }
 
