@@ -22,6 +22,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private const ALIGN_LEFT = 'L';
     private const ALIGN_RIGHT = 'R';
     private const ALIGN_CENTER = 'C';
+    private const FONT = 'Helvetica';
 
     // Location
     private const CURRENCY_AMOUNT_Y = 259.3;
@@ -48,22 +49,18 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private Fpdf $fpdf;
     private float $offsetX;
     private float $offsetY;
-    private string $font;
 
     public function __construct(
         QrBill $qrBill,
         string $language,
-        Fpdf $fpdf,
-        float $offsetX = 0,
-        float $offsetY = 0,
-        string $font = 'Helvetica'
-    )
-    {
+        Fpdf   $fpdf,
+        float  $offsetX = 0,
+        float  $offsetY = 0
+    ) {
         parent::__construct($qrBill, $language);
         $this->fpdf = $fpdf;
         $this->offsetX = $offsetX;
         $this->offsetY = $offsetY;
-        $this->font = $font;
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
     }
 
@@ -111,9 +108,9 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private function addInformationContentReceipt(): void
     {
         // Title
-        $this->fpdf->SetFont($this->font, 'B', self::FONT_SIZE_MAIN_TITLE);
+        $this->fpdf->SetFont(self::FONT, 'B', self::FONT_SIZE_MAIN_TITLE);
         $this->SetXY(self::LEFT_PART_X, self::TITLE_Y);
-        $this->fpdf->MultiCell(0, 7, utf8_decode(Translation::get('receipt', $this->language)));
+        $this->fpdf->MultiCell(0, 7, $this->convertText(Translation::get('receipt', $this->language)));
 
         // Elements
         $this->SetY(204);
@@ -123,17 +120,17 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         }
 
         // Acceptance section
-        $this->fpdf->SetFont($this->font, 'B', self::FONT_SIZE_TITLE_RECEIPT);
+        $this->fpdf->SetFont(self::FONT, 'B', self::FONT_SIZE_TITLE_RECEIPT);
         $this->SetXY(self::LEFT_PART_X, 274.3);
-        $this->fpdf->Cell(54, 0, utf8_decode(Translation::get('acceptancePoint', $this->language)), self::BORDER, '', self::ALIGN_RIGHT);
+        $this->fpdf->Cell(54, 0, $this->convertText(Translation::get('acceptancePoint', $this->language)), self::BORDER, '', self::ALIGN_RIGHT);
     }
 
     private function addInformationContent(): void
     {
         // Title
-        $this->fpdf->SetFont($this->font, 'B', self::FONT_SIZE_MAIN_TITLE);
+        $this->fpdf->SetFont(self::FONT, 'B', self::FONT_SIZE_MAIN_TITLE);
         $this->SetXY(self::RIGHT_PART_X, 195.2);
-        $this->fpdf->MultiCell(48, 7, utf8_decode(Translation::get('paymentPart', $this->language)));
+        $this->fpdf->MultiCell(48, 7, $this->convertText(Translation::get('paymentPart', $this->language)));
 
         // Elements
         $this->SetY(197.3);
@@ -190,7 +187,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private function addFurtherInformationContent(): void
     {
         $this->SetXY(self::RIGHT_PART_X, 286);
-        $this->fpdf->SetFont($this->font, '', self::FONT_SIZE_FURTHER_INFORMATION);
+        $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
 
         foreach ($this->getFurtherInformationElements() as $furtherInformationElement) {
             $this->SetX(self::RIGHT_PART_X);
@@ -198,15 +195,15 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         }
     }
 
-    private function addSeparatorContentIfNotPrintable(): void
+    private function addSeparatorContentIfNotPrintable()
     {
         if (!$this->isPrintable()) {
             $this->fpdf->SetLineWidth(0.1);
             $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
             $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
-            $this->fpdf->SetFont($this->font, '', self::FONT_SIZE_FURTHER_INFORMATION);
+            $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
             $this->SetY(189.6);
-            $this->fpdf->MultiCell(0, 0, utf8_decode(Translation::get('separate', $this->language)), self::BORDER, self::ALIGN_CENTER);
+            $this->fpdf->MultiCell(0, 0, $this->convertText(Translation::get('separate', $this->language)), self::BORDER, self::ALIGN_CENTER);
         }
     }
 
@@ -227,8 +224,8 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
     private function setTitleElement(Title $element, bool $isReceiptPart): void
     {
-        $this->fpdf->SetFont($this->font, 'B', $isReceiptPart ? self::FONT_SIZE_TITLE_RECEIPT : self::FONT_SIZE_TITLE_PAYMENT_PART);
-        $this->fpdf->MultiCell(0, 2.8, utf8_decode(
+        $this->fpdf->SetFont(self::FONT, 'B', $isReceiptPart ? self::FONT_SIZE_TITLE_RECEIPT : self::FONT_SIZE_TITLE_PAYMENT_PART);
+        $this->fpdf->MultiCell(0, 2.8, $this->convertText(
             Translation::get(str_replace("text.", "", $element->getTitle()), $this->language)
         ));
         $this->fpdf->Ln($this->amountLS);
@@ -236,11 +233,11 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
     private function setTextElement(Text $element, bool $isReceiptPart): void
     {
-        $this->fpdf->SetFont($this->font, '', $isReceiptPart ? self::FONT_SIZE_RECEIPT : self::FONT_SIZE_PAYMENT_PART);
+        $this->fpdf->SetFont(self::FONT, '', $isReceiptPart ? self::FONT_SIZE_RECEIPT : self::FONT_SIZE_PAYMENT_PART);
         $this->fpdf->MultiCell(
             $isReceiptPart ? 54 : 0,
             $isReceiptPart ? 3.3 : 4,
-            str_replace("text.", "", utf8_decode($element->getText())),
+            str_replace("text.", "", $this->convertText($element->getText())),
             self::BORDER,
             self::ALIGN_LEFT
         );
@@ -291,13 +288,9 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->fpdf->SetXY($x + $this->offsetX, $y + $this->offsetY);
     }
 
-    public function getFont(): string
+    private function convertText(string $text)
     {
-        return $this->font;
-    }
-
-    public function setFont(string $font): void
-    {
-        $this->font = $font;
+        $text = stripslashes($text);
+        return iconv('UTF-8', 'CP1250//TRANSLIT', $text);
     }
 }
