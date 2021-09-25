@@ -41,6 +41,8 @@ jobs:
 
       - name: Check coding standard
         run: vendor/bin/php-cs-fixer --no-interaction --dry-run --diff -v fix src/
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: 1
 
       - name: Static analysis
         run: vendor/bin/phpstan analyse
