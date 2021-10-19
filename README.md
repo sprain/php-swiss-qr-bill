@@ -43,7 +43,7 @@ The beauty of open source software lies in the fact that everybody can benefit f
 ## Official resources
 The repository contains the official specifications the library is based on:
 
-- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-en-v2.1.pdf)
+- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-en-v2.2.pdf)
 - [Technical information about the QR-IID and QR-IBAN](docs/specs/qr-iid_qr-iban-en.pdf)
 - [Style Guide QR-bill](docs/specs/style-guide-en.pdf)
 
