@@ -15,8 +15,7 @@ final class EmptyAdditionalInformation implements QrCodeableInterface
     {
         return [
             null,
-            self::TRAILER_EPD,
-            null
+            self::TRAILER_EPD
         ];
     }
 }
