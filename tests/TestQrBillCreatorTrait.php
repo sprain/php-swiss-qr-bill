@@ -10,6 +10,7 @@ use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
 use Sprain\SwissQrBill\DataGroup\Element\Header;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
+use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
 
 trait TestQrBillCreatorTrait
@@ -53,7 +54,8 @@ trait TestQrBillCreatorTrait
                     'creditorInformationQrIban',
                     'creditor',
                     'paymentAmountInformationZeroAmount',
-                    'paymentReferenceQr'
+                    'paymentReferenceQr',
+                    'additionalInformationZeroPayment'
                 ])
             ],
             ['qr-payment-reference-scor',
@@ -305,6 +307,12 @@ trait TestQrBillCreatorTrait
     public function additionalInformation(QrBill &$qrBill)
     {
         $additionalInformation = AdditionalInformation::create("Invoice 1234568\nGardening work", 'Bill Information');
+        $qrBill->setAdditionalInformation($additionalInformation);
+    }
+
+    public function additionalInformationZeroPayment(QrBill &$qrBill)
+    {
+        $additionalInformation = AdditionalInformation::create(Translation::get('doNotUseForPayment', 'en'));
         $qrBill->setAdditionalInformation($additionalInformation);
     }
 

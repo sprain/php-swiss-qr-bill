@@ -63,11 +63,16 @@ final class AdditionalInformation implements QrCodeableInterface, SelfValidatabl
 
     public function getQrCodeData(): array
     {
-        return [
+        $qrCodeData = [
             $this->getMessage(),
             self::TRAILER_EPD,
-            $this->getBillInformation()
         ];
+
+        if ($this->getBillInformation()) {
+            $qrCodeData[]= $this->getBillInformation();
+        }
+
+        return $qrCodeData;
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
