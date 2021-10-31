@@ -18,8 +18,6 @@ final class QrCode
     public const FILE_FORMAT_PNG = 'png';
     public const FILE_FORMAT_SVG = 'svg';
 
-    // A file extension is supported if the underlying library supports it,
-    // including the possibility to add a logo in the center of the qr code.
     private const SUPPORTED_FILE_FORMATS = [
         self::FILE_FORMAT_PNG,
         self::FILE_FORMAT_SVG
@@ -33,7 +31,7 @@ final class QrCode
     private Logo $qrCodeLogo;
     private WriterInterface $qrCodeWriter;
 
-    public static function create(string $data, ?string $fileFormat = null): self
+    public static function create(string $data, string $fileFormat = null): self
     {
         if (null === $fileFormat) {
             $fileFormat = self::FILE_FORMAT_SVG;
@@ -78,7 +76,7 @@ final class QrCode
     {
         if (!in_array($extension, self::SUPPORTED_FILE_FORMATS)) {
             throw new UnsupportedFileExtensionException(sprintf(
-                'The qr code file cannot be created. Only these file extensions are supported: %s. You provided: %s.',
+                'The qr code file cannot be created. Only these file formats are supported: %s. You provided: %s.',
                 implode(', ', self::SUPPORTED_FILE_FORMATS),
                 $extension
             ));
