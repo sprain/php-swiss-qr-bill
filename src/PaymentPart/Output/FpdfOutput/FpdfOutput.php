@@ -95,9 +95,6 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private function addSwissQrCodeImage(): void
     {
         $qrCode = $this->getQrCode();
-        $qrCode->setWriterByExtension(
-            $this->getQrCodeImageFormat()
-        );
 
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = 67 + $this->offsetX;

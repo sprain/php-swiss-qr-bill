@@ -164,8 +164,7 @@ abstract class AbstractOutput
 
     protected function getQrCode(): QrCode
     {
-        $qrCode = $this->qrBill->getQrCode();
-        $qrCode->setWriterByExtension($this->getQrCodeImageFormat());
+        $qrCode = $this->qrBill->getQrCode($this->getQrCodeImageFormat());
 
         return $qrCode;
     }

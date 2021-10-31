@@ -2,7 +2,6 @@
 
 namespace Sprain\SwissQrBill;
 
-use Endroid\QrCode\ErrorCorrectionLevel;
 use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombination;
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
@@ -25,10 +24,6 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 final class QrBill implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
-
-    private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../assets/swiss-cross.optimized.png';
-    private const PX_QR_CODE = 543;    // recommended 46x46 mm in px @ 300dpi – in pixel based outputs, the final image size may be slightly different, depending on the qr code contents
-    private const PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
 
     private Header $header;
     private ?CreditorInformation $creditorInformation = null;
@@ -162,7 +157,7 @@ final class QrBill implements SelfValidatableInterface
     /**
      * @throws InvalidQrBillDataException
      */
-    public function getQrCode(): QrCode
+    public function getQrCode(?string $fileFormat = null): QrCode
     {
         if (!$this->isValid()) {
             throw new InvalidQrBillDataException(
@@ -170,17 +165,10 @@ final class QrBill implements SelfValidatableInterface
             );
         }
 
-        $qrCode = new QrCode();
-        $qrCode->setText($this->getQrCodeContent());
-        $qrCode->setSize(self::PX_QR_CODE);
-        $qrCode->setLogoHeight(self::PX_SWISS_CROSS);
-        $qrCode->setLogoWidth(self::PX_SWISS_CROSS);
-        $qrCode->setLogoPath(self::SWISS_CROSS_LOGO_FILE);
-        $qrCode->setRoundBlockSize(true, \Endroid\QrCode\QrCode::ROUND_BLOCK_SIZE_MODE_ENLARGE);
-        $qrCode->setMargin(0);
-        $qrCode->setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel::MEDIUM));
-
-        return $qrCode;
+        return QrCode::create(
+            $this->getQrCodeContent(),
+            $fileFormat
+        );
     }
 
     private function getQrCodeContent(): string
