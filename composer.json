@@ -18,7 +18,7 @@
         "dms/phpunit-arraysubset-asserts": "^0.1|^0.2",
         "fpdf/fpdf": "^1.82",
         "friendsofphp/php-cs-fixer": "^2.19",
-        "phpstan/phpstan": "^0.12.53",
+        "phpstan/phpstan": "^0.12.95",
         "symfony/css-selector": "^4.2",
         "symfony/var-dumper": "^5.1",
         "tecnickcom/tcpdf": "^6.3.2"
