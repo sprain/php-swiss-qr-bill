@@ -8,6 +8,7 @@ use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\GroupSequenceProviderInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
@@ -113,7 +114,7 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
         ]);
     }
 
-    public function getGroupSequence()
+    public function getGroupSequence(): array|GroupSequence
     {
         return [
             'default',
