@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "02ddcd0efb28aacdcd0e8f71eb56654d",
+    "content-hash": "7a6cca1efbeedb3abfede9e1c0f17e87",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2161,16 +2161,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "dev-master",
+            "version": "v3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "241b491d2952b307d249dd47c858c620303acef5"
+                "reference": "47177af1cfb9dab5d1cc4daf91b7179c2efe7fad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/241b491d2952b307d249dd47c858c620303acef5",
-                "reference": "241b491d2952b307d249dd47c858c620303acef5",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/47177af1cfb9dab5d1cc4daf91b7179c2efe7fad",
+                "reference": "47177af1cfb9dab5d1cc4daf91b7179c2efe7fad",
                 "shasum": ""
             },
             "require": {
@@ -2212,7 +2212,6 @@
                 "ext-dom": "For handling output formats in XML",
                 "ext-mbstring": "For handling non-UTF8 characters."
             },
-            "default-branch": true,
             "bin": [
                 "php-cs-fixer"
             ],
@@ -2239,7 +2238,7 @@
             "description": "A tool to automatically fix PHP code style",
             "support": {
                 "issues": "https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues",
-                "source": "https://github.com/FriendsOfPHP/PHP-CS-Fixer/tree/master"
+                "source": "https://github.com/FriendsOfPHP/PHP-CS-Fixer/tree/v3.4.0"
             },
             "funding": [
                 {
@@ -2247,7 +2246,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-10T10:05:44+00:00"
+            "time": "2021-12-11T16:25:08+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -5252,13 +5251,11 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "friendsofphp/php-cs-fixer": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0"
+        "php": "^8.0.0|^8.1.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
