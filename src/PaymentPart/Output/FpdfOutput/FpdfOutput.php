@@ -110,9 +110,9 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->fpdf->MultiCell(0, 7, utf8_decode(Translation::get('receipt', $this->language)));
 
         // Elements
-        $this->SetY(204);
+        $this->setY(204);
         foreach ($this->getInformationElementsOfReceipt() as $receiptInformationElement) {
-            $this->SetX(self::LEFT_PART_X);
+            $this->setX(self::LEFT_PART_X);
             $this->setContentElement($receiptInformationElement, true);
         }
 
@@ -130,19 +130,19 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->fpdf->MultiCell(48, 7, utf8_decode(Translation::get('paymentPart', $this->language)));
 
         // Elements
-        $this->SetY(197.3);
+        $this->setY(197.3);
         foreach ($this->getInformationElements() as $informationElement) {
-            $this->SetX(self::RIGHT_PART_X_INFO);
+            $this->setX(self::RIGHT_PART_X_INFO);
             $this->setContentElement($informationElement, false);
         }
     }
 
     private function addCurrencyContentReceipt(): void
     {
-        $this->SetY(self::CURRENCY_AMOUNT_Y);
+        $this->setY(self::CURRENCY_AMOUNT_Y);
         foreach ($this->getCurrencyElements() as $receiptCurrencyElement) {
             $this->amountLS = self::AMOUNT_LINE_SPACING_RCPT;
-            $this->SetX(self::LEFT_PART_X);
+            $this->setX(self::LEFT_PART_X);
             $this->setContentElement($receiptCurrencyElement, true);
             $this->amountLS = 0;
         }
@@ -150,10 +150,10 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
     private function addAmountContentReceipt(): void
     {
-        $this->SetY(self::CURRENCY_AMOUNT_Y);
+        $this->setY(self::CURRENCY_AMOUNT_Y);
         foreach ($this->getAmountElementsReceipt() as $receiptAmountElement) {
             $this->amountLS = self::AMOUNT_LINE_SPACING_RCPT;
-            $this->SetX(16);
+            $this->setX(16);
             $this->setContentElement($receiptAmountElement, true);
             $this->amountLS = 0;
         }
@@ -161,10 +161,10 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
     private function addCurrencyContent(): void
     {
-        $this->SetY(self::CURRENCY_AMOUNT_Y);
+        $this->setY(self::CURRENCY_AMOUNT_Y);
         foreach ($this->getCurrencyElements() as $currencyElement) {
             $this->amountLS = self::AMOUNT_LINE_SPACING;
-            $this->SetX(self::RIGHT_PART_X);
+            $this->setX(self::RIGHT_PART_X);
             $this->setContentElement($currencyElement, false);
             $this->amountLS = 0;
         }
@@ -172,10 +172,10 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
     private function addAmountContent(): void
     {
-        $this->SetY(self::CURRENCY_AMOUNT_Y);
+        $this->setY(self::CURRENCY_AMOUNT_Y);
         foreach ($this->getAmountElements() as $amountElement) {
             $this->amountLS = self::AMOUNT_LINE_SPACING;
-            $this->SetX(80);
+            $this->setX(80);
             $this->setContentElement($amountElement, false);
             $this->amountLS = 0;
         }
@@ -187,7 +187,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
 
         foreach ($this->getFurtherInformationElements() as $furtherInformationElement) {
-            $this->SetX(self::RIGHT_PART_X);
+            $this->setX(self::RIGHT_PART_X);
             $this->setContentElement($furtherInformationElement, true);
         }
     }
@@ -199,7 +199,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
             $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
             $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
             $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
-            $this->SetY(189.6);
+            $this->setY(189.6);
             $this->fpdf->MultiCell(0, 0, utf8_decode(Translation::get('separate', $this->language)), self::BORDER, self::ALIGN_CENTER);
         }
     }
