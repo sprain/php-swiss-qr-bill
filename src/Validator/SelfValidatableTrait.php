@@ -15,7 +15,7 @@ trait SelfValidatableTrait
 
     public function getViolations(): ConstraintViolationListInterface
     {
-        if (null == $this->validator) {
+        if (null === $this->validator) {
             $this->validator = Validation::createValidatorBuilder()
                 ->addMethodMapping('loadValidatorMetadata')
                 ->getValidator();
@@ -26,10 +26,6 @@ trait SelfValidatableTrait
 
     public function isValid(): bool
     {
-        if (0 == $this->getViolations()->count()) {
-            return true;
-        }
-
-        return false;
+        return (0 === $this->getViolations()->count());
     }
 }

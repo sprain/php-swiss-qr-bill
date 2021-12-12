@@ -3,7 +3,6 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
-use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
@@ -134,41 +133,47 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    /**
-     * @param Title|Text|Placeholder $element
-     */
-    private function getContentElement(OutputElementInterface $element): string
+    private function getContentElement(Title|Text|Placeholder $element): string
     {
-        if ($element instanceof Title) {
-            $elementTemplate = TitleElementTemplate::TEMPLATE;
-            $elementString = str_replace('{{ title }}', $element->getTitle(), $elementTemplate);
+        return match (get_class($element)) {
+            Title::class => $this->getTitleElement($element),
+            Text::class => $this->getTextElement($element),
+            Placeholder::class => $this->getPlaceholderElement($element),
+        };
+    }
 
-            return $elementString;
-        }
+    private function getTitleElement(Title $element): string
+    {
+        $elementTemplate = TitleElementTemplate::TEMPLATE;
+        $elementString = str_replace('{{ title }}', $element->getTitle(), $elementTemplate);
 
-        if ($element instanceof Text) {
-            $elementTemplate = TextElementTemplate::TEMPLATE;
-            $elementString = str_replace('{{ text }}', nl2br($element->getText()), $elementTemplate);
+        return $elementString;
+    }
 
-            return $elementString;
-        }
+    private function getTextElement(Text $element): string
+    {
+        $elementTemplate = TextElementTemplate::TEMPLATE;
+        $elementString = str_replace('{{ text }}', nl2br($element->getText()), $elementTemplate);
 
-        if ($element instanceof Placeholder) {
-            $elementTemplate = PlaceholderElementTemplate::TEMPLATE;
-            $elementString = $elementTemplate;
+        return $elementString;
+    }
 
-            $svgDoc = new \DOMDocument();
-            $svgDoc->loadXML(file_get_contents($element->getFile()));
-            $svg = $svgDoc->getElementsByTagName('svg');
-            $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
+    private function getPlaceholderElement(Placeholder $element): string
+    {
+        $elementTemplate = PlaceholderElementTemplate::TEMPLATE;
+        $elementString = $elementTemplate;
 
-            $elementString = str_replace('{{ file }}', $dataUri, $elementString);
-            $elementString = str_replace('{{ width }}', (string) $element->getWidth(), $elementString);
-            $elementString = str_replace('{{ height }}', (string) $element->getHeight(), $elementString);
-            $elementString = str_replace('{{ id }}', $element->getType(), $elementString);
+        $svgDoc = new \DOMDocument();
+        $svgDoc->loadXML(file_get_contents($element->getFile()));
+        $svg = $svgDoc->getElementsByTagName('svg');
+        $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
 
-            return $elementString;
-        }
+        $elementString = str_replace('{{ file }}', $dataUri, $elementString);
+        $elementString = str_replace('{{ width }}', (string) $element->getWidth(), $elementString);
+        $elementString = str_replace('{{ height }}', (string) $element->getHeight(), $elementString);
+        $elementString = str_replace('{{ id }}', $element->getType(), $elementString);
+
+        return $elementString;
     }
 
     private function translateContents(string $paymentPart, string $language): string

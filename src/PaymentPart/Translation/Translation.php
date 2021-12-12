@@ -72,11 +72,7 @@ final class Translation
 
     public static function getAllByLanguage($language): ?array
     {
-        if (! array_key_exists($language, self::TRANSLATIONS)) {
-            return null;
-        }
-
-        return self::TRANSLATIONS[$language];
+        return self::TRANSLATIONS[$language] ?? null;
     }
 
     public static function get(string $key, string $language): ?string

@@ -64,7 +64,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
     }
 
-    public function getPaymentPart()
+    public function getPaymentPart(): void
     {
         $this->fpdf->SetAutoPageBreak(false);
 
@@ -192,7 +192,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         }
     }
 
-    private function addSeparatorContentIfNotPrintable()
+    private function addSeparatorContentIfNotPrintable(): void
     {
         if (!$this->isPrintable()) {
             $this->fpdf->SetLineWidth(0.1);

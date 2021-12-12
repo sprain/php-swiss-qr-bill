@@ -196,13 +196,15 @@ final class QrBill implements SelfValidatableInterface
 
         foreach ($elements as $element) {
             if ($element instanceof QrCodeableInterface) {
-                $qrCodeElements = array_merge($qrCodeElements, $element->getQrCodeData());
+                $qrCodeElements[] = $element->getQrCodeData();
             } elseif (is_array($element)) {
-                $qrCodeElements = array_merge($qrCodeElements, $this->extractQrCodeDataFromElements($element));
+                $qrCodeElements[] = $this->extractQrCodeDataFromElements($element);
             }
         }
 
-        array_walk($qrCodeElements, function (&$string) {
+        $qrCodeElements = array_merge(... $qrCodeElements);
+
+        array_walk($qrCodeElements, static function (&$string) {
             if (is_string($string)) {
                 $string = StringModifier::replaceLineBreaksWithString($string);
                 $string = StringModifier::replaceMultipleSpacesWithOne($string);
