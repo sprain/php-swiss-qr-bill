@@ -135,10 +135,12 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
 
     private function getContentElement(Title|Text|Placeholder $element): string
     {
+        # https://github.com/phpstan/phpstan/issues/4451
+        # @phpstan-ignore-next-line
         return match (get_class($element)) {
             Title::class => $this->getTitleElement($element),
             Text::class => $this->getTextElement($element),
-            Placeholder::class => $this->getPlaceholderElement($element),
+            Placeholder::class => $this->getPlaceholderElement($element)
         };
     }
 
