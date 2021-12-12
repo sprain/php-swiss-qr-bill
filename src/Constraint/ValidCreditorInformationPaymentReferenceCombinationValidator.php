@@ -19,7 +19,7 @@ final class ValidCreditorInformationPaymentReferenceCombinationValidator extends
         PaymentReference::TYPE_NON  => false,
     ];
 
-    public function validate($qrBill, Constraint $constraint)
+    public function validate($qrBill, Constraint $constraint): void
     {
         if (!$constraint instanceof ValidCreditorInformationPaymentReferenceCombination) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\ValidCreditorInformationPaymentReferenceCombination');

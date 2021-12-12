@@ -3,10 +3,9 @@
 namespace Sprain\SwissQrBill\QrCode;
 
 use Endroid\QrCode\QrCode as BaseQrCode;
-use Endroid\QrCode\QrCodeInterface;
 use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 
-final class QrCode extends BaseQrCode implements QrCodeInterface
+final class QrCode extends BaseQrCode
 {
     public const FILE_FORMAT_PNG = 'png';
     public const FILE_FORMAT_SVG = 'svg';
