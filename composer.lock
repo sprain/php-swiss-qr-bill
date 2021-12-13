@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "949992d7397f511c509e6ef2c9b463dc",
+    "content-hash": "1e35dafbfbea4f1b494c8560888589c4",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -108,16 +108,16 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "4.4.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "458745cabee80391408fe7044e4ea0f16a25a4b1"
+                "reference": "361b43bbdfa4360442369d0a236e7d8756160523"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/458745cabee80391408fe7044e4ea0f16a25a4b1",
-                "reference": "458745cabee80391408fe7044e4ea0f16a25a4b1",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/361b43bbdfa4360442369d0a236e7d8756160523",
+                "reference": "361b43bbdfa4360442369d0a236e7d8756160523",
                 "shasum": ""
             },
             "require": {
@@ -136,6 +136,7 @@
                 "roave/security-advisories": "Makes sure package versions with known security issues are not installed",
                 "setasign/fpdf": "Enables you to use the PDF writer"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -168,7 +169,7 @@
             ],
             "support": {
                 "issues": "https://github.com/endroid/qr-code/issues",
-                "source": "https://github.com/endroid/qr-code/tree/4.4.3"
+                "source": "https://github.com/endroid/qr-code/tree/master"
             },
             "funding": [
                 {
@@ -176,7 +177,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-12T13:37:40+00:00"
+            "time": "2021-12-13T11:01:54+00:00"
         },
         {
             "name": "khanamiryan/qrcode-detector-decoder",
@@ -4937,7 +4938,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "endroid/qr-code": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

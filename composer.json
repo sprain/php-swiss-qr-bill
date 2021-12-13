@@ -10,7 +10,7 @@
         "symfony/intl": "^4.4|^5.0|^6.0",
         "khanamiryan/qrcode-detector-decoder": "^1.0.3",
         "kmukku/php-iso11649": "^1.5",
-        "endroid/qr-code": "^4.4.3",
+        "endroid/qr-code": "dev-master",
         "symfony/polyfill-intl-icu": "^1.23"
     },
     "require-dev": {
