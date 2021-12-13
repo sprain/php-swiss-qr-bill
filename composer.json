@@ -8,7 +8,6 @@
         "ext-dom": "*",
         "symfony/validator": "^4.4|^5.0|^6.0",
         "symfony/intl": "^4.4|^5.0|^6.0",
-        "khanamiryan/qrcode-detector-decoder": "^1.0.3",
         "kmukku/php-iso11649": "^1.5",
         "endroid/qr-code": "dev-master",
         "symfony/polyfill-intl-icu": "^1.23"
@@ -19,8 +18,9 @@
         "dms/phpunit-arraysubset-asserts": "^0.2",
         "fpdf/fpdf": "^1.82",
         "friendsofphp/php-cs-fixer": "^3.4",
-        "tecnickcom/tcpdf": "^6.3.2",
-        "phpstan/phpstan": "^1.2"
+        "khanamiryan/qrcode-detector-decoder": "^1.0.3",
+        "phpstan/phpstan": "^1.2",
+        "tecnickcom/tcpdf": "^6.3.2"
     },
     "suggest": {
         "tecnickcom/tcpdf": "Needed to create pdfs with TcPdfOutput",
