@@ -94,7 +94,7 @@ final class QrCode
             $this->qrCode,
             $this->qrCodeLogo,
             null,
-            [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF]
+            [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF => true]
         );
     }
 }
