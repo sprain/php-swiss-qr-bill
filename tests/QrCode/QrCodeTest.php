@@ -13,9 +13,7 @@ final class QrCodeTest extends TestCase
      */
     public function testSupportedFileExtensions(string $extension): void
     {
-        $qrCode = new QrCode('This is a test code');
-        $qrCode->setLogoHeight(10);
-        $qrCode->setLogoWidth(10);
+        $qrCode = QrCode::create('This is a test code');
         $testfile = __DIR__ . '/../TestData/testfile.' . $extension;
 
         if (!is_writable(dirname($testfile))) {
@@ -43,7 +41,7 @@ final class QrCodeTest extends TestCase
     {
         $this->expectException(UnsupportedFileExtensionException::class);
 
-        $qrCode = new QrCode('This is a test code');
+        $qrCode = QrCode::create('This is a test code');
         $qrCode->writeFile(__DIR__ . '/../TestData/testfile.' . $extension);
     }
 
