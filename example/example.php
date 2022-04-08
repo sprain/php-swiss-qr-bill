@@ -4,7 +4,7 @@ use Sprain\SwissQrBill as QrBill;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// This is an example how to create a classic qr bill:
+// This is an example how to create a typical qr bill:
 // - with reference number
 // - with known debtor
 // - with specified amount
