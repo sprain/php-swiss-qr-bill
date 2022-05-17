@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\Amount;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
@@ -114,7 +115,7 @@ abstract class AbstractOutput
         $currencyElements = [];
 
         $currencyElements[] = Title::create('text.currency');
-        $currencyElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getCurrency());
+        $currencyElements[] = Amount::create($this->qrBill->getPaymentAmountInformation()->getCurrency());
 
         return $currencyElements;
     }
@@ -128,7 +129,7 @@ abstract class AbstractOutput
         if (null === $this->qrBill->getPaymentAmountInformation()->getAmount()) {
             $amountElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_AMOUNT);
         } else {
-            $amountElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
+            $amountElements[] = Amount::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
         }
 
         return $amountElements;
