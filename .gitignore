@@ -1,8 +1,11 @@
 /vendor
 /example/qr.png
 /example/qr.svg
-/.php_cs.cache
 /example/TcPdfOutput/tcpdf_example.pdf
 /example/HtmlOutput/html-example.htm
 /example/FpdfOutput/fpdf_example.pdf
+/example/PhpWordOutput/phpword_example.docx
+/.php_cs.cache
 /.php-cs-fixer.cache
+/.idea/
+/.phpunit.result.cache
