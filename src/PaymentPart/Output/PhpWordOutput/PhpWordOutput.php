@@ -8,7 +8,7 @@ use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\SimpleType\Jc;
 use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
-use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
+use Sprain\SwissQrBill\Exception\InvalidPhpWordImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Amount;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
@@ -19,6 +19,7 @@ use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table\Bill;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
+use Sprain\SwissQrBill\QrCode\QrCode;
 
 final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
@@ -65,8 +66,8 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 	}
 
 	public function setQrCodeImageFormat(string $fileExtension) : AbstractOutput {
-		if ($fileExtension === 'svg') {
-			throw new InvalidFpdfImageFormat('SVG images are not allowed by PHPWord.');
+		if ($fileExtension === QrCode::FILE_FORMAT_SVG) {
+			throw new InvalidPhpWordImageFormat('SVG images are not allowed by PHPWord.');
 		}
 
 		$this->qrCodeImageFormat = $fileExtension;
