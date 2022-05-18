@@ -43,7 +43,7 @@ class PhpWordOutputTest extends TestCase
 					->setQrCodeImageFormat($variation['format'])
 					->getPaymentPart();
 
-			if (true || $this->regenerateReferenceFiles) {
+			if ($this->regenerateReferenceFiles) {
 				$phpWord->save($file);
 			}
 
