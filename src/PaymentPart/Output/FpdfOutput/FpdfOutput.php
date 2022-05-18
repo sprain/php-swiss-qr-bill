@@ -83,7 +83,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
     public function setQrCodeImageFormat(string $fileExtension): AbstractOutput
     {
-        if ($fileExtension === 'svg') {
+        if ($fileExtension === QrCode::FILE_FORMAT_SVG) {
             throw new InvalidFpdfImageFormat('SVG images are not allowed by FPDF.');
         }
 
