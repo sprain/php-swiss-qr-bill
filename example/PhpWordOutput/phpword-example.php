@@ -4,6 +4,7 @@ ini_set('display_errors', 'on');
 
 use PhpOffice\PhpWord\Shared\Converter;
 use Sprain\SwissQrBill as QrBill;
+use Sprain\SwissQrBill\QrCode\QrCode;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -22,9 +23,11 @@ $section = $phpword->addSection([
 		'footerHeight' => Converter::cmToTwip(2.0),
 ]);
 // 3. Create a full payment part for TcPDF
+/** @noinspection PhpUndefinedVariableInspection */
 $output = new QrBill\PaymentPart\Output\PhpWordOutput\PhpWordOutput($qrBill, 'en', $phpword);
 $output
     ->setPrintable(false)
+		->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG)
     ->getPaymentPart();
 // 4. For demo purposes, let's save the generated example in a file
 $examplePath = __DIR__ . "/phpword_example.docx";
