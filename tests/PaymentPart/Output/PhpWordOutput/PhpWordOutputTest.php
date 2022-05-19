@@ -55,10 +55,28 @@ class PhpWordOutputTest extends TestCase
 			}
 			$phpWord->save($tmpFile);
 
-			$this->assertSame(
-					file_get_contents($file),
-					file_get_contents($tmpFile)
-			);
+			$zipArchive = new \ZipArchive();
+			$res = $zipArchive->open($file);
+			$this->assertTrue($res);
+
+			$tmpZipArchive = new \ZipArchive();
+			$res = $tmpZipArchive->open($tmpFile);
+			$this->assertTrue($res);
+
+			$count = $zipArchive->count();
+			$this->assertCount(15, $zipArchive);
+			$tmpZipArchive->count();
+			$this->assertCount(15, $tmpZipArchive);
+
+			for($i = 0; $i < $count; $i++) {
+				$name = $zipArchive->getNameIndex($i);
+				$content = $zipArchive->getFromName($name);
+				$tmpContent = $tmpZipArchive->getFromName($name);
+				$this->assertSame(
+						chunk_split($content, 150),
+						chunk_split($tmpContent, 150),
+				);
+			}
 		}
 	}
 
