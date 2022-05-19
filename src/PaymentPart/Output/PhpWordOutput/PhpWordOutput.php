@@ -6,6 +6,7 @@ use PhpOffice\PhpWord\Element\Cell;
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Shared\Converter;
+use PhpOffice\PhpWord\Style\Image;
 use Sprain\SwissQrBill\Exception\InvalidPhpWordImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
@@ -75,14 +76,50 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 	}
 
 	private function addPlaceholderElement(Cell $cell, Placeholder $element, bool $isReceiptPart) : void {
-		// TODO: implement image placeholders
+		$type = $element->getType();
+
+		switch ($type) {
+			case Placeholder::PLACEHOLDER_TYPE_AMOUNT['type']:
+				$cell->addImage($element->getFile(Placeholder::FILE_TYPE_PNG), [
+						'width' => Converter::cmToPoint($element->getWidth() / 10),
+						'height' => Converter::cmToPoint($element->getHeight() / 10),
+						'positioning' => Image::POSITION_ABSOLUTE,
+						'posHorizontal' => Image::POSITION_ABSOLUTE,
+						'posVertical' => Image::POSITION_ABSOLUTE,
+						'marginLeft' => Converter::cmToPoint(-0.45),
+						'marginTop' => Converter::cmToPoint(0.08),
+				]);
+				break;
+			case Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT['type']:
+				$cell->addImage($element->getFile(Placeholder::FILE_TYPE_PNG), [
+						'width' => Converter::cmToPoint($element->getWidth() / 10),
+						'height' => Converter::cmToPoint($element->getHeight() / 10),
+						'positioning' => Image::POSITION_ABSOLUTE,
+						'posHorizontal' => Image::POSITION_ABSOLUTE,
+						'posVertical' => Image::POSITION_ABSOLUTE,
+						'marginLeft' => Converter::cmToPoint(0.91),
+						'marginTop' => Converter::cmToPoint(-0.25),
+				]);
+				break;
+			case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY['type']:
+			case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT['type']:
+			default:
+				$cell->addImage($element->getFile(Placeholder::FILE_TYPE_PNG), [
+						'width' => Converter::cmToPoint($element->getWidth() / 10),
+						'height' => Converter::cmToPoint($element->getHeight() / 10),
+						'wrappingStyle' => Image::WRAP_INFRONT,
+						'positioning' => Image::POS_RELATIVE,
+						'posHorizontalRel' => Image::POS_RELTO_MARGIN,
+						'posVerticalRel' => Image::POS_RELTO_LINE,
+				]);
+		}
 	}
 
 	private function addSeparatorContentIfNotPrintable() : void {
 		if (!$this->isPrintable()) {
 			$text = Translation::get('separate', $this->language);
-			$fStyle = FontStyle::FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART;
-			$this->billTable->getSeparate()->addText($text, $fStyle);
+			$fStyle = FontStyle::FONT_STYLE_SEPARATOR;
+			$this->billTable->getSeparate()->addText($text, $fStyle, $fStyle);
 		}
 	}
 
@@ -95,7 +132,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 		FontStyle::setCurrentText(FontStyle::FONT_STYLE_VALUE_RECEIPT);
 		foreach ($informationElements as $key => $informationElement) {
 			$this->addContentElement($cell, $informationElement, true);
-			if($informationElement instanceof Text && $key !== $lastKey) {
+			if ($informationElement instanceof Text && $key !== $lastKey) {
 				$cell->addText('', FontStyle::FONT_STYLE_VALUE_RECEIPT, FontStyle::FONT_STYLE_VALUE_RECEIPT);
 			}
 		}
@@ -140,7 +177,10 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addReceiptAcceptancePoint() : void {
 		$text = Translation::get('acceptancePoint', $this->language);
-		$this->billTable->getReceipt()->getAcceptancePointSection()->addText($text, FontStyle::FONT_STYLE_ACCEPTANCE_POINT, FontStyle::FONT_STYLE_ACCEPTANCE_POINT);
+		$this->billTable->getReceipt()->getAcceptancePointSection()->addText(
+				$text,
+				FontStyle::FONT_STYLE_ACCEPTANCE_POINT,
+				FontStyle::FONT_STYLE_ACCEPTANCE_POINT);
 	}
 
 	private function addSwissQrCodeImage() : void {
@@ -161,7 +201,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 		FontStyle::setCurrentText(FontStyle::FONT_STYLE_VALUE_PAYMENT_PART);
 		foreach ($this->getInformationElements() as $key => $informationElement) {
 			$this->addContentElement($cell, $informationElement);
-			if($informationElement instanceof Text && $key !== $lastKey) {
+			if ($informationElement instanceof Text && $key !== $lastKey) {
 				$cell->addText('', FontStyle::FONT_STYLE_VALUE_PAYMENT_PART, FontStyle::FONT_STYLE_VALUE_PAYMENT_PART);
 			}
 		}

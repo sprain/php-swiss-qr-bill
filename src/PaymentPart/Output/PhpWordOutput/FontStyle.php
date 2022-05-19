@@ -19,15 +19,16 @@ abstract class FontStyle {
 	const FONT_STYLE_VALUE_PAYMENT_PART = 'SwissBill Payment part Value';
 	const FONT_STYLE_AMOUNT_PAYMENT_PART = 'SwissBill Payment part Amount';
 	const FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART = 'SwissBill Payment part Further information';
+	const FONT_STYLE_SEPARATOR = 'SwissBill Separator';
 
 	private static string $currentText = self::FONT_STYLE_VALUE_RECEIPT;
 
-	public static function setCurrentText(string $fStyle) {
-		self::$currentText = $fStyle;
+	public static function getCurrentText() : string {
+		return self::$currentText;
 	}
 
-	public static function getCurrentText(): string{
-		return self::$currentText;
+	public static function setCurrentText(string $fStyle) {
+		self::$currentText = $fStyle;
 	}
 
 	public static function defineFontStyles(PhpWord $phpWord) : void {
@@ -127,17 +128,25 @@ abstract class FontStyle {
 						'spaceAfter' => 0,
 				]
 		);
+
+		$fontStyle = [
+				'name' => self::FONT_FAMILY,
+				'size' => 7,
+		];
+		$paragraphStyle = [
+				'spacing' => Converter::pointToTwip(8),
+				'spacingLineRule' => LineSpacingRule::EXACT,
+				'spaceAfter' => 0,
+		];
 		$phpWord->addFontStyle(
 				self::FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 7,
-				],
-				[
-						'spacing' => Converter::pointToTwip(8),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-				]
+				$fontStyle,
+				$paragraphStyle
+		);
+		$phpWord->addFontStyle(
+				self::FONT_STYLE_SEPARATOR,
+				$fontStyle,
+				array_merge($paragraphStyle, ['alignment' => Jc::CENTER]),
 		);
 	}
 

@@ -56,17 +56,13 @@ class PhpWordOutputTest extends TestCase
 			$phpWord->save($tmpFile);
 
 			$zipArchive = new \ZipArchive();
-			$res = $zipArchive->open($file);
-			$this->assertTrue($res);
+			$this->assertTrue($zipArchive->open($file));
 
 			$tmpZipArchive = new \ZipArchive();
-			$res = $tmpZipArchive->open($tmpFile);
-			$this->assertTrue($res);
+			$this->assertTrue($tmpZipArchive->open($tmpFile));
 
 			$count = $zipArchive->count();
-			$this->assertCount(15, $zipArchive);
-			$tmpZipArchive->count();
-			$this->assertCount(15, $tmpZipArchive);
+			$this->assertCount($count,$tmpZipArchive);
 
 			for($i = 0; $i < $count; $i++) {
 				$name = $zipArchive->getNameIndex($i);

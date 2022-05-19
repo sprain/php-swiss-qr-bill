@@ -6,6 +6,7 @@ use PhpOffice\PhpWord\Element\Cell;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\SimpleType\Border;
+use PhpOffice\PhpWord\SimpleType\JcTable;
 use PhpOffice\PhpWord\Style\Table;
 use PhpOffice\PhpWord\Style\TablePosition;
 
@@ -32,25 +33,25 @@ class Bill {
 						'bottomFromText' => 0,
 				],
 		]);
-		$separateCellStyle = [];
+		$verticalLine = [];
 		if (!$isPrintable) {
-			$this->separate = $this->table->addRow(Converter::cmToTwip(0.6))->addCell(Converter::cmToTwip(21), [
+			$this->separate = $this->table->addRow(Converter::cmToTwip(0.5))->addCell(Converter::cmToTwip(21), [
 					'borderBottomColor' => '000000',
 					'borderBottomSize' => 1,
 					'borderBottomStyle' => Border::SINGLE,
-				  'gridSpan' => 2,
-					'valign' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER,
+					'gridSpan' => 2,
+					'valign' => JcTable::CENTER,
 			]);
-			$separateCellStyle = [
+			$verticalLine = [
 					'borderRightColor' => '000000',
 					'borderRightSize' => 1,
 					'borderRightStyle' => Border::SINGLE,
 			];
 		}
 		$row = $this->table->addRow(Converter::cmToTwip(9.5));
-		$cell = $row->addCell(Converter::cmToTwip(6.2), $separateCellStyle);
+		$cell = $row->addCell(Converter::cmToTwip(6.2), $verticalLine);
 		$cell = $cell->addTable([
-				'layout' => \PhpOffice\PhpWord\Style\Table::LAYOUT_FIXED,
+				'layout' => Table::LAYOUT_FIXED,
 				'width' => 100 * 50,
 				'unit' => 'pct',
 				'cellMargin' => Converter::cmToTwip(0.5),
@@ -58,7 +59,7 @@ class Bill {
 		$this->receipt = new Receipt($cell);
 		$cell = $row->addCell(Converter::cmToTwip(14.8));
 		$cell = $cell->addTable([
-				'layout' => \PhpOffice\PhpWord\Style\Table::LAYOUT_FIXED,
+				'layout' => Table::LAYOUT_FIXED,
 				'width' => 100 * 50,
 				'unit' => 'pct',
 				'cellMargin' => Converter::cmToTwip(0.5),
