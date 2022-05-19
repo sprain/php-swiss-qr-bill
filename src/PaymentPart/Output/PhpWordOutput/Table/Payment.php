@@ -6,7 +6,6 @@ use PhpOffice\PhpWord\Element\Cell;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\PhpWordHelper;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table\Receipt\AmountSection;
 use PhpOffice\PhpWord\Element\Table;
-use PhpOffice\PhpWord\Shared\Converter;
 
 class Payment {
 
@@ -25,27 +24,29 @@ class Payment {
 		]);
 		$this->table->getStyle()->setLayout(\PhpOffice\PhpWord\Style\Table::LAYOUT_FIXED);
 
-		$row = $this->table->addRow(PhpWordHelper::mmToTwip(85));
-		$paymentPartLeftCell = $row->addCell(PhpWordHelper::mmToTwip(56));
-		$this->informationSection = $row->addCell(PhpWordHelper::mmToTwip(92));
+		$row = $this->table->addRow(PhpWordHelper::mmToTwip(Style::PAYMENT_PART_INFORMATION_SECTION_HEIGHT));
+		$paymentPartLeftCell = $row->addCell(PhpWordHelper::mmToTwip(Style::PAYMENT_PART_INNER_WIDTH - Style::PAYMENT_PART_INFORMATION_SECTION_WIDTH));
+		$this->informationSection = $row->addCell(PhpWordHelper::mmToTwip(Style::PAYMENT_PART_INFORMATION_SECTION_WIDTH));
 
 		$table = $paymentPartLeftCell->addTable([
 				'layout' => \PhpOffice\PhpWord\Style\Table::LAYOUT_FIXED,
 				'width' => PhpWordHelper::percentToPct(100),
 				'unit' => 'pct',
 		]);
-		$row = $table->addRow(PhpWordHelper::mmToTwip(07));
+		$row = $table->addRow(PhpWordHelper::mmToTwip(Style::TITLE_SECTION_HEIGHT));
 		$this->titleSection = $row->addCell();
-		$table->addRow(PhpWordHelper::mmToTwip(05))->addCell()->addText('', ['size' => 8], ['spaceAfter' => 0]);
-		$row = $table->addRow(PhpWordHelper::mmToTwip(51));
+		$this->addSpacerBeforeQrCode($table);
+		$row = $table->addRow(PhpWordHelper::mmToTwip(Style::QR_CODE_SIZE_WITH_BOTTOM_SPACE));
 		$this->qrCodeSection = $row->addCell();
-		$row = $table->addRow(PhpWordHelper::mmToTwip(22));
-		$this->amountSection = new AmountSection($row->addCell(), 14.4, 51 - 14.4, 22);
+		$row = $table->addRow(PhpWordHelper::mmToTwip(Style::PAYMENT_PART_AMOUNT_SECTION_HEIGHT));
+		$this->amountSection = new AmountSection(
+				$row->addCell(),
+				Style::PAYMENT_PART_CURRENCY_WIDTH,
+				Style::PAYMENT_PART_AMOUNT_WIDTH,
+				Style::PAYMENT_PART_AMOUNT_SECTION_HEIGHT);
 
-		$row = $this->table->addRow(PhpWordHelper::mmToTwip(10));
-		$this->furtherInformationSection = $row->addCell(PhpWordHelper::mmToTwip(56), [
-				'gridSpan' => 2,
-		]);
+		$row = $this->table->addRow(PhpWordHelper::mmToTwip(Style::PAYMENT_PART_FURTHER_INFORMATION_SECTION_HEIGHT));
+		$this->furtherInformationSection = $row->addCell(null, ['gridSpan' => 2]);
 	}
 
 	public function getTitleSection() : Cell {
@@ -66,6 +67,11 @@ class Payment {
 
 	public function getFurtherInformationSection() : Cell {
 		return $this->furtherInformationSection;
+	}
+
+	private function addSpacerBeforeQrCode(Table $table) : void {
+		$fontSizeMustBeSmallThanRowHeight = 7;
+		$table->addRow(PhpWordHelper::mmToTwip(5))->addCell()->addText('', ['size' => $fontSizeMustBeSmallThanRowHeight], ['spaceAfter' => 0]);
 	}
 
 

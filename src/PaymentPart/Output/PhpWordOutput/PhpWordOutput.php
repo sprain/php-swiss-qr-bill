@@ -5,7 +5,6 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput;
 use PhpOffice\PhpWord\Element\Cell;
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\Style\Image;
 use Sprain\SwissQrBill\Exception\InvalidPhpWordImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
@@ -15,13 +14,12 @@ use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
 use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table\Bill;
+use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table\Style;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 
 final class PhpWordOutput extends AbstractOutput implements OutputInterface {
-
-	const QR_CODE_SIZE = 46;
 
 	private PhpWord $phpWord;
 	private Bill $billTable;
@@ -187,8 +185,8 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 		$qrCode = $this->getQrCode()->writeDataUri();
 		$img = base64_decode(preg_replace('#^data:image/[^;]+;base64,#', '', $qrCode));
 		$this->billTable->getPayment()->getQrCodeSection()->addImage($img, [
-				'width' => PhpWordHelper::mmToPoint(self::QR_CODE_SIZE),
-				'height' => PhpWordHelper::mmToPoint(self::QR_CODE_SIZE),
+				'width' => PhpWordHelper::mmToPoint(Style::QR_CODE_SIZE),
+				'height' => PhpWordHelper::mmToPoint(Style::QR_CODE_SIZE),
 		]);
 	}
 

@@ -3,7 +3,6 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table\Receipt;
 
 use PhpOffice\PhpWord\Element\Cell;
-use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\Style\Table;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\PhpWordHelper;
 

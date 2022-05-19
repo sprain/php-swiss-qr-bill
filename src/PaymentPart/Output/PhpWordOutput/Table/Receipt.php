@@ -2,7 +2,6 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table;
 
-use PhpOffice\PhpWord\Shared\Converter;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\PhpWordHelper;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table\Receipt\AmountSection;
 use PhpOffice\PhpWord\Element\Table;
@@ -22,10 +21,14 @@ class Receipt {
 				'width' => PhpWordHelper::percentToPct(100),
 				'unit' => 'pct',
 		]);
-		$this->titleSection = $this->table->addRow(PhpWordHelper::mmToTwip(07))->addCell();
-		$this->informationSection = $this->table->addRow(PhpWordHelper::mmToTwip(56))->addCell();
-		$this->amountSection = new AmountSection($this->table->addRow(PhpWordHelper::mmToTwip(14))->addCell(), 12.2, 52 - 12.2, 14);
-		$this->acceptancePointSection = $this->table->addRow(PhpWordHelper::mmToTwip(18))->addCell();
+		$this->titleSection = $this->table->addRow(PhpWordHelper::mmToTwip(Style::TITLE_SECTION_HEIGHT))->addCell();
+		$this->informationSection = $this->table->addRow(PhpWordHelper::mmToTwip(Style::RECEIPT_INFORMATION_SECTION_HEIGHT))->addCell();
+		$this->amountSection = new AmountSection(
+				$this->table->addRow(PhpWordHelper::mmToTwip(Style::RECEIPT_AMOUNT_SECTION_HEIGHT))->addCell(),
+				Style::RECEIPT_CURRENCY_WIDTH,
+				Style::RECEIPT_AMOUNT_WIDTH,
+				Style::RECEIPT_AMOUNT_SECTION_HEIGHT);
+		$this->acceptancePointSection = $this->table->addRow(PhpWordHelper::mmToTwip(Style::RECEIPT_ACCEPTANCE_SECTION_HEIGHT))->addCell();
 	}
 
 	public function getTitleSection() : Cell {

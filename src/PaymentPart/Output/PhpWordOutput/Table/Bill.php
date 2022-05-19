@@ -4,14 +4,13 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table;
 
 use PhpOffice\PhpWord\Element\Cell;
 use PhpOffice\PhpWord\Element\Section;
-use PhpOffice\PhpWord\Shared\Converter;
-use PhpOffice\PhpWord\SimpleType\Border;
 use PhpOffice\PhpWord\SimpleType\JcTable;
 use PhpOffice\PhpWord\Style\Table;
 use PhpOffice\PhpWord\Style\TablePosition;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\PhpWordHelper;
 
 class Bill {
+
 	private \PhpOffice\PhpWord\Element\Table $table;
 	private ?Cell $separate = null;
 	private Receipt $receipt;
@@ -20,8 +19,8 @@ class Bill {
 	public function __construct(Section $section, bool $isPrintable) {
 		$this->table = $section->addTable([
 				'layout' => Table::LAYOUT_FIXED,
-				'width' => PhpWordHelper::mmToTwip(210),
-				'height' => PhpWordHelper::mmToTwip(105),
+				'width' => PhpWordHelper::mmToTwip(Style::DIN_A4_WIDTH),
+				'height' => PhpWordHelper::mmToTwip(Style::DIN_A6_WIDTH),
 				'position' => [
 						'horzAnchor' => TablePosition::HANCHOR_PAGE,
 						'vertAnchor' => TablePosition::VANCHOR_PAGE,
@@ -35,24 +34,24 @@ class Bill {
 		]);
 		$verticalLine = [];
 		if (!$isPrintable) {
+			$width = PhpWordHelper::mmToTwip(Style::DIN_A4_WIDTH);
 			$height = PhpWordHelper::mmToTwip(5);
-			$width = PhpWordHelper::mmToTwip(210);
 			$separatorCellStyle = [
-					'borderBottomColor' => '000000',
-					'borderBottomSize' => 1,
-					'borderBottomStyle' => Border::SINGLE,
+					'borderBottomColor' => Style::NON_PRINTABLE_BORDER_COLOR,
+					'borderBottomSize' => Style::NON_PRINTABLE_BORDER_SIZE,
+					'borderBottomStyle' => Style::NON_PRINTABLE_BORDER_TYPE,
 					'gridSpan' => 2,
 					'valign' => JcTable::CENTER,
 			];
 			$this->separate = $this->table->addRow($height)->addCell($width, $separatorCellStyle);
 			$verticalLine = [
-					'borderRightColor' => '000000',
-					'borderRightSize' => 1,
-					'borderRightStyle' => Border::SINGLE,
+					'borderRightColor' => Style::NON_PRINTABLE_BORDER_COLOR,
+					'borderRightSize' => Style::NON_PRINTABLE_BORDER_SIZE,
+					'borderRightStyle' => Style::NON_PRINTABLE_BORDER_TYPE,
 			];
 		}
-		$row = $this->table->addRow(Converter::cmToTwip(9.5));
-		$cell = $row->addCell(PhpWordHelper::mmToTwip(62), $verticalLine);
+		$row = $this->table->addRow(PhpWordHelper::mmToTwip(Style::INNER_HEIGHT));
+		$cell = $row->addCell(PhpWordHelper::mmToTwip(Style::RECEIPT_WIDTH), $verticalLine);
 		$cell = $cell->addTable([
 				'layout' => Table::LAYOUT_FIXED,
 				'width' => PhpWordHelper::percentToPct(100),
@@ -60,7 +59,8 @@ class Bill {
 				'cellMargin' => PhpWordHelper::mmToTwip(5),
 		])->addRow()->addCell();
 		$this->receipt = new Receipt($cell);
-		$cell = $row->addCell(PhpWordHelper::mmToTwip(148));
+
+		$cell = $row->addCell(PhpWordHelper::mmToTwip(Style::PAYMENT_PART_WIDTH));
 		$cell = $cell->addTable([
 				'layout' => Table::LAYOUT_FIXED,
 				'width' => PhpWordHelper::percentToPct(100),
