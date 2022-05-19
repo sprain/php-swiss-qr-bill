@@ -21,23 +21,23 @@ final class HtmlOutputTest extends TestCase
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.html'
+                'file' => dirname(__DIR__, 3). '/TestData/HtmlOutput/' . $name . '.svg.html'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.print.html'
+                'file' => dirname(__DIR__, 3). '/TestData/HtmlOutput/' . $name . '.svg.print.html'
             ],
             /* PNGs do not create the same output in all environments
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.png.html'
+                'file' => dirname(__DIR__, 3). '/TestData/HtmlOutput/' . $name . '.png.html'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.png.print.html'
+                'file' => dirname(__DIR__, 3). '/TestData/HtmlOutput/' . $name . '.png.print.html'
             ]
             */
         ];

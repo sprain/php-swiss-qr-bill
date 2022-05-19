@@ -21,23 +21,23 @@ final class TcPdfOutputTest extends TestCase
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.pdf'
+                'file' => dirname(__DIR__, 3). '/TestData/TcPdfOutput/' . $name . '.svg.pdf'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.print.pdf'
+                'file' => dirname(__DIR__, 3). '/TestData/TcPdfOutput/' . $name . '.svg.print.pdf'
             ],
             /* PNGs do not create the same output in all environments
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.png.pdf'
+                'file' => dirname(__DIR__, 3). '/TestData/TcPdfOutput/' . $name . '.png.pdf'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.png.print.pdf'
+                'file' => dirname(__DIR__, 3). '/TestData/TcPdfOutput/' . $name . '.png.print.pdf'
             ]
             */
         ];

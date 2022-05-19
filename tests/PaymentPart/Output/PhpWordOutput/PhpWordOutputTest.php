@@ -22,12 +22,12 @@ class PhpWordOutputTest extends TestCase
 				[
 						'printable' => false,
 						'format' => QrCode::FILE_FORMAT_PNG,
-						'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/PhpWordOutput/' . $name . '.docx'
+						'file' => dirname(__DIR__, 3) . '/TestData/PhpWordOutput/' . $name . '.docx'
 				],
 				[
 						'printable' => true,
 						'format' => QrCode::FILE_FORMAT_PNG,
-						'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/PhpWordOutput/' . $name . '.print.docx'
+						'file' => dirname(__DIR__, 3) . '/TestData/PhpWordOutput/' . $name . '.print.docx'
 				]
 		];
 
