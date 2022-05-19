@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table;
 
 use PhpOffice\PhpWord\Shared\Converter;
+use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\PhpWordHelper;
 use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table\Receipt\AmountSection;
 use PhpOffice\PhpWord\Element\Table;
 use PhpOffice\PhpWord\Element\Cell;
@@ -21,10 +22,10 @@ class Receipt {
 				'width' => 100 * 50,
 				'unit' => 'pct',
 		]);
-		$this->titleSection = $this->table->addRow(Converter::cmToTwip(0.7))->addCell();
-		$this->informationSection = $this->table->addRow(Converter::cmToTwip(5.6))->addCell();
-		$this->amountSection = new AmountSection($this->table->addRow(Converter::cmToTwip(1.4))->addCell(), 1.22, 5.2 - 1.22, 1.4);
-		$this->acceptancePointSection = $this->table->addRow(Converter::cmToTwip(1.8))->addCell();
+		$this->titleSection = $this->table->addRow(PhpWordHelper::mmToTwip(07))->addCell();
+		$this->informationSection = $this->table->addRow(PhpWordHelper::mmToTwip(56))->addCell();
+		$this->amountSection = new AmountSection($this->table->addRow(PhpWordHelper::mmToTwip(14))->addCell(), 12.2, 52 - 12.2, 14);
+		$this->acceptancePointSection = $this->table->addRow(PhpWordHelper::mmToTwip(18))->addCell();
 	}
 
 	public function getTitleSection() : Cell {

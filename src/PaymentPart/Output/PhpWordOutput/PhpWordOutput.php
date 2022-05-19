@@ -21,7 +21,7 @@ use Sprain\SwissQrBill\QrCode\QrCode;
 
 final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
-	const QR_CODE_SIZE = 4.6;
+	const QR_CODE_SIZE = 46;
 
 	private PhpWord $phpWord;
 	private Bill $billTable;
@@ -81,32 +81,32 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 		switch ($type) {
 			case Placeholder::PLACEHOLDER_TYPE_AMOUNT['type']:
 				$cell->addImage($element->getFile(Placeholder::FILE_TYPE_PNG), [
-						'width' => Converter::cmToPoint($element->getWidth() / 10),
-						'height' => Converter::cmToPoint($element->getHeight() / 10),
+						'width' => PhpWordHelper::mmToPoint($element->getWidth()),
+						'height' => PhpWordHelper::mmToPoint($element->getHeight()),
 						'positioning' => Image::POSITION_ABSOLUTE,
 						'posHorizontal' => Image::POSITION_ABSOLUTE,
 						'posVertical' => Image::POSITION_ABSOLUTE,
-						'marginLeft' => Converter::cmToPoint(-0.45),
-						'marginTop' => Converter::cmToPoint(0.08),
+						'marginLeft' => PhpWordHelper::mmToPoint(-4.5),
+						'marginTop' => PhpWordHelper::mmToPoint(0.8),
 				]);
 				break;
 			case Placeholder::PLACEHOLDER_TYPE_AMOUNT_RECEIPT['type']:
 				$cell->addImage($element->getFile(Placeholder::FILE_TYPE_PNG), [
-						'width' => Converter::cmToPoint($element->getWidth() / 10),
-						'height' => Converter::cmToPoint($element->getHeight() / 10),
+						'width' => PhpWordHelper::mmToPoint($element->getWidth()),
+						'height' => PhpWordHelper::mmToPoint($element->getHeight()),
 						'positioning' => Image::POSITION_ABSOLUTE,
 						'posHorizontal' => Image::POSITION_ABSOLUTE,
 						'posVertical' => Image::POSITION_ABSOLUTE,
-						'marginLeft' => Converter::cmToPoint(0.91),
-						'marginTop' => Converter::cmToPoint(-0.25),
+						'marginLeft' => PhpWordHelper::mmToPoint(9.1),
+						'marginTop' => PhpWordHelper::mmToPoint(-2.5),
 				]);
 				break;
 			case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY['type']:
 			case Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT['type']:
 			default:
 				$cell->addImage($element->getFile(Placeholder::FILE_TYPE_PNG), [
-						'width' => Converter::cmToPoint($element->getWidth() / 10),
-						'height' => Converter::cmToPoint($element->getHeight() / 10),
+						'width' => PhpWordHelper::mmToPoint($element->getWidth()),
+						'height' => PhpWordHelper::mmToPoint($element->getHeight()),
 						'wrappingStyle' => Image::WRAP_INFRONT,
 						'positioning' => Image::POS_RELATIVE,
 						'posHorizontalRel' => Image::POS_RELTO_MARGIN,
@@ -187,8 +187,8 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 		$qrCode = $this->getQrCode()->writeDataUri();
 		$img = base64_decode(preg_replace('#^data:image/[^;]+;base64,#', '', $qrCode));
 		$this->billTable->getPayment()->getQrCodeSection()->addImage($img, [
-				'width' => Converter::cmToPoint(self::QR_CODE_SIZE),
-				'height' => Converter::cmToPoint(self::QR_CODE_SIZE),
+				'width' => PhpWordHelper::mmToPoint(self::QR_CODE_SIZE),
+				'height' => PhpWordHelper::mmToPoint(self::QR_CODE_SIZE),
 		]);
 	}
 

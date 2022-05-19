@@ -5,6 +5,7 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\Table\Receipt;
 use PhpOffice\PhpWord\Element\Cell;
 use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\Style\Table;
+use Sprain\SwissQrBill\PaymentPart\Output\PhpWordOutput\PhpWordHelper;
 
 class AmountSection {
 
@@ -17,9 +18,9 @@ class AmountSection {
 				'width' => 100 * 50,
 				'unit' => 'pct',
 		]);
-		$row = $table->addRow(Converter::cmToTwip($height));
-		$this->currencyCell = $row->addCell(Converter::cmToTwip($currencyWidth));
-		$this->amountCell = $row->addCell(Converter::cmToTwip($amountWidth));
+		$row = $table->addRow(PhpWordHelper::mmToTwip($height));
+		$this->currencyCell = $row->addCell(PhpWordHelper::mmToTwip($currencyWidth));
+		$this->amountCell = $row->addCell(PhpWordHelper::mmToTwip($amountWidth));
 	}
 
 	public function getCurrencyCell() : Cell {
