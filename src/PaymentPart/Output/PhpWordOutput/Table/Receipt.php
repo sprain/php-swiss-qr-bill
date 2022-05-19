@@ -19,7 +19,7 @@ class Receipt {
 	public function __construct(Cell $cell) {
 		$this->table = $cell->addTable([
 				'layout' => \PhpOffice\PhpWord\Style\Table::LAYOUT_FIXED,
-				'width' => 100 * 50,
+				'width' => PhpWordHelper::percentToPct(100),
 				'unit' => 'pct',
 		]);
 		$this->titleSection = $this->table->addRow(PhpWordHelper::mmToTwip(07))->addCell();

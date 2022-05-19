@@ -55,7 +55,7 @@ class Bill {
 		$cell = $row->addCell(PhpWordHelper::mmToTwip(62), $verticalLine);
 		$cell = $cell->addTable([
 				'layout' => Table::LAYOUT_FIXED,
-				'width' => 100 * 50,
+				'width' => PhpWordHelper::percentToPct(100),
 				'unit' => 'pct',
 				'cellMargin' => PhpWordHelper::mmToTwip(5),
 		])->addRow()->addCell();
@@ -63,7 +63,7 @@ class Bill {
 		$cell = $row->addCell(PhpWordHelper::mmToTwip(148));
 		$cell = $cell->addTable([
 				'layout' => Table::LAYOUT_FIXED,
-				'width' => 100 * 50,
+				'width' => PhpWordHelper::percentToPct(100),
 				'unit' => 'pct',
 				'cellMargin' => PhpWordHelper::mmToTwip(5),
 		])->addRow()->addCell();

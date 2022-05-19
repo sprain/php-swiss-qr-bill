@@ -15,7 +15,7 @@ class AmountSection {
 	public function __construct(Cell $cell, float $currencyWidth, float $amountWidth, float $height) {
 		$table = $cell->addTable([
 				'layout' => Table::LAYOUT_FIXED,
-				'width' => 100 * 50,
+				'width' => PhpWordHelper::percentToPct(100),
 				'unit' => 'pct',
 		]);
 		$row = $table->addRow(PhpWordHelper::mmToTwip($height));
