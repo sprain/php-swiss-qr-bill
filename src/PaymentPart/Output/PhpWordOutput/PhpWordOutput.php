@@ -52,7 +52,9 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 	public function getPaymentPart() {
 		$sections = $this->phpWord->getSections();
 		$lastAddedSection = end($sections);
-		$this->billTable = new Bill($lastAddedSection);
+		$this->billTable = new Bill($lastAddedSection, $this->isPrintable());
+
+		$this->addSeparatorContentIfNotPrintable();
 
 		$this->addInformationContentReceipt();
 		$this->addCurrencyContentReceipt();
@@ -93,6 +95,14 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addPlaceholderElement(Cell $cell, Placeholder $element, bool $isReceiptPart) : void {
 		// TODO: implement image placeholders
+	}
+
+	private function addSeparatorContentIfNotPrintable() : void {
+		if (!$this->isPrintable()) {
+			$text = Translation::get('separate', $this->language);
+			$fStyle = self::FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART;
+			$this->billTable->getSeparate()->addText($text, $fStyle);
+		}
 	}
 
 	private function addInformationContentReceipt() : void {
