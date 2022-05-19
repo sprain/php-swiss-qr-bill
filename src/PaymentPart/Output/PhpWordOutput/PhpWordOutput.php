@@ -6,11 +6,8 @@ use PhpOffice\PhpWord\Element\Cell;
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Shared\Converter;
-use PhpOffice\PhpWord\SimpleType\Jc;
-use PhpOffice\PhpWord\SimpleType\LineSpacingRule;
 use Sprain\SwissQrBill\Exception\InvalidPhpWordImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
-use Sprain\SwissQrBill\PaymentPart\Output\Element\Amount;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
@@ -22,17 +19,6 @@ use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 
 final class PhpWordOutput extends AbstractOutput implements OutputInterface {
-
-	const FONT_FAMILY = 'Helvetica';
-	const FONT_STYLE_TITLE = 'SwissBill Title';
-	const FONT_STYLE_HEADING_RECEIPT = 'SwissBill Receipt Heading';
-	const FONT_STYLE_VALUE_RECEIPT = 'SwissBill Receipt Value';
-	const FONT_STYLE_AMOUNT_RECEIPT = 'SwissBill Receipt Amount';
-	const FONT_STYLE_ACCEPTANCE_POINT = 'SwissBill Acceptance point';
-	const FONT_STYLE_HEADING_PAYMENT_PART = 'SwissBill Payment part Heading';
-	const FONT_STYLE_VALUE_PAYMENT_PART = 'SwissBill Payment part Value';
-	const FONT_STYLE_AMOUNT_PAYMENT_PART = 'SwissBill Payment part Amount';
-	const FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART = 'SwissBill Payment part Further information';
 
 	const QR_CODE_SIZE = 4.6;
 
@@ -46,7 +32,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 	) {
 		parent::__construct($qrBill, $language);
 		$this->phpWord = $phpWord;
-		$this->defineFontStyles();
+		FontStyle::defineFontStyles($this->phpWord);
 	}
 
 	public function getPaymentPart() {
@@ -79,18 +65,13 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addTitleElement(Cell $cell, Title $element, bool $isReceiptPart) : void {
 		$text = Translation::get(str_replace("text.", "", $element->getTitle()), $this->language);
-		$fStyle = $isReceiptPart ? self::FONT_STYLE_HEADING_RECEIPT : self::FONT_STYLE_HEADING_PAYMENT_PART;
+		$fStyle = $isReceiptPart ? FontStyle::FONT_STYLE_HEADING_RECEIPT : FontStyle::FONT_STYLE_HEADING_PAYMENT_PART;
 		$cell->addText($text, $fStyle, $fStyle);
 	}
 
-	private function addTextElement(Cell $cell, Text $element, bool $isReceiptPart) : void {
-		$fStyle = $isReceiptPart ? self::FONT_STYLE_VALUE_RECEIPT : self::FONT_STYLE_VALUE_PAYMENT_PART;
+	private function addTextElement(Cell $cell, Text $element) : void {
+		$fStyle = FontStyle::getCurrentText();
 		$this->addElementTextRun($element->getText(), $cell->addTextRun($fStyle), $fStyle);
-	}
-
-	private function addAmountElement(Cell $cell, Amount $element, bool $isReceiptPart) : void {
-		$fStyle = $isReceiptPart ? self::FONT_STYLE_AMOUNT_RECEIPT : self::FONT_STYLE_AMOUNT_PAYMENT_PART;
-		$cell->addText($element->getText(), $fStyle, $fStyle);
 	}
 
 	private function addPlaceholderElement(Cell $cell, Placeholder $element, bool $isReceiptPart) : void {
@@ -100,7 +81,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 	private function addSeparatorContentIfNotPrintable() : void {
 		if (!$this->isPrintable()) {
 			$text = Translation::get('separate', $this->language);
-			$fStyle = self::FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART;
+			$fStyle = FontStyle::FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART;
 			$this->billTable->getSeparate()->addText($text, $fStyle);
 		}
 	}
@@ -111,10 +92,11 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 		$cell = $this->billTable->getReceipt()->getInformationSection();
 		$informationElements = $this->getInformationElementsOfReceipt();
 		$lastKey = array_key_last($informationElements);
+		FontStyle::setCurrentText(FontStyle::FONT_STYLE_VALUE_RECEIPT);
 		foreach ($informationElements as $key => $informationElement) {
 			$this->addContentElement($cell, $informationElement, true);
 			if($informationElement instanceof Text && $key !== $lastKey) {
-				$cell->addText('', self::FONT_STYLE_VALUE_RECEIPT, self::FONT_STYLE_VALUE_RECEIPT);
+				$cell->addText('', FontStyle::FONT_STYLE_VALUE_RECEIPT, FontStyle::FONT_STYLE_VALUE_RECEIPT);
 			}
 		}
 
@@ -127,11 +109,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 		}
 
 		if ($element instanceof Text) {
-			$this->addTextElement($cell, $element, $isReceiptPart);
-		}
-
-		if ($element instanceof Amount) {
-			$this->addAmountElement($cell, $element, $isReceiptPart);
+			$this->addTextElement($cell, $element);
 		}
 
 		if ($element instanceof Placeholder) {
@@ -141,6 +119,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addCurrencyContentReceipt() : void {
 		$cell = $this->billTable->getReceipt()->getAmountSection()->getCurrencyCell();
+		FontStyle::setCurrentText(FontStyle::FONT_STYLE_AMOUNT_RECEIPT);
 		foreach ($this->getCurrencyElements() as $informationElement) {
 			$this->addContentElement($cell, $informationElement, true);
 		}
@@ -148,6 +127,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addAmountContentReceipt() : void {
 		$cell = $this->billTable->getReceipt()->getAmountSection()->getAmountCell();
+		FontStyle::setCurrentText(FontStyle::FONT_STYLE_AMOUNT_RECEIPT);
 		foreach ($this->getAmountElementsReceipt() as $informationElement) {
 			$this->addContentElement($cell, $informationElement, true);
 		}
@@ -155,12 +135,12 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addReceiptTitle() : void {
 		$text = Translation::get('receipt', $this->language);
-		$this->billTable->getReceipt()->getTitleSection()->addText($text, self::FONT_STYLE_TITLE);
+		$this->billTable->getReceipt()->getTitleSection()->addText($text, FontStyle::FONT_STYLE_TITLE);
 	}
 
 	private function addReceiptAcceptancePoint() : void {
 		$text = Translation::get('acceptancePoint', $this->language);
-		$this->billTable->getReceipt()->getAcceptancePointSection()->addText($text, self::FONT_STYLE_ACCEPTANCE_POINT, self::FONT_STYLE_ACCEPTANCE_POINT);
+		$this->billTable->getReceipt()->getAcceptancePointSection()->addText($text, FontStyle::FONT_STYLE_ACCEPTANCE_POINT, FontStyle::FONT_STYLE_ACCEPTANCE_POINT);
 	}
 
 	private function addSwissQrCodeImage() : void {
@@ -174,20 +154,22 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addInformationContent() : void {
 		$text = Translation::get('paymentPart', $this->language);
-		$this->billTable->getPayment()->getTitleSection()->addText($text, self::FONT_STYLE_TITLE);
+		$this->billTable->getPayment()->getTitleSection()->addText($text, FontStyle::FONT_STYLE_TITLE);
 		$cell = $this->billTable->getPayment()->getInformationSection();
 		$informationElements = $this->getInformationElements();
 		$lastKey = array_key_last($informationElements);
+		FontStyle::setCurrentText(FontStyle::FONT_STYLE_VALUE_PAYMENT_PART);
 		foreach ($this->getInformationElements() as $key => $informationElement) {
 			$this->addContentElement($cell, $informationElement);
 			if($informationElement instanceof Text && $key !== $lastKey) {
-				$cell->addText('', self::FONT_STYLE_VALUE_PAYMENT_PART, self::FONT_STYLE_VALUE_PAYMENT_PART);
+				$cell->addText('', FontStyle::FONT_STYLE_VALUE_PAYMENT_PART, FontStyle::FONT_STYLE_VALUE_PAYMENT_PART);
 			}
 		}
 	}
 
 	private function addCurrencyContent() : void {
 		$cell = $this->billTable->getPayment()->getAmountSection()->getCurrencyCell();
+		FontStyle::setCurrentText(FontStyle::FONT_STYLE_AMOUNT_PAYMENT_PART);
 		foreach ($this->getCurrencyElements() as $informationElement) {
 			$this->addContentElement($cell, $informationElement);
 		}
@@ -195,6 +177,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addAmountContent() : void {
 		$cell = $this->billTable->getPayment()->getAmountSection()->getAmountCell();
+		FontStyle::setCurrentText(FontStyle::FONT_STYLE_AMOUNT_PAYMENT_PART);
 		foreach ($this->getAmountElements() as $informationElement) {
 			$this->addContentElement($cell, $informationElement);
 		}
@@ -202,6 +185,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 
 	private function addFurtherInformationContent() : void {
 		$cell = $this->billTable->getPayment()->getFurtherInformationSection();
+		FontStyle::setCurrentText(FontStyle::FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART);
 		foreach ($this->getFurtherInformationElements() as $informationElement) {
 			$this->addContentElement($cell, $informationElement);
 		}
@@ -215,117 +199,6 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface {
 				$textRun->addTextBreak();
 			}
 		}
-	}
-
-	private function defineFontStyles() : void {
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_TITLE,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 11,
-						'bold' => true,
-				]
-		);
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_HEADING_RECEIPT,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 6,
-						'bold' => true,
-				],
-				[
-						'spacing' => Converter::pointToTwip(9),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-				]
-		);
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_VALUE_RECEIPT,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 8,
-				],
-				[
-						'spacing' => Converter::pointToTwip(9),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-				]
-		);
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_AMOUNT_RECEIPT,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 8,
-				],
-				[
-						'spacing' => Converter::pointToTwip(11),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-				]
-		);
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_ACCEPTANCE_POINT,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 6,
-						'bold' => true,
-				],
-				[
-						'spacing' => Converter::pointToTwip(8),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-						'alignment' => Jc::END,
-				]
-		);
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_HEADING_PAYMENT_PART,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 8,
-						'bold' => true,
-				],
-				[
-						'spacing' => Converter::pointToTwip(11),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-				]
-		);
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_VALUE_PAYMENT_PART,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 10,
-				],
-				[
-						'spacing' => Converter::pointToTwip(11),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-				]
-		);
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_AMOUNT_PAYMENT_PART,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 10,
-				],
-				[
-						'spacing' => Converter::pointToTwip(13),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-				]
-		);
-		$this->phpWord->addFontStyle(
-				self::FONT_STYLE_FURTHER_INFORMATION_PAYMENT_PART,
-				[
-						'name' => self::FONT_FAMILY,
-						'size' => 7,
-				],
-				[
-						'spacing' => Converter::pointToTwip(8),
-						'spacingLineRule' => LineSpacingRule::EXACT,
-						'spaceAfter' => 0,
-				]
-		);
 	}
 
 }

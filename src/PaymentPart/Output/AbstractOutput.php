@@ -115,7 +115,7 @@ abstract class AbstractOutput
         $currencyElements = [];
 
         $currencyElements[] = Title::create('text.currency');
-        $currencyElements[] = Amount::create($this->qrBill->getPaymentAmountInformation()->getCurrency());
+        $currencyElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getCurrency());
 
         return $currencyElements;
     }
@@ -129,7 +129,7 @@ abstract class AbstractOutput
         if (null === $this->qrBill->getPaymentAmountInformation()->getAmount()) {
             $amountElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_AMOUNT);
         } else {
-            $amountElements[] = Amount::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
+            $amountElements[] = Text::create($this->qrBill->getPaymentAmountInformation()->getFormattedAmount());
         }
 
         return $amountElements;
