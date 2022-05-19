@@ -35,6 +35,8 @@ class PhpWordOutputTest extends TestCase
 			$file = $variation['file'];
 
 			$phpWord = new \PhpOffice\PhpWord\PhpWord();
+			$phpWord->getDocInfo()->setCreated(strtotime('2022-05-18 00:00:00'));
+			$phpWord->getDocInfo()->setModified(strtotime('2022-05-18 00:00:00'));
 			$phpWord->addSection();
 
 			$output = new PhpWordOutput($qrBill, 'en', $phpWord);
