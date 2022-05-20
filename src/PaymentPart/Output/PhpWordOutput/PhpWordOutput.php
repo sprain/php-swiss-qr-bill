@@ -77,7 +77,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface
         $this->addElementTextRun($element->getText(), $cell->addTextRun($fStyle), $fStyle);
     }
 
-    private function addPlaceholderElement(Cell $cell, Placeholder $element, bool $isReceiptPart) : void
+    private function addPlaceholderElement(Cell $cell, Placeholder $element) : void
     {
         $type = $element->getType();
 
