@@ -6,14 +6,14 @@ use PhpOffice\PhpWord\Shared\Converter;
 
 abstract class PhpWordHelper
 {
-    public static function mmToTwip(int|float $mm) : float|int
+    public static function mmToTwip(int|float $mm) : int
     {
-        return Converter::cmToTwip($mm / 10);
+        return round(Converter::cmToTwip($mm / 10));
     }
 
-    public static function mmToPoint(int|float $mm) : float|int
+    public static function mmToPoint(int|float $mm) : int
     {
-        return Converter::cmToPoint($mm / 10);
+        return round(Converter::cmToPoint($mm / 10));
     }
 
     /**
