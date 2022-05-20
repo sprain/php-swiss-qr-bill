@@ -8,12 +8,12 @@ abstract class PhpWordHelper
 {
     public static function mmToTwip(int|float $mm) : int
     {
-        return round(Converter::cmToTwip($mm / 10));
+        return (int) round(Converter::cmToTwip($mm / 10));
     }
 
     public static function mmToPoint(int|float $mm) : int
     {
-        return round(Converter::cmToPoint($mm / 10));
+        return (int) round(Converter::cmToPoint($mm / 10));
     }
 
     /**
