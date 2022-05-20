@@ -156,7 +156,7 @@ final class PhpWordOutput extends AbstractOutput implements OutputInterface
         }
 
         if ($element instanceof Placeholder) {
-            $this->addPlaceholderElement($cell, $element, $isReceiptPart);
+            $this->addPlaceholderElement($cell, $element);
         }
     }
 
