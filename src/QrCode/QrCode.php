@@ -62,9 +62,24 @@ final class QrCode
         $this->getQrCodeResult()->saveToFile($path);
     }
 
-    public function writeDataUri(): string
+    /**
+     * @deprecated Will be removed in v5. Use getDataUri() instead.
+     */
+    public function writeDataUri()
     {
+        return $this->getDataUri();
+    }
+
+    public function getDataUri(string $format = self::FILE_FORMAT_SVG): string
+    {
+        $this->setWriterByExtension($format);
         return $this->getQrCodeResult()->getDataUri();
+    }
+    
+    public function getAsString(string $format = self::FILE_FORMAT_SVG): string
+    {
+        $this->setWriterByExtension($format);
+        return $this->getQrCodeResult()->getString();
     }
 
     public function getText(): string

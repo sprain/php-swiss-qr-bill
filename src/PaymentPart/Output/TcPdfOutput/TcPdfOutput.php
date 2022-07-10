@@ -103,7 +103,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = self::RIGHT_PART_X + 1 + $this->offsetX;
 
-        $img = base64_decode(preg_replace('#^data:image/[^;]+;base64,#', '', $qrCode->writeDataUri()));
+        $img = $qrCode->getAsString($this->getQrCodeImageFormat());
         $this->tcPdf->$method("@".$img, $xPosQrCode, $yPosQrCode, 46, 46);
     }
 
