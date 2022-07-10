@@ -50,5 +50,5 @@ The repository contains the official specifications the library is based on:
 
 For more official information about the new standards see
 
-- [https://www.paymentstandards.ch/en/home/roadmap/payment-slips.html](https://www.paymentstandards.ch/en/home/roadmap/payment-slips.html)
+- [https://www.paymentstandards.ch/de/shared/communication-grid.html](https://www.paymentstandards.ch/de/shared/communication-grid.html)
 - [https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html](https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html)
