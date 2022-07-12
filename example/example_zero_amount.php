@@ -6,7 +6,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 // This is an example how to create a qr bill with an amount of 0.00 and
 // the note "do not use for payment". This is used for "Avisierungen".
-// See https://www.paymentstandards.ch/de/shared/communication-grid/avis.html
 //
 // The specifics in this case are:
 // - set an amount of 0.00
