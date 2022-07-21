@@ -23,12 +23,12 @@ final class FpdfOutputTest extends TestCase
             [
                 'printable' => false,
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.pdf'
+                'file' => dirname(__DIR__, 3). '/TestData/FpdfOutput/' . $name . '.pdf'
             ],
             [
                 'printable' => true,
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
+                'file' => dirname(__DIR__, 3). '/TestData/FpdfOutput/' . $name . '.print.pdf'
             ]
         ];
 
