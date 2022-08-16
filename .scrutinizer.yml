@@ -7,7 +7,7 @@ filter:
 
 build:
   environment:
-    php: 8.0.12
+    php: 8.1.9
   nodes:
     analysis:
       tests:
