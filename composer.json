@@ -22,6 +22,9 @@
         "phpstan/phpstan": "^1.2",
         "tecnickcom/tcpdf": "^6.3.2"
     },
+    "conflict": {
+        "khanamiryan/qrcode-detector-decoder": "1.0.6"
+    },
     "suggest": {
         "tecnickcom/tcpdf": "Needed to create pdfs with TcPdfOutput",
         "fpdf/fpdf": "Needed to create pdfs with FpdfOutput"
