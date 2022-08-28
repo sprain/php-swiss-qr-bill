@@ -34,7 +34,7 @@ See https://github.com/sprain/php-swiss-qr-bill/issues/129
 
 ## Getting help
 
-Do you need hmore elp using this library?
+Do you need more help using this library?
 
 * [Search the existing and closed issues](https://github.com/sprain/php-swiss-qr-bill/issues?q=is%3Aissue) to see if you find your answer there.
 * If you still need help, you may [create an issue](https://github.com/sprain/php-swiss-qr-bill/issues) yourself to ask your question.
