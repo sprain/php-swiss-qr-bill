@@ -15,22 +15,38 @@ composer require sprain/swiss-qr-bill
 
 Then have a look at [example/example.php](example/example.php).
 
+## FAQs
+* **Why is my IBAN not working?**<br>
+A typical QR bill ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example.php)) requires a special QR IBAN. You can get yours from your bank. A classic IBAN can be used for QR bills with a SCOR reference ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example_scor.php)) or no reference number at all ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example_minimal.php)).
 
-## Versioning
+* **How do I recognize a QR IBAN?**<br>
+See https://github.com/sprain/php-swiss-qr-bill/issues/182#issuecomment-1229539977
 
-[Semantic versioning](https://semver.org/) is used for this library.
+* **How do I create QR bills for international IBANs?**<br>
+You can't. The QR bill by specification only supports IBANs from Switzerland and Liechtenstein.
 
-In addition, a minor version will always be published if any visible change in the output of the qr code or the payment part takes place, even if it could be considered to be just a bugfix.
+* **How do I support currencies other than CHF or EUR?**<br>
+You can't. The QR bill by specification only supports CHF and EUR.
+
+* **How do I make my QR bills payable by Twint?**<br>
+See https://github.com/sprain/php-swiss-qr-bill/issues/129 
+
 
 ## Getting help
 
-Do you need help using this library?
+Do you need hmore elp using this library?
 
 * [Search the existing and closed issues](https://github.com/sprain/php-swiss-qr-bill/issues?q=is%3Aissue) to see if you find your answer there.
 * If you still need help, you may [create an issue](https://github.com/sprain/php-swiss-qr-bill/issues) yourself to ask your question.
 
 Please note that the maintainer of this library will not provide any support by email.
 The beauty of open source software lies in the fact that everybody can benefit from each other. Therefore questions will only be answered in public.
+
+## Versioning
+
+[Semantic versioning](https://semver.org/) is used for this library.
+
+In addition, a minor version will always be published if any visible change in the output of the qr code or the payment part takes place, even if it could be considered to be just a bugfix.
 
 ## Support the project
 
