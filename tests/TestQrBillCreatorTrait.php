@@ -48,6 +48,16 @@ trait TestQrBillCreatorTrait
                     'ultimateDebtor'
                 ])
             ],
+            ['qr-payment-information-without-amount-and-long-addresses',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditorLong',
+                    'paymentAmountInformationWithoutAmount',
+                    'paymentReferenceQr',
+                    'ultimateDebtorLong'
+                ])
+            ],
             ['qr-payment-information-zero-amount',
                 $this->createQrBill([
                     'header',
@@ -199,6 +209,11 @@ trait TestQrBillCreatorTrait
         $qrBill->setCreditor($this->structuredAddress());
     }
 
+    public function creditorLong(QrBill &$qrBill)
+    {
+        $qrBill->setCreditor($this->longAddress());
+    }
+
     public function invalidCreditor(QrBill &$qrBill)
     {
         $qrBill->setCreditor($this->invalidAddress());
@@ -275,6 +290,11 @@ trait TestQrBillCreatorTrait
         $qrBill->setUltimateDebtor($this->combinedAddress());
     }
 
+    public function ultimateDebtorLong(QrBill &$qrBill)
+    {
+        $qrBill->setUltimateDebtor($this->longAddress());
+    }
+
     public function internationalUltimateDebtor(QrBill &$qrBill)
     {
         $qrBill->setUltimateDebtor(CombinedAddress::create(
@@ -334,6 +354,16 @@ trait TestQrBillCreatorTrait
             'Thomas LeClaire',
             'Rue examplaire 22a',
             '1000 Lausanne',
+            'CH'
+        );
+    }
+
+    public function longAddress()
+    {
+        return CombinedAddress::create(
+            'Heaps of Characters International Trading Company of Switzerland GmbH',
+            'Street of the Mighty Long Names Where Heroes Live and Villans Die 75',
+            '1000 Lausanne au bord du lac, où le soleil brille encore la nuit',
             'CH'
         );
     }
