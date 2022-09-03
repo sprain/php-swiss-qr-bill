@@ -177,7 +177,7 @@ final class CombinedAddressTest extends TestCase
                     'Thomas Mustermann',
                     'Musterweg 22a',
                     '9490 Vaduz',
-                    'FL'
+                    'LI'
                 ),
                 "Thomas Mustermann\nMusterweg 22a\n9490 Vaduz"
             ],

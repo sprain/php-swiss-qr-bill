@@ -252,7 +252,7 @@ final class StructuredAddressTest extends TestCase
                     'Thomas Mustermann',
                     '9490',
                     'Vaduz',
-                    'FL'
+                    'LI'
                 ),
                 "Thomas Mustermann\n9490 Vaduz"
             ],
