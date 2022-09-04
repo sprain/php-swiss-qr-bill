@@ -137,7 +137,7 @@ final class StructuredAddress extends Address implements AddressInterface, SelfV
             $lines[2] = $this->getStreet();
 
             if ($this->getBuildingNumber()) {
-                $lines[2] .= " " . $this->getBuildingNumber();
+                $lines[2] .= ' ' . $this->getBuildingNumber();
             }
         }
 
