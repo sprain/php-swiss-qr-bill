@@ -91,7 +91,7 @@ abstract class AbstractOutput
         $informationElements = [];
 
         $informationElements[] = Title::create('text.creditor');
-        $informationElements[] = Text::create($this->qrBill->getCreditorInformation()->getFormattedIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress());
+        $informationElements[] = Text::create($this->qrBill->getCreditorInformation()->getFormattedIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress(true));
 
         if ($this->qrBill->getPaymentReference()->getType() !== PaymentReference::TYPE_NON) {
             $informationElements[] = Title::create('text.reference');
