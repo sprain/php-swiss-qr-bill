@@ -58,6 +58,15 @@ trait TestQrBillCreatorTrait
                     'ultimateDebtorLong'
                 ])
             ],
+            ['qr-payment-information-with-mediumlong-creditor-and-unknown-debtor',
+                $this->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditorMediumLong',
+                    'paymentAmountInformationWithoutAmount',
+                    'paymentReferenceQr'
+                ])
+            ],
             ['qr-payment-information-zero-amount',
                 $this->createQrBill([
                     'header',
@@ -209,6 +218,11 @@ trait TestQrBillCreatorTrait
         $qrBill->setCreditor($this->structuredAddress());
     }
 
+    public function creditorMediumLong(QrBill &$qrBill)
+    {
+        $qrBill->setCreditor($this->mediumLongAddress());
+    }
+
     public function creditorLong(QrBill &$qrBill)
     {
         $qrBill->setCreditor($this->longAddress());
@@ -352,6 +366,16 @@ trait TestQrBillCreatorTrait
     {
         return CombinedAddress::create(
             'Thomas LeClaire',
+            'Rue examplaire 22a',
+            '1000 Lausanne',
+            'CH'
+        );
+    }
+
+    public function mediumLongAddress()
+    {
+        return CombinedAddress::create(
+            'Heaps of Characters International Trading Company of Switzerland GmbH',
             'Rue examplaire 22a',
             '1000 Lausanne',
             'CH'
