@@ -265,6 +265,17 @@ final class StructuredAddressTest extends TestCase
                 ),
                 "Thomas Mustermann\nDE-80331 München"
             ],
+            [
+                $address = StructuredAddress::createWithStreet(
+                    "Thomas\nMustermann",
+                    "Musterweg\t\ram\rRhein",
+                    '12',
+                    '80331',
+                    'München',
+                    ' DE '
+                ),
+                "Thomas Mustermann\nMusterweg am Rhein 12\nDE-80331 München"
+            ],
 
         ];
     }

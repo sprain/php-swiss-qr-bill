@@ -4,6 +4,7 @@ namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -55,12 +56,12 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
         string $city,
         string $country
     ) {
-        $this->name = $name;
-        $this->street = $street;
-        $this->buildingNumber = $buildingNumber;
-        $this->postalCode = $postalCode;
-        $this->city = $city;
-        $this->country = strtoupper($country);
+        $this->name = self::normalizeString($name);
+        $this->street = self::normalizeString($street);
+        $this->buildingNumber = self::normalizeString($buildingNumber);
+        $this->postalCode = self::normalizeString($postalCode);
+        $this->city = self::normalizeString($city);
+        $this->country = strtoupper(self::normalizeString($country));
     }
 
     public static function createWithoutStreet(
@@ -200,5 +201,18 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
             new Assert\NotBlank(),
             new Assert\Country()
         ]);
+    }
+
+    private static function normalizeString(?string $string): ?string
+    {
+        if (is_null($string)) {
+            return null;
+        }
+
+        $string = trim($string);
+        $string = StringModifier::replaceLineBreaksAndTabsWithSpace($string);
+        $string = StringModifier::replaceMultipleSpacesWithOne($string);
+
+        return $string;
     }
 }

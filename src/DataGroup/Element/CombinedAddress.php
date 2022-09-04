@@ -144,7 +144,7 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         ]);
     }
 
-    private function normalizeString(?string $string): ?string
+    private static function normalizeString(?string $string): ?string
     {
         if (is_null($string)) {
             return null;
