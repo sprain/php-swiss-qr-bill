@@ -100,7 +100,7 @@ abstract class AbstractOutput
 
         if ($this->qrBill->getUltimateDebtor()) {
             $informationElements[] = Title::create('text.payableBy');
-            $informationElements[] = Text::create($this->qrBill->getUltimateDebtor()->getFullAddress());
+            $informationElements[] = Text::create($this->qrBill->getUltimateDebtor()->getFullAddress(true));
         } else {
             $informationElements[] = Title::create('text.payableByName');
             $informationElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT);
