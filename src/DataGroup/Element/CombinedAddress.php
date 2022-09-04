@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
+use Sprain\SwissQrBill\DataGroup\Element\Abstracts\Address;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\String\StringAnalyzer;
 use Sprain\SwissQrBill\String\StringModifier;
@@ -11,7 +12,7 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
+class CombinedAddress extends Address implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
     use SelfValidatableTrait;
 
@@ -87,7 +88,7 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         return $this->country;
     }
 
-    public function getFullAddress($forReceipt = false): string
+    public function getFullAddress(bool $forReceipt = false): string
     {
         $lines[1] = $this->getName();
 
@@ -147,58 +148,5 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
             new Assert\NotBlank(),
             new Assert\Country()
         ]);
-    }
-
-    private static function normalizeString(?string $string): ?string
-    {
-        if (is_null($string)) {
-            return null;
-        }
-
-        $string = trim($string);
-        $string = StringModifier::replaceLineBreaksAndTabsWithSpace($string);
-        $string = StringModifier::replaceMultipleSpacesWithOne($string);
-
-        return $string;
-    }
-
-    private static function willBeMoreThanOneLineOnReceipt(string $string): bool
-    {
-        $words = StringAnalyzer::getSingleWords($string);
-        $count = 0;
-
-        foreach($words as $word) {
-            $count += StringAnalyzer::countCharacters($word);
-            $count++;
-
-            if ($count > 40) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private static function clearMultilines(array $lines): array
-    {
-        $noOfLongLines = 0;
-
-        foreach($lines as $line) {
-            if (self::willBeMoreThanOneLineOnReceipt($line)) {
-                $noOfLongLines++;
-            }
-        }
-
-        if (0 < $noOfLongLines) {
-            if (isset($lines[2])) {
-                unset($lines[2]);
-            }
-        }
-
-        if (2 == $noOfLongLines) {
-            unset($lines[3]);
-        }
-
-        return $lines;
     }
 }

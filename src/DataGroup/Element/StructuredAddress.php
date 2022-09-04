@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
+use Sprain\SwissQrBill\DataGroup\Element\Abstracts\Address;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
@@ -10,7 +11,7 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-final class StructuredAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
+final class StructuredAddress extends Address implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
     use SelfValidatableTrait;
 
@@ -128,25 +129,29 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
         return $this->country;
     }
 
-    public function getFullAddress(): string
+    public function getFullAddress(bool $forReceipt = false): string
     {
-        $address = $this->getName();
+        $lines[1] = $this->getName();
 
         if ($this->getStreet()) {
-            $address .= "\n" . $this->getStreet();
+            $lines[2] = "\n" . $this->getStreet();
 
             if ($this->getBuildingNumber()) {
-                $address .= " " . $this->getBuildingNumber();
+                $lines[2] .= " " . $this->getBuildingNumber();
             }
         }
 
         if (in_array($this->getCountry(), ['CH', 'LI'])) {
-            $address .= sprintf("\n%s %s", $this->getPostalCode(), $this->getCity());
+            $lines[3] = sprintf("\n%s %s", $this->getPostalCode(), $this->getCity());
         } else {
-            $address .= sprintf("\n%s-%s %s", $this->getCountry(), $this->getPostalCode(), $this->getCity());
+            $lines[3] = sprintf("\n%s-%s %s", $this->getCountry(), $this->getPostalCode(), $this->getCity());
         }
 
-        return $address;
+        if ($forReceipt) {
+            $lines = self::clearMultilines($lines);
+        }
+
+        return implode("\n", $lines);
     }
 
     public function getQrCodeData(): array
@@ -201,18 +206,5 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
             new Assert\NotBlank(),
             new Assert\Country()
         ]);
-    }
-
-    private static function normalizeString(?string $string): ?string
-    {
-        if (is_null($string)) {
-            return null;
-        }
-
-        $string = trim($string);
-        $string = StringModifier::replaceLineBreaksAndTabsWithSpace($string);
-        $string = StringModifier::replaceMultipleSpacesWithOne($string);
-
-        return $string;
     }
 }

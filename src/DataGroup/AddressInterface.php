@@ -11,5 +11,5 @@ interface AddressInterface
 
     public function getCountry(): ?string;
 
-    public function getFullAddress(): string;
+    public function getFullAddress(bool $forReceipt = false): string;
 }
