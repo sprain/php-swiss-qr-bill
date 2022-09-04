@@ -7,6 +7,8 @@ namespace Sprain\SwissQrBill\DataGroup\Element\Abstracts;
 
 abstract class Address
 {
+    private const MAX_CHARS_PER_LINE_ON_RECEIPT = 40;
+
     protected static function normalizeString(?string $string): ?string
     {
         if (is_null($string)) {
@@ -52,7 +54,7 @@ abstract class Address
             $count += StringAnalyzer::countCharacters($word);
             $count++;
 
-            if ($count > 40) {
+            if ($count > self::MAX_CHARS_PER_LINE_ON_RECEIPT) {
                 return true;
             }
         }
