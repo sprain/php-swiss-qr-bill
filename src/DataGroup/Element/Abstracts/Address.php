@@ -1,9 +1,9 @@
 <?php
 
+namespace Sprain\SwissQrBill\DataGroup\Element\Abstracts;
+
 use Sprain\SwissQrBill\String\StringAnalyzer;
 use Sprain\SwissQrBill\String\StringModifier;
-
-namespace Sprain\SwissQrBill\DataGroup\Element\Abstracts;
 
 abstract class Address
 {
@@ -38,7 +38,7 @@ abstract class Address
             }
         }
 
-        if (2 == $noOfLongLines) {
+        if (1 < $noOfLongLines) {
             unset($lines[3]);
         }
 
