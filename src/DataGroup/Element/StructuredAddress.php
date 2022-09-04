@@ -134,7 +134,7 @@ final class StructuredAddress extends Address implements AddressInterface, SelfV
         $lines[1] = $this->getName();
 
         if ($this->getStreet()) {
-            $lines[2] = "\n" . $this->getStreet();
+            $lines[2] = $this->getStreet();
 
             if ($this->getBuildingNumber()) {
                 $lines[2] .= " " . $this->getBuildingNumber();
@@ -142,9 +142,9 @@ final class StructuredAddress extends Address implements AddressInterface, SelfV
         }
 
         if (in_array($this->getCountry(), ['CH', 'LI'])) {
-            $lines[3] = sprintf("\n%s %s", $this->getPostalCode(), $this->getCity());
+            $lines[3] = sprintf("%s %s", $this->getPostalCode(), $this->getCity());
         } else {
-            $lines[3] = sprintf("\n%s-%s %s", $this->getCountry(), $this->getPostalCode(), $this->getCity());
+            $lines[3] = sprintf("%s-%s %s", $this->getCountry(), $this->getPostalCode(), $this->getCity());
         }
 
         if ($forReceipt) {
