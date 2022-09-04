@@ -4,6 +4,7 @@ namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -45,10 +46,10 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         string $addressLine2,
         string $country
     ) {
-        $this->name = $name;
-        $this->addressLine1 = $addressLine1;
-        $this->addressLine2 = $addressLine2;
-        $this->country = strtoupper($country);
+        $this->name = self::normalizeString($name);
+        $this->addressLine1 = self::normalizeString($addressLine1);
+        $this->addressLine2 = self::normalizeString($addressLine2);
+        $this->country = strtoupper(self::normalizeString($country));
     }
 
     public static function create(
@@ -141,5 +142,18 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
             new Assert\NotBlank(),
             new Assert\Country()
         ]);
+    }
+
+    private function normalizeString(?string $string): ?string
+    {
+        if (is_null($string)) {
+            return null;
+        }
+
+        $string = trim($string);
+        $string = StringModifier::replaceLineBreaksAndTabsWithString($string);
+        $string = StringModifier::replaceMultipleSpacesWithOne($string);
+
+        return $string;
     }
 }

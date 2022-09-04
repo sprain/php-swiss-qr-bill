@@ -190,6 +190,15 @@ final class CombinedAddressTest extends TestCase
                 ),
                 "Thomas Mustermann\nMusterweg 22a\nDE-80331 München"
             ],
+            [
+                CombinedAddress::create(
+                    "Thomas\nMustermann",
+                    "Musterweg\t22a",
+                    "80331\r München",
+                    ' DE '
+                ),
+                "Thomas Mustermann\nMusterweg 22a\nDE-80331 München"
+            ],
         ];
     }
 }
