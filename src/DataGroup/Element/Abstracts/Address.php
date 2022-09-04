@@ -16,7 +16,7 @@ abstract class Address
         }
 
         $string = trim($string);
-        $string = StringModifier::replaceLineBreaksAndTabsWithSpace($string);
+        $string = StringModifier::replaceLineBreaksAndTabsWithSpaces($string);
         $string = StringModifier::replaceMultipleSpacesWithOne($string);
 
         return $string;
