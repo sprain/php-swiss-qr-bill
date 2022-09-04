@@ -32,13 +32,13 @@ abstract class Address
             }
         }
 
-        if (0 < $noOfLongLines) {
+        if ($noOfLongLines > 0) {
             if (isset($lines[2])) {
                 unset($lines[2]);
             }
         }
 
-        if (1 < $noOfLongLines) {
+        if ($noOfLongLines > 1) {
             unset($lines[3]);
         }
 
