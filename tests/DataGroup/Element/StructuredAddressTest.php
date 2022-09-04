@@ -217,7 +217,7 @@ final class StructuredAddressTest extends TestCase
     {
         return [
             [
-                $address = StructuredAddress::createWithStreet(
+                StructuredAddress::createWithStreet(
                     'Thomas Mustermann',
                     'Musterweg',
                     '22a',
@@ -228,7 +228,7 @@ final class StructuredAddressTest extends TestCase
                 "Thomas Mustermann\nMusterweg 22a\n1000 Lausanne"
             ],
             [
-                $address = StructuredAddress::createWithStreet(
+                StructuredAddress::createWithStreet(
                     'Thomas Mustermann',
                     'Musterweg',
                     null,
@@ -239,7 +239,7 @@ final class StructuredAddressTest extends TestCase
                 "Thomas Mustermann\nMusterweg\n1000 Lausanne"
             ],
             [
-                $address = StructuredAddress::createWithoutStreet(
+                StructuredAddress::createWithoutStreet(
                     'Thomas Mustermann',
                     '1000',
                     'Lausanne',
@@ -248,7 +248,7 @@ final class StructuredAddressTest extends TestCase
                 "Thomas Mustermann\n1000 Lausanne"
             ],
             [
-                $address = StructuredAddress::createWithoutStreet(
+                StructuredAddress::createWithoutStreet(
                     'Thomas Mustermann',
                     '9490',
                     'Vaduz',
@@ -257,7 +257,7 @@ final class StructuredAddressTest extends TestCase
                 "Thomas Mustermann\n9490 Vaduz"
             ],
             [
-                $address = StructuredAddress::createWithoutStreet(
+                StructuredAddress::createWithoutStreet(
                     'Thomas Mustermann',
                     '80331',
                     'München',
@@ -266,7 +266,7 @@ final class StructuredAddressTest extends TestCase
                 "Thomas Mustermann\nDE-80331 München"
             ],
             [
-                $address = StructuredAddress::createWithStreet(
+                StructuredAddress::createWithStreet(
                     "Thomas\nMustermann",
                     "Musterweg\t\ram\rRhein",
                     '12',
@@ -276,7 +276,125 @@ final class StructuredAddressTest extends TestCase
                 ),
                 "Thomas Mustermann\nMusterweg am Rhein 12\nDE-80331 München"
             ],
+            [
+                StructuredAddress::createWithStreet(
+                    'Heaps of Characters International Trading Company of Switzerland GmbH',
+                    'Street of the Mighty Long Names Where Heroes Live and Villans Die',
+                    '75',
+                    '1000',
+                    'Lausanne au bord du lac, où le soleil brille encore la nuit',
+                    'CH'
+                ),
+                "Heaps of Characters International Trading Company of Switzerland GmbH\nStreet of the Mighty Long Names Where Heroes Live and Villans Die 75\n1000 Lausanne au bord du lac, où le soleil brille encore la nuit"
+            ],
+            [
+                StructuredAddress::createWithStreet(
+                    'Heaps of Characters International Trading Company of Switzerland GmbH',
+                    'Rue examplaire',
+        '22a',
+                    '1000',
+                    'Lausanne',
+                    'CH'
+                ),
+                "Heaps of Characters International Trading Company of Switzerland GmbH\nRue examplaire 22a\n1000 Lausanne"
+            ],
 
+        ];
+    }
+
+    /**
+     * @dataProvider addressProviderReceipt
+     */
+    public function testFullAddressStringForReceipt(StructuredAddress $address, $expected): void
+    {
+        $this->assertSame($expected, $address->getFullAddress(true));
+    }
+
+    public function addressProviderReceipt(): array
+    {
+        return [
+            [
+                StructuredAddress::createWithStreet(
+                    'Thomas Mustermann',
+                    'Musterweg',
+                    '22a',
+                    '1000',
+                    'Lausanne',
+                    'CH'
+                ),
+                "Thomas Mustermann\nMusterweg 22a\n1000 Lausanne"
+            ],
+            [
+                StructuredAddress::createWithStreet(
+                    'Thomas Mustermann',
+                    'Musterweg',
+                    null,
+                    '1000',
+                    'Lausanne',
+                    'CH'
+                ),
+                "Thomas Mustermann\nMusterweg\n1000 Lausanne"
+            ],
+            [
+                StructuredAddress::createWithoutStreet(
+                    'Thomas Mustermann',
+                    '1000',
+                    'Lausanne',
+                    'CH'
+                ),
+                "Thomas Mustermann\n1000 Lausanne"
+            ],
+            [
+                StructuredAddress::createWithoutStreet(
+                    'Thomas Mustermann',
+                    '9490',
+                    'Vaduz',
+                    'LI'
+                ),
+                "Thomas Mustermann\n9490 Vaduz"
+            ],
+            [
+                StructuredAddress::createWithoutStreet(
+                    'Thomas Mustermann',
+                    '80331',
+                    'München',
+                    'DE'
+                ),
+                "Thomas Mustermann\nDE-80331 München"
+            ],
+            [
+                StructuredAddress::createWithStreet(
+                    "Thomas\nMustermann",
+                    "Musterweg\t\ram\rRhein",
+                    '12',
+                    '80331',
+                    'München',
+                    ' DE '
+                ),
+                "Thomas Mustermann\nMusterweg am Rhein 12\nDE-80331 München"
+            ],
+            [
+                StructuredAddress::createWithStreet(
+                    'Heaps of Characters International Trading Company of Switzerland GmbH',
+                    'Street of the Mighty Long Names Where Heroes Live and Villans Die',
+                    '75',
+                    '1000',
+                    'Lausanne au bord du lac, où le soleil brille encore la nuit',
+                    'CH'
+                ),
+                "Heaps of Characters International Trading Company of Switzerland GmbH"
+            ],
+            [
+                StructuredAddress::createWithStreet(
+                    'Heaps of Characters International Trading Company of Switzerland GmbH',
+                    'Rue examplaire',
+                    '22a',
+                    '1000',
+                    'Lausanne',
+                    'CH'
+                ),
+                "Heaps of Characters International Trading Company of Switzerland GmbH\n1000 Lausanne"
+            ],
         ];
     }
 }
