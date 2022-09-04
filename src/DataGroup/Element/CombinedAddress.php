@@ -151,7 +151,7 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         }
 
         $string = trim($string);
-        $string = StringModifier::replaceLineBreaksAndTabsWithString($string);
+        $string = StringModifier::replaceLineBreaksAndTabsWithSpace($string);
         $string = StringModifier::replaceMultipleSpacesWithOne($string);
 
         return $string;

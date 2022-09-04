@@ -14,7 +14,7 @@ final class StringModifierTest extends TestCase
     {
         $this->assertSame(
             $expectedResult,
-            StringModifier::replaceLineBreaksAndTabsWithString($string)
+            StringModifier::replaceLineBreaksAndTabsWithSpace($string)
         );
     }
 
