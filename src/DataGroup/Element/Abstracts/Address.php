@@ -5,6 +5,9 @@ namespace Sprain\SwissQrBill\DataGroup\Element\Abstracts;
 use Sprain\SwissQrBill\String\StringAnalyzer;
 use Sprain\SwissQrBill\String\StringModifier;
 
+/**
+ * @internal
+ */
 abstract class Address
 {
     private const MAX_CHARS_PER_LINE_ON_RECEIPT = 40;
