@@ -26,7 +26,7 @@ abstract class Address
     {
         $noOfLongLines = 0;
 
-        foreach($lines as $line) {
+        foreach ($lines as $line) {
             if (self::willBeMoreThanOneLineOnReceipt($line)) {
                 $noOfLongLines++;
             }
@@ -50,7 +50,7 @@ abstract class Address
         $words = StringAnalyzer::getSingleWords($string);
         $count = 0;
 
-        foreach($words as $word) {
+        foreach ($words as $word) {
             $count += StringAnalyzer::countCharacters($word);
             $count++;
 
