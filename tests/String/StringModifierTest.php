@@ -8,23 +8,23 @@ use Sprain\SwissQrBill\String\StringModifier;
 final class StringModifierTest extends TestCase
 {
     /**
-     * @dataProvider lineBreaksProvider
+     * @dataProvider lineBreaksAndTabsProvider
      */
-    public function testRemoveLineBreaks(?string $string, string $expectedResult): void
+    public function testRemoveLineBreaksAndTabs(?string $string, string $expectedResult): void
     {
         $this->assertSame(
             $expectedResult,
-            StringModifier::replaceLineBreaksWithString($string)
+            StringModifier::replaceLineBreaksAndTabsWithString($string)
         );
     }
 
-    public function lineBreaksProvider(): array
+    public function lineBreaksAndTabsProvider(): array
     {
         return [
             [null, ''],
             ["foo\nbar\rbaz\r\n", "foo bar baz  "],
-            ["\n\nfoo\nbar\nbaz\n\n", "  foo bar baz  "],
-            ["\n\nfoo\n\nbar\n\nbaz\n\n", "  foo  bar  baz  "],
+            ["\n\nfoo\nbar\tbaz\n\n", "  foo bar baz  "],
+            ["\n\nfoo\n\nbar\t\nbaz\n\n", "  foo  bar  baz  "],
         ];
     }
 
