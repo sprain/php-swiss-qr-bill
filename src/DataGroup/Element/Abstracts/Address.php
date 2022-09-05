@@ -50,18 +50,6 @@ abstract class Address
 
     private static function willBeMoreThanOneLineOnReceipt(string $string): bool
     {
-        $words = StringAnalyzer::getSingleWords($string);
-        $count = 0;
-
-        foreach ($words as $word) {
-            $count += StringAnalyzer::countCharacters($word);
-            $count++;
-
-            if ($count > self::MAX_CHARS_PER_LINE_ON_RECEIPT) {
-                return true;
-            }
-        }
-
-        return false;
+        return mb_strlen($string) > self::MAX_CHARS_PER_LINE_ON_RECEIPT;
     }
 }
