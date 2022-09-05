@@ -3,13 +3,16 @@
 namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
+use Sprain\SwissQrBill\DataGroup\Element\Abstracts\Address;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\String\StringAnalyzer;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
+class CombinedAddress extends Address implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
     use SelfValidatableTrait;
 
@@ -45,10 +48,10 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         string $addressLine2,
         string $country
     ) {
-        $this->name = $name;
-        $this->addressLine1 = $addressLine1;
-        $this->addressLine2 = $addressLine2;
-        $this->country = strtoupper($country);
+        $this->name = self::normalizeString($name);
+        $this->addressLine1 = self::normalizeString($addressLine1);
+        $this->addressLine2 = self::normalizeString($addressLine2);
+        $this->country = strtoupper(self::normalizeString($country));
     }
 
     public static function create(
@@ -85,21 +88,25 @@ class CombinedAddress implements AddressInterface, SelfValidatableInterface, QrC
         return $this->country;
     }
 
-    public function getFullAddress(): string
+    public function getFullAddress(bool $forReceipt = false): string
     {
-        $address = $this->getName();
+        $lines[1] = $this->getName();
 
         if ($this->getAddressLine1()) {
-            $address .= "\n" . $this->getAddressLine1();
+            $lines[2] = $this->getAddressLine1();
         }
 
         if (in_array($this->getCountry(), ['CH', 'LI'])) {
-            $address .= "\n" . $this->getAddressLine2();
+            $lines[3] = $this->getAddressLine2();
         } else {
-            $address .= sprintf("\n%s-%s", $this->getCountry(), $this->getAddressLine2());
+            $lines[3] = sprintf("%s-%s", $this->getCountry(), $this->getAddressLine2());
         }
 
-        return $address;
+        if ($forReceipt) {
+            $lines = self::clearMultilines($lines);
+        }
+
+        return implode("\n", $lines);
     }
 
     public function getQrCodeData(): array

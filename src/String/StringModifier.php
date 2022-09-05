@@ -7,11 +7,11 @@ namespace Sprain\SwissQrBill\String;
  */
 final class StringModifier
 {
-    public static function replaceLineBreaksWithString(?string $string): string
+    public static function replaceLineBreaksAndTabsWithSpaces(?string $string): string
     {
         return is_null($string)
             ? ''
-            : str_replace(["\r", "\n"], ' ', $string);
+            : str_replace(["\r", "\n", "\t"], ' ', $string);
     }
 
     public static function replaceMultipleSpacesWithOne(?string $string): string

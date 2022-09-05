@@ -91,7 +91,7 @@ abstract class AbstractOutput
         $informationElements = [];
 
         $informationElements[] = Title::create('text.creditor');
-        $informationElements[] = Text::create($this->qrBill->getCreditorInformation()->getFormattedIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress());
+        $informationElements[] = Text::create($this->qrBill->getCreditorInformation()->getFormattedIban() . "\n" . $this->qrBill->getCreditor()->getFullAddress(true));
 
         if ($this->qrBill->getPaymentReference()->getType() !== PaymentReference::TYPE_NON) {
             $informationElements[] = Title::create('text.reference');
@@ -100,7 +100,7 @@ abstract class AbstractOutput
 
         if ($this->qrBill->getUltimateDebtor()) {
             $informationElements[] = Title::create('text.payableBy');
-            $informationElements[] = Text::create($this->qrBill->getUltimateDebtor()->getFullAddress());
+            $informationElements[] = Text::create($this->qrBill->getUltimateDebtor()->getFullAddress(true));
         } else {
             $informationElements[] = Title::create('text.payableByName');
             $informationElements[] = Placeholder::create(Placeholder::PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT);
