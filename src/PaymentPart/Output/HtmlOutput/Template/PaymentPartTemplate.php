@@ -9,11 +9,11 @@ class PaymentPartTemplate
 #qr-bill {
 	box-sizing: border-box;
 	border-collapse: collapse;
-	color: #000;
+	color: #000 !important;
 }
 
 #qr-bill * {
-	font-family: Arial, Frutiger, Helvetica, "Liberation Sans";
+	font-family: Arial, Frutiger, Helvetica, "Liberation Sans"  !important;
 }
 
 #qr-bill img.qr-bill-placeholder {
@@ -22,7 +22,7 @@ class PaymentPartTemplate
 
 #qr-bill-separate-info {
     text-align: center;
-    font-size: 8pt;
+    font-size: 8pt !important;
     line-height: 9pt;
 	border-bottom: 0.75pt solid black;
 	height: 5mm;
@@ -31,28 +31,28 @@ class PaymentPartTemplate
 
 /* h1 / h2 */
 #qr-bill h1 {
-	font-size: 11pt;
-	font-weight: bold;
+	font-size: 11pt !important;
+	font-weight: bold !important;
 	margin: 0;
 	padding: 0;
 	height: 7mm;
 }
 
 #qr-bill h2 {
-	font-weight: bold;
+	font-weight: bold !important;
 	margin: 0;
 	padding: 0;
 }
 
 #qr-bill-payment-part h2 {
-	font-size: 8pt;
-	line-height: 11pt;	
+	font-size: 8pt !important;
+	line-height: 11pt !important;	
     margin-top: 11pt;
 }
 
 #qr-bill-receipt h2 {
-	font-size: 6pt;
-	line-height: 8pt;	
+	font-size: 6pt !important;
+	line-height: 8pt !important;	
     margin-top: 8pt;
 }
 
@@ -63,32 +63,32 @@ class PaymentPartTemplate
 
 /* p */
 #qr-bill p {
-	font-weight: normal;
+	font-weight: normal !important;
 	margin: 0;
 	padding: 0;
 }
 
 #qr-bill-receipt p {
-	font-size: 8pt;
-	line-height: 9pt;
+	font-size: 8pt !important;
+	line-height: 9pt !important;
 }
 
 #qr-bill-payment-part p {
-	font-size: 10pt;
-	line-height: 11pt;
+	font-size: 10pt !important;
+	line-height: 11pt !important;
 }
 
 #qr-bill-amount-area-receipt p{
-    line-height: 11pt;
+    line-height: 11pt !important;
 }
 
 #qr-bill-amount-area p{
-    line-height: 13pt;
+    line-height: 13pt !important;
 }
 
 #qr-bill-payment-further-information p {
-    font-size: 7pt;
-    line-height: 9pt;
+    font-size: 7pt !important;
+    line-height: 9pt !important;
 }
 
 /* Receipt */
