@@ -2,6 +2,7 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
+use setasign\Fpdi\Tcpdf\Fpdi;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
@@ -48,14 +49,14 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private const LINE_SPACING_RECEIPT = 3.5;
     private const LINE_SPACING_PAYMENT_PART = 4.8;
 
-    private TCPDF $tcPdf;
+    private TCPDF|Fpdi $tcPdf;
     private float $offsetX;
     private float $offsetY;
 
     public function __construct(
         QrBill $qrBill,
         string $language,
-        TCPDF $tcPdf,
+        TCPDF|Fpdi $tcPdf,
         float $offsetX = 0,
         float $offsetY = 0
     ) {

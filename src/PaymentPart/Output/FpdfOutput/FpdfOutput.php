@@ -4,6 +4,7 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
 use Fpdf\Fpdf;
+use setasign\Fpdi\Fpdi;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
@@ -46,14 +47,14 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private const LINE_SPACING_PAYMENT_PART = 4.8;
     private float $amountLS = 0;
 
-    private Fpdf $fpdf;
+    private Fpdf|Fpdi $fpdf;
     private float $offsetX;
     private float $offsetY;
 
     public function __construct(
         QrBill $qrBill,
         string $language,
-        Fpdf $fpdf,
+        Fpdf|Fpdi $fpdf,
         float $offsetX = 0,
         float $offsetY = 0
     ) {
