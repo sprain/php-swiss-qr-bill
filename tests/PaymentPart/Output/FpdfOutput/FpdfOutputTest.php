@@ -3,9 +3,11 @@
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
 use Fpdf\Fpdf;
+use Fpdf\Traits\MemoryImageSupport\MemImageTrait;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\UnsupportedEnvironmentException;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
@@ -35,7 +37,7 @@ final class FpdfOutputTest extends TestCase
         foreach ($variations as $variation) {
             $file = $variation['file'];
 
-            $fpdf = new Fpdf('P', 'mm', 'A4');
+            $fpdf = $this->instantiateFpdf();
             $fpdf->AddPage();
 
             $output = new FpdfOutput($qrBill, 'en', $fpdf);
@@ -67,12 +69,37 @@ final class FpdfOutputTest extends TestCase
             'paymentReferenceQr'
         ]);
 
-        $fpdf = new Fpdf('P', 'mm', 'A4');
+        $fpdf = $this->instantiateFpdf();
         $fpdf->AddPage();
 
         $output = new FpdfOutput($qrBill, 'en', $fpdf);
         $output
             ->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG)
+            ->getPaymentPart();
+    }
+
+    public function testItThrowsUnsupportedEnvironmentException(): void
+    {
+        if (ini_get('allow_url_fopen') === "1") {
+            $this->markTestSkipped("This test only works in hardened environment.");
+        }
+
+        $this->expectException(UnsupportedEnvironmentException::class);
+
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReferenceQr'
+        ]);
+
+        $fpdf = $this->instantiateFpdf(false);
+        $fpdf->AddPage();
+
+        $output = new FpdfOutput($qrBill, 'en', $fpdf);
+        $output
+            ->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG)
             ->getPaymentPart();
     }
 
@@ -86,5 +113,20 @@ final class FpdfOutputTest extends TestCase
             return $matches[1];
         }
         return null;
+    }
+
+    private function instantiateFpdf($withMemImageSupport = null): Fpdf
+    {
+        if ($withMemImageSupport === null) {
+            $withMemImageSupport = !ini_get('allow_url_fopen');
+        }
+
+        if ($withMemImageSupport) {
+            return new class extends Fpdf {
+                use MemImageTrait;
+            };
+        } else {
+            return new Fpdf('P', 'mm', 'A4');
+        }
     }
 }

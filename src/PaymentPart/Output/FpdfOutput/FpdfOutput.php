@@ -100,7 +100,29 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = 67 + $this->offsetX;
 
-        $this->fpdf->Image($qrCode->getDataUri($this->getQrCodeImageFormat()), $xPosQrCode, $yPosQrCode, 46, 46, 'png');
+        if (ini_get('allow_url_fopen') === "1") {
+            $this->fpdf->Image(
+                $qrCode->getDataUri($this->getQrCodeImageFormat()),
+                $xPosQrCode,
+                $yPosQrCode,
+                46,
+                46,
+                'png'
+            );
+        }
+        elseif (method_exists($this->fpdf, 'MemImage')) {
+            $this->fpdf->MemImage(
+                $qrCode->getAsString($this->getQrCodeImageFormat()),
+                $xPosQrCode,
+                $yPosQrCode,
+                46,
+                46
+            );
+        } else {
+            throw new UnsupportedEnvironmentException(
+                'If directive "allow_url_fopen" is disabled, FPDFs "Memory Image Support" script is required'
+            );
+        }
     }
 
     private function addInformationContentReceipt(): void
