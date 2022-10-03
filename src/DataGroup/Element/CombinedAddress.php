@@ -96,7 +96,7 @@ class CombinedAddress extends Address implements AddressInterface, SelfValidatab
             $lines[2] = $this->getAddressLine1();
         }
 
-        if (in_array($this->getCountry(), ['CH', 'LI'])) {
+        if ('CH' === $this->getCountry()) {
             $lines[3] = $this->getAddressLine2();
         } else {
             $lines[3] = sprintf("%s-%s", $this->getCountry(), $this->getAddressLine2());
