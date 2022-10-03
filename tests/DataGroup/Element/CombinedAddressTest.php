@@ -179,7 +179,7 @@ final class CombinedAddressTest extends TestCase
                     '9490 Vaduz',
                     'LI'
                 ),
-                "Thomas Mustermann\nMusterweg 22a\n9490 Vaduz"
+                "Thomas Mustermann\nMusterweg 22a\nLI-9490 Vaduz"
             ],
             [
                 CombinedAddress::create(
@@ -256,7 +256,7 @@ final class CombinedAddressTest extends TestCase
                     '9490 Vaduz',
                     'LI'
                 ),
-                "Thomas Mustermann\nMusterweg 22a\n9490 Vaduz"
+                "Thomas Mustermann\nMusterweg 22a\nLI-9490 Vaduz"
             ],
             [
                 CombinedAddress::create(

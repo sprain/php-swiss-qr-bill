@@ -254,7 +254,7 @@ final class StructuredAddressTest extends TestCase
                     'Vaduz',
                     'LI'
                 ),
-                "Thomas Mustermann\n9490 Vaduz"
+                "Thomas Mustermann\nLI-9490 Vaduz"
             ],
             [
                 StructuredAddress::createWithoutStreet(
@@ -351,7 +351,7 @@ final class StructuredAddressTest extends TestCase
                     'Vaduz',
                     'LI'
                 ),
-                "Thomas Mustermann\n9490 Vaduz"
+                "Thomas Mustermann\nLI-9490 Vaduz"
             ],
             [
                 StructuredAddress::createWithoutStreet(
