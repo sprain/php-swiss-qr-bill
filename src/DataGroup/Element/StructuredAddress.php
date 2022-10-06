@@ -141,7 +141,7 @@ final class StructuredAddress extends Address implements AddressInterface, SelfV
             }
         }
 
-        if (in_array($this->getCountry(), ['CH', 'LI'])) {
+        if ('CH' === $this->getCountry()) {
             $lines[3] = sprintf("%s %s", $this->getPostalCode(), $this->getCity());
         } else {
             $lines[3] = sprintf("%s-%s %s", $this->getCountry(), $this->getPostalCode(), $this->getCity());

@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/sprain/php-swiss-qr-bill/actions/workflows/tests.yml/badge.svg)](https://github.com/sprain/php-swiss-qr-bill/actions)
 
-A PHP library to create Swiss QR Bill payment parts (_QR-Rechnung_) which will fully replace the red and orange payment slips by Septemer 30, 2022.
+A PHP library to create Swiss QR Bill payment parts (_QR-Rechnung_) which fully replaced the red and orange payment slips by September 30, 2022.
 
 ![Image of Swiss QR Bill example](docs/assets/example-payment-part.png)
 
