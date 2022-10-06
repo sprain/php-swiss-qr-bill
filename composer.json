@@ -20,8 +20,8 @@
         "friendsofphp/php-cs-fixer": "^3.4",
         "khanamiryan/qrcode-detector-decoder": "^1.0.3",
         "phpstan/phpstan": "^1.2",
-        "setasign/fpdi": "^2.3.6",
-        "setasign/fpdf": "^1.8.4",
+        "setasign/fpdi": "^2.3.5",
+        "setasign/fpdf": "^1.8.2",
         "tecnickcom/tcpdf": "^6.3.2"
     },
     "conflict": {
