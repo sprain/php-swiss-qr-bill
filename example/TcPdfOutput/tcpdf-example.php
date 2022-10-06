@@ -8,6 +8,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/../example.php';
 
 // 2. Create a TCPDF instance (or use an existing one from your project)
+// – alternatively, an instance of \setasign\Fpdi\Tcpdf\Fpdi() is also accepted by TcPdfOutput.
 $tcPdf = new TCPDF('P', 'mm', 'A4', true, 'ISO-8859-1');
 $tcPdf->setPrintHeader(false);
 $tcPdf->setPrintFooter(false);

@@ -8,6 +8,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/../example.php';
 
 // 2. Create an FPDF instance (or use an existing one from your project)
+// – alternatively, an instance of \setasign\Fpdi\Fpdi() is also accepted by FpdfOutput.
 $fpdf = new \Fpdf\Fpdf('P', 'mm', 'A4');
 $fpdf->AddPage();
 

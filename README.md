@@ -31,6 +31,14 @@ You can't. The QR bill by specification only supports CHF and EUR.
 * **How do I make my QR bills payable by Twint?**<br>
 See https://github.com/sprain/php-swiss-qr-bill/issues/129 
 
+* **What PDF libraries are supported by this library?**<br>
+The following libraries are currently actively supported:
+  * [fpdf/fpdf](https://packagist.org/packages/fpdf/fpdf)
+  * [tecnickcom/tcpdf](https://packagist.org/packages/tecnickcom/tcpdf)
+  * [setasign/fpdi](https://packagist.org/packages/setasign/fpdi) (accepted by `FpdfOutput` and `TcPdfOutput`)
+
+  The output of `HtmlOutput` has been known to be used to generate PDFs with [PrinceXML](https://www.princexml.com), [Docraptor](http://docraptor.com) or [dompdf/dompdf](https://packagist.org/packages/dompdf/dompdf) (with some adjustments as decribed [here](https://github.com/sprain/php-swiss-qr-bill/issues/178#issuecomment-1222752493))
+
 
 ## Getting help
 
