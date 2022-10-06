@@ -20,6 +20,8 @@
         "friendsofphp/php-cs-fixer": "^3.4",
         "khanamiryan/qrcode-detector-decoder": "^1.0.3",
         "phpstan/phpstan": "^1.2",
+        "setasign/fpdi": "^2.3.6",
+        "setasign/fpdf": "^1.8.4",
         "tecnickcom/tcpdf": "^6.3.2"
     },
     "conflict": {
@@ -27,7 +29,9 @@
     },
     "suggest": {
         "tecnickcom/tcpdf": "Needed to create pdfs with TcPdfOutput",
-        "fpdf/fpdf": "Needed to create pdfs with FpdfOutput"
+        "fpdf/fpdf": "Needed to create pdfs with FpdfOutput",
+        "setasign/fpdi": "Needed to create pdfs with Fpdi",
+        "setasign/fpdf": "Needed to create pdfs with Fpdi"
     },
     "autoload": {
         "psr-4": {
