@@ -36,29 +36,34 @@ class PaymentPartTemplate
 	margin: 0;
 	padding: 0;
 	height: 7mm;
+	color: #000 !important;
 }
 
 #qr-bill h2 {
 	font-weight: bold !important;
 	margin: 0;
 	padding: 0;
+	color: #000 !important;
 }
 
 #qr-bill-payment-part h2 {
 	font-size: 8pt !important;
 	line-height: 11pt !important;	
     margin-top: 11pt;
+	color: #000 !important;
 }
 
 #qr-bill-receipt h2 {
 	font-size: 6pt !important;
 	line-height: 8pt !important;	
     margin-top: 8pt;
+	color: #000 !important;
 }
 
 #qr-bill-payment-part h2:first-child,
 #qr-bill-receipt h2:first-child {
 	margin-top: 0;
+	color: #000 !important;
 }
 
 /* p */
@@ -66,29 +71,35 @@ class PaymentPartTemplate
 	font-weight: normal !important;
 	margin: 0;
 	padding: 0;
+	color: #000 !important;
 }
 
 #qr-bill-receipt p {
 	font-size: 8pt !important;
 	line-height: 9pt !important;
+	color: #000 !important;
 }
 
 #qr-bill-payment-part p {
 	font-size: 10pt !important;
 	line-height: 11pt !important;
+	color: #000 !important;
 }
 
 #qr-bill-amount-area-receipt p{
     line-height: 11pt !important;
+	color: #000 !important;
 }
 
 #qr-bill-amount-area p{
     line-height: 13pt !important;
+	color: #000 !important;
 }
 
 #qr-bill-payment-further-information p {
     font-size: 7pt !important;
     line-height: 9pt !important;
+	color: #000 !important;
 }
 
 /* Receipt */
