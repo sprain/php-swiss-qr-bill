@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "474340e448cc2fbc1275f0161db94c0c",
+    "content-hash": "933db0df01aaba722003b47663495c44",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1355,22 +1355,29 @@
         },
         {
             "name": "fpdf/fpdf",
-            "version": "1.84.1",
+            "version": "1.85.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/coreydoughty/Fpdf.git",
-                "reference": "cfafa307947f7c646b87045d0decc67bdc423209"
+                "reference": "5ba6a7d4363174ac828a0c15cc1b4a8f845b1e16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/coreydoughty/Fpdf/zipball/cfafa307947f7c646b87045d0decc67bdc423209",
-                "reference": "cfafa307947f7c646b87045d0decc67bdc423209",
+                "url": "https://api.github.com/repos/coreydoughty/Fpdf/zipball/5ba6a7d4363174ac828a0c15cc1b4a8f845b1e16",
+                "reference": "5ba6a7d4363174ac828a0c15cc1b4a8f845b1e16",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.6.0"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "FPDF": "Fpdf\\Fpdf"
+                    }
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Fpdf\\": "src/Fpdf"
@@ -1395,9 +1402,9 @@
             ],
             "support": {
                 "issues": "https://github.com/coreydoughty/Fpdf/issues",
-                "source": "https://github.com/coreydoughty/Fpdf/tree/1.84.1"
+                "source": "https://github.com/coreydoughty/Fpdf/tree/1.85.0"
             },
-            "time": "2022-09-02T14:13:29+00:00"
+            "time": "2022-11-18T15:23:37+00:00"
         },
         {
             "name": "friendsofphp/php-cs-fixer",
