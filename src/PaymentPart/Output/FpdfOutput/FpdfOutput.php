@@ -109,8 +109,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
                 46,
                 'png'
             );
-        }
-        elseif (method_exists($this->fpdf, 'MemImage')) {
+        } elseif (method_exists($this->fpdf, 'MemImage')) {
             $this->fpdf->MemImage(
                 $qrCode->getAsString($this->getQrCodeImageFormat()),
                 $xPosQrCode,
