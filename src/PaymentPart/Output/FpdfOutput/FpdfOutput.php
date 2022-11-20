@@ -100,7 +100,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = 67 + $this->offsetX;
 
-        if (ini_get('allow_url_fopen') === "1") {
+        if ("1" === ini_get('allow_url_fopen')) {
             $this->fpdf->Image(
                 $qrCode->getDataUri($this->getQrCodeImageFormat()),
                 $xPosQrCode,
@@ -109,7 +109,11 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
                 46,
                 'png'
             );
-        } elseif (method_exists($this->fpdf, 'MemImage')) {
+
+            return;
+        }
+
+        if (method_exists($this->fpdf, 'MemImage')) {
             $this->fpdf->MemImage(
                 $qrCode->getAsString($this->getQrCodeImageFormat()),
                 $xPosQrCode,
@@ -117,11 +121,13 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
                 46,
                 46
             );
-        } else {
-            throw new UnsupportedEnvironmentException(
-                '"allow_url_fopen" is disabled on your server. Use FPDF with MemImageTrait. See fpdf-example.php within this library.'
-            );
+
+            return;
         }
+
+        throw new UnsupportedEnvironmentException(
+            '"allow_url_fopen" is disabled on your server. Use FPDF with MemImageTrait. See fpdf-example.php within this library.'
+        );
     }
 
     private function addInformationContentReceipt(): void
