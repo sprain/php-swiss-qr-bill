@@ -30,7 +30,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private const LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
     private const RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
 
-    // Location
+    // Positioning
     private const CURRENCY_AMOUNT_Y = 259;
     private const LEFT_PART_X = 4;
     private const RIGHT_PART_X = 66;
