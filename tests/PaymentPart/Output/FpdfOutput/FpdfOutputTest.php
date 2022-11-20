@@ -117,7 +117,11 @@ final class FpdfOutputTest extends TestCase
 
     private function instantiateFpdf($withMemImageSupport = null): Fpdf
     {
-        if (!ini_get('allow_url_fopen')) {
+        if ($withMemImageSupport === null) {
+            $withMemImageSupport = !ini_get('allow_url_fopen');
+        }
+
+        if ($withMemImageSupport) {
             return new class('P', 'mm', 'A4') extends Fpdf {
                 use MemImageTrait;
             };
