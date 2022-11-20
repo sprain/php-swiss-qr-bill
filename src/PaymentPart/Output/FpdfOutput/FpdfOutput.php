@@ -25,7 +25,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private const ALIGN_CENTER = 'C';
     private const FONT = 'Helvetica';
 
-    // Location
+    // Positioning
     private const CURRENCY_AMOUNT_Y = 259.3;
     private const AMOUNT_LINE_SPACING = 1.2;
     private const AMOUNT_LINE_SPACING_RCPT = 0.6;
@@ -84,7 +84,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
     public function setQrCodeImageFormat(string $fileExtension): AbstractOutput
     {
-        if ($fileExtension === 'svg') {
+        if (QrCode::FILE_FORMAT_SVG === $fileExtension) {
             throw new InvalidFpdfImageFormat('SVG images are not allowed by FPDF.');
         }
 
@@ -100,7 +100,34 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = 67 + $this->offsetX;
 
-        $this->fpdf->Image($qrCode->getDataUri($this->getQrCodeImageFormat()), $xPosQrCode, $yPosQrCode, 46, 46, 'png');
+        if ("1" === ini_get('allow_url_fopen')) {
+            $this->fpdf->Image(
+                $qrCode->getDataUri($this->getQrCodeImageFormat()),
+                $xPosQrCode,
+                $yPosQrCode,
+                46,
+                46,
+                'png'
+            );
+
+            return;
+        }
+
+        if (method_exists($this->fpdf, 'MemImage')) {
+            $this->fpdf->MemImage(
+                $qrCode->getAsString($this->getQrCodeImageFormat()),
+                $xPosQrCode,
+                $yPosQrCode,
+                46,
+                46
+            );
+
+            return;
+        }
+
+        throw new UnsupportedEnvironmentException(
+            '"allow_url_fopen" is disabled on your server. Use FPDF with MemImageTrait. See fpdf-example.php within this library.'
+        );
     }
 
     private function addInformationContentReceipt(): void

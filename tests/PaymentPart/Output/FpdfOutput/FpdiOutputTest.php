@@ -2,6 +2,7 @@
 
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
+use Fpdf\Traits\MemoryImageSupport\MemImageTrait;
 use PHPUnit\Framework\TestCase;
 use setasign\Fpdi\Fpdi;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
@@ -35,7 +36,7 @@ final class FpdiOutputTest extends TestCase
         foreach ($variations as $variation) {
             $file = $variation['file'];
 
-            $fpdf = new Fpdi('P', 'mm', 'A4');
+            $fpdf = $this->instantiateFpdi();
             $fpdf->AddPage();
 
             $output = new FpdfOutput($qrBill, 'en', $fpdf);
@@ -67,7 +68,7 @@ final class FpdiOutputTest extends TestCase
             'paymentReferenceQr'
         ]);
 
-        $fpdf = new Fpdi('P', 'mm', 'A4');
+        $fpdf = $this->instantiateFpdi();
         $fpdf->AddPage();
 
         $output = new FpdfOutput($qrBill, 'en', $fpdf);
@@ -86,5 +87,20 @@ final class FpdiOutputTest extends TestCase
             return $matches[1];
         }
         return null;
+    }
+
+    private function instantiateFpdi($withMemImageSupport = null): Fpdi
+    {
+        if ($withMemImageSupport === null) {
+            $withMemImageSupport = !ini_get('allow_url_fopen');
+        }
+
+        if ($withMemImageSupport) {
+            return new class('P', 'mm', 'A4') extends Fpdi {
+                use MemImageTrait;
+            };
+        }
+
+        return new Fpdi('P', 'mm', 'A4');
     }
 }

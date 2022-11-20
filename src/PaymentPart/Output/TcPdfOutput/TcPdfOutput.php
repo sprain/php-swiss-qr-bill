@@ -30,7 +30,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private const LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
     private const RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
 
-    // Location
+    // Positioning
     private const CURRENCY_AMOUNT_Y = 259;
     private const LEFT_PART_X = 4;
     private const RIGHT_PART_X = 66;
@@ -94,14 +94,10 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     {
         $qrCode = $this->getQrCode();
 
-        switch ($this->getQrCodeImageFormat()) {
-            case QrCode::FILE_FORMAT_SVG:
-                $method = "ImageSVG";
-                break;
-            case QrCode::FILE_FORMAT_PNG:
-            default:
-                $method = "Image";
-        }
+        $method = match ($this->getQrCodeImageFormat()) {
+            QrCode::FILE_FORMAT_SVG => "ImageSVG",
+            default => "Image",
+        };
 
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = self::RIGHT_PART_X + 1 + $this->offsetX;
