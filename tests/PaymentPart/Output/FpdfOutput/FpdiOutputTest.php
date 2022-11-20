@@ -91,17 +91,12 @@ final class FpdiOutputTest extends TestCase
 
     private function instantiateFpdi($withMemImageSupport = null): Fpdi
     {
-        if ($withMemImageSupport === null) {
-            $withMemImageSupport = !ini_get('allow_url_fopen');
-        }
-
-        if ($withMemImageSupport) {
-            return new class extends Fpdi {
-                // this uses the MemImageTrait from Fpdf/Fpdf
+        if (!ini_get('allow_url_fopen')) {
+            return new class('P', 'mm', 'A4') extends Fpdi {
                 use MemImageTrait;
             };
-        } else {
-            return new Fpdi('P', 'mm', 'A4');
         }
+
+        return new Fpdi('P', 'mm', 'A4');
     }
 }
