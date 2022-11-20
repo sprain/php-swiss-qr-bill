@@ -119,7 +119,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
             );
         } else {
             throw new UnsupportedEnvironmentException(
-                'If directive "allow_url_fopen" is disabled, FPDFs "Memory Image Support" script is required'
+                '"allow_url_fopen" is disabled on your server. Use FPDF with MemImageTrait. See fpdf-example.php within this library.'
             );
         }
     }
