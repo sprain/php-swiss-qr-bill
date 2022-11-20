@@ -94,14 +94,10 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     {
         $qrCode = $this->getQrCode();
 
-        switch ($this->getQrCodeImageFormat()) {
-            case QrCode::FILE_FORMAT_SVG:
-                $method = "ImageSVG";
-                break;
-            case QrCode::FILE_FORMAT_PNG:
-            default:
-                $method = "Image";
-        }
+        $method = match ($this->getQrCodeImageFormat()) {
+            QrCode::FILE_FORMAT_SVG => "ImageSVG",
+            default => "Image",
+        };
 
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = self::RIGHT_PART_X + 1 + $this->offsetX;
