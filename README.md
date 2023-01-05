@@ -71,7 +71,5 @@ The repository contains the official specifications the library is based on:
 - [Style Guide QR-bill](docs/specs/style-guide-en.pdf)
 - [Validation Tool](https://validation.iso-payments.ch/gp/qrrechnung/validation/)
 
-For more official information about the new standards see
-
-- [https://www.paymentstandards.ch/de/shared/communication-grid.html](https://www.paymentstandards.ch/de/shared/communication-grid.html)
-- [https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html](https://www.six-group.com/interbank-clearing/en/home/standardization/payment-slips.html)
+For more official information see
+- [https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/qr-bill.html](https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/qr-bill.html)
