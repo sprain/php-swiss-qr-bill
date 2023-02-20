@@ -80,7 +80,7 @@ final class FpdfOutputTest extends TestCase
 
     public function testItThrowsUnsupportedEnvironmentException(): void
     {
-        if (ini_get('allow_url_fopen') === "1") {
+        if ((bool)ini_get('allow_url_fopen')) {
             $this->markTestSkipped("This test only works in hardened environment.");
         }
 
