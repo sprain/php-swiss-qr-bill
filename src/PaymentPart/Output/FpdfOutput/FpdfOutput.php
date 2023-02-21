@@ -100,7 +100,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = 67 + $this->offsetX;
 
-        if ("1" === ini_get('allow_url_fopen')) {
+        if ((bool)ini_get('allow_url_fopen')) {
             $this->fpdf->Image(
                 $qrCode->getDataUri($this->getQrCodeImageFormat()),
                 $xPosQrCode,
