@@ -3,9 +3,11 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\FurtherInformationElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PlaceholderElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableStylesTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TextElementTemplate;
@@ -133,11 +135,12 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         return $paymentPart;
     }
 
-    private function getContentElement(Title|Text|Placeholder $element): string
+    private function getContentElement(FurtherInformation|Title|Text|Placeholder $element): string
     {
         # https://github.com/phpstan/phpstan/issues/4451
         # @phpstan-ignore-next-line
         return match (get_class($element)) {
+            FurtherInformation::class => $this->getFurtherInformationElement($element),
             Title::class => $this->getTitleElement($element),
             Text::class => $this->getTextElement($element),
             Placeholder::class => $this->getPlaceholderElement($element)
@@ -155,6 +158,14 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
     private function getTextElement(Text $element): string
     {
         $elementTemplate = TextElementTemplate::TEMPLATE;
+        $elementString = str_replace('{{ text }}', nl2br($element->getText()), $elementTemplate);
+
+        return $elementString;
+    }
+
+    private function getFurtherInformationElement(FurtherInformation $element): string
+    {
+        $elementTemplate = FurtherInformationElementTemplate::TEMPLATE;
         $elementString = str_replace('{{ text }}', nl2br($element->getText()), $elementTemplate);
 
         return $elementString;
