@@ -232,7 +232,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         }
     }
 
-    private function setContentElement(OutputElementInterface $element, ?bool $isReceiptPart = null): void
+    private function setContentElement(OutputElementInterface $element, bool $isReceiptPart): void
     {
         if ($element instanceof FurtherInformation) {
             $this->setFurtherInformationElement($element);
@@ -285,7 +285,6 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
             self::BORDER,
             self::ALIGN_LEFT
         );
-        $this->fpdf->Ln(self::LINE_SPACING_PAYMENT_PART);
     }
 
     private function setPlaceholderElement(Placeholder $element): void
