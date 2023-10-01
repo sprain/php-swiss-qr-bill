@@ -30,5 +30,5 @@ QRR
 Invoice 1234568 Gardening work
 EPD
 Bill Information
-foo
-foo
+CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9
+CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9
