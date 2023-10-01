@@ -34,7 +34,7 @@ abstract class AbstractOutput
         return $this->language;
     }
 
-    public function setPrintable(bool $printable): self
+    public function setPrintable(bool $printable): static
     {
         $this->printable = $printable;
 
@@ -46,7 +46,7 @@ abstract class AbstractOutput
         return $this->printable;
     }
 
-    public function setQrCodeImageFormat(string $fileExtension): self
+    public function setQrCodeImageFormat(string $fileExtension): static
     {
         $this->qrCodeImageFormat = $fileExtension;
 
