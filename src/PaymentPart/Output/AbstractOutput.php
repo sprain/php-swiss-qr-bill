@@ -3,6 +3,7 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
@@ -157,7 +158,7 @@ abstract class AbstractOutput
         foreach ($this->qrBill->getAlternativeSchemes() as $alternativeScheme) {
             $furtherInformationLines[] = $alternativeScheme->getParameter();
         }
-        $furtherInformationElements[] = Text::create(implode("\n", $furtherInformationLines));
+        $furtherInformationElements[] = FurtherInformation::create(implode("\n", $furtherInformationLines));
 
         return $furtherInformationElements;
     }
