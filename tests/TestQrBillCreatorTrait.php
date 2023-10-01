@@ -15,7 +15,7 @@ use Sprain\SwissQrBill\QrBill;
 
 trait TestQrBillCreatorTrait
 {
-    protected $regenerateReferenceFiles = false;
+    protected $regenerateReferenceFiles = true;
 
     public function validQrBillsProvider()
     {

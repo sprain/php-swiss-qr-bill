@@ -4,6 +4,7 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
 use setasign\Fpdi\Tcpdf\Fpdi;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
@@ -29,6 +30,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private const RIGHT_CELL_HEIGHT_RATIO_COMMON = 1.1;
     private const LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
     private const RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
+    private const FURTHER_INFORMATION_CELL_HEIGHT_RATIO_COMMON = 1.5;
 
     // Positioning
     private const CURRENCY_AMOUNT_Y = 259;
@@ -201,13 +203,12 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
     private function addFurtherInformationContent(): void
     {
         $x = self::RIGHT_PART_X;
-        $this->tcPdf->setCellHeightRatio(self::RIGHT_CELL_HEIGHT_RATIO_COMMON);
+        $this->tcPdf->setCellHeightRatio(self::FURTHER_INFORMATION_CELL_HEIGHT_RATIO_COMMON);
         $this->setY(286);
-        $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
 
         foreach ($this->getFurtherInformationElements() as $furtherInformationElement) {
             $this->setX($x);
-            $this->setContentElement($furtherInformationElement, true);
+            $this->setContentElement($furtherInformationElement, false);
         }
     }
 
@@ -226,6 +227,10 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function setContentElement(OutputElementInterface $element, bool $isReceiptPart): void
     {
+        if ($element instanceof FurtherInformation) {
+            $this->setFurtherInformationElement($element);
+        }
+
         if ($element instanceof Title) {
             $this->setTitleElement($element, $isReceiptPart);
         }
@@ -266,10 +271,21 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
             str_replace("text.", "", $element->getText()),
             $isReceiptPart ? 54 : 0,
             0,
-            self::ALIGN_BELOW,
-            self::ALIGN_LEFT
+            self::ALIGN_BELOW
         );
+
         $this->tcPdf->Ln($isReceiptPart ? self::LINE_SPACING_RECEIPT : self::LINE_SPACING_PAYMENT_PART);
+    }
+
+    private function setFurtherInformationElement(FurtherInformation $element): void
+    {
+        $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
+        $this->printMultiCell(
+            iconv('UTF-8', 'windows-1252', $element->getText()),
+            0,
+            0,
+            self::BORDER
+        );
     }
 
     private function setPlaceholderElement(Placeholder $element): void
@@ -313,8 +329,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function printCell(
         string $text,
-        int $w = 0,
-        int $h = 0,
+        float $w = 0,
+        float $h = 0,
         int $nextLineAlign = 0,
         string $textAlign = self::ALIGN_LEFT
     ): void {
@@ -323,12 +339,11 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function printMultiCell(
         string $text,
-        int $w = 0,
-        int $h = 0,
-        int $nextLineAlign = 0,
-        string $textAlign = self::ALIGN_LEFT
+        float $w = 0,
+        float $h = 0,
+        int $nextLineAlign = 0
     ): void {
-        $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, $textAlign, false, $nextLineAlign);
+        $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, self::ALIGN_LEFT, false, $nextLineAlign);
     }
 
     private function printLine(int $x1, int $y1, int $x2, int $y2): void
