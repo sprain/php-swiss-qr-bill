@@ -329,8 +329,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function printCell(
         string $text,
-        float $w = 0,
-        float $h = 0,
+        int $w = 0,
+        int $h = 0,
         int $nextLineAlign = 0,
         string $textAlign = self::ALIGN_LEFT
     ): void {
@@ -339,8 +339,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
     private function printMultiCell(
         string $text,
-        float $w = 0,
-        float $h = 0,
+        int $w = 0,
+        int $h = 0,
         int $nextLineAlign = 0
     ): void {
         $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, self::ALIGN_LEFT, false, $nextLineAlign);
