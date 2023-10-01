@@ -257,8 +257,12 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->fpdf->MultiCell(
             0,
             2.8,
-            iconv('UTF-8', 'windows-1252', Translation::get(str_replace('text.', '', $element->getTitle()), $this->language)
-        ));
+            iconv(
+                'UTF-8',
+                'windows-1252',
+                Translation::get(str_replace('text.', '', $element->getTitle()), $this->language)
+            )
+        );
         $this->fpdf->Ln($this->amountLS);
     }
 
