@@ -97,15 +97,15 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $qrCode = $this->getQrCode();
 
         $method = match ($this->getQrCodeImageFormat()) {
-            QrCode::FILE_FORMAT_SVG => "ImageSVG",
-            default => "Image",
+            QrCode::FILE_FORMAT_SVG => 'ImageSVG',
+            default => 'Image',
         };
 
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = self::RIGHT_PART_X + 1 + $this->offsetX;
 
         $img = $qrCode->getAsString($this->getQrCodeImageFormat());
-        $this->tcPdf->$method("@".$img, $xPosQrCode, $yPosQrCode, 46, 46);
+        $this->tcPdf->$method('@'.$img, $xPosQrCode, $yPosQrCode, 46, 46);
     }
 
     private function addInformationContentReceipt(): void
@@ -252,7 +252,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
             $isReceiptPart ? self::FONT_SIZE_TITLE_RECEIPT : self::FONT_SIZE_TITLE_PAYMENT_PART
         );
         $this->printCell(
-            Translation::get(str_replace("text.", "", $element->getTitle()), $this->language),
+            Translation::get(str_replace('text.', '', $element->getTitle()), $this->language),
             0,
             0,
             self::ALIGN_BELOW
@@ -268,7 +268,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         );
 
         $this->printMultiCell(
-            str_replace("text.", "", $element->getText()),
+            str_replace('text.', '', $element->getText()),
             $isReceiptPart ? 54 : 0,
             0,
             self::ALIGN_BELOW
