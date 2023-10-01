@@ -42,6 +42,9 @@ The following libraries are currently actively supported:
 
   The output of `HtmlOutput` is known to be used to generate PDFs with [PrinceXML](https://www.princexml.com), [Docraptor](http://docraptor.com), and [dompdf/dompdf](https://packagist.org/packages/dompdf/dompdf) (with some adjustments as decribed [here](https://github.com/sprain/php-swiss-qr-bill/issues/178#issuecomment-1222752493))
 
+* **Why are you using `final` on most classes? I want to extend them!
+This library implements the official specification of the QR bill. This implementation is not supposed to be adjusted as it might result in broken QR bills. Therefore many classes are marked as final. If you find the need to extend one of those final classes, you might have found a bug in this library. In that case it will be very helpful if you provide a bug report or even a pull request here. Thank you!
+
 
 ## Getting help
 
