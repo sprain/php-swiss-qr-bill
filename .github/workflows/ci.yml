@@ -1,0 +1,90 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        php: ['8.0', '8.1', '8.2']
+        stability: ['prefer-lowest', 'prefer-stable']
+
+    name: PHP Tests ${{ matrix.php }} - ${{ matrix.stability }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, gd
+          tools: composer
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-progress
+
+      - name: Execute tests in default environment
+        run: vendor/bin/phpunit --verbose
+
+      - name: Execute tests in hardened environment
+        run: php -d allow_url_fopen=0 -d memory_limit=256M -d register_globals=0 vendor/bin/phpunit --verbose
+
+  run_code_checks:
+    runs-on: ubuntu-20.04
+    name: PHP Code-Checks
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom, curl, libxml, mbstring, zip, bcmath, gd
+          tools: composer
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Check composer files
+        run: composer validate --strict
+
+      - name: Check coding standard
+        run: composer cs:diff
+
+      - name: Static analysis
+        run: composer phpstan
