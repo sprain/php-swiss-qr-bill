@@ -6,6 +6,7 @@
     "require": {
         "php": "^8.0.0|^8.1.0|^8.2.0",
         "ext-dom": "*",
+        "ext-bcmath": "*",
         "symfony/validator": "^4.4|^5.0|^6.0",
         "symfony/intl": "^4.4|^5.0|^6.0",
         "kmukku/php-iso11649": "^1.5",
