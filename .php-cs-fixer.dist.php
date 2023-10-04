@@ -1,12 +1,11 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__)
+    ->in(__DIR__.'/src')
 ;
 
 return (new PhpCsFixer\Config())
     ->setRules([
         '@PSR2' => true
     ])
-    ->setFinder($finder)
-    ;
+    ->setFinder($finder);

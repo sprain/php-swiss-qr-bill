@@ -24,6 +24,12 @@
         "setasign/fpdf": "^1.8.2",
         "tecnickcom/tcpdf": "^6.3.2"
     },
+    "scripts": {
+        "cs:fix": "vendor/bin/php-cs-fixer fix --verbose",
+        "cs:diff": "vendor/bin/php-cs-fixer fix --dry-run --diff --verbose",
+        "phpstan": "vendor/bin/phpstan analyse",
+        "phpunit": "vendor/bin/phpunit --verbose"
+    },
     "conflict": {
         "khanamiryan/qrcode-detector-decoder": "1.0.6"
     },
