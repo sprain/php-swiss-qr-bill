@@ -21,19 +21,22 @@ $qrBill->setCreditor(
         'Rue du Lac 1268',
         '2501 Biel',
         'CH'
-    ));
+    )
+);
 
 $qrBill->setCreditorInformation(
     QrBill\DataGroup\Element\CreditorInformation::create(
         'CH4431999123000889012' // This is a special QR-IBAN. Classic IBANs will not be valid here.
-    ));
+    )
+);
 
 // Add payment amount information of 0.00
 $qrBill->setPaymentAmountInformation(
     QrBill\DataGroup\Element\PaymentAmountInformation::create(
         'CHF',
         0.00
-    ));
+    )
+);
 
 // Add payment reference
 $referenceNumber = QrBill\Reference\QrPaymentReferenceGenerator::generate(
@@ -45,7 +48,8 @@ $qrBill->setPaymentReference(
     QrBill\DataGroup\Element\PaymentReference::create(
         QrBill\DataGroup\Element\PaymentReference::TYPE_QR,
         $referenceNumber
-    ));
+    )
+);
 
 // Add do-not-use-for-payment information
 $qrBill->setAdditionalInformation(
@@ -59,7 +63,7 @@ try {
     $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
     $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
 } catch (Exception $e) {
-    foreach($qrBill->getViolations() as $violation) {
+    foreach ($qrBill->getViolations() as $violation) {
         print $violation->getMessage()."\n";
     }
     exit;
