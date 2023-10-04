@@ -7,6 +7,7 @@ use Fpdf\Fpdf;
 use setasign\Fpdi\Fpdi;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
@@ -100,7 +101,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $yPosQrCode = 209.5 + $this->offsetY;
         $xPosQrCode = 67 + $this->offsetX;
 
-        if ((bool)ini_get('allow_url_fopen')) {
+        if (ini_get('allow_url_fopen')) {
             $this->fpdf->Image(
                 $qrCode->getDataUri($this->getQrCodeImageFormat()),
                 $xPosQrCode,
@@ -212,11 +213,10 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private function addFurtherInformationContent(): void
     {
         $this->SetXY(self::RIGHT_PART_X, 286);
-        $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
 
         foreach ($this->getFurtherInformationElements() as $furtherInformationElement) {
             $this->setX(self::RIGHT_PART_X);
-            $this->setContentElement($furtherInformationElement, true);
+            $this->setContentElement($furtherInformationElement, false);
         }
     }
 
@@ -234,6 +234,10 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
 
     private function setContentElement(OutputElementInterface $element, bool $isReceiptPart): void
     {
+        if ($element instanceof FurtherInformation) {
+            $this->setFurtherInformationElement($element);
+        }
+
         if ($element instanceof Title) {
             $this->setTitleElement($element, $isReceiptPart);
         }
@@ -250,11 +254,15 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
     private function setTitleElement(Title $element, bool $isReceiptPart): void
     {
         $this->fpdf->SetFont(self::FONT, 'B', $isReceiptPart ? self::FONT_SIZE_TITLE_RECEIPT : self::FONT_SIZE_TITLE_PAYMENT_PART);
-        $this->fpdf->MultiCell(0, 2.8, iconv(
-            'UTF-8',
-            'windows-1252',
-            Translation::get(str_replace("text.", "", $element->getTitle()), $this->language)
-        ));
+        $this->fpdf->MultiCell(
+            0,
+            2.8,
+            iconv(
+                'UTF-8',
+                'windows-1252',
+                Translation::get(str_replace('text.', '', $element->getTitle()), $this->language)
+            )
+        );
         $this->fpdf->Ln($this->amountLS);
     }
 
@@ -264,11 +272,23 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->fpdf->MultiCell(
             $isReceiptPart ? 54 : 0,
             $isReceiptPart ? 3.3 : 4,
-            str_replace("text.", "", iconv('UTF-8', 'windows-1252', $element->getText())),
+            str_replace('text.', '', iconv('UTF-8', 'windows-1252', $element->getText())),
             self::BORDER,
             self::ALIGN_LEFT
         );
         $this->fpdf->Ln($isReceiptPart ? self::LINE_SPACING_RECEIPT : self::LINE_SPACING_PAYMENT_PART);
+    }
+
+    private function setFurtherInformationElement(FurtherInformation $element): void
+    {
+        $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
+        $this->fpdf->MultiCell(
+            0,
+            4,
+            iconv('UTF-8', 'windows-1252', $element->getText()),
+            self::BORDER,
+            self::ALIGN_LEFT
+        );
     }
 
     private function setPlaceholderElement(Placeholder $element): void

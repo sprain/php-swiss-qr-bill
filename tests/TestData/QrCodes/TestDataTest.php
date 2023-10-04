@@ -23,21 +23,21 @@ class TestDataTest extends TestCase
     public function qrFileProvider(): array
     {
         return [
-            [__DIR__ . '/qr-additional-information.png', 'c690b3c552cb31057a34d1bbe1e3a158'],
-            [__DIR__ . '/qr-alternative-schemes.png', 'ca22587f45609486ec9128f8bfb9ef83'],
-            [__DIR__ . '/qr-full-set.png', 'ae3aa21373bb4b6ad61a8df96995f06b'],
-            [__DIR__ . '/qr-international-ultimate-debtor.png', '3178b54237dbbf43df99ea98bba82aaa'],
-            [__DIR__ . '/qr-minimal-setup.png', '246e856c5c75e92ad9e70298e870d957'],
+            [__DIR__ . '/qr-additional-information.png', '5089db74d380d6ece97d02c86cb35e2d'],
+            [__DIR__ . '/qr-alternative-schemes.png', 'd34aeb0d10da0663a5dfd9df54503e71'],
+            [__DIR__ . '/qr-full-set.png', 'b52be79babcc58485ee68fb4f722657c'],
+            [__DIR__ . '/qr-international-ultimate-debtor.png', 'c56676e8c98f3ba54fac959c450a0995'],
+            [__DIR__ . '/qr-minimal-setup.png', '72911d0c7d23298aeb14e4960204d6e0'],
             [__DIR__ . '/qr-payment-information-with-mediumlong-creditor-and-unknown-debtor.png', 'c347c35996eee781942ee2fa35da0a88'],
             [__DIR__ . '/qr-payment-information-without-amount-and-long-addresses.png', 'c5d23d3fe94aeed310bdf3b9349ce2f9'],
-            [__DIR__ . '/qr-payment-information-without-amount.png', 'd21e7106158945a52c7b2be00fbd5369'],
-            [__DIR__ . '/qr-payment-information-without-amount-but-debtor.png', '67b382fdaa8cd69eb328862d8393fb9f'],
-            [__DIR__ . '/qr-payment-information-zero-amount.png', '66c1373bac50b98705d94b33462a72c6'],
-            [__DIR__ . '/qr-payment-reference-non.png', '5843f882b1883f8202c43c17fa07ae86'],
-            [__DIR__ . '/qr-payment-reference-scor.png', '4ef959e7b428650ec4198491a6d91f1c'],
-            [__DIR__ . '/qr-ultimate-debtor.png', '9d1d257c2b65d9d04d4d7a20ced6ef1a'],
+            [__DIR__ . '/qr-payment-information-without-amount.png', '1da10251b49d72aa48c35207f54d4f1e'],
+            [__DIR__ . '/qr-payment-information-without-amount-but-debtor.png', '7f0276efa720448229a0cbeccc2aa805'],
+            [__DIR__ . '/qr-payment-information-zero-amount.png', 'd779c23775b755e7d193b22e93b51ed4'],
+            [__DIR__ . '/qr-payment-reference-non.png', '176a87b6743ebb3b4d15e9d85937780a'],
+            [__DIR__ . '/qr-payment-reference-scor.png', '7abd60316b137fa472165faff8e4a28c'],
+            [__DIR__ . '/qr-ultimate-debtor.png', 'ed279b73f429a8d9960b8dcb94c2c429'],
 
-            [__DIR__ . '/proof-of-validation.png', '5089538f592679b5cd69130b7f16fe24'],
+            [__DIR__ . '/proof-of-validation.png', 'a50bc5625703d22da79b46880ff3aef4'],
         ];
     }
 }

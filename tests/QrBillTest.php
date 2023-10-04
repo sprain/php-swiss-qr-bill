@@ -42,8 +42,8 @@ final class QrBillTest extends TestCase
         ]);
 
         $qrBill->setAlternativeSchemes([
-            AlternativeScheme::create('foo'),
-            AlternativeScheme::create('foo')
+            AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'),
+            AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9')
         ]);
 
         $this->assertSame(
@@ -214,7 +214,7 @@ final class QrBillTest extends TestCase
             'paymentReferenceQr',
         ]);
 
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'));
         $qrBill->addAlternativeScheme(AlternativeScheme::create(''));
 
         $this->assertFalse($qrBill->isValid());
@@ -230,9 +230,9 @@ final class QrBillTest extends TestCase
             'paymentReferenceQr'
         ]);
 
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'));
 
         $this->assertFalse($qrBill->isValid());
     }

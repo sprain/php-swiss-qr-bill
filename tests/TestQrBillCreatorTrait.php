@@ -144,8 +144,8 @@ trait TestQrBillCreatorTrait
             'paymentReferenceQr',
         ]);
 
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'));
 
         return $qrBill;
     }
@@ -162,8 +162,8 @@ trait TestQrBillCreatorTrait
             'additionalInformation'
         ]);
 
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
-        $qrBill->addAlternativeScheme(AlternativeScheme::create('foo'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'));
+        $qrBill->addAlternativeScheme(AlternativeScheme::create('CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9'));
 
         return $qrBill;
     }
