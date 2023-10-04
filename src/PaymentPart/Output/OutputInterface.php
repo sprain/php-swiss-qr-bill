@@ -10,13 +10,13 @@ interface OutputInterface
 
     public function getLanguage(): ?string;
 
-    public function getPaymentPart();
+    public function getPaymentPart(): ?string;
 
-    public function setPrintable(bool $printable);
+    public function setPrintable(bool $printable): static;
 
     public function isPrintable(): bool;
 
-    public function setQrCodeImageFormat(string $imageFormat);
+    public function setQrCodeImageFormat(string $imageFormat): static;
 
     public function getQrCodeImageFormat(): string;
 }

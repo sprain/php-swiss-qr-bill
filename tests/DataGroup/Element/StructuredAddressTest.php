@@ -291,7 +291,7 @@ final class StructuredAddressTest extends TestCase
                 StructuredAddress::createWithStreet(
                     'Heaps of Characters International Trading Company of Switzerland GmbH',
                     'Rue examplaire',
-        '22a',
+                    '22a',
                     '1000',
                     'Lausanne',
                     'CH'

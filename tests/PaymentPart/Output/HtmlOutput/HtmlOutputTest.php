@@ -52,7 +52,7 @@ final class HtmlOutputTest extends TestCase
                 ->getPaymentPart();
 
             if ($this->regenerateReferenceFiles) {
-               file_put_contents($file, $output);
+                file_put_contents($file, $output);
             }
 
             $this->assertSame(

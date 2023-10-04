@@ -80,7 +80,7 @@ final class QrCode
     /**
      * @deprecated Will be removed in v5. Use getDataUri() instead.
      */
-    public function writeDataUri()
+    public function writeDataUri(): string
     {
         return $this->getDataUri();
     }

@@ -15,7 +15,7 @@ use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
 use TCPDF;
 
-final class TcPdfOutput extends AbstractOutput implements OutputInterface
+final class TcPdfOutput extends AbstractOutput
 {
     // TCPDF
     private const BORDER = 0;
@@ -69,7 +69,7 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG);
     }
 
-    public function getPaymentPart(): void
+    public function getPaymentPart(): ?string
     {
         $retainCellHeightRatio = $this->tcPdf->getCellHeightRatio();
         $retainAutoPageBreak = $this->tcPdf->getAutoPageBreak();
@@ -90,6 +90,8 @@ final class TcPdfOutput extends AbstractOutput implements OutputInterface
 
         $this->tcPdf->setCellHeightRatio($retainCellHeightRatio);
         $this->tcPdf->SetAutoPageBreak($retainAutoPageBreak);
+
+        return null;
     }
 
     private function addSwissQrCodeImage(): void

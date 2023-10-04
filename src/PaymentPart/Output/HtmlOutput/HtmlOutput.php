@@ -16,9 +16,9 @@ use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTempla
 use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
-final class HtmlOutput extends AbstractOutput implements OutputInterface
+final class HtmlOutput extends AbstractOutput
 {
-    public function getPaymentPart(): string
+    public function getPaymentPart(): ?string
     {
         $paymentPart = PaymentPartTemplate::TEMPLATE;
 
@@ -137,8 +137,6 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
 
     private function getContentElement(FurtherInformation|Title|Text|Placeholder $element): string
     {
-        # https://github.com/phpstan/phpstan/issues/4451
-        # @phpstan-ignore-next-line
         return match (get_class($element)) {
             FurtherInformation::class => $this->getFurtherInformationElement($element),
             Title::class => $this->getTitleElement($element),

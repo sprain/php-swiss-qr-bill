@@ -32,6 +32,7 @@ final class QrBill implements SelfValidatableInterface
     private ?AddressInterface $ultimateDebtor = null;
     private ?PaymentReference $paymentReference = null;
     private ?AdditionalInformation $additionalInformation = null;
+
     /** @var AlternativeScheme[] */
     private array $alternativeSchemes = [];
 
@@ -135,11 +136,17 @@ final class QrBill implements SelfValidatableInterface
         return $this;
     }
 
+    /**
+     * @return list<AlternativeScheme>
+     */
     public function getAlternativeSchemes(): array
     {
         return $this->alternativeSchemes;
     }
 
+    /**
+     * @param list<AlternativeScheme> $alternativeSchemes
+     */
     public function setAlternativeSchemes(array $alternativeSchemes): self
     {
         $this->alternativeSchemes = $alternativeSchemes;
@@ -190,6 +197,10 @@ final class QrBill implements SelfValidatableInterface
         return implode("\n", $qrCodeStringElements);
     }
 
+    /**
+     * @param list<QrCodeableInterface|list<QrCodeableInterface>> $elements
+     * @return list<string|int|null>
+     */
     private function extractQrCodeDataFromElements(array $elements): array
     {
         $qrCodeElements = [];

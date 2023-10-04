@@ -4,13 +4,14 @@ namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
+use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 
-abstract class AbstractOutput
+abstract class AbstractOutput implements OutputInterface
 {
     protected QrBill $qrBill;
     protected string $language;
@@ -59,6 +60,9 @@ abstract class AbstractOutput
         return $this->qrCodeImageFormat;
     }
 
+    /**
+     * @return list<Title|Text|Placeholder>
+     */
     protected function getInformationElements(): array
     {
         $informationElements = [];
@@ -87,6 +91,9 @@ abstract class AbstractOutput
         return $informationElements;
     }
 
+    /**
+     * @return list<Title|Text|Placeholder>
+     */
     protected function getInformationElementsOfReceipt(): array
     {
         $informationElements = [];
@@ -110,6 +117,9 @@ abstract class AbstractOutput
         return $informationElements;
     }
 
+    /**
+     * @return list<Title|Text>
+     */
     protected function getCurrencyElements(): array
     {
         $currencyElements = [];
@@ -120,6 +130,9 @@ abstract class AbstractOutput
         return $currencyElements;
     }
 
+    /**
+     * @return list<Title|Text|Placeholder>
+     */
     protected function getAmountElements(): array
     {
         $amountElements = [];
@@ -135,6 +148,9 @@ abstract class AbstractOutput
         return $amountElements;
     }
 
+    /**
+     * @return list<Title|Text|Placeholder>
+     */
     protected function getAmountElementsReceipt(): array
     {
         $amountElements = [];
@@ -150,6 +166,9 @@ abstract class AbstractOutput
         return $amountElements;
     }
 
+    /**
+     * @return list<FurtherInformation|string>
+     */
     protected function getFurtherInformationElements(): array
     {
         $furtherInformationElements = [];

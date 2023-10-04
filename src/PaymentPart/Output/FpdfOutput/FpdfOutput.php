@@ -17,7 +17,7 @@ use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 
-final class FpdfOutput extends AbstractOutput implements OutputInterface
+final class FpdfOutput extends AbstractOutput
 {
     // FPDF
     private const BORDER = 0;
@@ -66,7 +66,7 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
     }
 
-    public function getPaymentPart(): void
+    public function getPaymentPart(): ?string
     {
         $this->fpdf->SetAutoPageBreak(false);
 
@@ -81,6 +81,8 @@ final class FpdfOutput extends AbstractOutput implements OutputInterface
         $this->addCurrencyContent();
         $this->addAmountContent();
         $this->addFurtherInformationContent();
+
+        return null;
     }
 
     public function setQrCodeImageFormat(string $fileExtension): static
