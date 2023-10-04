@@ -46,17 +46,21 @@ final class QrCode
             // Endroid 4.x
             $this->qrCode = BaseQrCode::create($data)
                 ->setEncoding(new Encoding('UTF-8'))
+                /** @phpstan-ignore-next-line as it throws error if Endroid 5 is installed */
                 ->setErrorCorrectionLevel(new ErrorCorrectionLevel\ErrorCorrectionLevelMedium())
                 ->setSize(self::PX_QR_CODE)
                 ->setMargin(0)
+                /** @phpstan-ignore-next-line as it throws error if Endroid 5 is installed  */
                 ->setRoundBlockSizeMode(new RoundBlockSizeMode\RoundBlockSizeModeEnlarge());
         } else {
             // Endroid 5.x
             $this->qrCode = BaseQrCode::create($data)
                 ->setEncoding(new Encoding('UTF-8'))
+                /** @phpstan-ignore-next-line as it throws error if Endroid 4 is installed */
                 ->setErrorCorrectionLevel(ErrorCorrectionLevel::Medium)
                 ->setSize(self::PX_QR_CODE)
                 ->setMargin(0)
+                /** @phpstan-ignore-next-line as it throws error if Endroid 4 is installed */
                 ->setRoundBlockSizeMode(RoundBlockSizeMode::Enlarge);
         }
 
