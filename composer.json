@@ -41,7 +41,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Sprain\\SwissQrBill\\": "src",
+            "Sprain\\SwissQrBill\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Sprain\\Tests\\SwissQrBill\\": "tests"
         }
     }
