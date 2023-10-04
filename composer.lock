@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f8c8009f4976379503522594ce61e52",
+    "content-hash": "9da3c6bb2613f31f739b5f33012af323",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -112,21 +112,21 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "4.8.1",
+            "version": "5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "652157aee43d919be36cf2100a5a25b0882462f7"
+                "reference": "3601a9df66f6c526e4bb6dc2261e1ce03064e7d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/652157aee43d919be36cf2100a5a25b0882462f7",
-                "reference": "652157aee43d919be36cf2100a5a25b0882462f7",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/3601a9df66f6c526e4bb6dc2261e1ce03064e7d2",
+                "reference": "3601a9df66f6c526e4bb6dc2261e1ce03064e7d2",
                 "shasum": ""
             },
             "require": {
                 "bacon/bacon-qr-code": "^2.0.5",
-                "php": "^8.0"
+                "php": "^8.1"
             },
             "conflict": {
                 "khanamiryan/qrcode-detector-decoder": "^1.0.6"
@@ -146,7 +146,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.x-dev"
+                    "dev-master": "5.x-dev"
                 }
             },
             "autoload": {
@@ -175,7 +175,7 @@
             ],
             "support": {
                 "issues": "https://github.com/endroid/qr-code/issues",
-                "source": "https://github.com/endroid/qr-code/tree/4.8.1"
+                "source": "https://github.com/endroid/qr-code/tree/5.0.1"
             },
             "funding": [
                 {
@@ -183,7 +183,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-23T08:56:09+00:00"
+            "time": "2023-10-02T22:39:22+00:00"
         },
         {
             "name": "kmukku/php-iso11649",
@@ -4763,5 +4763,5 @@
         "ext-dom": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
