@@ -65,5 +65,4 @@ final class RfCreditorReferenceGeneratorTest extends TestCase
             ['123.'], // invalid symbol
         ];
     }
-
 }

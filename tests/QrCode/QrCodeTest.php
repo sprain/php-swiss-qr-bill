@@ -114,5 +114,4 @@ final class QrCodeTest extends TestCase
             ]
         ];
     }
-
 }

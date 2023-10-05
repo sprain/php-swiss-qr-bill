@@ -48,6 +48,9 @@ final class Placeholder implements OutputElementInterface
     private int $width;
     private int $height;
 
+    /**
+     * @param array{type: string, fileSvg: string, filePng: string, width: int, height: int} $type
+     */
     public static function create(array $type): self
     {
         $placeholder = new self();
@@ -65,7 +68,7 @@ final class Placeholder implements OutputElementInterface
         return $this->type;
     }
 
-    public function getFile($type = self::FILE_TYPE_SVG): string
+    public function getFile(string $type = self::FILE_TYPE_SVG): string
     {
         return match ($type) {
             self::FILE_TYPE_PNG => $this->filePng,

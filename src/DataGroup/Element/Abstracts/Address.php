@@ -20,11 +20,13 @@ abstract class Address
 
         $string = trim($string);
         $string = StringModifier::replaceLineBreaksAndTabsWithSpaces($string);
-        $string = StringModifier::replaceMultipleSpacesWithOne($string);
-
-        return $string;
+        return StringModifier::replaceMultipleSpacesWithOne($string);
     }
 
+    /**
+     * @param string[] $lines
+     * @return string[]
+     */
     protected static function clearMultilines(array $lines): array
     {
         $noOfLongLines = 0;

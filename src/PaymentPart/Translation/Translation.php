@@ -70,7 +70,10 @@ final class Translation
         ]
     ];
 
-    public static function getAllByLanguage($language): ?array
+    /**
+     * @return array<string, string>|null
+     */
+    public static function getAllByLanguage(string $language): ?array
     {
         return self::TRANSLATIONS[$language] ?? null;
     }
