@@ -2,6 +2,4 @@ parameters:
     level: 6
     paths:
         - src/
-    ignoreErrors:
-        - '#Parameter \#1 \$h of method TCPDF::setCellHeightRatio\(\) expects int, float given\.#'
     reportUnmatchedIgnoredErrors: false

@@ -198,7 +198,7 @@ final class QrBill implements SelfValidatableInterface
     }
 
     /**
-     * @param list<QrCodeableInterface|list<QrCodeableInterface>> $elements
+     * @param list<QrCodeableInterface|AddressInterface|list<AddressInterface|QrCodeableInterface>> $elements
      * @return list<string|int|null>
      */
     private function extractQrCodeDataFromElements(array $elements): array
