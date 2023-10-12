@@ -167,7 +167,7 @@ abstract class AbstractOutput implements OutputInterface
     }
 
     /**
-     * @return list<FurtherInformation|string>
+     * @return list<FurtherInformation>
      */
     protected function getFurtherInformationElements(): array
     {

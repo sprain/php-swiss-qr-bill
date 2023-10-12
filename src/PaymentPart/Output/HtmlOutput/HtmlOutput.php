@@ -13,7 +13,6 @@ use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableStylesTem
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TextElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 final class HtmlOutput extends AbstractOutput
@@ -175,7 +174,7 @@ final class HtmlOutput extends AbstractOutput
         $elementString = $elementTemplate;
 
         $svgDoc = new \DOMDocument();
-        $svgDoc->loadXML(file_get_contents($element->getFile()));
+        $svgDoc->loadXML(file_get_contents($element->getFile())); // @phpstan-ignore argument.type (the loaded file is under our control)
         $svg = $svgDoc->getElementsByTagName('svg');
         $dataUri = 'data:image/svg+xml;base64,' . base64_encode($svg->item(0)->C14N());
 
