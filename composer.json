@@ -7,6 +7,7 @@
         "php": "^8.0.0|^8.1.0|^8.2.0",
         "ext-dom": "*",
         "ext-bcmath": "*",
+        "ext-iconv": "*",
         "symfony/validator": "^4.4|^5.0|^6.0",
         "symfony/intl": "^4.4|^5.0|^6.0",
         "kmukku/php-iso11649": "^1.5",
@@ -20,7 +21,7 @@
         "fpdf/fpdf": "^1.85",
         "friendsofphp/php-cs-fixer": "^3.15",
         "khanamiryan/qrcode-detector-decoder": "^1.0.3",
-        "phpstan/phpstan": "^1.10.37",
+        "phpstan/phpstan": "^1.11-dev",
         "setasign/fpdi": "^2.3.5",
         "setasign/fpdf": "^1.8.2",
         "tecnickcom/tcpdf": "^6.3.2"
