@@ -32,45 +32,46 @@ class PaymentPartTemplate
 /* h1 / h2 */
 #qr-bill h1 {
     font-size: 11pt !important;
+    line-height: 13pt !important;
     font-weight: bold !important;
-    margin: 0;
-    padding: 0;
-    height: 7mm;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 7mm !important;
     color: #000 !important;
 }
 
 #qr-bill h2 {
     font-weight: bold !important;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     color: #000 !important;
 }
 
 #qr-bill-payment-part h2 {
     font-size: 8pt !important;
     line-height: 11pt !important;    
-    margin-top: 11pt;
+    margin-top: 11pt !important;
     color: #000 !important;
 }
 
 #qr-bill-receipt h2 {
     font-size: 6pt !important;
     line-height: 8pt !important;    
-    margin-top: 8pt;
+    margin-top: 8pt !important;
     color: #000 !important;
 }
 
 #qr-bill-payment-part h2:first-child,
 #qr-bill-receipt h2:first-child {
-    margin-top: 0;
+    margin-top: 0 !important;
     color: #000 !important;
 }
 
 /* p */
 #qr-bill p {
     font-weight: normal !important;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     color: #000 !important;
 }
 
