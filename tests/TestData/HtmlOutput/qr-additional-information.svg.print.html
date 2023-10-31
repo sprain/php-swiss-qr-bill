@@ -1,12 +1,12 @@
 <style>
 #qr-bill {
-	box-sizing: border-box;
-	border-collapse: collapse;
-	color: #000 !important;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    color: #000 !important;
 }
 
 #qr-bill * {
-	font-family: Arial, Frutiger, Helvetica, "Liberation Sans"  !important;
+    font-family: Arial, Frutiger, Helvetica, "Liberation Sans"  !important;
 }
 
 #qr-bill img.qr-bill-placeholder {
@@ -17,92 +17,93 @@
     text-align: center;
     font-size: 8pt !important;
     line-height: 9pt;
-	border-bottom: 0.75pt solid black;
-	height: 5mm;
-	vertical-align: middle;
+    border-bottom: 0.75pt solid black;
+    height: 5mm;
+    vertical-align: middle;
 }
 
 /* h1 / h2 */
 #qr-bill h1 {
-	font-size: 11pt !important;
-	font-weight: bold !important;
-	margin: 0;
-	padding: 0;
-	height: 7mm;
-	color: #000 !important;
+    font-size: 11pt !important;
+    line-height: 13pt !important;
+    font-weight: bold !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 7mm !important;
+    color: #000 !important;
 }
 
 #qr-bill h2 {
-	font-weight: bold !important;
-	margin: 0;
-	padding: 0;
-	color: #000 !important;
+    font-weight: bold !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #000 !important;
 }
 
 #qr-bill-payment-part h2 {
-	font-size: 8pt !important;
-	line-height: 11pt !important;	
-    margin-top: 11pt;
-	color: #000 !important;
+    font-size: 8pt !important;
+    line-height: 11pt !important;    
+    margin-top: 11pt !important;
+    color: #000 !important;
 }
 
 #qr-bill-receipt h2 {
-	font-size: 6pt !important;
-	line-height: 8pt !important;	
-    margin-top: 8pt;
-	color: #000 !important;
+    font-size: 6pt !important;
+    line-height: 8pt !important;    
+    margin-top: 8pt !important;
+    color: #000 !important;
 }
 
 #qr-bill-payment-part h2:first-child,
 #qr-bill-receipt h2:first-child {
-	margin-top: 0;
-	color: #000 !important;
+    margin-top: 0 !important;
+    color: #000 !important;
 }
 
 /* p */
 #qr-bill p {
-	font-weight: normal !important;
-	margin: 0;
-	padding: 0;
-	color: #000 !important;
+    font-weight: normal !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #000 !important;
 }
 
 #qr-bill-receipt p {
-	font-size: 8pt !important;
-	line-height: 9pt !important;
-	color: #000 !important;
+    font-size: 8pt !important;
+    line-height: 9pt !important;
+    color: #000 !important;
 }
 
 #qr-bill-payment-part p {
-	font-size: 10pt !important;
-	line-height: 11pt !important;
-	color: #000 !important;
+    font-size: 10pt !important;
+    line-height: 11pt !important;
+    color: #000 !important;
 }
 
 #qr-bill-amount-area-receipt p{
     line-height: 11pt !important;
-	color: #000 !important;
+    color: #000 !important;
 }
 
 #qr-bill-amount-area p{
     line-height: 13pt !important;
-	color: #000 !important;
+    color: #000 !important;
 }
 
 #qr-bill-payment-further-information p {
     font-size: 7pt !important;
     line-height: 9pt !important;
-	color: #000 !important;
+    color: #000 !important;
 }
 
 /* Receipt */
 #qr-bill-receipt {
     box-sizing: border-box;
     width: 62mm;
-	border-right: 0.2mm solid black;
-	padding-left: 5mm;
-	padding-top: 5mm;
-	vertical-align: top;
+    border-right: 0.2mm solid black;
+    padding-left: 5mm;
+    padding-top: 5mm;
+    vertical-align: top;
 }
 
 #qr-bill-information-receipt {
@@ -114,8 +115,8 @@
 }
 
 #qr-bill-currency-receipt {
-	float: left;
-	margin-right: 2mm;
+    float: left;
+    margin-right: 2mm;
 }
 
 #qr-bill-acceptance-point {
@@ -134,10 +135,10 @@
 #qr-bill-payment-part {
     box-sizing: border-box;
     width: 148mm;
-	padding-left: 5mm;
-	padding-top: 5mm;
-	padding-right: 5mm;
-	vertical-align: top;
+    padding-left: 5mm;
+    padding-top: 5mm;
+    padding-right: 5mm;
+    vertical-align: top;
 }
 
 #qr-bill-payment-part-left {
@@ -147,10 +148,10 @@
 }
 
 #qr-bill-swiss-qr-image {
-	width: 46mm;
-	height: 46mm;
-	margin: 5mm;
-	margin-left: 0;
+    width: 46mm;
+    height: 46mm;
+    margin: 5mm;
+    margin-left: 0;
 }
 
 #qr-bill-amount-area {
@@ -158,8 +159,8 @@
 }
 
 #qr-bill-currency {
-	float: left;
-	margin-right: 2mm;
+    float: left;
+    margin-right: 2mm;
 }
 
 #qr-bill-payment-further-information {
@@ -188,10 +189,10 @@
     <tr id="qr-bill-separate-info">
         <td colspan="99"><span id="qr-bill-separate-info-text">Separate before paying in</span></td>
     </tr>
-	<tr>
-	    <td id="qr-bill-receipt">
-	        <h1>Receipt</h1>
-	        <div id="qr-bill-information-receipt">
+    <tr>
+        <td id="qr-bill-receipt">
+            <h1>Receipt</h1>
+            <div id="qr-bill-information-receipt">
                 <h2>Account / Payable to</h2><p>CH44 3199 9123 0008 8901 2<br />
 Thomas LeClaire<br />
 Rue examplaire 22a<br />
@@ -222,8 +223,8 @@ Rue examplaire 22a<br />
                         <h2>Amount</h2><p>25.90</p>
                     </div>
                 </div>
-			</div>
-			<div id="qr-bill-payment-part-right">
+            </div>
+            <div id="qr-bill-payment-part-right">
                 <div id="qr-bill-information">
                     <h2>Account / Payable to</h2><p>CH44 3199 9123 0008 8901 2<br />
 Thomas LeClaire<br />
@@ -232,10 +233,10 @@ Rue examplaire 22a<br />
 Gardening work<br />
 Bill Information</p><h2>Payable by (name/address)</h2><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBpZD0iRWJlbmVfMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTg0LjMgNzAuOTsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDE4NC4zIDcwLjkiIHg9IjBweCIgeT0iMHB4IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cmVjdCBoZWlnaHQ9IjAuOCIgd2lkdGg9IjguNSI+PC9yZWN0PgoJPHJlY3QgaGVpZ2h0PSIwLjgiIHRyYW5zZm9ybT0ibWF0cml4KC0xLjgzNjk3MGUtMTYgMSAtMSAtMS44MzY5NzBlLTE2IDQuNjI3IDMuODc3KSIgd2lkdGg9IjguNSIgeD0iLTMuOSIgeT0iMy45Ij48L3JlY3Q+CjwvZz4KPGc+Cgk8cmVjdCBoZWlnaHQ9IjAuOCIgdHJhbnNmb3JtPSJtYXRyaXgoNi4xMjMyMzRlLTE3IC0xIDEgNi4xMjMyMzRlLTE3IC02Ni4yMzkyIDY2Ljk4OTIpIiB3aWR0aD0iOC41IiB4PSItMy45IiB5PSI2Ni4yIj48L3JlY3Q+Cgk8cmVjdCBoZWlnaHQ9IjAuOCIgd2lkdGg9IjguNSIgeT0iNzAuMSI+PC9yZWN0Pgo8L2c+CjxnPgoJPHJlY3QgaGVpZ2h0PSIwLjgiIHRyYW5zZm9ybT0ibWF0cml4KC0xIC0xLjIyNDY0N2UtMTYgMS4yMjQ2NDdlLTE2IC0xIDM2MCAxNDAuOTgyMykiIHdpZHRoPSI4LjUiIHg9IjE3NS43IiB5PSI3MC4xIj48L3JlY3Q+Cgk8cmVjdCBoZWlnaHQ9IjAuOCIgdHJhbnNmb3JtPSJtYXRyaXgoNi4xMjMyMzRlLTE3IC0xIDEgNi4xMjMyMzRlLTE3IDExNy4yNjI4IDI1MC40OTExKSIgd2lkdGg9IjguNSIgeD0iMTc5LjYiIHk9IjY2LjIiPjwvcmVjdD4KPC9nPgo8Zz4KCTxyZWN0IGhlaWdodD0iMC44IiB0cmFuc2Zvcm09Im1hdHJpeCgtMS44MzY5NzBlLTE2IDEgLTEgLTEuODM2OTcwZS0xNiAxODguMTI4OSAtMTc5LjYyNSkiIHdpZHRoPSI4LjUiIHg9IjE3OS42IiB5PSIzLjkiPjwvcmVjdD4KCTxyZWN0IGhlaWdodD0iMC44IiB0cmFuc2Zvcm09Im1hdHJpeCgtMSAtMS4yMjQ2NDdlLTE2IDEuMjI0NjQ3ZS0xNiAtMSAzNjAgMC43NSkiIHdpZHRoPSI4LjUiIHg9IjE3NS43Ij48L3JlY3Q+CjwvZz4KPC9zdmc+" style="width:65mm; height:25mm;" class="qr-bill-placeholder" id="placeholder_payable_by">
                 </div>
-			</div>
-			<div id="qr-bill-payment-further-information">
-			    <p></p>
+            </div>
+            <div id="qr-bill-payment-further-information">
+                <p></p>
             </div>
         </td>
-	</tr>
+    </tr>
 </table>
