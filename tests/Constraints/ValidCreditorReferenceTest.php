@@ -4,11 +4,12 @@ namespace Sprain\Tests\SwissQrBill\Constraints;
 
 use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
 use Sprain\SwissQrBill\Constraint\ValidCreditorReferenceValidator;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 final class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): ConstraintValidatorInterface
     {
         return new ValidCreditorReferenceValidator();
     }

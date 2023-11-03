@@ -8,11 +8,12 @@ use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombin
 use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\QrBill;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 final class ValidCreditorInformationPaymentReferenceCombinationTest extends ConstraintValidatorTestCase
 {
-    protected function createValidator()
+    protected function createValidator(): ConstraintValidatorInterface
     {
         return new ValidCreditorInformationPaymentReferenceCombinationValidator();
     }
