@@ -12,6 +12,7 @@ use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\DataGroup\EmptyElement\EmptyAdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\EmptyElement\EmptyAddress;
+use Sprain\SwissQrBill\DataGroup\EmptyElement\EmptyLine;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -189,12 +190,24 @@ final class QrBill implements SelfValidatableInterface
             $this->getUltimateDebtor() ?: new EmptyAddress(),
             $this->getPaymentReference(),
             $this->getAdditionalInformation() ?: new EmptyAdditionalInformation(),
+            $this->getPossibleEmptyLine(),
             $this->getAlternativeSchemes()
         ];
 
         $qrCodeStringElements = $this->extractQrCodeDataFromElements($elements);
 
         return implode("\n", $qrCodeStringElements);
+    }
+
+    private function getPossibleEmptyLine(): ?EmptyLine
+    {
+        if ($this->getAlternativeSchemes()) {
+            if (null === $this->getAdditionalInformation() || null === $this->getAdditionalInformation()->getBillInformation()) {
+                return new EmptyLine();
+            }
+        }
+
+        return null;
     }
 
     /**
