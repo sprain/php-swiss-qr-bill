@@ -20,7 +20,7 @@ Then have a look at [example/example.php](example/example.php).
 A typical QR bill ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example.php)) requires a special QR IBAN. You can get yours from your bank. A classic IBAN can be used for QR bills with a SCOR reference ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example_scor.php)) or no reference number at all ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example_minimal.php)).
 
 * **How do I recognize a QR IBAN?**<br>
-In a QR IBAN, the *institute id*, which is defined in the 5th to 9th character, is a number in the range of 30000 to 31999. (Example: CH44 **3199 9**123 0008 8901 2). For how detect it in code, see https://github.com/sprain/php-swiss-qr-bill/issues/182#issuecomment-1229539977
+In a QR IBAN, the *institute id*, which is defined in the 5th to 9th character, is a number in the range of 30000 to 31999. (Example: CH44 **3199 9**123 0008 8901 2). For how to detect it in code, see https://github.com/sprain/php-swiss-qr-bill/issues/182#issuecomment-1229539977
 
 * **How do I create QR bills for international IBANs?**<br>
 You can't. The QR bill by specification only supports IBANs from Switzerland and Liechtenstein.
