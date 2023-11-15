@@ -37,7 +37,7 @@ class TestDataTest extends TestCase
             [__DIR__ . '/qr-payment-reference-scor.png', '7abd60316b137fa472165faff8e4a28c'],
             [__DIR__ . '/qr-ultimate-debtor.png', 'ed279b73f429a8d9960b8dcb94c2c429'],
 
-            [__DIR__ . '/proof-of-validation.png', 'a50bc5625703d22da79b46880ff3aef4'],
+            [__DIR__ . '/proof-of-validation.png', 'f40119eaf7bf58159f9da521e51f9278'],
         ];
     }
 }
