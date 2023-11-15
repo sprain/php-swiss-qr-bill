@@ -36,7 +36,7 @@ $qrBill->setCreditorInformation(
 // Add debtor information
 // Who has to pay the invoice? This part is optional.
 //
-// Notice how you can use two different styles of addresses: CombinedAddress or StructuredAddress.
+// Note how you can use two different styles of addresses: CombinedAddress or StructuredAddress.
 // They are interchangeable for creditor as well as debtor.
 $qrBill->setUltimateDebtor(
     QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
