@@ -202,7 +202,7 @@ final class QrBill implements SelfValidatableInterface
     private function getPossibleEmptyLine(): ?EmptyLine
     {
         if ($this->getAlternativeSchemes()) {
-            if (null === $this->getAdditionalInformation() || null === $this->getAdditionalInformation()->getBillInformation()) {
+            if (null === $this->getAdditionalInformation()?->getBillInformation()) {
                 return new EmptyLine();
             }
         }
