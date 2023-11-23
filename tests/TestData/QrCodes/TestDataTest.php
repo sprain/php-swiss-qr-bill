@@ -24,7 +24,7 @@ class TestDataTest extends TestCase
     {
         return [
             [__DIR__ . '/qr-additional-information.png', '5089db74d380d6ece97d02c86cb35e2d'],
-            [__DIR__ . '/qr-alternative-schemes.png', 'd34aeb0d10da0663a5dfd9df54503e71'],
+            [__DIR__ . '/qr-alternative-schemes.png', '0ac1061daa0114ba49708a5593471da0'],
             [__DIR__ . '/qr-full-set.png', 'b52be79babcc58485ee68fb4f722657c'],
             [__DIR__ . '/qr-international-ultimate-debtor.png', 'c56676e8c98f3ba54fac959c450a0995'],
             [__DIR__ . '/qr-minimal-setup.png', '72911d0c7d23298aeb14e4960204d6e0'],
@@ -37,7 +37,7 @@ class TestDataTest extends TestCase
             [__DIR__ . '/qr-payment-reference-scor.png', '7abd60316b137fa472165faff8e4a28c'],
             [__DIR__ . '/qr-ultimate-debtor.png', 'ed279b73f429a8d9960b8dcb94c2c429'],
 
-            [__DIR__ . '/proof-of-validation.png', 'a50bc5625703d22da79b46880ff3aef4'],
+            [__DIR__ . '/proof-of-validation.png', 'f40119eaf7bf58159f9da521e51f9278'],
         ];
     }
 }
