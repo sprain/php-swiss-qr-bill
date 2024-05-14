@@ -30,6 +30,8 @@ final class QrCode
     private BaseQrCode $qrCode;
     private Logo $qrCodeLogo;
     private WriterInterface $qrCodeWriter;
+    /** @var array<string, bool> $options */
+    private array $options = [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF => true];
 
     public static function create(string $data, string $fileFormat = null): self
     {
@@ -68,6 +70,15 @@ final class QrCode
             ->setResizeToWidth(self::PX_SWISS_CROSS);
 
         $this->setWriterByExtension($fileFormat);
+    }
+
+    /**
+     * @param array<string, bool> $options
+     * @return void
+     */
+    public function addOptions(array $options): void
+    {
+        $this->options = array_merge($this->options, $options);
     }
 
     public function writeFile(string $path): void
@@ -124,7 +135,7 @@ final class QrCode
             $this->qrCode,
             $this->qrCodeLogo,
             null,
-            [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF => true]
+            $this->options
         );
     }
 }

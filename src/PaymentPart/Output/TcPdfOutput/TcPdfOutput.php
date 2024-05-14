@@ -2,6 +2,7 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
+use Endroid\QrCode\Writer\SvgWriter;
 use setasign\Fpdi\Tcpdf\Fpdi;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
@@ -97,6 +98,11 @@ final class TcPdfOutput extends AbstractOutput
     private function addSwissQrCodeImage(): void
     {
         $qrCode = $this->getQrCode();
+
+        // The compact version uses the <path> element, which increases the size of the output file.
+        $qrCode->addOptions([
+            SvgWriter::WRITER_OPTION_COMPACT => false
+        ]);
 
         $method = match ($this->getQrCodeImageFormat()) {
             QrCode::FILE_FORMAT_SVG => 'ImageSVG',
