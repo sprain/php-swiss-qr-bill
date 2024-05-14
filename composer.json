@@ -11,7 +11,7 @@
         "symfony/validator": "^4.4|^5.0|^6.0|^7.0",
         "symfony/intl": "^4.4|^5.0|^6.0|^7.0",
         "kmukku/php-iso11649": "^1.5",
-        "endroid/qr-code": "^4.4.4|^5.0",
+        "endroid/qr-code": "^4.4.4|^5.0.9",
         "symfony/polyfill-intl-icu": "^1.23"
     },
     "require-dev": {
