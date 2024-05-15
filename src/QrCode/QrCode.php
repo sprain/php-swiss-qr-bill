@@ -112,7 +112,7 @@ final class QrCode
      * However, for some unknown reason this inflates the filze size of invoices created with TcPdfOutput, even though
      * the file size of the qr code becomes smaller.
      * In endroid/qr-code 5.0.9, an option was added to create SVGs in the "old style" again, using <defs> elements.
-     * This new style is what we want to use for TcPdfOutput, if available.
+     * This is what we want to use for TcPdfOutput, if available.
      *
      * @link https://github.com/sprain/php-swiss-qr-bill/issues/249
      * @link https://github.com/endroid/qr-code/commit/3dcdfab4c9122874f3915d8bf80a43b9df11852d
