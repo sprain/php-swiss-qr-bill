@@ -31,7 +31,7 @@ final class QrCode
     private Logo $qrCodeLogo;
     private WriterInterface $qrCodeWriter;
 
-    /** @var array<string, bool> $options */
+    /** @var array<string, bool> $writerOptions */
     private array $writerOptions = [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF => true];
 
     public static function create(string $data, string $fileFormat = null): self
