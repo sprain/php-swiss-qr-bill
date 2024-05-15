@@ -99,8 +99,9 @@ final class TcPdfOutput extends AbstractOutput
         $qrCode = $this->getQrCode();
 
         // The compact version uses the <path> element, which increases the size of the output file.
+        // For "endroid/qr-code: ^4" compatibility, do not use SvgWriter::WRITER_OPTION_COMPACT but the hardcoded "compact" key
         $qrCode->addOptions([
-            SvgWriter::WRITER_OPTION_COMPACT => false
+            'compact' => false
         ]);
 
         $method = match ($this->getQrCodeImageFormat()) {
