@@ -31,6 +31,9 @@ final class QrCode
     private Logo $qrCodeLogo;
     private WriterInterface $qrCodeWriter;
 
+    /** @var array<string, bool> $writerOptions */
+    private array $writerOptions = [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF => true];
+
     public static function create(string $data, string $fileFormat = null): self
     {
         if (null === $fileFormat) {
@@ -102,6 +105,28 @@ final class QrCode
         return $this->qrCode->getData();
     }
 
+    /**
+     * This makes sure the file size of invoices created with TcPdfOutput is not unnecessarily inflated.
+     *
+     * With endroid/qr-code 5.0.8, the default behaviour was changed to create optimized SVGs with the <path> element.
+     * However, for some unknown reason this inflates the filze size of invoices created with TcPdfOutput, even though
+     * the file size of the qr code becomes smaller.
+     * In endroid/qr-code 5.0.9, an option was added to create SVGs in the "old style" again, using <defs> elements.
+     * This is what we want to use for TcPdfOutput, if available.
+     *
+     * @link https://github.com/sprain/php-swiss-qr-bill/issues/249
+     * @link https://github.com/endroid/qr-code/commit/3dcdfab4c9122874f3915d8bf80a43b9df11852d
+     */
+    public function avoidCompactSvgs(): void
+    {
+        // The constant only exists in Endroid 5.0.9 and higher
+        if (defined('Endroid\QrCode\Writer\SvgWriter::WRITER_OPTION_COMPACT')) {
+            $this->writerOptions = array_merge($this->writerOptions, [
+                SvgWriter::WRITER_OPTION_COMPACT => false
+            ]);
+        }
+    }
+
     private function setWriterByExtension(string $extension): void
     {
         if (!in_array($extension, self::SUPPORTED_FILE_FORMATS)) {
@@ -124,7 +149,7 @@ final class QrCode
             $this->qrCode,
             $this->qrCodeLogo,
             null,
-            [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF => true]
+            $this->writerOptions
         );
     }
 }

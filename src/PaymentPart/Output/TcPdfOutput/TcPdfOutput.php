@@ -9,7 +9,6 @@ use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
-use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
@@ -97,6 +96,7 @@ final class TcPdfOutput extends AbstractOutput
     private function addSwissQrCodeImage(): void
     {
         $qrCode = $this->getQrCode();
+        $qrCode->avoidCompactSvgs();
 
         $method = match ($this->getQrCodeImageFormat()) {
             QrCode::FILE_FORMAT_SVG => 'ImageSVG',
