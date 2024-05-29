@@ -20,7 +20,7 @@
         "dms/phpunit-arraysubset-asserts": "^0.2",
         "fpdf/fpdf": "^1.85",
         "friendsofphp/php-cs-fixer": "^3.15",
-        "khanamiryan/qrcode-detector-decoder": "^1.0.3",
+        "khanamiryan/qrcode-detector-decoder": "^1.0.3|^2.0",
         "phpstan/phpstan": "^1.11-dev",
         "setasign/fpdi": "^2.3.5",
         "setasign/fpdf": "^1.8.2",
