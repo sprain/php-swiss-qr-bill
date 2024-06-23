@@ -93,6 +93,7 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
         ]);
 
         $metadata->addPropertyConstraints('reference', [
+            /** @phpstan-ignore-next-line because docs do not match bc compatible syntax */
             new Assert\Type([
                 'type' => 'alnum',
                 'groups' => [self::TYPE_QR]
