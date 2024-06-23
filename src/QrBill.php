@@ -165,7 +165,7 @@ final class QrBill implements SelfValidatableInterface
     /**
      * @throws InvalidQrBillDataException
      */
-    public function getQrCode(?string $fileFormat = null): QrCode
+    public function getQrCode(?string $fileFormat = null, array $unsupportedCharacterReplacements = []): QrCode
     {
         if (!$this->isValid()) {
             throw new InvalidQrBillDataException(
@@ -175,7 +175,8 @@ final class QrBill implements SelfValidatableInterface
 
         return QrCode::create(
             $this->getQrCodeContent(),
-            $fileFormat
+            $fileFormat,
+            $unsupportedCharacterReplacements
         );
     }
 

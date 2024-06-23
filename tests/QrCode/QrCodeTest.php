@@ -120,9 +120,43 @@ final class QrCodeTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidCharactersCodeProvider
+     * @dataProvider replacementCharactersProvider
      */
-    public function testItRemovesInvalidCharacters(string $providedString, string $expectedString): void
+    public function testItReplacesUnsupportedCharacters(string $providedString, array $replacements, string $expectedString): void
+    {
+        $qrCode = QrCode::create($providedString, null, $replacements);
+
+        $this->assertEquals(
+            $expectedString,
+            $qrCode->getText()
+        );
+    }
+
+    public function replacementCharactersProvider(): array
+    {
+        return [
+            'replaceSpecificUnsupportedCharacters' => [
+                'providedString' => '«This is a test!»',
+                'replacements' => [
+                    '«' => '"',
+                    '»' => '"'
+                ],
+                'expectedString' => '"This is a test!"'
+            ],
+            'ignoreReplacementsOfSupportedCharacters' => [
+                'providedString' => '«This is a test!»',
+                'replacements' => [
+                    't' => 'a',
+                ],
+                'expectedString' => 'This is a test!'
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider unsupportedCharactersProvider
+     */
+    public function testItRemovesUnsupportedCharacters(string $providedString, string $expectedString): void
     {
         $qrCode = QrCode::create($providedString);
 
@@ -132,7 +166,7 @@ final class QrCodeTest extends TestCase
         );
     }
 
-    public function invalidCharactersCodeProvider(): array
+    public function unsupportedCharactersProvider(): array
     {
         return [
             'keepAllAllowedCharacters' => [

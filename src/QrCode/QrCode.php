@@ -18,6 +18,8 @@ final class QrCode
     public const FILE_FORMAT_PNG = 'png';
     public const FILE_FORMAT_SVG = 'svg';
 
+    public const SUPPORTED_CHARACTERS = 'a-zA-Z0-9.,;:\'"+\-\/()?*\[\]{}|`´~ !^#%&<>÷=@_$£àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ';
+
     private const SUPPORTED_FILE_FORMATS = [
         self::FILE_FORMAT_PNG,
         self::FILE_FORMAT_SVG
@@ -34,17 +36,18 @@ final class QrCode
     /** @var array<string, bool> $writerOptions */
     private array $writerOptions = [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF => true];
 
-    public static function create(string $data, string $fileFormat = null): self
+    public static function create(string $data, string $fileFormat = null, array $unsupportedCharacterReplacements = []): self
     {
         if (null === $fileFormat) {
             $fileFormat = self::FILE_FORMAT_SVG;
         }
 
-        return new self($data, $fileFormat);
+        return new self($data, $fileFormat, $unsupportedCharacterReplacements);
     }
 
-    private function __construct(string $data, string $fileFormat)
+    private function __construct(string $data, string $fileFormat, array $unsupportedCharacterReplacements)
     {
+        $data = $this->replaceUnsupportedCharacters($data, $unsupportedCharacterReplacements);
         $data = $this->cleanUnsupportedCharacters($data);
 
         if (class_exists(ErrorCorrectionLevel\ErrorCorrectionLevelMedium::class)) {
@@ -129,11 +132,22 @@ final class QrCode
         }
     }
 
+    private function replaceUnsupportedCharacters(string $data, array $unsupportedCharacterReplacements): string
+    {
+        foreach ($unsupportedCharacterReplacements as $character => $replacement) {
+            if (preg_match("/([^" . self::SUPPORTED_CHARACTERS . "])/u", $character)) {
+                $data = str_replace($character, $replacement, $data);
+            }
+        }
+
+        return $data;
+    }
+
     private function cleanUnsupportedCharacters(string $data): string
     {
-        $pattern = '/([^a-zA-Z0-9.,;:\'"+\-\/()?*\[\]{}|`´~ !^#%&<>÷=@_$£àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ\\n])/u';
+        $supportedCharacters = self::SUPPORTED_CHARACTERS . "\\n";
 
-        return preg_replace($pattern, '', $data);
+        return preg_replace("/([^$supportedCharacters])/u", '', $data);
     }
 
     private function setWriterByExtension(string $extension): void
