@@ -45,6 +45,8 @@ final class QrCode
 
     private function __construct(string $data, string $fileFormat)
     {
+        $data = $this->cleanUnsupportedCharacters($data);
+
         if (class_exists(ErrorCorrectionLevel\ErrorCorrectionLevelMedium::class)) {
             // Endroid 4.x
             $this->qrCode = BaseQrCode::create($data)
@@ -125,6 +127,13 @@ final class QrCode
                 SvgWriter::WRITER_OPTION_COMPACT => false
             ]);
         }
+    }
+
+    private function cleanUnsupportedCharacters(string $data): string
+    {
+        $pattern = '/([^a-zA-Z0-9.,;:\'"+\-\/()?*\[\]{}|`´~ !^#%&<>÷=@_$£àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ\\n])/u';
+
+        return preg_replace($pattern, '', $data);
     }
 
     private function setWriterByExtension(string $extension): void

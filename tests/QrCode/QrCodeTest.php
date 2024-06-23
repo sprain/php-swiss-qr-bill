@@ -118,4 +118,31 @@ final class QrCodeTest extends TestCase
             ]
         ];
     }
+
+    /**
+     * @dataProvider invalidCharactersCodeProvider
+     */
+    public function testItRemovesInvalidCharacters(string $providedString, string $expectedString): void
+    {
+        $qrCode = QrCode::create($providedString);
+
+        $this->assertEquals(
+            $expectedString,
+            $qrCode->getText()
+        );
+    }
+
+    public function invalidCharactersCodeProvider(): array
+    {
+        return [
+            'keepAllAllowedCharacters' => [
+                'providedString' => 'a-zA-Z0-9.,;:\'+-/()?*[]{}|`´~!"#%&<>÷=@_$£^àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ',
+                'expectedString' => 'a-zA-Z0-9.,;:\'+-/()?*[]{}|`´~!"#%&<>÷=@_$£^àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ'
+            ],
+            'removeUnallowedCharacters' => [
+                'providedString' => '«This is a test!»',
+                'expectedString' => 'This is a test!'
+            ],
+        ];
+    }
 }
