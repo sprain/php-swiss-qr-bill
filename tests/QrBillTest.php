@@ -268,9 +268,11 @@ final class QrBillTest extends TestCase
             '»' => '"',
         ];
 
+        $qrBill->setUnsupportedCharacterReplacements($unsupportedCharacterReplacements);
+
         $this->assertStringContainsString(
             'Team "We are the Champions!"',
-            $qrBill->getQrCode(null, $unsupportedCharacterReplacements)->getText()
+            $qrBill->getQrCode()->getText()
         );
     }
 

@@ -34,6 +34,9 @@ final class QrBill implements SelfValidatableInterface
     private ?PaymentReference $paymentReference = null;
     private ?AdditionalInformation $additionalInformation = null;
 
+    /** @var array<string, string> */
+    private array $unsupportedCharacterReplacements = [];
+
     /** @var AlternativeScheme[] */
     private array $alternativeSchemes = [];
 
@@ -163,9 +166,17 @@ final class QrBill implements SelfValidatableInterface
     }
 
     /**
-     * @throws InvalidQrBillDataException
+     * @param array<string, string> $unsupportedCharacterReplacements
+     * @return $this
      */
-    public function getQrCode(?string $fileFormat = null, array $unsupportedCharacterReplacements = []): QrCode
+    public function setUnsupportedCharacterReplacements(array $unsupportedCharacterReplacements): self
+    {
+        $this->unsupportedCharacterReplacements = $unsupportedCharacterReplacements;
+
+        return $this;
+    }
+
+    public function getQrCode(?string $fileFormat = null): QrCode
     {
         if (!$this->isValid()) {
             throw new InvalidQrBillDataException(
@@ -176,7 +187,7 @@ final class QrBill implements SelfValidatableInterface
         return QrCode::create(
             $this->getQrCodeContent(),
             $fileFormat,
-            $unsupportedCharacterReplacements
+            $this->unsupportedCharacterReplacements
         );
     }
 

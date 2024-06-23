@@ -36,6 +36,13 @@ final class QrCode
     /** @var array<string, bool> $writerOptions */
     private array $writerOptions = [SvgWriter::WRITER_OPTION_FORCE_XLINK_HREF => true];
 
+    /**
+     * @param string $data
+     * @param string|null $fileFormat
+     * @param array<string, string> $unsupportedCharacterReplacements
+     * @return self
+     * @throws UnsupportedFileExtensionException
+     */
     public static function create(string $data, string $fileFormat = null, array $unsupportedCharacterReplacements = []): self
     {
         if (null === $fileFormat) {
@@ -45,6 +52,12 @@ final class QrCode
         return new self($data, $fileFormat, $unsupportedCharacterReplacements);
     }
 
+    /**
+     * @param string $data
+     * @param string $fileFormat
+     * @param array<string, string> $unsupportedCharacterReplacements
+     * @throws UnsupportedFileExtensionException
+     */
     private function __construct(string $data, string $fileFormat, array $unsupportedCharacterReplacements)
     {
         $data = $this->replaceUnsupportedCharacters($data, $unsupportedCharacterReplacements);
@@ -132,6 +145,11 @@ final class QrCode
         }
     }
 
+    /**
+     * @param string $data
+     * @param array<string, string> $unsupportedCharacterReplacements
+     * @return string
+     */
     private function replaceUnsupportedCharacters(string $data, array $unsupportedCharacterReplacements): string
     {
         foreach ($unsupportedCharacterReplacements as $character => $replacement) {
