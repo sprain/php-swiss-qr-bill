@@ -218,6 +218,11 @@ trait TestQrBillCreatorTrait
         $qrBill->setCreditor($this->structuredAddress());
     }
 
+    public function creditorWithUnsupportedCharacters(QrBill &$qrBill)
+    {
+        $qrBill->setCreditor($this->addressWithUnsupportedCharacters());
+    }
+
     public function creditorMediumLong(QrBill &$qrBill)
     {
         $qrBill->setCreditor($this->mediumLongAddress());
@@ -388,6 +393,16 @@ trait TestQrBillCreatorTrait
             'Heaps of Characters International Trading Company of Switzerland GmbH',
             'Street of the Mighty Long Names Where Heroes Live and Villans Die 75',
             '1000 Lausanne au bord du lac, où le soleil brille encore la nuit',
+            'CH'
+        );
+    }
+
+    public function addressWithUnsupportedCharacters()
+    {
+        return CombinedAddress::create(
+            'Team «We are the Champions!»',
+            'Rue examplaire 22a',
+            '1000 Lausanne',
             'CH'
         );
     }

@@ -118,4 +118,65 @@ final class QrCodeTest extends TestCase
             ]
         ];
     }
+
+    /**
+     * @dataProvider replacementCharactersProvider
+     */
+    public function testItReplacesUnsupportedCharacters(string $providedString, array $replacements, string $expectedString): void
+    {
+        $qrCode = QrCode::create($providedString, null, $replacements);
+
+        $this->assertEquals(
+            $expectedString,
+            $qrCode->getText()
+        );
+    }
+
+    public function replacementCharactersProvider(): array
+    {
+        return [
+            'replaceSpecificUnsupportedCharacters' => [
+                'providedString' => '«This is a test!»',
+                'replacements' => [
+                    '«' => '"',
+                    '»' => '"'
+                ],
+                'expectedString' => '"This is a test!"'
+            ],
+            'ignoreReplacementsOfSupportedCharacters' => [
+                'providedString' => '«This is a test!»',
+                'replacements' => [
+                    't' => 'a',
+                ],
+                'expectedString' => 'This is a test!'
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider unsupportedCharactersProvider
+     */
+    public function testItRemovesUnsupportedCharacters(string $providedString, string $expectedString): void
+    {
+        $qrCode = QrCode::create($providedString);
+
+        $this->assertEquals(
+            $expectedString,
+            $qrCode->getText()
+        );
+    }
+
+    public function unsupportedCharactersProvider(): array
+    {
+        return [
+            'keepAllAllowedCharacters' => [
+                'providedString' => 'a-zA-Z0-9.,;:\'+-/()?*[]{}|`´~!"#%&<>÷=@_$£^àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ',
+                'expectedString' => 'a-zA-Z0-9.,;:\'+-/()?*[]{}|`´~!"#%&<>÷=@_$£^àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ'
+            ],
+            'removeUnallowedCharacters' => [
+                'providedString' => '«This is a test!»',
+                'expectedString' => 'This is a test!'
+            ],
+        ];
+    }
 }

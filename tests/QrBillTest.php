@@ -237,6 +237,45 @@ final class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
+    public function testItReplacesUnsupportedCharacters()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditorWithUnsupportedCharacters',
+            'paymentAmountInformation',
+            'paymentReferenceQr',
+        ]);
+
+        $this->assertStringContainsString(
+            'Team We are the Champions!',
+            $qrBill->getQrCode()->getText()
+        );
+    }
+
+    public function testItConsidersReplacementCharacters()
+    {
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditorWithUnsupportedCharacters',
+            'paymentAmountInformation',
+            'paymentReferenceQr',
+        ]);
+
+        $unsupportedCharacterReplacements = [
+            '«' => '"',
+            '»' => '"',
+        ];
+
+        $qrBill->setUnsupportedCharacterReplacements($unsupportedCharacterReplacements);
+
+        $this->assertStringContainsString(
+            'Team "We are the Champions!"',
+            $qrBill->getQrCode()->getText()
+        );
+    }
+
     public function testCatchInvalidData()
     {
         $this->expectException(InvalidQrBillDataException::class);
