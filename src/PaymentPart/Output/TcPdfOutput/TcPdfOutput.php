@@ -23,6 +23,7 @@ final class TcPdfOutput extends AbstractOutput
     private const ALIGN_RIGHT = 'R';
     private const ALIGN_CENTER = 'C';
     private const FONT = 'Helvetica';
+    private const FONT_UNICODE = 'freeserif';
 
     // Ratio
     private const LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
@@ -45,6 +46,7 @@ final class TcPdfOutput extends AbstractOutput
     private const FONT_SIZE_TITLE_PAYMENT_PART = 8;
     private const FONT_SIZE_PAYMENT_PART = 10;
     private const FONT_SIZE_FURTHER_INFORMATION = 7;
+    private const FONT_SIZE_SCISSORS = 12;
 
     // Line spacing
     private const LINE_SPACING_RECEIPT = 3.5;
@@ -217,13 +219,37 @@ final class TcPdfOutput extends AbstractOutput
     private function addSeparatorContentIfNotPrintable(): void
     {
         if (!$this->isPrintable()) {
-            $this->tcPdf->SetLineStyle(['width' => 0.1, 'color' => [0, 0, 0]]);
-            $this->printLine(2, 193, 208, 193);
-            $this->printLine(62, 193, 62, 296);
-            $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
-            $this->setY(188);
-            $this->setX(5);
-            $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::ALIGN_CENTER);
+            $lineStyle = ['width' => 0.1, 'color' => [0, 0, 0]];
+            if ($this->isScissors()) {
+                $lineStyle['dash'] = '2';
+            }
+
+            $this->tcPdf->SetLineStyle($lineStyle);
+            $xstart = 2;
+            $xmiddle = 62;
+            $y = 193;
+            $this->printLine($xstart, $y, 208, $y);
+            $this->printLine($xmiddle, $y, $xmiddle, 296);
+
+            if ($this->isScissors()) {
+                $this->tcPdf->setFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
+                // horizontal scissors
+                $this->setY($y);
+                $this->setX($xstart + 3);
+                $this->tcPdf->Cell(0, 10, '✂', 0, 0, 'L', false, '', 0, false, 'C');
+                // vertical scissors
+                $this->setY($y + 3);
+                $this->setX($xmiddle);
+                $this->tcPdf->StartTransform();
+                $this->tcPdf->Rotate(-90);
+                $this->tcPdf->Cell(0, 10, '✂', 0, 0, 'L', false, '', 0, false, 'C');
+                $this->tcPdf->StopTransform();
+            } else {
+                $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
+                $this->setY($y - 5);
+                $this->setX($xstart + 3);
+                $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::ALIGN_CENTER);
+            }
         }
     }
 

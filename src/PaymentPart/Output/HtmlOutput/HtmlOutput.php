@@ -127,6 +127,8 @@ final class HtmlOutput extends AbstractOutput
         $printableStyles = '';
         if ($this->isPrintable()) {
             $printableStyles = PrintableStylesTemplate::TEMPLATE;
+        } elseif ($this->isScissors()) {
+            $printableStyles = PrintableStylesTemplate::TEMPLATE_SCISSORS;
         }
 
         $paymentPart = str_replace('{{ printable-content }}', $printableStyles, $paymentPart);

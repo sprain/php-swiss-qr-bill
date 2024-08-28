@@ -24,6 +24,7 @@ final class FpdfOutput extends AbstractOutput
     private const ALIGN_RIGHT = 'R';
     private const ALIGN_CENTER = 'C';
     private const FONT = 'Helvetica';
+    private const FONT_UNICODE = 'zapfdingbats';
 
     // Positioning
     private const CURRENCY_AMOUNT_Y = 259.3;
@@ -41,6 +42,7 @@ final class FpdfOutput extends AbstractOutput
     private const FONT_SIZE_TITLE_PAYMENT_PART = 8;
     private const FONT_SIZE_PAYMENT_PART = 10;
     private const FONT_SIZE_FURTHER_INFORMATION = 7;
+    private const FONT_SIZE_SCISSORS = 14;
 
     // Line spacing
     private const LINE_SPACING_RECEIPT = 3.4;
@@ -225,11 +227,27 @@ final class FpdfOutput extends AbstractOutput
     {
         if (!$this->isPrintable()) {
             $this->fpdf->SetLineWidth(0.1);
+            if ($this->isScissors()) {
+                // for dash line: http://www.fpdf.org/en/script/script33.php
+            }
             $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
             $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
-            $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
-            $this->setY(189.6);
-            $this->fpdf->MultiCell(0, 0, $this->toUtf8(Translation::get('separate', $this->language)), self::BORDER, self::ALIGN_CENTER);
+
+            if ($this->isScissors()) {
+                $this->fpdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
+                $scissorsCode = '"';
+                // horizontal scissors
+                $this->setXY(2 + 5, 193 + 0.2);
+                $this->fpdf->Cell(1, 0, $scissorsCode, 0, 0, 'C');
+                // vertical scissors
+                // for rotation: http://www.fpdf.org/en/script/script31.php
+                $this->setXY(62, 193 + 5);
+                $this->fpdf->Cell(1, 0, $scissorsCode, 0, 0, 'C');
+            } else {
+                $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
+                $this->setY(189.6);
+                $this->fpdf->MultiCell(0, 0, $this->toUtf8(Translation::get('separate', $this->language)), self::BORDER, self::ALIGN_CENTER);
+            }
         }
     }
 

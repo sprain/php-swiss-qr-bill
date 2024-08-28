@@ -12,6 +12,7 @@ $output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
 
 $html = $output
     ->setPrintable(false)
+    ->setScissors(false) // TRUE to show scissors instead of text
     ->getPaymentPart();
 
 // 3. For demo purposes, let's save the generated example in a file

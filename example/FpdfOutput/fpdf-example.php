@@ -22,6 +22,7 @@ $fpdf->AddPage();
 $output = new QrBill\PaymentPart\Output\FpdfOutput\FpdfOutput($qrBill, 'en', $fpdf);
 $output
     ->setPrintable(false)
+    ->setScissors(false) // TRUE to show scissors instead of text
     ->getPaymentPart();
 
 // 4. For demo purposes, let's save the generated example in a file

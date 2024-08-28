@@ -16,6 +16,7 @@ abstract class AbstractOutput implements OutputInterface
     protected QrBill $qrBill;
     protected string $language;
     protected bool $printable;
+    protected bool $scissors;
     protected string $qrCodeImageFormat;
 
     public function __construct(QrBill $qrBill, string $language)
@@ -23,6 +24,7 @@ abstract class AbstractOutput implements OutputInterface
         $this->qrBill = $qrBill;
         $this->language = $language;
         $this->printable = false;
+        $this->scissors = false;
         $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }
 
@@ -43,9 +45,21 @@ abstract class AbstractOutput implements OutputInterface
         return $this;
     }
 
+    public function setScissors(bool $scissors): static
+    {
+        $this->scissors = $scissors;
+
+        return $this;
+    }
+
     public function isPrintable(): bool
     {
         return $this->printable;
+    }
+
+    public function isScissors(): bool
+    {
+        return $this->scissors;
     }
 
     public function setQrCodeImageFormat(string $fileExtension): static
