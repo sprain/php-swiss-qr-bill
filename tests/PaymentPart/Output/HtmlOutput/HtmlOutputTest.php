@@ -22,13 +22,21 @@ final class HtmlOutputTest extends TestCase
         $variations = [
             [
                 'printable' => false,
+                'scissors' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.html'
             ],
             [
                 'printable' => true,
+                'scissors' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.print.html'
+            ],
+            [
+                'printable' => false,
+                'scissors' => true,
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.scissors.html'
             ],
             /* PNGs do not create the same output in all environments
             [
@@ -50,6 +58,7 @@ final class HtmlOutputTest extends TestCase
             $htmlOutput = (new HtmlOutput($qrBill, 'en'));
             $output = $htmlOutput
                 ->setPrintable($variation['printable'])
+                ->setScissors($variation['scissors'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 

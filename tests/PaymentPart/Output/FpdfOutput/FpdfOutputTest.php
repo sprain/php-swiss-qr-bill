@@ -24,13 +24,21 @@ final class FpdfOutputTest extends TestCase
         $variations = [
             [
                 'printable' => false,
+                'scissors' => false,
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.pdf'
             ],
             [
                 'printable' => true,
+                'scissors' => false,
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
+            ],
+            [
+                'printable' => false,
+                'scissors' => true,
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.scissors.pdf'
             ]
         ];
 
@@ -43,13 +51,14 @@ final class FpdfOutputTest extends TestCase
             $output = new FpdfOutput($qrBill, 'en', $fpdf);
             $output
                 ->setPrintable($variation['printable'])
+                ->setScissors($variation['scissors'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
             if ($this->regenerateReferenceFiles) {
                 $fpdf->Output($file, 'F');
             }
-            
+
             $contents = $this->getActualPdfContents($fpdf->Output($file, 'S'));
 
             $this->assertNotNull($contents);

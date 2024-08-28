@@ -20,13 +20,21 @@ final class TcPdfOutputTest extends TestCase
         $variations = [
             [
                 'printable' => false,
+                'scissors' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.pdf'
             ],
             [
                 'printable' => true,
+                'scissors' => false,
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.print.pdf'
+            ],
+            [
+                'printable' => false,
+                'scissors' => true,
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissors.pdf'
             ],
             /* PNGs do not create the same output in all environments
             [
@@ -53,6 +61,7 @@ final class TcPdfOutputTest extends TestCase
             $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
             $output
                 ->setPrintable($variation['printable'])
+                ->setScissors($variation['scissors'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
