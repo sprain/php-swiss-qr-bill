@@ -16,6 +16,11 @@ $fpdf = new \Fpdf\Fpdf('P', 'mm', 'A4');
 //     use \Fpdf\Traits\MemoryImageSupport\MemImageTrait;
 // };
 
+// In case you want to draw scissors and dashed lines, use this way to create your FPDF instance:
+// $fpdf = new class('P', 'mm', 'A4') extends \Fpdf\Fpdf {
+//     use \Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfTrait;
+// };
+
 $fpdf->AddPage();
 
 // 3. Create a full payment part for FPDF

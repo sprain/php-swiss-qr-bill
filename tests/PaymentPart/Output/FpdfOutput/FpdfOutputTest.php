@@ -11,6 +11,8 @@ use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\UnsupportedEnvironmentExcep
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
+use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfTrait;
+use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\MissingTraitException;
 
 final class FpdfOutputTest extends TestCase
 {
@@ -64,6 +66,29 @@ final class FpdfOutputTest extends TestCase
             $this->assertNotNull($contents);
             $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
         }
+    }
+
+    public function testItThrowsMissingTraitException(): void
+    {
+        $this->expectException(MissingTraitException::class);
+
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReferenceQr'
+        ]);
+
+        $fpdf = $this->instantiateFpdf(null, false);
+        $fpdf->AddPage();
+
+        $output = new FpdfOutput($qrBill, 'en', $fpdf);
+        $output
+            ->setPrintable(false)
+            ->setScissors(true)
+            ->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG)
+            ->getPaymentPart();
     }
 
     public function testItThrowsSvgNotSupportedException(): void
@@ -124,7 +149,7 @@ final class FpdfOutputTest extends TestCase
         return null;
     }
 
-    private function instantiateFpdf($withMemImageSupport = null): Fpdf
+    private function instantiateFpdf($withMemImageSupport = null, $withBundledTrait = null): Fpdf
     {
         if ($withMemImageSupport === null) {
             $withMemImageSupport = !ini_get('allow_url_fopen');
@@ -133,6 +158,16 @@ final class FpdfOutputTest extends TestCase
         if ($withMemImageSupport) {
             return new class('P', 'mm', 'A4') extends Fpdf {
                 use MemImageTrait;
+            };
+        }
+
+        if ($withBundledTrait === null) {
+            $withBundledTrait = true;
+        }
+
+        if ($withBundledTrait) {
+            return new class('P', 'mm', 'A4') extends Fpdf {
+                use FpdfTrait;
             };
         }
 

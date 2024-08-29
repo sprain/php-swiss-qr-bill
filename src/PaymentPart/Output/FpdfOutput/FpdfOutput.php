@@ -228,21 +228,24 @@ final class FpdfOutput extends AbstractOutput
         if (!$this->isPrintable()) {
             $this->fpdf->SetLineWidth(0.1);
             if ($this->isScissors()) {
-                // for dash line: http://www.fpdf.org/en/script/script33.php
+                if (!method_exists($this->fpdf, 'swissQrBillSetDash') || !method_exists($this->fpdf, 'swissQrBillTextWithRotation')) {
+                    throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
+                }
+                $this->fpdf->swissQrBillSetDash(2, 1);
             }
             $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
             $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
 
             if ($this->isScissors()) {
+                $this->fpdf->swissQrBillSetDash(0);
+
                 $this->fpdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
                 $scissorsCode = '"';
                 // horizontal scissors
-                $this->setXY(2 + 5, 193 + 0.2);
+                $this->setXY(2 + $this->offsetX + 5, 193 + $this->offsetY + 0.2);
                 $this->fpdf->Cell(1, 0, $scissorsCode, 0, 0, 'C');
                 // vertical scissors
-                // for rotation: http://www.fpdf.org/en/script/script31.php
-                $this->setXY(62, 193 + 5);
-                $this->fpdf->Cell(1, 0, $scissorsCode, 0, 0, 'C');
+                $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX - 1.7, 193 + $this->offsetY + 4, $scissorsCode, -90);
             } else {
                 $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
                 $this->setY(189.6);
