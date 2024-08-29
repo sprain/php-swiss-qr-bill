@@ -19,13 +19,12 @@ class PrintableStylesTemplate
 EOT;
 
     public const TEMPLATE_SCISSORS = <<<EOT
-
 #qr-bill-separate-info {
     border-bottom-style: dashed;
 }
 
 #qr-bill-separate-info:before {
-    content: '✂';
+    content: '\\2702';
     position: relative;
     font-size: 16pt;
     top: 3.6mm;
@@ -43,7 +42,7 @@ EOT;
 #qr-bill-receipt:after {
     transform: rotate(90deg);
     display: inline-block;
-    content: '✂';
+    content: '\\2702';
     position: relative;
     font-size: 16pt;
     top: -95mm;
