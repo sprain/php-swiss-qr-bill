@@ -4,15 +4,14 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
 trait FpdfTrait
 {
-
     /**
      * Set dash line style for the next ->Line() command
-     * DO NOT USE IT. Its purpose is only for this library. Name and/or signature
-     * may change without any notification.
+     * DO NOT USE IT. Its purpose is only for the Swiss QR Bill library. Name and/or
+     * signature may change without any notification.
      *
      * @see http://www.fpdf.org/en/script/script33.php
-     * @param float $black Width
-     * @param ?float $white
+     * @param float $black Width of black dash. 0 to reset to solid line
+     * @param ?float $white Width of white dash. Defaults to same as black
      * @return void
      */
     public function swissQrBillSetDash(float $black = 0, ?float $white = null): void
@@ -28,8 +27,8 @@ trait FpdfTrait
 
     /**
      * Rotate text
-     * DO NOT USE IT. Its purpose is only for this library. Name and/or signature
-     * may change without any notification.
+     * DO NOT USE IT. Its purpose is only for the Swiss QR Bill library. Name and/or
+     * signature may change without any notification.
      *
      * @see http://www.fpdf.org/en/script/script31.php
      * @param float $x
@@ -62,9 +61,8 @@ trait FpdfTrait
         );
 
         if ($this->ColorFlag) {
-            $s = 'q '. $this->TextColor .' ' . $s . ' Q';
+            $s = sprintf('q %s %s Q', $this->TextColor, $s);
         }
         $this->_out($s);
     }
-
 }

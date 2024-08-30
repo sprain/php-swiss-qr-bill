@@ -24,6 +24,7 @@ final class TcPdfOutput extends AbstractOutput
     private const ALIGN_CENTER = 'C';
     private const FONT = 'Helvetica';
     private const FONT_UNICODE = 'freeserif';
+    private const FONT_UNICODE_CHAR_SCISSORS = '✂';
 
     // Ratio
     private const LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
@@ -242,7 +243,7 @@ final class TcPdfOutput extends AbstractOutput
                 $this->setX($xmiddle);
                 $this->tcPdf->StartTransform();
                 $this->tcPdf->Rotate(-90);
-                $this->tcPdf->Cell(0, 10, '✂', 0, 0, 'L', false, '', 0, false, 'C');
+                $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
                 $this->tcPdf->StopTransform();
             } else {
                 $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);

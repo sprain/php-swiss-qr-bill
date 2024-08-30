@@ -6,5 +6,6 @@
 /example/HtmlOutput/html-example.htm
 /example/FpdfOutput/fpdf_example.pdf
 /.php-cs-fixer.cache
+/.phpunit.result.cache
 /composer.lock
 .idea/

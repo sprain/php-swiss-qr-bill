@@ -25,6 +25,7 @@ final class FpdfOutput extends AbstractOutput
     private const ALIGN_CENTER = 'C';
     private const FONT = 'Helvetica';
     private const FONT_UNICODE = 'zapfdingbats';
+    private const FONT_UNICODE_CHAR_SCISSORS = '"';
 
     // Positioning
     private const CURRENCY_AMOUNT_Y = 259.3;
@@ -228,7 +229,7 @@ final class FpdfOutput extends AbstractOutput
         if (!$this->isPrintable()) {
             $this->fpdf->SetLineWidth(0.1);
             if ($this->isScissors()) {
-                if (!method_exists($this->fpdf, 'swissQrBillSetDash') || !method_exists($this->fpdf, 'swissQrBillTextWithRotation')) {
+                if (!method_exists($this->fpdf, 'swissQrBillSetDash')) {
                     throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
                 }
                 $this->fpdf->swissQrBillSetDash(2, 1);
@@ -240,12 +241,14 @@ final class FpdfOutput extends AbstractOutput
                 $this->fpdf->swissQrBillSetDash(0);
 
                 $this->fpdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
-                $scissorsCode = '"';
                 // horizontal scissors
                 $this->setXY(2 + $this->offsetX + 5, 193 + $this->offsetY + 0.2);
-                $this->fpdf->Cell(1, 0, $scissorsCode, 0, 0, 'C');
-                // vertical scissors
-                $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX - 1.7, 193 + $this->offsetY + 4, $scissorsCode, -90);
+                $this->fpdf->Cell(1, 0, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'C');
+                // vertical scissors$
+                if (!method_exists($this->fpdf, 'swissQrBillTextWithRotation')) {
+                    throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
+                }
+                $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX - 1.7, 193 + $this->offsetY + 4, self::FONT_UNICODE_CHAR_SCISSORS, -90);
             } else {
                 $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
                 $this->setY(189.6);
