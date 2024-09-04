@@ -172,7 +172,35 @@
     margin-top: -11pt;
 }
 
+#qr-bill-separate-info {
+    border-bottom-style: dashed;
+}
 
+#qr-bill-separate-info:before {
+    content: '\2702';
+    position: relative;
+    font-size: 16pt;
+    top: 3.6mm;
+    left: -23mm;
+}
+
+#qr-bill-separate-info-text {
+    display: none;
+}
+
+#qr-bill-receipt {
+    border-right-style: dashed;
+}
+
+#qr-bill-receipt:after {
+    transform: rotate(90deg);
+    display: inline-block;
+    content: '\2702';
+    position: relative;
+    font-size: 16pt;
+    top: -95mm;
+    left: 54.5mm;
+}
 </style>
 
 <table id="qr-bill">
