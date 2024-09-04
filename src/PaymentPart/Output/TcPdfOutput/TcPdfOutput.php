@@ -283,7 +283,7 @@ final class TcPdfOutput extends AbstractOutput
     {
         $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
         $this->printMultiCell(
-            $this->toUtf8($element->getText()),
+            $element->getText(),
             0,
             0,
             self::BORDER
@@ -351,10 +351,5 @@ final class TcPdfOutput extends AbstractOutput
     private function printLine(int $x1, int $y1, int $x2, int $y2): void
     {
         $this->tcPdf->Line($x1+$this->offsetX, $y1+$this->offsetY, $x2+$this->offsetX, $y2+$this->offsetY);
-    }
-
-    private function toUtf8(string $text): string
-    {
-        return iconv('UTF-8', 'windows-1252', $text) ?: '';
     }
 }
