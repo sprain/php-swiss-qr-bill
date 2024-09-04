@@ -337,6 +337,6 @@ final class FpdfOutput extends AbstractOutput
     private function convertEncoding(string $text): string
     {
         // FPDF does not support unicode.
-        return mb_convert_encoding($text, 'Windows-1252', 'UTF-8');
+        return mb_convert_encoding($text, 'CP1252', 'UTF-8');
     }
 }
