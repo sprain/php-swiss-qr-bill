@@ -129,14 +129,20 @@ final class FpdiOutputTest extends TestCase
             $withMemImageSupport = !ini_get('allow_url_fopen');
         }
 
+        if ($withBundledTrait === null) {
+            $withBundledTrait = true;
+        }
+
         if ($withMemImageSupport) {
+            if ($withBundledTrait) {
+                return new class('P', 'mm', 'A4') extends Fpdi {
+                    use MemImageTrait;
+                    use FpdfTrait;
+                };
+            }
             return new class('P', 'mm', 'A4') extends Fpdi {
                 use MemImageTrait;
             };
-        }
-
-        if ($withBundledTrait === null) {
-            $withBundledTrait = true;
         }
 
         if ($withBundledTrait) {
