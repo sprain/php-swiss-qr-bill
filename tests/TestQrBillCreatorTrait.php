@@ -15,7 +15,7 @@ use Sprain\SwissQrBill\QrBill;
 
 trait TestQrBillCreatorTrait
 {
-    protected $regenerateReferenceFiles = false;
+    protected $regenerateReferenceFiles = true;
 
     public function validQrBillsProvider()
     {
@@ -319,6 +319,16 @@ trait TestQrBillCreatorTrait
         $qrBill->setUltimateDebtor(CombinedAddress::create(
             'Joachim Kraut',
             'Ewigermeisterstrasse 20',
+            '80331 München',
+            'DE'
+        ));
+    }
+
+    public function utf8SpecialCharsUltimateDebtor(QrBill &$qrBill)
+    {
+        $qrBill->setUltimateDebtor(CombinedAddress::create(
+            'Jôachim Kräutłą',
+            'Ewigérmeisterstrasse 20',
             '80331 München',
             'DE'
         ));

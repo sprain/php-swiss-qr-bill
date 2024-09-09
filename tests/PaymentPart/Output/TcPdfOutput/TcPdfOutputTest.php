@@ -3,6 +3,9 @@
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
 use PHPUnit\Framework\TestCase;
+use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\Fonts;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -19,22 +22,34 @@ final class TcPdfOutputTest extends TestCase
     {
         $variations = [
             [
-                'printable' => false,
-                'scissors' => false,
+                'layout' => (new PrintOptions())->setPrintable(false),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.pdf'
             ],
             [
-                'printable' => true,
-                'scissors' => false,
+                'layout' => (new PrintOptions())->setPrintable(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.print.pdf'
             ],
             [
-                'printable' => false,
-                'scissors' => true,
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissors.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPositions::BOTTOM),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissorsdown.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setText(true)->setTextDownArrows(true),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.textarrows.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setText(false),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.textno.pdf'
             ],
             /* PNGs do not create the same output in all environments
             [
@@ -60,8 +75,7 @@ final class TcPdfOutputTest extends TestCase
 
             $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
             $output
-                ->setPrintable($variation['printable'])
-                ->setScissors($variation['scissors'])
+                ->setPrintOptions($variation['layout'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
@@ -74,6 +88,40 @@ final class TcPdfOutputTest extends TestCase
             $this->assertNotNull($contents);
             $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
         }
+    }
+
+    public function testUtf8SpecialChars(): void
+    {
+        $file = __DIR__ . '/../../../TestData/TcPdfOutput/qr-utf8.svg.pdf';
+
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReferenceQr',
+            'utf8SpecialCharsUltimateDebtor'
+        ]);
+
+        $tcPdf = new \TCPDF('P', 'mm', 'A4', true, 'ISO-8859-1');
+        $tcPdf->setPrintHeader(false);
+        $tcPdf->setPrintFooter(false);
+        $tcPdf->AddPage();
+
+        $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
+        $output
+            ->setPrintOptions((new PrintOptions())->setPrintable(true)->setFont(Fonts::UTF8))
+            ->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG)
+            ->getPaymentPart();
+
+        if ($this->regenerateReferenceFiles) {
+            $tcPdf->Output($file, 'F');
+        }
+
+        $contents = $this->getActualPdfContents($tcPdf->Output($file, 'S'));
+
+        $this->assertNotNull($contents);
+        $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
     }
 
     private function getActualPdfContents(string $fileContents): ?string

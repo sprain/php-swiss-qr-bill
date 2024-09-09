@@ -4,7 +4,6 @@ namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
-use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
@@ -15,16 +14,14 @@ abstract class AbstractOutput implements OutputInterface
 {
     protected QrBill $qrBill;
     protected string $language;
-    protected bool $printable;
-    protected bool $scissors;
+    protected PrintOptions $printOptions;
     protected string $qrCodeImageFormat;
 
     public function __construct(QrBill $qrBill, string $language)
     {
         $this->qrBill = $qrBill;
         $this->language = $language;
-        $this->printable = false;
-        $this->scissors = false;
+        $this->printOptions = new PrintOptions();
         $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }
 
@@ -38,28 +35,16 @@ abstract class AbstractOutput implements OutputInterface
         return $this->language;
     }
 
-    public function setPrintable(bool $printable): static
+    public function setPrintOptions(PrintOptions $printOptions): static
     {
-        $this->printable = $printable;
+        $this->printOptions = $printOptions;
 
         return $this;
     }
 
-    public function setScissors(bool $scissors): static
+    public function getPrintOptions(): PrintOptions
     {
-        $this->scissors = $scissors;
-
-        return $this;
-    }
-
-    public function isPrintable(): bool
-    {
-        return $this->printable;
-    }
-
-    public function isScissors(): bool
-    {
-        return $this->scissors;
+        return $this->printOptions;
     }
 
     public function setQrCodeImageFormat(string $fileExtension): static

@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 use setasign\Fpdi\Fpdi;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\Fonts;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
@@ -24,22 +27,34 @@ final class FpdiOutputTest extends TestCase
     {
         $variations = [
             [
-                'printable' => false,
-                'scissors' => false,
+                'layout' => (new PrintOptions())->setPrintable(false),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.pdf'
             ],
             [
-                'printable' => true,
-                'scissors' => false,
+                'layout' => (new PrintOptions())->setPrintable(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
             ],
             [
-                'printable' => false,
-                'scissors' => true,
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.scissors.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPositions::BOTTOM),
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.scissorsdown.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setText(true)->setTextDownArrows(true),
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.textarrows.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setText(false),
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.textno.pdf'
             ]
         ];
 
@@ -51,8 +66,7 @@ final class FpdiOutputTest extends TestCase
 
             $output = new FpdfOutput($qrBill, 'en', $fpdf);
             $output
-                ->setPrintable($variation['printable'])
-                ->setScissors($variation['scissors'])
+                ->setPrintOptions($variation['layout'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
@@ -84,8 +98,7 @@ final class FpdiOutputTest extends TestCase
 
         $output = new FpdfOutput($qrBill, 'en', $fpdf);
         $output
-            ->setPrintable(false)
-            ->setScissors(true)
+            ->setPrintOptions((new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true))
             ->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG)
             ->getPaymentPart();
     }

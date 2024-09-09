@@ -3,6 +3,9 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
 use setasign\Fpdi\Tcpdf\Fpdi;
+use Sprain\SwissQrBill\PaymentPart\Output\Fonts;
+use Sprain\SwissQrBill\PaymentPart\Output\LineStyles;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
@@ -22,9 +25,11 @@ final class TcPdfOutput extends AbstractOutput
     private const ALIGN_LEFT = 'L';
     private const ALIGN_RIGHT = 'R';
     private const ALIGN_CENTER = 'C';
-    private const FONT = 'Helvetica';
-    private const FONT_UNICODE = 'freeserif';
-    private const FONT_UNICODE_CHAR_SCISSORS = '✂';
+    private const FONT_DEFAULT = 'Helvetica';
+    private const FONT_UTF8 = 'freesans';
+    private const FONT_UNICODE = 'zapfdingbats';
+    private const FONT_UNICODE_CHAR_SCISSORS = '"';
+    private const FONT_UNICODE_CHAR_DOWN_ARROW = 't';
 
     // Ratio
     private const LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
@@ -47,7 +52,8 @@ final class TcPdfOutput extends AbstractOutput
     private const FONT_SIZE_TITLE_PAYMENT_PART = 8;
     private const FONT_SIZE_PAYMENT_PART = 10;
     private const FONT_SIZE_FURTHER_INFORMATION = 7;
-    private const FONT_SIZE_SCISSORS = 12;
+    private const FONT_SIZE_SCISSORS = 14;
+    private const FONT_SIZE_DOWN_ARROW = 10;
 
     // Line spacing
     private const LINE_SPACING_RECEIPT = 3.5;
@@ -119,7 +125,7 @@ final class TcPdfOutput extends AbstractOutput
         $this->tcPdf->setCellHeightRatio(self::LEFT_CELL_HEIGHT_RATIO_COMMON);
 
         // Title
-        $this->tcPdf->SetFont(self::FONT, 'B', self::FONT_SIZE_MAIN_TITLE);
+        $this->tcPdf->SetFont($this->getFont(), 'B', self::FONT_SIZE_MAIN_TITLE);
         $this->setY(self::TITLE_Y);
         $this->setX($x);
         $this->printCell(Translation::get('receipt', $this->language), 0, 7);
@@ -132,7 +138,7 @@ final class TcPdfOutput extends AbstractOutput
         }
 
         // Acceptance section
-        $this->tcPdf->SetFont(self::FONT, 'B', 6);
+        $this->tcPdf->SetFont($this->getFont(), 'B', 6);
         $this->setY(273);
         $this->setX($x);
         $this->printCell(Translation::get('acceptancePoint', $this->language), 54, 0, self::ALIGN_BELOW, self::ALIGN_RIGHT);
@@ -144,7 +150,7 @@ final class TcPdfOutput extends AbstractOutput
         $this->tcPdf->setCellHeightRatio(self::RIGHT_CELL_HEIGHT_RATIO_COMMON);
 
         // Title
-        $this->tcPdf->SetFont(self::FONT, 'B', self::FONT_SIZE_MAIN_TITLE);
+        $this->tcPdf->SetFont($this->getFont(), 'B', self::FONT_SIZE_MAIN_TITLE);
         $this->setY(self::TITLE_Y);
         $this->setX(self::RIGHT_PART_X);
         $this->printCell(Translation::get('paymentPart', $this->language), 48, 7);
@@ -219,37 +225,69 @@ final class TcPdfOutput extends AbstractOutput
 
     private function addSeparatorContentIfNotPrintable(): void
     {
-        if (!$this->isPrintable()) {
-            $lineStyle = ['width' => 0.1, 'color' => [0, 0, 0]];
-            if ($this->isScissors()) {
-                $lineStyle['dash'] = '2';
+        $layout = $this->getPrintOptions();
+        if (!$layout->isPrintable()) {
+            if ($layout->getLineStyle() !== LineStyles::NONE) {
+                $lineStyle = ['width' => 0.1, 'color' => [0, 0, 0]];
+                if ($layout->getLineStyle() === LineStyles::DASHED) {
+                    $lineStyle['dash'] = '2';
+                }
+                $this->tcPdf->SetLineStyle($lineStyle);
+                $xstart = 2;
+                $xmiddle = 62;
+                $y = 193;
+                $yend = 296;
+                $this->printLine($xstart, $y, 208, $y);
+                $this->printLine($xmiddle, $y, $xmiddle, $yend);
             }
 
-            $this->tcPdf->SetLineStyle($lineStyle);
-            $xstart = 2;
-            $xmiddle = 62;
-            $y = 193;
-            $this->printLine($xstart, $y, 208, $y);
-            $this->printLine($xmiddle, $y, $xmiddle, 296);
-
-            if ($this->isScissors()) {
+            if ($layout->hasSeparatorSymbol()) {
                 $this->tcPdf->setFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
                 // horizontal scissors
                 $this->setY($y);
                 $this->setX($xstart + 3);
-                $this->tcPdf->Cell(0, 10, '✂', 0, 0, 'L', false, '', 0, false, 'C');
-                // vertical scissors
-                $this->setY($y + 3);
-                $this->setX($xmiddle);
-                $this->tcPdf->StartTransform();
-                $this->tcPdf->Rotate(-90);
                 $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
-                $this->tcPdf->StopTransform();
-            } else {
-                $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
+                // vertical scissors
+                if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPositions::TOP) {
+                    $this->setY($y + 3);
+                    $this->setX($xmiddle);
+                    $this->tcPdf->StartTransform();
+                    $this->tcPdf->Rotate(-90);
+                    $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
+                    $this->tcPdf->StopTransform();
+                } else {
+                    $this->setY($yend - 15);
+                    $this->setX($xmiddle);
+                    $this->tcPdf->StartTransform();
+                    $this->tcPdf->Rotate(90);
+                    $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
+                    $this->tcPdf->StopTransform();
+                }
+            }
+            if ($layout->hasText()) {
+                $this->tcPdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
                 $this->setY($y - 5);
                 $this->setX($xstart + 3);
                 $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::ALIGN_CENTER);
+
+                if ($layout->hasTextDownArrows()) {
+                    $textWidth = $this->tcPdf->GetStringWidth(Translation::get('separate', $this->language));
+                    $arrowMargin = 3;
+                    $yoffset = 5.2;
+                    $xstart = ($this->tcPdf->getPageWidth() / 2) - ($textWidth / 2);
+                    $this->tcPdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_DOWN_ARROW);
+                    for ($i = 0; $i < 3; $i += 1) {
+                        $this->tcPdf->setXY($xstart - $arrowMargin, $y - $yoffset);
+                        $xstart -= $arrowMargin;
+                        $this->tcPdf->Cell(3, 1, self::FONT_UNICODE_CHAR_DOWN_ARROW, 0, 0, 'R', false);
+                    }
+                    $xstart = ($this->tcPdf->getPageWidth() / 2) + ($textWidth / 2);
+                    for ($i = 0; $i < 3; $i += 1) {
+                        $this->tcPdf->setXY($xstart, $y - $yoffset);
+                        $xstart += $arrowMargin;
+                        $this->tcPdf->Cell(3, 1, self::FONT_UNICODE_CHAR_DOWN_ARROW, 0, 0, 'L', false);
+                    }
+                }
             }
         }
     }
@@ -276,7 +314,7 @@ final class TcPdfOutput extends AbstractOutput
     private function setTitleElement(Title $element, bool $isReceiptPart): void
     {
         $this->tcPdf->SetFont(
-            self::FONT,
+            $this->getFont(),
             'B',
             $isReceiptPart ? self::FONT_SIZE_TITLE_RECEIPT : self::FONT_SIZE_TITLE_PAYMENT_PART
         );
@@ -291,7 +329,7 @@ final class TcPdfOutput extends AbstractOutput
     private function setTextElement(Text $element, bool $isReceiptPart): void
     {
         $this->tcPdf->SetFont(
-            self::FONT,
+            $this->getFont(),
             '',
             $isReceiptPart ? self::FONT_SIZE_RECEIPT : self::FONT_SIZE_PAYMENT_PART
         );
@@ -308,7 +346,7 @@ final class TcPdfOutput extends AbstractOutput
 
     private function setFurtherInformationElement(FurtherInformation $element): void
     {
-        $this->tcPdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
+        $this->tcPdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
         $this->printMultiCell(
             $element->getText(),
             0,
@@ -378,5 +416,17 @@ final class TcPdfOutput extends AbstractOutput
     private function printLine(int $x1, int $y1, int $x2, int $y2): void
     {
         $this->tcPdf->Line($x1+$this->offsetX, $y1+$this->offsetY, $x2+$this->offsetX, $y2+$this->offsetY);
+    }
+
+    private function getFont(): string
+    {
+        $font = $this->getPrintOptions()->getFont();
+        if ($font === Fonts::DEFAULT) {
+            return self::FONT_DEFAULT;
+        } elseif ($font === Fonts::UTF8) {
+            return self::FONT_UTF8;
+        } else {
+            return $font;
+        }
     }
 }
