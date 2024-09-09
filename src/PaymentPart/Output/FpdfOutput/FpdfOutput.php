@@ -140,7 +140,7 @@ final class FpdfOutput extends AbstractOutput
         // Title
         $this->fpdf->SetFont(self::FONT, 'B', self::FONT_SIZE_MAIN_TITLE);
         $this->SetXY(self::LEFT_PART_X, self::TITLE_Y);
-        $this->fpdf->MultiCell(0, 7, $this->toUtf8(Translation::get('receipt', $this->language)));
+        $this->fpdf->MultiCell(0, 7, $this->convertEncoding(Translation::get('receipt', $this->language)));
 
         // Elements
         $this->setY(204);
@@ -152,7 +152,7 @@ final class FpdfOutput extends AbstractOutput
         // Acceptance section
         $this->fpdf->SetFont(self::FONT, 'B', self::FONT_SIZE_TITLE_RECEIPT);
         $this->SetXY(self::LEFT_PART_X, 274.3);
-        $this->fpdf->Cell(54, 0, $this->toUtf8(Translation::get('acceptancePoint', $this->language)), self::BORDER, '', self::ALIGN_RIGHT);
+        $this->fpdf->Cell(54, 0, $this->convertEncoding(Translation::get('acceptancePoint', $this->language)), self::BORDER, '', self::ALIGN_RIGHT);
     }
 
     private function addInformationContent(): void
@@ -160,7 +160,7 @@ final class FpdfOutput extends AbstractOutput
         // Title
         $this->fpdf->SetFont(self::FONT, 'B', self::FONT_SIZE_MAIN_TITLE);
         $this->SetXY(self::RIGHT_PART_X, 195.2);
-        $this->fpdf->MultiCell(48, 7, $this->toUtf8(Translation::get('paymentPart', $this->language)));
+        $this->fpdf->MultiCell(48, 7, $this->convertEncoding(Translation::get('paymentPart', $this->language)));
 
         // Elements
         $this->setY(197.3);
@@ -236,7 +236,6 @@ final class FpdfOutput extends AbstractOutput
             }
             $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
             $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
-
             if ($this->isScissors()) {
                 $this->fpdf->swissQrBillSetDash(0);
 
@@ -252,7 +251,7 @@ final class FpdfOutput extends AbstractOutput
             } else {
                 $this->fpdf->SetFont(self::FONT, '', self::FONT_SIZE_FURTHER_INFORMATION);
                 $this->setY(189.6);
-                $this->fpdf->MultiCell(0, 0, $this->toUtf8(Translation::get('separate', $this->language)), self::BORDER, self::ALIGN_CENTER);
+                $this->fpdf->MultiCell(0, 0, $this->convertEncoding(Translation::get('separate', $this->language)), self::BORDER, self::ALIGN_CENTER);
             }
         }
     }
@@ -282,9 +281,7 @@ final class FpdfOutput extends AbstractOutput
         $this->fpdf->MultiCell(
             0,
             2.8,
-            iconv(
-                'UTF-8',
-                'windows-1252',
+            $this->convertEncoding(
                 Translation::get(str_replace('text.', '', $element->getTitle()), $this->language)
             )
         );
@@ -297,7 +294,7 @@ final class FpdfOutput extends AbstractOutput
         $this->fpdf->MultiCell(
             $isReceiptPart ? 54 : 0,
             $isReceiptPart ? 3.3 : 4,
-            str_replace('text.', '', $this->toUtf8($element->getText())),
+            str_replace('text.', '', $this->convertEncoding($element->getText())),
             self::BORDER,
             self::ALIGN_LEFT
         );
@@ -310,7 +307,7 @@ final class FpdfOutput extends AbstractOutput
         $this->fpdf->MultiCell(
             0,
             4,
-            $this->toUtf8($element->getText()),
+            $this->convertEncoding($element->getText()),
             self::BORDER,
             self::ALIGN_LEFT
         );
@@ -360,8 +357,9 @@ final class FpdfOutput extends AbstractOutput
         $this->fpdf->SetXY($x + $this->offsetX, $y + $this->offsetY);
     }
 
-    private function toUtf8(string $text): string
+    private function convertEncoding(string $text): string
     {
-        return iconv('UTF-8', 'windows-1252', $text) ?: '';
+        // FPDF does not support unicode.
+        return mb_convert_encoding($text, 'CP1252', 'UTF-8');
     }
 }
