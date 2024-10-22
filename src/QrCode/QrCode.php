@@ -67,26 +67,39 @@ final class QrCode
             // Endroid 4.x
             $this->qrCode = BaseQrCode::create($data)
                 ->setEncoding(new Encoding('UTF-8'))
-                /** @phpstan-ignore-next-line as it throws error if Endroid 5 is installed */
                 ->setErrorCorrectionLevel(new ErrorCorrectionLevel\ErrorCorrectionLevelMedium())
                 ->setSize(self::PX_QR_CODE)
                 ->setMargin(0)
-                /** @phpstan-ignore-next-line as it throws error if Endroid 5 is installed  */
                 ->setRoundBlockSizeMode(new RoundBlockSizeMode\RoundBlockSizeModeEnlarge());
-        } else {
+        } elseif (method_exists(BaseQrCode::class, 'create')) {
             // Endroid 5.x
             $this->qrCode = BaseQrCode::create($data)
                 ->setEncoding(new Encoding('UTF-8'))
-                /** @phpstan-ignore-next-line as it throws error if Endroid 4 is installed */
                 ->setErrorCorrectionLevel(ErrorCorrectionLevel::Medium)
                 ->setSize(self::PX_QR_CODE)
                 ->setMargin(0)
-                /** @phpstan-ignore-next-line as it throws error if Endroid 4 is installed */
                 ->setRoundBlockSizeMode(RoundBlockSizeMode::Enlarge);
+        } else {
+            // Endroid 6.x
+            $this->qrCode = new BaseQrCode(
+                $data,
+                new Encoding('UTF-8'),
+                ErrorCorrectionLevel::Medium,
+                self::PX_QR_CODE,
+                0,
+                RoundBlockSizeMode::Enlarge
+            );
         }
 
-        $this->qrCodeLogo = Logo::create(self::SWISS_CROSS_LOGO_FILE)
-            ->setResizeToWidth(self::PX_SWISS_CROSS);
+        if (method_exists(Logo::class, 'create')) {
+            $this->qrCodeLogo = Logo::create(self::SWISS_CROSS_LOGO_FILE)
+                ->setResizeToWidth(self::PX_SWISS_CROSS);
+        } else {
+            $this->qrCodeLogo = new Logo(
+                self::SWISS_CROSS_LOGO_FILE,
+                self::PX_SWISS_CROSS
+            );
+        }
 
         $this->setWriterByExtension($fileFormat);
     }
