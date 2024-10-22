@@ -12,9 +12,8 @@ use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
-use Sprain\SwissQrBill\PaymentPart\Output\Fonts;
-use Sprain\SwissQrBill\PaymentPart\Output\LineStyles;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
+use Sprain\SwissQrBill\PaymentPart\Output\LineStyle;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -232,65 +231,65 @@ final class FpdfOutput extends AbstractOutput
     private function addSeparatorContentIfNotPrintable(): void
     {
         $layout = $this->getPrintOptions();
-        if (!$layout->isPrintable()) {
-            if ($layout->getLineStyle() !== LineStyles::NONE) {
-                if ($layout->getLineStyle() === LineStyles::DASHED) {
-                    if (!method_exists($this->fpdf, 'swissQrBillSetDash')) {
-                        throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
-                    }
-                }
-                $this->fpdf->SetLineWidth(0.1);
-                if ($layout->getLineStyle() === LineStyles::DASHED) {
-                    $this->fpdf->swissQrBillSetDash(2, 1);
-                }
-                $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
-                $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
-                if ($layout->getLineStyle() === LineStyles::DASHED) {
-                    $this->fpdf->swissQrBillSetDash(0);
-                }
-            }
+        if ($layout->isPrintable()) {
+            return;
+        }
 
-            if ($layout->hasSeparatorSymbol()) {
-                $this->fpdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
-                // horizontal scissors
-                $this->setXY(2 + $this->offsetX + 5, 193 + $this->offsetY + 0.2);
-                $this->fpdf->Cell(1, 0, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'C');
-                // vertical scissors
-                if (!method_exists($this->fpdf, 'swissQrBillTextWithRotation')) {
+        if ($layout->getLineStyle() !== LineStyle::NONE) {
+            if ($layout->getLineStyle() === LineStyle::DASHED) {
+                if (!method_exists($this->fpdf, 'swissQrBillSetDash')) {
                     throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
                 }
-                if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPositions::TOP) {
-                    $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX - 1.7, 193 + $this->offsetY + 4, self::FONT_UNICODE_CHAR_SCISSORS, -90);
-                } else {
-                    $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX + 1.7, 193 + $this->offsetY + 90, self::FONT_UNICODE_CHAR_SCISSORS, 90);
-                }
             }
+            $this->fpdf->SetLineWidth(0.1);
+            if ($layout->getLineStyle() === LineStyle::DASHED) {
+                $this->fpdf->swissQrBillSetDash(2, 1);
+            }
+            $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
+            $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
+            if ($layout->getLineStyle() === LineStyle::DASHED) {
+                $this->fpdf->swissQrBillSetDash(0);
+            }
+        }
 
-            if ($layout->hasText()) {
-                $this->fpdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
-                $y = 189.6;
-                $this->setY($y);
-                $separateText = $this->convertEncoding(Translation::get('separate', $this->language));
-                $this->fpdf->MultiCell(0, 0, $separateText, self::BORDER, self::ALIGN_CENTER);
+        if ($layout->hasSeparatorSymbol()) {
+            $this->fpdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
+            // horizontal scissors
+            $this->setXY(2 + $this->offsetX + 5, 193 + $this->offsetY + 0.2);
+            $this->fpdf->Cell(1, 0, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'C');
+            // vertical scissors
+            if (!method_exists($this->fpdf, 'swissQrBillTextWithRotation')) {
+                throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
+            }
+            if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::TOP) {
+                $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX - 1.7, 193 + $this->offsetY + 4, self::FONT_UNICODE_CHAR_SCISSORS, -90);
+            } else {
+                $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX + 1.7, 193 + $this->offsetY + 90, self::FONT_UNICODE_CHAR_SCISSORS, 90);
+            }
+        }
 
-                if ($layout->hasTextDownArrows()) {
-                    $textWidth = $this->fpdf->GetStringWidth($separateText);
-                    $arrowMargin = 3;
-                    $yoffset = 0.6;
-                    $xstart = ($this->fpdf->GetPageWidth() / 2) - ($textWidth / 2);
-                    $this->fpdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_DOWN_ARROW);
-                    for ($i = 0; $i < 3; $i += 1) {
-                        $this->fpdf->setXY($xstart - $arrowMargin, $y - $yoffset);
-                        $xstart -= $arrowMargin;
-                        $this->fpdf->Cell(3, 1, self::FONT_UNICODE_CHAR_DOWN_ARROW, 0, 0, 'R', false);
-                    }
-                    $xstart = ($this->fpdf->getPageWidth() / 2) + ($textWidth / 2);
-                    for ($i = 0; $i < 3; $i += 1) {
-                        $this->fpdf->setXY($xstart, $y - $yoffset);
-                        $xstart += $arrowMargin;
-                        $this->fpdf->Cell(3, 1, self::FONT_UNICODE_CHAR_DOWN_ARROW, 0, 0, 'L', false);
-                    }
-                }
+        if ($layout->hasText()) {
+            $this->fpdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
+            $y = 189.6;
+            $this->setY($y);
+            $separateText = $this->convertEncoding(Translation::get('separate', $this->language));
+            $this->fpdf->MultiCell(0, 0, $separateText, self::BORDER, self::ALIGN_CENTER);
+
+            if ($layout->hasTextDownArrows()) {
+                $textWidth = $this->fpdf->GetStringWidth($separateText);
+                $arrowMargin = 3;
+                $yoffset = 0.6;
+                $this->fpdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_DOWN_ARROW);
+
+                $arrows = str_pad('', 3, self::FONT_UNICODE_CHAR_DOWN_ARROW);
+
+                $xstart = ($this->fpdf->GetPageWidth() / 2) - ($textWidth / 2);
+                $this->fpdf->setXY($xstart - $arrowMargin, $y - $yoffset);
+                $this->fpdf->Cell(3, 1, $arrows, 0, 0, 'R', false);
+
+                $xstart = ($this->fpdf->getPageWidth() / 2) + ($textWidth / 2);
+                $this->fpdf->setXY($xstart, $y - $yoffset);
+                $this->fpdf->Cell(3, 1, $arrows, 0, 0, 'L', false);
             }
         }
     }
@@ -404,11 +403,6 @@ final class FpdfOutput extends AbstractOutput
 
     private function getFont(): string
     {
-        $layout = $this->getPrintOptions();
-        $font = $layout->getFont();
-        if ($font === Fonts::DEFAULT) {
-            return self::FONT;
-        }
-        return $font;
+        return self::FONT;
     }
 }

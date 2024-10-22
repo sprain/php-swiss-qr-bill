@@ -8,8 +8,7 @@ use setasign\Fpdi\Fpdi;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
-use Sprain\SwissQrBill\PaymentPart\Output\Fonts;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
@@ -42,7 +41,7 @@ final class FpdiOutputTest extends TestCase
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.scissors.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPositions::BOTTOM),
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.scissorsdown.pdf'
             ],

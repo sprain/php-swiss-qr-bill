@@ -5,8 +5,7 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
-use Sprain\SwissQrBill\PaymentPart\Output\Fonts;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestCompactSvgQrCodeTrait;
@@ -39,7 +38,7 @@ final class HtmlOutputTest extends TestCase
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.scissors.html'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPositions::BOTTOM),
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.scissorsdown.html'
             ],
@@ -76,7 +75,7 @@ final class HtmlOutputTest extends TestCase
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
-            if (true) {
+            if ($this->regenerateReferenceFiles) {
                 file_put_contents($file, $output);
             }
 

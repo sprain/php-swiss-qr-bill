@@ -13,7 +13,7 @@ use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableStylesTem
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TextElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 final class HtmlOutput extends AbstractOutput
@@ -134,7 +134,7 @@ final class HtmlOutput extends AbstractOutput
             if ($layout->hasSeparatorSymbol()) {
                 // draw scissors
                 $printableStyles = PrintableStylesTemplate::TEMPLATE_SCISSORS;
-                if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPositions::BOTTOM) {
+                if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::BOTTOM) {
                     // draw vertical scissors at bottom
                     $printableStyles .= PrintableStylesTemplate::TEMPLATE_VERTICAL_SCISSORS_DOWN;
                 }

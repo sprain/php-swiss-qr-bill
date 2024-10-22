@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use Sprain\SwissQrBill as QrBill;
+use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -23,14 +24,19 @@ $fpdf = new \Fpdf\Fpdf('P', 'mm', 'A4');
 
 $fpdf->AddPage();
 
-// 3. Create a full payment part for FPDF
+// 3. Optional, set layout options
+$options = new PrintOptions();
+$options
+    ->setPrintable(false)
+    ->setSeparatorSymbol(false); // TRUE to show scissors instead of text
+
+// 4. Create a full payment part for FPDF
 $output = new QrBill\PaymentPart\Output\FpdfOutput\FpdfOutput($qrBill, 'en', $fpdf);
 $output
-    ->setPrintable(false)
-    ->setScissors(false) // TRUE to show scissors instead of text
+    ->setPrintOptions($options)
     ->getPaymentPart();
 
-// 4. For demo purposes, let's save the generated example in a file
+// 5. For demo purposes, let's save the generated example in a file
 $examplePath = __DIR__ . "/fpdf_example.pdf";
 $fpdf->Output($examplePath, 'F');
 

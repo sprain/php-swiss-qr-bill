@@ -2,34 +2,27 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output;
 
-enum LineStyles
+enum LineStyle
 {
     case SOLID;
     case DASHED;
     case NONE;
 }
 
-enum VerticalSeparatorSymbolPositions
+enum VerticalSeparatorSymbolPosition
 {
     case TOP;
     case BOTTOM;
-}
-
-enum Fonts
-{
-    case DEFAULT;
-    case UTF8;
 }
 
 final class PrintOptions
 {
     private bool $printable = false;
     private bool $separatorSymbol = false;
-    private VerticalSeparatorSymbolPositions $verticalSeparatorSymbolPosition = VerticalSeparatorSymbolPositions::TOP;
+    private VerticalSeparatorSymbolPosition $verticalSeparatorSymbolPosition = VerticalSeparatorSymbolPosition::TOP;
     private bool $textDownArrows = false;
-    private LineStyles $lineStyle = LineStyles::SOLID;
+    private LineStyle $lineStyle = LineStyle::SOLID;
     private bool $text = true;
-    private string|Fonts $font = Fonts::DEFAULT;
 
     public function isPrintable(): bool
     {
@@ -41,9 +34,9 @@ final class PrintOptions
         $this->printable = $value;
 
         if (!$this->printable) {
-            $this->lineStyle = $this->separatorSymbol ? LineStyles::DASHED : LineStyles::SOLID;
+            $this->lineStyle = $this->separatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
         } else {
-            $this->lineStyle = LineStyles::NONE;
+            $this->lineStyle = LineStyle::NONE;
         }
         return $this;
     }
@@ -57,7 +50,7 @@ final class PrintOptions
     {
         $this->separatorSymbol = $value;
         if (!$this->printable) {
-            $this->lineStyle = $this->separatorSymbol ? LineStyles::DASHED : LineStyles::SOLID;
+            $this->lineStyle = $this->separatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
         }
         return $this;
     }
@@ -84,29 +77,18 @@ final class PrintOptions
         return $this;
     }
 
-    public function getVerticalSeparatorSymbolPosition(): VerticalSeparatorSymbolPositions
+    public function getVerticalSeparatorSymbolPosition(): VerticalSeparatorSymbolPosition
     {
         return $this->verticalSeparatorSymbolPosition;
     }
 
-    public function setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPositions $value): static
+    public function setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition $value): static
     {
         $this->verticalSeparatorSymbolPosition = $value;
         return $this;
     }
 
-    public function getFont(): string|Fonts
-    {
-        return $this->font;
-    }
-
-    public function setFont(string|Fonts $value): static
-    {
-        $this->font = $value;
-        return $this;
-    }
-
-    public function getLineStyle(): LineStyles
+    public function getLineStyle(): LineStyle
     {
         return $this->lineStyle;
     }

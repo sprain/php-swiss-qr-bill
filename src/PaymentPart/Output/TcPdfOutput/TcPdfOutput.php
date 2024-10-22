@@ -3,9 +3,8 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
 use setasign\Fpdi\Tcpdf\Fpdi;
-use Sprain\SwissQrBill\PaymentPart\Output\Fonts;
-use Sprain\SwissQrBill\PaymentPart\Output\LineStyles;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
+use Sprain\SwissQrBill\PaymentPart\Output\LineStyle;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
@@ -25,8 +24,7 @@ final class TcPdfOutput extends AbstractOutput
     private const ALIGN_LEFT = 'L';
     private const ALIGN_RIGHT = 'R';
     private const ALIGN_CENTER = 'C';
-    private const FONT_DEFAULT = 'Helvetica';
-    private const FONT_UTF8 = 'freesans';
+    private const FONT = 'Helvetica';
     private const FONT_UNICODE = 'zapfdingbats';
     private const FONT_UNICODE_CHAR_SCISSORS = '"';
     private const FONT_UNICODE_CHAR_DOWN_ARROW = 't';
@@ -226,68 +224,69 @@ final class TcPdfOutput extends AbstractOutput
     private function addSeparatorContentIfNotPrintable(): void
     {
         $layout = $this->getPrintOptions();
-        if (!$layout->isPrintable()) {
-            if ($layout->getLineStyle() !== LineStyles::NONE) {
-                $lineStyle = ['width' => 0.1, 'color' => [0, 0, 0]];
-                if ($layout->getLineStyle() === LineStyles::DASHED) {
-                    $lineStyle['dash'] = '2';
-                }
-                $this->tcPdf->SetLineStyle($lineStyle);
-                $xstart = 2;
-                $xmiddle = 62;
-                $y = 193;
-                $yend = 296;
-                $this->printLine($xstart, $y, 208, $y);
-                $this->printLine($xmiddle, $y, $xmiddle, $yend);
-            }
+        if ($layout->isPrintable()) {
+            return;
+        }
 
-            if ($layout->hasSeparatorSymbol()) {
-                $this->tcPdf->setFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
-                // horizontal scissors
-                $this->setY($y);
-                $this->setX($xstart + 3);
+        $xstart = 2;
+        $xmiddle = 62;
+        $y = 193;
+        $yend = 296;
+
+        if ($layout->getLineStyle() !== LineStyle::NONE) {
+            $lineStyle = ['width' => 0.1, 'color' => [0, 0, 0]];
+            if ($layout->getLineStyle() === LineStyle::DASHED) {
+                $lineStyle['dash'] = '2';
+            }
+            $this->tcPdf->SetLineStyle($lineStyle);
+            $this->printLine($xstart, $y, 208, $y);
+            $this->printLine($xmiddle, $y, $xmiddle, $yend);
+        }
+
+        if ($layout->hasSeparatorSymbol()) {
+            $this->tcPdf->setFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
+            // horizontal scissors
+            $this->setY($y);
+            $this->setX($xstart + 3);
+            $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
+            // vertical scissors
+            if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::TOP) {
+                $this->setY($y + 3);
+                $this->setX($xmiddle);
+                $this->tcPdf->StartTransform();
+                $this->tcPdf->Rotate(-90);
                 $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
-                // vertical scissors
-                if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPositions::TOP) {
-                    $this->setY($y + 3);
-                    $this->setX($xmiddle);
-                    $this->tcPdf->StartTransform();
-                    $this->tcPdf->Rotate(-90);
-                    $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
-                    $this->tcPdf->StopTransform();
-                } else {
-                    $this->setY($yend - 15);
-                    $this->setX($xmiddle);
-                    $this->tcPdf->StartTransform();
-                    $this->tcPdf->Rotate(90);
-                    $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
-                    $this->tcPdf->StopTransform();
-                }
+                $this->tcPdf->StopTransform();
+            } else {
+                $this->setY($yend - 15);
+                $this->setX($xmiddle);
+                $this->tcPdf->StartTransform();
+                $this->tcPdf->Rotate(90);
+                $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
+                $this->tcPdf->StopTransform();
             }
-            if ($layout->hasText()) {
-                $this->tcPdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
-                $this->setY($y - 5);
-                $this->setX($xstart + 3);
-                $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::ALIGN_CENTER);
+        }
+        if ($layout->hasText()) {
+            $this->tcPdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
+            $this->setY($y - 5);
+            $this->setX($xstart + 3);
+            $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::ALIGN_CENTER);
 
-                if ($layout->hasTextDownArrows()) {
-                    $textWidth = $this->tcPdf->GetStringWidth(Translation::get('separate', $this->language));
-                    $arrowMargin = 3;
-                    $yoffset = 5.2;
-                    $xstart = ($this->tcPdf->getPageWidth() / 2) - ($textWidth / 2);
-                    $this->tcPdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_DOWN_ARROW);
-                    for ($i = 0; $i < 3; $i += 1) {
-                        $this->tcPdf->setXY($xstart - $arrowMargin, $y - $yoffset);
-                        $xstart -= $arrowMargin;
-                        $this->tcPdf->Cell(3, 1, self::FONT_UNICODE_CHAR_DOWN_ARROW, 0, 0, 'R', false);
-                    }
-                    $xstart = ($this->tcPdf->getPageWidth() / 2) + ($textWidth / 2);
-                    for ($i = 0; $i < 3; $i += 1) {
-                        $this->tcPdf->setXY($xstart, $y - $yoffset);
-                        $xstart += $arrowMargin;
-                        $this->tcPdf->Cell(3, 1, self::FONT_UNICODE_CHAR_DOWN_ARROW, 0, 0, 'L', false);
-                    }
-                }
+            if ($layout->hasTextDownArrows()) {
+                $textWidth = $this->tcPdf->GetStringWidth(Translation::get('separate', $this->language));
+                $arrowMargin = 3;
+                $yoffset = 5.5;
+                $this->tcPdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_DOWN_ARROW);
+
+                $arrows = str_pad('', 3, self::FONT_UNICODE_CHAR_DOWN_ARROW);
+
+                $xstart = ($this->tcPdf->getPageWidth() / 2) - ($textWidth / 2);
+                $this->tcPdf->setXY($xstart - $arrowMargin, $y - $yoffset);
+                $this->tcPdf->Cell(3, 1, $arrows, 0, 0, 'R', false);
+
+                $xstart = ($this->tcPdf->getPageWidth() / 2) + ($textWidth / 2);
+                $this->tcPdf->setXY($xstart, $y - $yoffset);
+                $this->tcPdf->Cell(3, 1, $arrows, 0, 0, 'L', false);
             }
         }
     }
@@ -420,13 +419,6 @@ final class TcPdfOutput extends AbstractOutput
 
     private function getFont(): string
     {
-        $font = $this->getPrintOptions()->getFont();
-        if ($font === Fonts::DEFAULT) {
-            return self::FONT_DEFAULT;
-        } elseif ($font === Fonts::UTF8) {
-            return self::FONT_UTF8;
-        } else {
-            return $font;
-        }
+        return self::FONT;
     }
 }

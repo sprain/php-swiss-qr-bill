@@ -5,8 +5,7 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 use PHPUnit\Framework\TestCase;
 use setasign\Fpdi\Tcpdf\Fpdi;
 use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
-use Sprain\SwissQrBill\PaymentPart\Output\Fonts;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPositions;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -38,7 +37,7 @@ final class FpdiOutputTest extends TestCase
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissors.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPositions::BOTTOM),
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissorsdown.pdf'
             ],
