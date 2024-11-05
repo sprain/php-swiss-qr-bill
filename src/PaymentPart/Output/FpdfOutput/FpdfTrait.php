@@ -26,8 +26,6 @@ trait FpdfTrait
 
     /**
      * Rotate text
-     * DO NOT USE IT. Its purpose is only for the Swiss QR Bill library. Name and/or
-     * signature may change without any notification.
      *
      * @see http://www.fpdf.org/en/script/script31.php
      */
