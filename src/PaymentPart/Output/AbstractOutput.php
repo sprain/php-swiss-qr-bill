@@ -35,6 +35,23 @@ abstract class AbstractOutput implements OutputInterface
         return $this->language;
     }
 
+    /**
+     * @deprecated Will be removed in next major release. Use setPrintOptions() instead.
+     */
+    public function setPrintable(bool $printable): static
+    {
+        $this->printOptions->setPrintable($printable);
+        return $this;
+    }
+
+    /**
+     * @deprecated Will be removed in next major release. Use getPrintOptions() instead.
+     */
+    public function isPrintable(): bool
+    {
+        return $this->printOptions->isPrintable();
+    }
+
     public function setPrintOptions(PrintOptions $printOptions): static
     {
         $this->printOptions = $printOptions;

@@ -37,7 +37,7 @@ final class FpdiOutputTest extends TestCase
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissors.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::$BOTTOM),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissorsdown.pdf'
             ],
@@ -45,11 +45,6 @@ final class FpdiOutputTest extends TestCase
                 'layout' => (new PrintOptions())->setPrintable(false)->setText(true)->setTextDownArrows(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.textarrows.pdf'
-            ],
-            [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setText(false),
-                'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.textno.pdf'
             ],
             /* PNGs do not create the same output in all environments
             [

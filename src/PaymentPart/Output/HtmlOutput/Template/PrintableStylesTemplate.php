@@ -68,7 +68,7 @@ EOT;
 }
 EOT;
 
-public const TEMPLATE_TEXT_DOWN_ARROWS = <<<EOT
+    public const TEMPLATE_TEXT_DOWN_ARROWS = <<<EOT
 #qr-bill-separate-info-text:before {
     display: inline-block;
     content: '\\25BC \\25BC \\25BC';

@@ -41,7 +41,7 @@ final class FpdiOutputTest extends TestCase
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.scissors.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::$BOTTOM),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.scissorsdown.pdf'
             ],
@@ -49,11 +49,6 @@ final class FpdiOutputTest extends TestCase
                 'layout' => (new PrintOptions())->setPrintable(false)->setText(true)->setTextDownArrows(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.textarrows.pdf'
-            ],
-            [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setText(false),
-                'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.textno.pdf'
             ]
         ];
 

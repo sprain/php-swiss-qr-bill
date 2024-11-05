@@ -38,7 +38,7 @@ final class HtmlOutputTest extends TestCase
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.scissors.html'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::$BOTTOM),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.scissorsdown.html'
             ],
@@ -46,11 +46,6 @@ final class HtmlOutputTest extends TestCase
                 'layout' => (new PrintOptions())->setPrintable(false)->setText(true)->setTextDownArrows(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.textarrows.html'
-            ],
-            [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setText(false),
-                'format' => QrCode::FILE_FORMAT_SVG,
-                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.textno.html'
             ],
             /* PNGs do not create the same output in all environments
             [

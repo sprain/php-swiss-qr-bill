@@ -233,9 +233,9 @@ final class TcPdfOutput extends AbstractOutput
         $y = 193;
         $yend = 296;
 
-        if ($layout->getLineStyle() !== LineStyle::NONE) {
+        if ($layout->getLineStyle() !== LineStyle::$NONE) {
             $lineStyle = ['width' => 0.1, 'color' => [0, 0, 0]];
-            if ($layout->getLineStyle() === LineStyle::DASHED) {
+            if ($layout->getLineStyle() === LineStyle::$DASHED) {
                 $lineStyle['dash'] = '2';
             }
             $this->tcPdf->SetLineStyle($lineStyle);
@@ -250,7 +250,7 @@ final class TcPdfOutput extends AbstractOutput
             $this->setX($xstart + 3);
             $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
             // vertical scissors
-            if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::TOP) {
+            if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::$TOP) {
                 $this->setY($y + 3);
                 $this->setX($xmiddle);
                 $this->tcPdf->StartTransform();
