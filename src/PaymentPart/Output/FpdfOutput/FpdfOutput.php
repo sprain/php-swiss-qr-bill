@@ -235,19 +235,17 @@ final class FpdfOutput extends AbstractOutput
             return;
         }
 
-        if ($layout->getLineStyle() !== LineStyle::$NONE) {
-            if ($layout->getLineStyle() === LineStyle::$DASHED) {
+        if ($layout->getLineStyle() !== LineStyle::NONE) {
+            $this->fpdf->SetLineWidth(0.1);
+            if ($layout->getLineStyle() === LineStyle::DASHED) {
                 if (!method_exists($this->fpdf, 'swissQrBillSetDash')) {
                     throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
                 }
-            }
-            $this->fpdf->SetLineWidth(0.1);
-            if ($layout->getLineStyle() === LineStyle::$DASHED) {
                 $this->fpdf->swissQrBillSetDash(2, 1);
             }
             $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
             $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
-            if ($layout->getLineStyle() === LineStyle::$DASHED) {
+            if ($layout->getLineStyle() === LineStyle::DASHED && method_exists($this->fpdf, 'swissQrBillSetDash')) {
                 $this->fpdf->swissQrBillSetDash(0);
             }
         }
@@ -261,7 +259,7 @@ final class FpdfOutput extends AbstractOutput
             if (!method_exists($this->fpdf, 'swissQrBillTextWithRotation')) {
                 throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
             }
-            if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::$TOP) {
+            if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::TOP) {
                 $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX - 1.7, 193 + $this->offsetY + 4, self::FONT_UNICODE_CHAR_SCISSORS, -90);
             } else {
                 $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX + 1.7, 193 + $this->offsetY + 90, self::FONT_UNICODE_CHAR_SCISSORS, 90);

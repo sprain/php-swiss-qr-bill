@@ -134,7 +134,7 @@ final class HtmlOutput extends AbstractOutput
             if ($layout->hasSeparatorSymbol()) {
                 // draw scissors
                 $printableStyles = PrintableStylesTemplate::TEMPLATE_SCISSORS;
-                if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::$BOTTOM) {
+                if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::BOTTOM) {
                     // draw vertical scissors at bottom
                     $printableStyles .= PrintableStylesTemplate::TEMPLATE_VERTICAL_SCISSORS_DOWN;
                 }

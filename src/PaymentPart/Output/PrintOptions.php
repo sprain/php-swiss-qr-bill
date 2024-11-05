@@ -7,15 +7,14 @@ namespace Sprain\SwissQrBill\PaymentPart\Output;
  * with PHP 8.0, ENUMs should not be used, since they exist only from PHP 8.1
  * The idea here is to have a usage as close as an ENUM.
  *
- * There would be two breaking changes for consumers:
- * 1. remove the $ in front of the name: LineStyle::$SOLID becomes LineStyle::SOLID.
- * 2. only an ENUM value could be given to the method setXXX(). Now, standard strings are also accepted
+ * There would be one breaking change for consumers:
+ * 1. only an ENUM value could be given to the method setXXX(). Now, standard strings are also accepted
  */
 final class LineStyle
 {
-    public static $SOLID = 'SOLID';
-    public static $DASHED = 'DASHED';
-    public static $NONE = 'NONE';
+    public const SOLID = 'SOLID';
+    public const DASHED = 'DASHED';
+    public const NONE = 'NONE';
 }
 
 /**
@@ -23,24 +22,18 @@ final class LineStyle
  */
 final class VerticalSeparatorSymbolPosition
 {
-    public static $TOP = 'TOP';
-    public static $BOTTOM = 'BOTTOM';
+    public const TOP = 'TOP';
+    public const BOTTOM = 'BOTTOM';
 }
 
 final class PrintOptions
 {
     private bool $printable = false;
     private bool $separatorSymbol = false;
-    private VerticalSeparatorSymbolPosition|string $verticalSeparatorSymbolPosition;
+    private VerticalSeparatorSymbolPosition|string $verticalSeparatorSymbolPosition = VerticalSeparatorSymbolPosition::TOP;
     private bool $textDownArrows = false;
-    private LineStyle|string $lineStyle;
+    private LineStyle|string $lineStyle = LineStyle::SOLID;
     private bool $text = true;
-
-    public function __construct()
-    {
-        $this->verticalSeparatorSymbolPosition = VerticalSeparatorSymbolPosition::$TOP;
-        $this->lineStyle = LineStyle::$SOLID;
-    }
 
     public function isPrintable(): bool
     {
@@ -52,9 +45,9 @@ final class PrintOptions
         $this->printable = $value;
 
         if (!$this->printable) {
-            $this->lineStyle = $this->separatorSymbol ? LineStyle::$DASHED : LineStyle::$SOLID;
+            $this->lineStyle = $this->separatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
         } else {
-            $this->lineStyle = LineStyle::$NONE;
+            $this->lineStyle = LineStyle::NONE;
         }
         return $this;
     }
@@ -71,7 +64,7 @@ final class PrintOptions
             $this->text = false;
         }
         if (!$this->printable) {
-            $this->lineStyle = $this->separatorSymbol ? LineStyle::$DASHED : LineStyle::$SOLID;
+            $this->lineStyle = $this->separatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
         }
         return $this;
     }
@@ -99,7 +92,7 @@ final class PrintOptions
             $this->separatorSymbol = false;
         }
         if (!$this->printable) {
-            $this->lineStyle = LineStyle::$SOLID;
+            $this->lineStyle = LineStyle::SOLID;
         }
         return $this;
     }
