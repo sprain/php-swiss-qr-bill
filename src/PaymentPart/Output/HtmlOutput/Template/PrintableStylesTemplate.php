@@ -39,10 +39,10 @@ EOT;
     transform: rotate(90deg);
     display: inline-block;
     content: '\\2702';
-    position: relative;
+    position: fixed;
     font-size: 16pt;
-    top: -95mm;
-    left: 54.2mm;
+    top: 12.5mm;
+    left: 61.1mm;
 }
 EOT;
 
@@ -51,10 +51,10 @@ EOT;
     transform: rotate(-90deg);
     display: inline-block;
     content: '\\2702';
-    position: relative;
+    position: fixed;
     font-size: 16pt;
-    top: -15mm;
-    left: 54.7mm;
+    top: 91.8mm;
+    left: 61.7mm;
 }
 EOT;
 

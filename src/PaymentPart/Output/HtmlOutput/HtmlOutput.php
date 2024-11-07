@@ -136,16 +136,16 @@ final class HtmlOutput extends AbstractOutput
                 $printableStyles = PrintableStylesTemplate::TEMPLATE_SCISSORS;
                 if ($layout->isPositionScissorsAtBottom()) {
                     // draw vertical scissors at bottom
-                    $printableStyles .= PrintableStylesTemplate::TEMPLATE_VERTICAL_SCISSORS_DOWN;
+                    $printableStyles .= PHP_EOL.PHP_EOL. PrintableStylesTemplate::TEMPLATE_VERTICAL_SCISSORS_DOWN;
                 }
             }
 
             if (!$layout->isDisplayText()) {
                 // hide text
-                $printableStyles .= PrintableStylesTemplate::TEMPLATE_HIDE_TEXT;
+                $printableStyles .= PHP_EOL.PHP_EOL. PrintableStylesTemplate::TEMPLATE_HIDE_TEXT;
             } elseif ($layout->isDisplayTextDownArrows()) {
                 // text not hidden and draw text arrows
-                $printableStyles .= PrintableStylesTemplate::TEMPLATE_TEXT_DOWN_ARROWS;
+                $printableStyles .= PHP_EOL.PHP_EOL. PrintableStylesTemplate::TEMPLATE_TEXT_DOWN_ARROWS;
             }
         }
 
