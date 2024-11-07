@@ -12,7 +12,7 @@ final class LineStyle
     public const NONE = 'NONE';
 }
 
-final class PrintOptions
+final class DisplayOptions
 {
     private bool $isPrintable = false;
     private bool $displayScissors = false;

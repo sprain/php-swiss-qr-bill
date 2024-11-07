@@ -14,14 +14,14 @@ abstract class AbstractOutput implements OutputInterface
 {
     protected QrBill $qrBill;
     protected string $language;
-    protected PrintOptions $printOptions;
+    protected DisplayOptions $displayOptions;
     protected string $qrCodeImageFormat;
 
     public function __construct(QrBill $qrBill, string $language)
     {
         $this->qrBill = $qrBill;
         $this->language = $language;
-        $this->printOptions = new PrintOptions();
+        $this->displayOptions = new DisplayOptions();
         $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }
 
@@ -36,35 +36,35 @@ abstract class AbstractOutput implements OutputInterface
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use setPrintOptions() instead.
+     * @deprecated Will be removed in next major release. Use setDisplayOptions() instead.
      */
     public function setPrintable(bool $printable): static
     {
-        $this->printOptions->setPrintable($printable);
+        $this->displayOptions->setPrintable($printable);
 
         return $this;
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use getPrintOptions() instead.
+     * @deprecated Will be removed in next major release. Use getDisplayOptions() instead.
      */
     public function isPrintable(): bool
     {
-        return $this->printOptions->isPrintable();
+        return $this->displayOptions->isPrintable();
     }
 
-    public function setPrintOptions(PrintOptions $printOptions): static
+    public function setDisplayOptions(DisplayOptions $displayOptions): static
     {
-        $this->printOptions = $printOptions;
+        $this->displayOptions = $displayOptions;
 
         return $this;
     }
 
-    public function getPrintOptions(): PrintOptions
+    public function getDisplayOptions(): DisplayOptions
     {
-        $this->printOptions->consolidate();
+        $this->displayOptions->consolidate();
 
-        return $this->printOptions;
+        return $this->displayOptions;
     }
 
     public function setQrCodeImageFormat(string $fileExtension): static

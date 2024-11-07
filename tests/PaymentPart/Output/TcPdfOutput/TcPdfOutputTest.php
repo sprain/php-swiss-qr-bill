@@ -3,7 +3,7 @@
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
 use PHPUnit\Framework\TestCase;
-use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
 use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
@@ -21,27 +21,27 @@ final class TcPdfOutputTest extends TestCase
     {
         $variations = [
             [
-                'layout' => (new PrintOptions())->setPrintable(false),
+                'layout' => (new DisplayOptions())->setPrintable(false),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(true),
+                'layout' => (new DisplayOptions())->setPrintable(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.print.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayScissors(true),
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissors.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayScissors(true)->setPositionScissorsAtBottom(true),
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true)->setPositionScissorsAtBottom(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissorsdown.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayTextDownArrows(true),
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayTextDownArrows(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.textarrows.pdf'
             ],
@@ -69,7 +69,7 @@ final class TcPdfOutputTest extends TestCase
 
             $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
             $output
-                ->setPrintOptions($variation['layout'])
+                ->setDisplayOptions($variation['layout'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
@@ -104,7 +104,7 @@ final class TcPdfOutputTest extends TestCase
 
         $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
         $output
-            ->setPrintOptions((new PrintOptions())->setPrintable(true))
+            ->setDisplayOptions((new DisplayOptions())->setPrintable(true))
             ->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG)
             ->getPaymentPart();
 

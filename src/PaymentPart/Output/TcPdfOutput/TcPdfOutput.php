@@ -223,7 +223,7 @@ final class TcPdfOutput extends AbstractOutput
 
     private function addSeparatorContentIfNotPrintable(): void
     {
-        $layout = $this->getPrintOptions();
+        $layout = $this->getDisplayOptions();
         if ($layout->isPrintable()) {
             return;
         }

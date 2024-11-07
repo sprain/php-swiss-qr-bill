@@ -125,7 +125,7 @@ final class HtmlOutput extends AbstractOutput
 
     private function hideSeparatorContentIfPrintable(string $paymentPart): string
     {
-        $layout = $this->getPrintOptions();
+        $layout = $this->getDisplayOptions();
         $printableStyles = '';
         if ($layout->isPrintable()) {
             // draw nothing

@@ -4,7 +4,7 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
-use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
 use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -23,27 +23,27 @@ final class HtmlOutputTest extends TestCase
     {
         $variations = [
             [
-                'layout' => (new PrintOptions())->setPrintable(false),
+                'layout' => (new DisplayOptions())->setPrintable(false),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.html'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(true),
+                'layout' => (new DisplayOptions())->setPrintable(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.print.html'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayScissors(true),
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.scissors.html'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayScissors(true)->setPositionScissorsAtBottom(true),
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true)->setPositionScissorsAtBottom(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.scissorsdown.html'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayTextDownArrows(true),
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayTextDownArrows(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.textarrows.html'
             ],
@@ -66,7 +66,7 @@ final class HtmlOutputTest extends TestCase
 
             $htmlOutput = (new HtmlOutput($qrBill, 'en'));
             $output = $htmlOutput
-                ->setPrintOptions($variation['layout'])
+                ->setDisplayOptions($variation['layout'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 

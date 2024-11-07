@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 use Sprain\SwissQrBill as QrBill;
-use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -19,8 +19,8 @@ $tcPdf->AddPage();
 $output = new QrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput($qrBill, 'en', $tcPdf);
 
 // 4. Optional, set layout options
-$printOptions = new PrintOptions();
-$printOptions
+$displayOptions = new DisplayOptions();
+$displayOptions
     ->setPrintable(false) // true to remove lines for printing on a perforated stationery
     ->setDisplayTextDownArrows(false) // true to show arrows next to separation text, if shown
     ->setDisplayScissors(false) // true to show scissors instead of separation text
@@ -29,7 +29,7 @@ $printOptions
 
 // 5. Generate the output
 $output
-    ->setPrintOptions($printOptions)
+    ->setDisplayOptions($displayOptions)
     ->getPaymentPart();
 
 // 6. For demo purposes, let's save the generated example in a file

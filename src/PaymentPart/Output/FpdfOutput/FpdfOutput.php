@@ -230,7 +230,7 @@ final class FpdfOutput extends AbstractOutput
 
     private function addSeparatorContentIfNotPrintable(): void
     {
-        $layout = $this->getPrintOptions();
+        $layout = $this->getDisplayOptions();
         if ($layout->isPrintable()) {
             return;
         }
