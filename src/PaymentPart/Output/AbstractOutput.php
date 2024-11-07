@@ -41,6 +41,7 @@ abstract class AbstractOutput implements OutputInterface
     public function setPrintable(bool $printable): static
     {
         $this->printOptions->setPrintable($printable);
+
         return $this;
     }
 
@@ -61,6 +62,8 @@ abstract class AbstractOutput implements OutputInterface
 
     public function getPrintOptions(): PrintOptions
     {
+        $this->printOptions->consolidate();
+
         return $this->printOptions;
     }
 

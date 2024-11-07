@@ -3,12 +3,7 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 /**
- * @internal This class is meant to be an ENUM. But because it must be compatible
- * with PHP 8.0, ENUMs should not be used, since they exist only from PHP 8.1
- * The idea here is to have a usage as close as an ENUM.
- *
- * There would be one breaking change for consumers:
- * 1. only an ENUM value could be given to the method setXXX(). Now, standard strings are also accepted
+ * @internal
  */
 final class LineStyle
 {
@@ -18,7 +13,7 @@ final class LineStyle
 }
 
 /**
- * @internal See internal comment for LineStyle above
+ * @internal
  */
 final class VerticalSeparatorSymbolPosition
 {
@@ -30,9 +25,9 @@ final class PrintOptions
 {
     private bool $printable = false;
     private bool $separatorSymbol = false;
-    private VerticalSeparatorSymbolPosition|string $verticalSeparatorSymbolPosition = VerticalSeparatorSymbolPosition::TOP;
+    private string $verticalSeparatorSymbolPosition = VerticalSeparatorSymbolPosition::TOP;
     private bool $textDownArrows = false;
-    private LineStyle|string $lineStyle = LineStyle::SOLID;
+    private string $lineStyle = LineStyle::SOLID;
     private bool $text = true;
 
     public function isPrintable(): bool
@@ -40,15 +35,10 @@ final class PrintOptions
         return $this->printable;
     }
 
-    public function setPrintable(bool $value): static
+    public function setPrintable(bool $isPrintable): self
     {
-        $this->printable = $value;
+        $this->printable = $isPrintable;
 
-        if (!$this->printable) {
-            $this->lineStyle = $this->separatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
-        } else {
-            $this->lineStyle = LineStyle::NONE;
-        }
         return $this;
     }
 
@@ -57,15 +47,10 @@ final class PrintOptions
         return $this->separatorSymbol;
     }
 
-    public function setSeparatorSymbol(bool $value): static
+    public function setSeparatorSymbol(bool $hasSeparatorSymbol): self
     {
-        $this->separatorSymbol = $value;
-        if ($this->separatorSymbol) {
-            $this->text = false;
-        }
-        if (!$this->printable) {
-            $this->lineStyle = $this->separatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
-        }
+        $this->separatorSymbol = $hasSeparatorSymbol;
+
         return $this;
     }
 
@@ -74,9 +59,10 @@ final class PrintOptions
         return $this->textDownArrows;
     }
 
-    public function setTextDownArrows(bool $value): static
+    public function setTextDownArrows(bool $hasTextDownArrows): self
     {
-        $this->textDownArrows = $value;
+        $this->textDownArrows = $hasTextDownArrows;
+
         return $this;
     }
 
@@ -85,31 +71,44 @@ final class PrintOptions
         return $this->text;
     }
 
-    public function setText(bool $value): static
+    public function setText(bool $hasText): self
     {
-        $this->text = $value;
-        if ($this->text) {
-            $this->separatorSymbol = false;
-        }
-        if (!$this->printable) {
-            $this->lineStyle = LineStyle::SOLID;
-        }
+        $this->text = $hasText;
+
         return $this;
     }
 
-    public function getVerticalSeparatorSymbolPosition(): VerticalSeparatorSymbolPosition|string
+    public function getVerticalSeparatorSymbolPosition(): string
     {
         return $this->verticalSeparatorSymbolPosition;
     }
 
-    public function setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition|string $value): static
+    public function setVerticalSeparatorSymbolPosition(string $verticalSeparatorSymbolPosition): self
     {
-        $this->verticalSeparatorSymbolPosition = $value;
+        $this->verticalSeparatorSymbolPosition = $verticalSeparatorSymbolPosition;
+
         return $this;
     }
 
-    public function getLineStyle(): LineStyle|string
+    public function getLineStyle(): string
     {
         return $this->lineStyle;
+    }
+
+    /**
+     * @internal
+     */
+    public function consolidate(): void
+    {
+        $this->lineStyle = $this->separatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
+
+        if ($this->printable) {
+            $this->lineStyle = LineStyle::NONE;
+        }
+
+        if ($this->separatorSymbol) {
+            $this->text = false;
+            $this->textDownArrows = false;
+        }
     }
 }
