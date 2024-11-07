@@ -4,7 +4,6 @@ namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
-use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
@@ -15,14 +14,14 @@ abstract class AbstractOutput implements OutputInterface
 {
     protected QrBill $qrBill;
     protected string $language;
-    protected bool $printable;
+    protected PrintOptions $printOptions;
     protected string $qrCodeImageFormat;
 
     public function __construct(QrBill $qrBill, string $language)
     {
         $this->qrBill = $qrBill;
         $this->language = $language;
-        $this->printable = false;
+        $this->printOptions = new PrintOptions();
         $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }
 
@@ -36,16 +35,33 @@ abstract class AbstractOutput implements OutputInterface
         return $this->language;
     }
 
+    /**
+     * @deprecated Will be removed in next major release. Use setPrintOptions() instead.
+     */
     public function setPrintable(bool $printable): static
     {
-        $this->printable = $printable;
+        $this->printOptions->setPrintable($printable);
+        return $this;
+    }
+
+    /**
+     * @deprecated Will be removed in next major release. Use getPrintOptions() instead.
+     */
+    public function isPrintable(): bool
+    {
+        return $this->printOptions->isPrintable();
+    }
+
+    public function setPrintOptions(PrintOptions $printOptions): static
+    {
+        $this->printOptions = $printOptions;
 
         return $this;
     }
 
-    public function isPrintable(): bool
+    public function getPrintOptions(): PrintOptions
     {
-        return $this->printable;
+        return $this->printOptions;
     }
 
     public function setQrCodeImageFormat(string $fileExtension): static

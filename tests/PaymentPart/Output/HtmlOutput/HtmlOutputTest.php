@@ -4,6 +4,8 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestCompactSvgQrCodeTrait;
@@ -21,14 +23,29 @@ final class HtmlOutputTest extends TestCase
     {
         $variations = [
             [
-                'printable' => false,
+                'layout' => (new PrintOptions())->setPrintable(false),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.html'
             ],
             [
-                'printable' => true,
+                'layout' => (new PrintOptions())->setPrintable(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.print.html'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . $this->getCompact() . '.svg.scissors.html'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.scissorsdown.html'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setText(true)->setTextDownArrows(true),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/HtmlOutput/' . $name . '.svg.textarrows.html'
             ],
             /* PNGs do not create the same output in all environments
             [
@@ -49,7 +66,7 @@ final class HtmlOutputTest extends TestCase
 
             $htmlOutput = (new HtmlOutput($qrBill, 'en'));
             $output = $htmlOutput
-                ->setPrintable($variation['printable'])
+                ->setPrintOptions($variation['layout'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 

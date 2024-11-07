@@ -4,6 +4,8 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
 use PHPUnit\Framework\TestCase;
 use setasign\Fpdi\Tcpdf\Fpdi;
+use Sprain\SwissQrBill\PaymentPart\Output\PrintOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -20,14 +22,29 @@ final class FpdiOutputTest extends TestCase
     {
         $variations = [
             [
-                'printable' => false,
+                'layout' => (new PrintOptions())->setPrintable(false),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.pdf'
             ],
             [
-                'printable' => true,
+                'layout' => (new PrintOptions())->setPrintable(true),
                 'format' => QrCode::FILE_FORMAT_SVG,
                 'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.print.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissors.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.scissorsdown.pdf'
+            ],
+            [
+                'layout' => (new PrintOptions())->setPrintable(false)->setText(true)->setTextDownArrows(true),
+                'format' => QrCode::FILE_FORMAT_SVG,
+                'file' => __DIR__ . '/../../../TestData/TcPdfOutput/' . $name . '.svg.textarrows.pdf'
             ],
             /* PNGs do not create the same output in all environments
             [
@@ -53,7 +70,7 @@ final class FpdiOutputTest extends TestCase
 
             $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
             $output
-                ->setPrintable($variation['printable'])
+                ->setPrintOptions($variation['layout'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
