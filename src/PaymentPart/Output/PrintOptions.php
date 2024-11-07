@@ -12,22 +12,13 @@ final class LineStyle
     public const NONE = 'NONE';
 }
 
-/**
- * @internal
- */
-final class VerticalSeparatorSymbolPosition
-{
-    public const TOP = 'TOP';
-    public const BOTTOM = 'BOTTOM';
-}
-
 final class PrintOptions
 {
     private bool $isPrintable = false;
-    private bool $hasSeparatorSymbol = false;
-    private bool $hasTextDownArrows = false;
-    private bool $hasText = true;
-    private string $verticalSeparatorSymbolPosition = VerticalSeparatorSymbolPosition::TOP;
+    private bool $displayScissors = false;
+    private bool $positionScissorsAtBottom = false;
+    private bool $displayTextDownArrows = false;
+    private bool $displayText = true;
     private string $lineStyle = LineStyle::SOLID;
 
     public function isPrintable(): bool
@@ -42,52 +33,45 @@ final class PrintOptions
         return $this;
     }
 
-    public function hasSeparatorSymbol(): bool
+    public function isDisplayScissors(): bool
     {
-        return $this->hasSeparatorSymbol;
+        return $this->displayScissors;
     }
 
-    public function setSeparatorSymbol(bool $hasSeparatorSymbol): self
+    public function setDisplayScissors(bool $displayScissors): self
     {
-        $this->hasSeparatorSymbol = $hasSeparatorSymbol;
+        $this->displayScissors = $displayScissors;
 
         return $this;
     }
 
-    public function hasTextDownArrows(): bool
+    public function isPositionScissorsAtBottom(): bool
     {
-        return $this->hasTextDownArrows;
+        return $this->positionScissorsAtBottom;
     }
 
-    public function setTextDownArrows(bool $hasTextDownArrows): self
+    public function setPositionScissorsAtBottom(bool $positionScissorsAtBottom): self
     {
-        $this->hasTextDownArrows = $hasTextDownArrows;
+        $this->positionScissorsAtBottom = $positionScissorsAtBottom;
 
         return $this;
     }
 
-    public function hasText(): bool
+    public function isDisplayTextDownArrows(): bool
     {
-        return $this->hasText;
+        return $this->displayTextDownArrows;
     }
 
-    public function setText(bool $hasText): self
+    public function setDisplayTextDownArrows(bool $displayTextDownArrows): self
     {
-        $this->hasText = $hasText;
+        $this->displayTextDownArrows = $displayTextDownArrows;
 
         return $this;
     }
 
-    public function getVerticalSeparatorSymbolPosition(): string
+    public function isDisplayText(): bool
     {
-        return $this->verticalSeparatorSymbolPosition;
-    }
-
-    public function setVerticalSeparatorSymbolPosition(string $verticalSeparatorSymbolPosition): self
-    {
-        $this->verticalSeparatorSymbolPosition = $verticalSeparatorSymbolPosition;
-
-        return $this;
+        return $this->displayText;
     }
 
     public function getLineStyle(): string
@@ -100,15 +84,15 @@ final class PrintOptions
      */
     public function consolidate(): void
     {
-        $this->lineStyle = $this->hasSeparatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
+        $this->lineStyle = $this->displayScissors ? LineStyle::DASHED : LineStyle::SOLID;
 
         if ($this->isPrintable) {
             $this->lineStyle = LineStyle::NONE;
         }
 
-        if ($this->hasSeparatorSymbol) {
-            $this->hasText = false;
-            $this->hasTextDownArrows = false;
+        if ($this->displayScissors) {
+            $this->displayText = false;
+            $this->displayTextDownArrows = false;
         }
     }
 }

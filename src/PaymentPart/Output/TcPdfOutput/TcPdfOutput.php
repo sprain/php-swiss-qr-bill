@@ -243,36 +243,37 @@ final class TcPdfOutput extends AbstractOutput
             $this->printLine($xmiddle, $y, $xmiddle, $yend);
         }
 
-        if ($layout->hasSeparatorSymbol()) {
+        if ($layout->isDisplayScissors()) {
             $this->tcPdf->setFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
             // horizontal scissors
             $this->setY($y);
             $this->setX($xstart + 3);
             $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
             // vertical scissors
-            if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::TOP) {
-                $this->setY($y + 3);
-                $this->setX($xmiddle);
-                $this->tcPdf->StartTransform();
-                $this->tcPdf->Rotate(-90);
-                $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
-                $this->tcPdf->StopTransform();
-            } else {
+            if ($layout->isPositionScissorsAtBottom()) {
                 $this->setY($yend - 15);
                 $this->setX($xmiddle);
                 $this->tcPdf->StartTransform();
                 $this->tcPdf->Rotate(90);
                 $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
                 $this->tcPdf->StopTransform();
+            } else {
+                $this->setY($y + 3);
+                $this->setX($xmiddle);
+                $this->tcPdf->StartTransform();
+                $this->tcPdf->Rotate(-90);
+                $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
+                $this->tcPdf->StopTransform();
             }
         }
-        if ($layout->hasText()) {
+
+        if ($layout->isDisplayText()) {
             $this->tcPdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
             $this->setY($y - 5);
             $this->setX($xstart + 3);
             $this->printCell(Translation::get('separate', $this->language), 200, 0, 0, self::ALIGN_CENTER);
 
-            if ($layout->hasTextDownArrows()) {
+            if ($layout->isDisplayTextDownArrows()) {
                 $textWidth = $this->tcPdf->GetStringWidth(Translation::get('separate', $this->language));
                 $arrowMargin = 3;
                 $yoffset = 5.5;

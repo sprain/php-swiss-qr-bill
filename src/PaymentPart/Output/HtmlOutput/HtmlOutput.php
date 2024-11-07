@@ -131,18 +131,19 @@ final class HtmlOutput extends AbstractOutput
             // draw nothing
             $printableStyles = PrintableStylesTemplate::TEMPLATE;
         } else {
-            if ($layout->hasSeparatorSymbol()) {
+            if ($layout->isDisplayScissors()) {
                 // draw scissors
                 $printableStyles = PrintableStylesTemplate::TEMPLATE_SCISSORS;
-                if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::BOTTOM) {
+                if ($layout->isPositionScissorsAtBottom()) {
                     // draw vertical scissors at bottom
                     $printableStyles .= PrintableStylesTemplate::TEMPLATE_VERTICAL_SCISSORS_DOWN;
                 }
             }
-            if (!$layout->hasText()) {
+
+            if (!$layout->isDisplayText()) {
                 // hide text
                 $printableStyles .= PrintableStylesTemplate::TEMPLATE_HIDE_TEXT;
-            } elseif ($layout->hasTextDownArrows()) {
+            } elseif ($layout->isDisplayTextDownArrows()) {
                 // text not hidden and draw text arrows
                 $printableStyles .= PrintableStylesTemplate::TEMPLATE_TEXT_DOWN_ARROWS;
             }

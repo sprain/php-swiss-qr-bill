@@ -22,7 +22,10 @@ $output = new QrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput($qrBill, 'en', $
 $printOptions = new PrintOptions();
 $printOptions
     ->setPrintable(false) // true to remove lines for printing on a perforated stationery
-    ->setSeparatorSymbol(false); // true to show scissors instead of text
+    ->setDisplayTextDownArrows(false) // true to show arrows next to separation text, if shown
+    ->setDisplayScissors(false) // true to show scissors instead of separation text
+    ->setPositionScissorsAtBottom(false) // true to place scissors at the bottom, if shown
+;
 
 // 5. Generate the output
 $output

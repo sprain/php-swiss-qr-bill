@@ -250,30 +250,32 @@ final class FpdfOutput extends AbstractOutput
             }
         }
 
-        if ($layout->hasSeparatorSymbol()) {
+        if ($layout->isDisplayScissors()) {
             $this->fpdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_SCISSORS);
+
             // horizontal scissors
             $this->setXY(2 + $this->offsetX + 5, 193 + $this->offsetY + 0.2);
             $this->fpdf->Cell(1, 0, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'C');
+
             // vertical scissors
             if (!method_exists($this->fpdf, 'swissQrBillTextWithRotation')) {
                 throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
             }
-            if ($layout->getVerticalSeparatorSymbolPosition() === VerticalSeparatorSymbolPosition::TOP) {
-                $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX - 1.7, 193 + $this->offsetY + 4, self::FONT_UNICODE_CHAR_SCISSORS, -90);
-            } else {
+            if ($layout->isPositionScissorsAtBottom()) {
                 $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX + 1.7, 193 + $this->offsetY + 90, self::FONT_UNICODE_CHAR_SCISSORS, 90);
+            } else {
+                $this->fpdf->swissQrBillTextWithRotation(62 + $this->offsetX - 1.7, 193 + $this->offsetY + 4, self::FONT_UNICODE_CHAR_SCISSORS, -90);
             }
         }
 
-        if ($layout->hasText()) {
+        if ($layout->isDisplayText()) {
             $this->fpdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
             $y = 189.6;
             $this->setY($y);
             $separateText = $this->convertEncoding(Translation::get('separate', $this->language));
             $this->fpdf->MultiCell(0, 0, $separateText, self::BORDER, self::ALIGN_CENTER);
 
-            if ($layout->hasTextDownArrows()) {
+            if ($layout->isDisplayTextDownArrows()) {
                 $textWidth = $this->fpdf->GetStringWidth($separateText);
                 $arrowMargin = 3;
                 $yoffset = 0.6;
