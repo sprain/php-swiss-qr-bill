@@ -23,57 +23,57 @@ final class VerticalSeparatorSymbolPosition
 
 final class PrintOptions
 {
-    private bool $printable = false;
-    private bool $separatorSymbol = false;
+    private bool $isPrintable = false;
+    private bool $hasSeparatorSymbol = false;
+    private bool $hasTextDownArrows = false;
+    private bool $hasText = true;
     private string $verticalSeparatorSymbolPosition = VerticalSeparatorSymbolPosition::TOP;
-    private bool $textDownArrows = false;
     private string $lineStyle = LineStyle::SOLID;
-    private bool $text = true;
 
     public function isPrintable(): bool
     {
-        return $this->printable;
+        return $this->isPrintable;
     }
 
     public function setPrintable(bool $isPrintable): self
     {
-        $this->printable = $isPrintable;
+        $this->isPrintable = $isPrintable;
 
         return $this;
     }
 
     public function hasSeparatorSymbol(): bool
     {
-        return $this->separatorSymbol;
+        return $this->hasSeparatorSymbol;
     }
 
     public function setSeparatorSymbol(bool $hasSeparatorSymbol): self
     {
-        $this->separatorSymbol = $hasSeparatorSymbol;
+        $this->hasSeparatorSymbol = $hasSeparatorSymbol;
 
         return $this;
     }
 
     public function hasTextDownArrows(): bool
     {
-        return $this->textDownArrows;
+        return $this->hasTextDownArrows;
     }
 
     public function setTextDownArrows(bool $hasTextDownArrows): self
     {
-        $this->textDownArrows = $hasTextDownArrows;
+        $this->hasTextDownArrows = $hasTextDownArrows;
 
         return $this;
     }
 
     public function hasText(): bool
     {
-        return $this->text;
+        return $this->hasText;
     }
 
     public function setText(bool $hasText): self
     {
-        $this->text = $hasText;
+        $this->hasText = $hasText;
 
         return $this;
     }
@@ -100,15 +100,15 @@ final class PrintOptions
      */
     public function consolidate(): void
     {
-        $this->lineStyle = $this->separatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
+        $this->lineStyle = $this->hasSeparatorSymbol ? LineStyle::DASHED : LineStyle::SOLID;
 
-        if ($this->printable) {
+        if ($this->isPrintable) {
             $this->lineStyle = LineStyle::NONE;
         }
 
-        if ($this->separatorSymbol) {
-            $this->text = false;
-            $this->textDownArrows = false;
+        if ($this->hasSeparatorSymbol) {
+            $this->hasText = false;
+            $this->hasTextDownArrows = false;
         }
     }
 }
