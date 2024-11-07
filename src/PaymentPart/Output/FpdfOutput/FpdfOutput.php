@@ -241,7 +241,7 @@ final class FpdfOutput extends AbstractOutput
                 if (!method_exists($this->fpdf, 'swissQrBillSetDash')) {
                     throw new MissingTraitException('Missing FpdfTrait in this fpdf instance. See fpdf-example.php within this library.');
                 }
-                $this->fpdf->swissQrBillSetDash(2, 1);
+                $this->fpdf->swissQrBillSetDash(0.6, 0.6);
             }
             $this->fpdf->Line(2 + $this->offsetX, 193 + $this->offsetY, 208 + $this->offsetX, 193 + $this->offsetY);
             $this->fpdf->Line(62 + $this->offsetX, 193 + $this->offsetY, 62 + $this->offsetX, 296 + $this->offsetY);
