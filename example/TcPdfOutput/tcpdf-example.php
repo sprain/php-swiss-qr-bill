@@ -15,19 +15,21 @@ $tcPdf->setPrintHeader(false);
 $tcPdf->setPrintFooter(false);
 $tcPdf->AddPage();
 
-// 3. Optional, set layout options
-$options = new PrintOptions();
-$options
-    ->setPrintable(false)
-    ->setSeparatorSymbol(false); // TRUE to show scissors instead of text
-
-// 4. Create a full payment part for TcPDF
+// 3. Create a full payment part for TcPDF
 $output = new QrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput($qrBill, 'en', $tcPdf);
+
+// 4. Optional, set layout options
+$printOptions = new PrintOptions();
+$printOptions
+    ->setPrintable(false) // true to remove lines for printing on a perforated stationery
+    ->setSeparatorSymbol(false); // true to show scissors instead of text
+
+// 5. Generate the output
 $output
-    ->setPrintOptions($options)
+    ->setPrintOptions($printOptions)
     ->getPaymentPart();
 
-// 5. For demo purposes, let's save the generated example in a file
+// 6. For demo purposes, let's save the generated example in a file
 $examplePath = __DIR__ . "/tcpdf_example.pdf";
 $tcPdf->Output($examplePath, 'F');
 

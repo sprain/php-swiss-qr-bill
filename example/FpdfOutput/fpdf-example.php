@@ -18,25 +18,27 @@ $fpdf = new \Fpdf\Fpdf('P', 'mm', 'A4');
 // };
 
 // In case you want to draw scissors and dashed lines, use this way to create your FPDF instance:
-// $fpdf = new class('P', 'mm', 'A4') extends \Fpdf\Fpdf {
-//     use \Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfTrait;
-// };
+ $fpdf = new class('P', 'mm', 'A4') extends \Fpdf\Fpdf {
+     use \Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfTrait;
+ };
 
 $fpdf->AddPage();
 
-// 3. Optional, set layout options
-$options = new PrintOptions();
-$options
-    ->setPrintable(false)
-    ->setSeparatorSymbol(false); // TRUE to show scissors instead of text
-
-// 4. Create a full payment part for FPDF
+// 3. Create a full payment part for FPDF
 $output = new QrBill\PaymentPart\Output\FpdfOutput\FpdfOutput($qrBill, 'en', $fpdf);
+
+// 4. Optional, set layout options
+$printOptions = new PrintOptions();
+$printOptions
+    ->setPrintable(false) // true to remove lines for printing on a perforated stationery
+    ->setSeparatorSymbol(false); // true to show scissors instead of text
+
+// 5. Generate the output
 $output
-    ->setPrintOptions($options)
+    ->setPrintOptions($printOptions)
     ->getPaymentPart();
 
-// 5. For demo purposes, let's save the generated example in a file
+// 6. For demo purposes, let's save the generated example in a file
 $examplePath = __DIR__ . "/fpdf_example.pdf";
 $fpdf->Output($examplePath, 'F');
 
