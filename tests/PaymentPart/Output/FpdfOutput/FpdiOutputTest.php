@@ -36,17 +36,17 @@ final class FpdiOutputTest extends TestCase
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true),
+                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayScissors(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.scissors.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true)->setVerticalSeparatorSymbolPosition(VerticalSeparatorSymbolPosition::BOTTOM),
+                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayScissors(true)->setPositionScissorsAtBottom(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.scissorsdown.pdf'
             ],
             [
-                'layout' => (new PrintOptions())->setPrintable(false)->setText(true)->setTextDownArrows(true),
+                'layout' => (new PrintOptions())->setPrintable(false)->setDisplayTextDownArrows(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.textarrows.pdf'
             ]
@@ -92,7 +92,7 @@ final class FpdiOutputTest extends TestCase
 
         $output = new FpdfOutput($qrBill, 'en', $fpdf);
         $output
-            ->setPrintOptions((new PrintOptions())->setPrintable(false)->setSeparatorSymbol(true))
+            ->setPrintOptions((new PrintOptions())->setPrintable(false)->setDisplayScissors(true))
             ->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG)
             ->getPaymentPart();
     }
