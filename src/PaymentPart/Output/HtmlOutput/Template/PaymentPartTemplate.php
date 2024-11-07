@@ -107,7 +107,7 @@ class PaymentPartTemplate
 #qr-bill-receipt {
     box-sizing: border-box;
     width: 62mm;
-    border-right: 0.2mm solid black;
+    border-right: 0.75pt solid black;
     padding-left: 5mm;
     padding-top: 5mm;
     vertical-align: top;

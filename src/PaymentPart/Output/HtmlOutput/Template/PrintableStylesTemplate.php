@@ -35,10 +35,6 @@ EOT;
     left: -23mm;
 }
 
-#qr-bill-receipt {
-    border-right-style: dashed;
-}
-
 #qr-bill-receipt:after {
     transform: rotate(90deg);
     display: inline-block;
@@ -46,7 +42,7 @@ EOT;
     position: relative;
     font-size: 16pt;
     top: -95mm;
-    left: 54.5mm;
+    left: 54.2mm;
 }
 EOT;
 
