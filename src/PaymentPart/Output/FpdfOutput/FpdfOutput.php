@@ -54,21 +54,14 @@ final class FpdfOutput extends AbstractOutput
     private const LINE_SPACING_PAYMENT_PART = 4.8;
     private float $amountLS = 0;
 
-    private Fpdf|Fpdi $fpdf;
-    private float $offsetX;
-    private float $offsetY;
-
     public function __construct(
         QrBill $qrBill,
         string $language,
-        Fpdf|Fpdi $fpdf,
-        float $offsetX = 0,
-        float $offsetY = 0
+        private Fpdf|Fpdi $fpdf,
+        private float $offsetX = 0,
+        private float $offsetY = 0
     ) {
         parent::__construct($qrBill, $language);
-        $this->fpdf = $fpdf;
-        $this->offsetX = $offsetX;
-        $this->offsetY = $offsetY;
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
     }
 

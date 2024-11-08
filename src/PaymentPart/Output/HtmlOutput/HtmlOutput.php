@@ -156,7 +156,7 @@ final class HtmlOutput extends AbstractOutput
 
     private function getContentElement(FurtherInformation|Title|Text|Placeholder $element): string
     {
-        return match (get_class($element)) {
+        return match ($element::class) {
             FurtherInformation::class => $this->getFurtherInformationElement($element),
             Title::class => $this->getTitleElement($element),
             Text::class => $this->getTextElement($element),

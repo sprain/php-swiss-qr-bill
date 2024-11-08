@@ -9,7 +9,7 @@ final class DisplayOptions
     private bool $positionScissorsAtBottom = false;
     private bool $displayTextDownArrows = false;
     private bool $displayText = true;
-    private string $lineStyle = LineStyle::SOLID;
+    private LineStyle $lineStyle = LineStyle::SOLID;
 
     public function isPrintable(): bool
     {
@@ -64,7 +64,7 @@ final class DisplayOptions
         return $this->displayText;
     }
 
-    public function getLineStyle(): string
+    public function getLineStyle(): LineStyle
     {
         return $this->lineStyle;
     }
@@ -90,9 +90,9 @@ final class DisplayOptions
 /**
  * @internal
  */
-final class LineStyle
+enum LineStyle
 {
-    public const SOLID = 'SOLID';
-    public const DASHED = 'DASHED';
-    public const NONE = 'NONE';
+    case SOLID;
+    case DASHED;
+    case NONE;
 }

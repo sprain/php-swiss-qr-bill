@@ -57,21 +57,14 @@ final class TcPdfOutput extends AbstractOutput
     private const LINE_SPACING_RECEIPT = 3.5;
     private const LINE_SPACING_PAYMENT_PART = 4.8;
 
-    private TCPDF|Fpdi $tcPdf;
-    private float $offsetX;
-    private float $offsetY;
-
     public function __construct(
         QrBill $qrBill,
         string $language,
-        TCPDF|Fpdi $tcPdf,
-        float $offsetX = 0,
-        float $offsetY = 0
+        private TCPDF|Fpdi $tcPdf,
+        private float $offsetX = 0,
+        private float $offsetY = 0
     ) {
         parent::__construct($qrBill, $language);
-        $this->tcPdf = $tcPdf;
-        $this->offsetX = $offsetX;
-        $this->offsetY = $offsetY;
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG);
     }
 

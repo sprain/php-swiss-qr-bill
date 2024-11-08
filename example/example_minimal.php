@@ -51,7 +51,7 @@ $qrBill->setPaymentReference(
 try {
     $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.png');
     $qrBill->getQrCode()->writeFile(__DIR__ . '/qr.svg');
-} catch (Exception $e) {
+} catch (Exception) {
     foreach ($qrBill->getViolations() as $violation) {
         print $violation->getMessage()."\n";
     }

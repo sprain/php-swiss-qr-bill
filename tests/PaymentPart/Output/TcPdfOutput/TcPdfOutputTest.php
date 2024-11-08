@@ -124,10 +124,6 @@ final class TcPdfOutputTest extends TestCase
         $pattern = '/stream(.*?)endstream/s';
         preg_match($pattern, $fileContents, $matches);
 
-        if (isset($matches[1])) {
-            return $matches[1];
-        }
-
-        return null;
+        return $matches[1] ?? null;
     }
 }

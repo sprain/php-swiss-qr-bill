@@ -29,17 +29,17 @@ final class FpdfOutputTest extends TestCase
             [
                 'layout' => (new DisplayOptions())->setPrintable(false),
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.pdf'
+                'file' => dirname(__DIR__, 3) . '/TestData/FpdfOutput/' . $name . '.pdf'
             ],
             [
                 'layout' => (new DisplayOptions())->setPrintable(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
+                'file' => dirname(__DIR__, 3) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
             ],
             [
                 'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
-                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.scissors.pdf'
+                'file' => dirname(__DIR__, 3) . '/TestData/FpdfOutput/' . $name . '.scissors.pdf'
             ],
             [
                 'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true)->setPositionScissorsAtBottom(true),
@@ -181,11 +181,7 @@ final class FpdfOutputTest extends TestCase
         // Extract actual pdf content and ignore all meta data which may differ in different versions of Fpdf
         $pattern = '/stream(.*?)endstream/s';
         preg_match($pattern, $fileContents, $matches);
-
-        if (isset($matches[1])) {
-            return $matches[1];
-        }
-        return null;
+        return $matches[1] ?? null;
     }
 
     private function instantiateFpdf($withMemImageSupport = null, $withBundledTrait = null): Fpdf

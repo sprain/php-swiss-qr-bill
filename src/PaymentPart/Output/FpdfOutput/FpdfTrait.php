@@ -15,7 +15,7 @@ trait FpdfTrait
      */
     public function swissQrBillSetDash(float $black = 0, ?float $white = null): void
     {
-        $white = $white === null ? $black : $white;
+        $white ??= $black;
 
         $s = $black > 0
             ? sprintf('[%.3F %.3F] 0 d', $black * $this->k, $white * $this->k)

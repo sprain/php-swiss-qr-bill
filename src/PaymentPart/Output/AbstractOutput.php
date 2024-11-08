@@ -12,15 +12,11 @@ use Sprain\SwissQrBill\QrCode\QrCode;
 
 abstract class AbstractOutput implements OutputInterface
 {
-    protected QrBill $qrBill;
-    protected string $language;
     protected DisplayOptions $displayOptions;
     protected string $qrCodeImageFormat;
 
-    public function __construct(QrBill $qrBill, string $language)
+    public function __construct(protected QrBill $qrBill, protected string $language)
     {
-        $this->qrBill = $qrBill;
-        $this->language = $language;
         $this->displayOptions = new DisplayOptions();
         $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }

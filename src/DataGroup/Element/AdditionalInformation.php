@@ -14,24 +14,19 @@ final class AdditionalInformation implements QrCodeableInterface, SelfValidatabl
 
     public const TRAILER_EPD = 'EPD';
 
-    /**
-     * Unstructured information can be used to indicate the payment purpose
-     * or for additional textual information about payments with a structured reference.
-     */
-    private ?string $message;
-
-    /**
-     * Bill information contains coded information for automated booking of the payment.
-     * The data is not forwarded with the payment.
-     */
-    private ?string $billInformation;
-
     private function __construct(
-        ?string $message,
-        ?string $billInformation
-    ) {
-        $this->message = $message;
-        $this->billInformation = $billInformation;
+        /**
+         * Unstructured information can be used to indicate the payment purpose
+         * or for additional textual information about payments with a structured reference.
+         */
+        private ?string $message,
+        /**
+         * Bill information contains coded information for automated booking of the payment.
+         * The data is not forwarded with the payment.
+         */
+        private ?string $billInformation
+    )
+    {
     }
 
     public static function create(
