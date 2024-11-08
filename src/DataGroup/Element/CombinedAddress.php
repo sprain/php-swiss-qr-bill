@@ -16,35 +16,30 @@ class CombinedAddress extends Address implements AddressInterface, SelfValidatab
 
     public const ADDRESS_TYPE = 'K';
 
-    /**
-     * Name or company
-     */
-    private string $name;
-
-    /**
-     * Address line 1
-     *
-     * Street and building number or P.O. Box
-     */
-    private ?string $addressLine1;
-
-    /**
-     * Address line 2
-     *
-     * Postal code and town
-     */
-    private string $addressLine2;
-
-    /**
-     * Country (ISO 3166-1 alpha-2)
-     */
-    private string $country;
-
     private function __construct(
-        string $name,
-        ?string $addressLine1,
-        string $addressLine2,
-        string $country
+        /**
+         * Name or company
+         */
+        private string $name,
+
+        /**
+         * Address line 1
+         *
+         * Street and building number or P.O. Box
+         */
+        private ?string $addressLine1,
+
+        /**
+         * Address line 2
+         *
+         * Postal code and town
+         */
+        private string $addressLine2,
+
+        /**
+         * Country (ISO 3166-1 alpha-2)
+         */
+        private string $country
     ) {
         $this->name = self::normalizeString($name);
         $this->addressLine1 = self::normalizeString($addressLine1);

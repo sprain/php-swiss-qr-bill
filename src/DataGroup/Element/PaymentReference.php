@@ -20,15 +20,18 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
     public const TYPE_SCOR = 'SCOR';
     public const TYPE_NON = 'NON';
 
-    private function __construct(/**
-     * Reference type
-     */
-    private string $type, /**
-     * Structured reference number
-     * Either a QR reference or a Creditor Reference (ISO 11649)
-     */
-    private ?string $reference)
-    {
+    private function __construct(
+        /**
+         * Reference type
+         */
+        private readonly string $type,
+
+        /**
+         * Structured reference number
+         * Either a QR reference or a Creditor Reference (ISO 11649)
+         */
+        private ?string $reference
+    ) {
         $this->handleWhiteSpaceInReference();
     }
 

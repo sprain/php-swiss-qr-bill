@@ -20,18 +20,20 @@ final class Header implements QrCodeableInterface, SelfValidatableInterface
         /**
          * Unambiguous indicator for the Swiss QR code.
          */
-        private string $qrType,
+        private readonly string $qrType,
+
         /**
          * Version of the specifications (Implementation Guidelines) in use on
          * the date on which the Swiss QR code was created.
          * The first two positions indicate the main version, the following the
          * two positions the sub-version ("0200" for version 2.0).
          */
-        private string $version,
+        private readonly string $version,
+
         /**
          * Character set code
          */
-        private int $coding
+        private readonly int $coding
     )
     {
     }

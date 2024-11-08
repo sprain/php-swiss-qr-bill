@@ -57,9 +57,9 @@ final class FpdfOutput extends AbstractOutput
     public function __construct(
         QrBill $qrBill,
         string $language,
-        private Fpdf|Fpdi $fpdf,
-        private float $offsetX = 0,
-        private float $offsetY = 0
+        private readonly Fpdf|Fpdi $fpdf,
+        private readonly float $offsetX = 0,
+        private readonly float $offsetY = 0
     ) {
         parent::__construct($qrBill, $language);
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
