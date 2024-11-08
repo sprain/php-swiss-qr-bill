@@ -14,8 +14,8 @@ abstract class AbstractOutput implements OutputInterface
 {
     protected QrBill $qrBill;
     protected string $language;
-    protected DisplayOptions $displayOptions;
     protected string $qrCodeImageFormat;
+    private DisplayOptions $displayOptions;
 
     public function __construct(QrBill $qrBill, string $language)
     {
