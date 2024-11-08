@@ -24,7 +24,8 @@
         "phpstan/phpstan": "^1.11-dev",
         "setasign/fpdi": "^2.3.5",
         "setasign/fpdf": "^1.8.2",
-        "tecnickcom/tcpdf": "^6.3.2"
+        "tecnickcom/tcpdf": "^6.3.2",
+        "rector/rector": "^1.2"
     },
     "scripts": {
         "cs:fix": "vendor/bin/php-cs-fixer fix --verbose",
