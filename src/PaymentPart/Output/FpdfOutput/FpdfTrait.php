@@ -3,8 +3,7 @@
 namespace Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
 /**
- * @internal DO NOT USE IT. Its purpose is only for the Swiss QR Bill library. Name and/or
- * signature may change without any notification
+ * @internal
  */
 trait FpdfTrait
 {
