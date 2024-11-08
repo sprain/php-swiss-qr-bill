@@ -2,16 +2,6 @@
 
 namespace Sprain\SwissQrBill\PaymentPart\Output;
 
-/**
- * @internal
- */
-final class LineStyle
-{
-    public const SOLID = 'SOLID';
-    public const DASHED = 'DASHED';
-    public const NONE = 'NONE';
-}
-
 final class DisplayOptions
 {
     private bool $isPrintable = false;
@@ -95,4 +85,14 @@ final class DisplayOptions
             $this->displayTextDownArrows = false;
         }
     }
+}
+
+/**
+ * @internal
+ */
+final class LineStyle
+{
+    public const SOLID = 'SOLID';
+    public const DASHED = 'DASHED';
+    public const NONE = 'NONE';
 }
