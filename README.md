@@ -79,3 +79,14 @@ The repository contains the official specifications the library is based on:
 
 For more official information see
 - [https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/qr-bill.html](https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/qr-bill.html)
+
+## For contributors of this libray
+
+How to generate new test data:
+
+1. Set `$regenerateReferenceFiles = true` in `TestQrBillCreatorTrait`
+2. `composer update --prefer-lowest`
+3. `vendor/bin/phpunit` – ignore failing tests in `testQrFile`
+4. `composer update`
+5. `vendor/bin/phpunit` – there should be no more errors
+6. Set `$regenerateReferenceFiles = false` in `TestQrBillCreatorTrait`
