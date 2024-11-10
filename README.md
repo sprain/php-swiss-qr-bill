@@ -64,12 +64,12 @@ In addition, a minor version will always be published if any visible change in t
 
 ### PHP version support
 
-This library supports a PHP version as long as it accounts for at least 10% [of current installations](https://packagist.org/packages/sprain/swiss-qr-bill/php-stats).
+This library supports a PHP version as long as it accounts for at least approximately 10% [of current installations](https://packagist.org/packages/sprain/swiss-qr-bill/php-stats).
 
 ### Depdendency support
 
 Older versions of dependencies are supported as long as they do not hinder further development or account for at least
-10% of current installations of the corresponding dependency.
+approximately 10% of current installations of the corresponding dependency.
 
 ## Support the project
 
