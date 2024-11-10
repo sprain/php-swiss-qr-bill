@@ -18,8 +18,7 @@ final class CreditorInformation implements QrCodeableInterface, SelfValidatableI
          * IBAN or QR-IBAN of the creditor
          */
         private string $iban
-    )
-    {
+    ) {
         $this->iban = StringModifier::stripWhitespace($iban);
     }
 

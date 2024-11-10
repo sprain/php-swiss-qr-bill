@@ -25,8 +25,7 @@ final class AdditionalInformation implements QrCodeableInterface, SelfValidatabl
          * The data is not forwarded with the payment.
          */
         private ?string $billInformation
-    )
-    {
+    ) {
     }
 
     public static function create(

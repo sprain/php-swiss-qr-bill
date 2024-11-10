@@ -34,8 +34,7 @@ final class Header implements QrCodeableInterface, SelfValidatableInterface
          * Character set code
          */
         private readonly int $coding
-    )
-    {
+    ) {
     }
 
     public static function create(string $qrType, string $version, int $coding): self

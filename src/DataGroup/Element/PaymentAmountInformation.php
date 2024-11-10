@@ -25,8 +25,7 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
          * The payment amount due
          */
         private readonly ?float $amount
-    )
-    {
+    ) {
         $this->currency = strtoupper($currency);
     }
 
