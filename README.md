@@ -68,7 +68,7 @@ This library supports a PHP version as long as it accounts for at least 10% [of 
 
 ### Depdendency support
 
-Older versions of dependencies are supported as long as they do not hinder further development or accounts for at least
+Older versions of dependencies are supported as long as they do not hinder further development or account for at least
 10% of current installations of the corresponding dependency.
 
 ## Support the project
