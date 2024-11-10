@@ -13,7 +13,6 @@ use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PrintableStylesTem
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TextElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 final class HtmlOutput extends AbstractOutput

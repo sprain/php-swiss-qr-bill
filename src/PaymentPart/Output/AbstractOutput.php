@@ -12,8 +12,8 @@ use Sprain\SwissQrBill\QrCode\QrCode;
 
 abstract class AbstractOutput implements OutputInterface
 {
-    protected DisplayOptions $displayOptions;
     protected string $qrCodeImageFormat;
+    private DisplayOptions $displayOptions;
 
     public function __construct(protected QrBill $qrBill, protected string $language)
     {
