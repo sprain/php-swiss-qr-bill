@@ -124,9 +124,28 @@ final class HtmlOutput extends AbstractOutput
 
     private function hideSeparatorContentIfPrintable(string $paymentPart): string
     {
+        $layout = $this->getDisplayOptions();
         $printableStyles = '';
-        if ($this->isPrintable()) {
+        if ($layout->isPrintable()) {
+            // draw nothing
             $printableStyles = PrintableStylesTemplate::TEMPLATE;
+        } else {
+            if ($layout->isDisplayScissors()) {
+                // draw scissors
+                $printableStyles = PrintableStylesTemplate::TEMPLATE_SCISSORS;
+                if ($layout->isPositionScissorsAtBottom()) {
+                    // draw vertical scissors at bottom
+                    $printableStyles .= PHP_EOL.PHP_EOL. PrintableStylesTemplate::TEMPLATE_VERTICAL_SCISSORS_DOWN;
+                }
+            }
+
+            if (!$layout->isDisplayText()) {
+                // hide text
+                $printableStyles .= PHP_EOL.PHP_EOL. PrintableStylesTemplate::TEMPLATE_HIDE_TEXT;
+            } elseif ($layout->isDisplayTextDownArrows()) {
+                // text not hidden and draw text arrows
+                $printableStyles .= PHP_EOL.PHP_EOL. PrintableStylesTemplate::TEMPLATE_TEXT_DOWN_ARROWS;
+            }
         }
 
         $paymentPart = str_replace('{{ printable-content }}', $printableStyles, $paymentPart);

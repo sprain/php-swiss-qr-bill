@@ -7,9 +7,13 @@ use PHPUnit\Framework\TestCase;
 use setasign\Fpdi\Fpdi;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput;
+use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
+use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfTrait;
+use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\MissingTraitException;
 
 final class FpdiOutputTest extends TestCase
 {
@@ -22,14 +26,29 @@ final class FpdiOutputTest extends TestCase
     {
         $variations = [
             [
-                'printable' => false,
+                'layout' => (new DisplayOptions())->setPrintable(false),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.pdf'
             ],
             [
-                'printable' => true,
+                'layout' => (new DisplayOptions())->setPrintable(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.print.pdf'
+            ],
+            [
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true),
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => dirname(dirname(dirname(__DIR__))) . '/TestData/FpdfOutput/' . $name . '.scissors.pdf'
+            ],
+            [
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true)->setPositionScissorsAtBottom(true),
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.scissorsdown.pdf'
+            ],
+            [
+                'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayTextDownArrows(true),
+                'format' => QrCode::FILE_FORMAT_PNG,
+                'file' => __DIR__ . '/../../../TestData/FpdfOutput/' . $name . '.svg.textarrows.pdf'
             ]
         ];
 
@@ -41,19 +60,41 @@ final class FpdiOutputTest extends TestCase
 
             $output = new FpdfOutput($qrBill, 'en', $fpdf);
             $output
-                ->setPrintable($variation['printable'])
+                ->setDisplayOptions($variation['layout'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
 
             if ($this->regenerateReferenceFiles) {
                 $fpdf->Output($file, 'F');
             }
-            
+
             $contents = $this->getActualPdfContents($fpdf->Output($file, 'S'));
 
             $this->assertNotNull($contents);
             $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
         }
+    }
+
+    public function testItThrowsMissingTraitException(): void
+    {
+        $this->expectException(MissingTraitException::class);
+
+        $qrBill = $this->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditor',
+            'paymentAmountInformation',
+            'paymentReferenceQr'
+        ]);
+
+        $fpdf = $this->instantiateFpdi(null, false);
+        $fpdf->AddPage();
+
+        $output = new FpdfOutput($qrBill, 'en', $fpdf);
+        $output
+            ->setDisplayOptions((new DisplayOptions())->setPrintable(false)->setDisplayScissors(true))
+            ->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG)
+            ->getPaymentPart();
     }
 
     public function testItThrowsSvgNotSupportedException(): void
@@ -89,15 +130,31 @@ final class FpdiOutputTest extends TestCase
         return null;
     }
 
-    private function instantiateFpdi($withMemImageSupport = null): Fpdi
+    private function instantiateFpdi($withMemImageSupport = null, $withBundledTrait = null): Fpdi
     {
         if ($withMemImageSupport === null) {
             $withMemImageSupport = !ini_get('allow_url_fopen');
         }
 
+        if ($withBundledTrait === null) {
+            $withBundledTrait = true;
+        }
+
         if ($withMemImageSupport) {
+            if ($withBundledTrait) {
+                return new class('P', 'mm', 'A4') extends Fpdi {
+                    use MemImageTrait;
+                    use FpdfTrait;
+                };
+            }
             return new class('P', 'mm', 'A4') extends Fpdi {
                 use MemImageTrait;
+            };
+        }
+
+        if ($withBundledTrait) {
+            return new class('P', 'mm', 'A4') extends Fpdi {
+                use FpdfTrait;
             };
         }
 

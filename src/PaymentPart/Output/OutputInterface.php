@@ -12,9 +12,9 @@ interface OutputInterface
 
     public function getPaymentPart(): ?string;
 
-    public function setPrintable(bool $printable): static;
+    public function setDisplayOptions(DisplayOptions $displayOptions): static;
 
-    public function isPrintable(): bool;
+    public function getDisplayOptions(): DisplayOptions;
 
     public function setQrCodeImageFormat(string $imageFormat): static;
 

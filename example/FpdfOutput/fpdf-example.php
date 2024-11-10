@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use Sprain\SwissQrBill as QrBill;
+use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -16,15 +17,31 @@ $fpdf = new \Fpdf\Fpdf('P', 'mm', 'A4');
 //     use \Fpdf\Traits\MemoryImageSupport\MemImageTrait;
 // };
 
+// In case you want to draw scissors and dashed lines, use this way to create your FPDF instance:
+// $fpdf = new class('P', 'mm', 'A4') extends \Fpdf\Fpdf {
+//    use \Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfTrait;
+// };
+
 $fpdf->AddPage();
 
 // 3. Create a full payment part for FPDF
 $output = new QrBill\PaymentPart\Output\FpdfOutput\FpdfOutput($qrBill, 'en', $fpdf);
+
+// 4. Optional, set layout options
+$displayOptions = new DisplayOptions();
+$displayOptions
+    ->setPrintable(false) // true to remove lines for printing on a perforated stationery
+    ->setDisplayTextDownArrows(false) // true to show arrows next to separation text, if shown
+    ->setDisplayScissors(false) // true to show scissors instead of separation text
+    ->setPositionScissorsAtBottom(false) // true to place scissors at the bottom, if shown
+;
+
+// 5. Generate the output
 $output
-    ->setPrintable(false)
+    ->setDisplayOptions($displayOptions)
     ->getPaymentPart();
 
-// 4. For demo purposes, let's save the generated example in a file
+// 6. For demo purposes, let's save the generated example in a file
 $examplePath = __DIR__ . "/fpdf_example.pdf";
 $fpdf->Output($examplePath, 'F');
 

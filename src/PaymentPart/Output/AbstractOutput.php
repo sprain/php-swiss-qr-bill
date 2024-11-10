@@ -4,7 +4,6 @@ namespace Sprain\SwissQrBill\PaymentPart\Output;
 
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\FurtherInformation;
-use Sprain\SwissQrBill\PaymentPart\Output\Element\OutputElementInterface;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Placeholder;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Text;
 use Sprain\SwissQrBill\PaymentPart\Output\Element\Title;
@@ -15,14 +14,14 @@ abstract class AbstractOutput implements OutputInterface
 {
     protected QrBill $qrBill;
     protected string $language;
-    protected bool $printable;
     protected string $qrCodeImageFormat;
+    private DisplayOptions $displayOptions;
 
     public function __construct(QrBill $qrBill, string $language)
     {
         $this->qrBill = $qrBill;
         $this->language = $language;
-        $this->printable = false;
+        $this->displayOptions = new DisplayOptions();
         $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }
 
@@ -36,16 +35,36 @@ abstract class AbstractOutput implements OutputInterface
         return $this->language;
     }
 
+    /**
+     * @deprecated Will be removed in next major release. Use setDisplayOptions() instead.
+     */
     public function setPrintable(bool $printable): static
     {
-        $this->printable = $printable;
+        $this->displayOptions->setPrintable($printable);
 
         return $this;
     }
 
+    /**
+     * @deprecated Will be removed in next major release. Use getDisplayOptions() instead.
+     */
     public function isPrintable(): bool
     {
-        return $this->printable;
+        return $this->displayOptions->isPrintable();
+    }
+
+    public function setDisplayOptions(DisplayOptions $displayOptions): static
+    {
+        $this->displayOptions = $displayOptions;
+
+        return $this;
+    }
+
+    public function getDisplayOptions(): DisplayOptions
+    {
+        $this->displayOptions->consolidate();
+
+        return $this->displayOptions;
     }
 
     public function setQrCodeImageFormat(string $fileExtension): static

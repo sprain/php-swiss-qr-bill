@@ -324,6 +324,16 @@ trait TestQrBillCreatorTrait
         ));
     }
 
+    public function utf8SpecialCharsUltimateDebtor(QrBill &$qrBill)
+    {
+        $qrBill->setUltimateDebtor(CombinedAddress::create(
+            'Jôachim Kräutłą',
+            'Ewigérmeisterstrasse 20',
+            '80331 München',
+            'DE'
+        ));
+    }
+
     public function invalidUltimateDebtor(QrBill &$qrBill)
     {
         $qrBill->setUltimateDebtor($this->invalidAddress());
