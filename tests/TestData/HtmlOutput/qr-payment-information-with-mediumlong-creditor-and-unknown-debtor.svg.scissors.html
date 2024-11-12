@@ -42,14 +42,14 @@
 
 #qr-bill-payment-part h2 {
     font-size: 8pt !important;
-    line-height: 11pt !important;    
+    line-height: 11pt !important;
     margin-top: 11pt !important;
     color: #000 !important;
 }
 
 #qr-bill-receipt h2 {
     font-size: 6pt !important;
-    line-height: 8pt !important;    
+    line-height: 8pt !important;
     margin-top: 8pt !important;
     color: #000 !important;
 }
@@ -172,6 +172,10 @@
     margin-top: -11pt;
 }
 
+#qr-bill-scissors {
+    float: right;
+}
+
 #qr-bill-separate-info {
     border-bottom-style: dashed;
 }
@@ -188,14 +192,15 @@
     left: -23mm;
 }
 
-#qr-bill-receipt:after {
+#qr-bill-scissors:after {
     transform: rotate(90deg);
     display: inline-block;
     content: '\2702';
-    position: fixed;
+    position: relative;
+    font-weight: normal;
     font-size: 16pt;
-    top: 12.5mm;
-    left: 61.1mm;
+    top: 0;
+    left: 2.5mm;
 }
 
 #qr-bill-separate-info-text {
@@ -209,7 +214,7 @@
     </tr>
     <tr>
         <td id="qr-bill-receipt">
-            <h1>Receipt</h1>
+            <h1>Receipt<span id="qr-bill-scissors"></span></h1>
             <div id="qr-bill-information-receipt">
                 <h2>Account / Payable to</h2><p>CH44 3199 9123 0008 8901 2<br />
 Heaps of Characters International Trading Company of Switzerland GmbH<br />

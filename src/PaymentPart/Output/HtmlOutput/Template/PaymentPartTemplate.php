@@ -49,14 +49,14 @@ class PaymentPartTemplate
 
 #qr-bill-payment-part h2 {
     font-size: 8pt !important;
-    line-height: 11pt !important;    
+    line-height: 11pt !important;
     margin-top: 11pt !important;
     color: #000 !important;
 }
 
 #qr-bill-receipt h2 {
     font-size: 6pt !important;
-    line-height: 8pt !important;    
+    line-height: 8pt !important;
     margin-top: 8pt !important;
     color: #000 !important;
 }
@@ -179,6 +179,10 @@ class PaymentPartTemplate
     margin-top: -11pt;
 }
 
+#qr-bill-scissors {
+    float: right;
+}
+
 {{ printable-content }}
 </style>
 
@@ -188,7 +192,7 @@ class PaymentPartTemplate
     </tr>
     <tr>
         <td id="qr-bill-receipt">
-            <h1>{{ text.receipt }}</h1>
+            <h1>{{ text.receipt }}<span id="qr-bill-scissors"></span></h1>
             <div id="qr-bill-information-receipt">
                 {{ information-content-receipt }}
             </div>

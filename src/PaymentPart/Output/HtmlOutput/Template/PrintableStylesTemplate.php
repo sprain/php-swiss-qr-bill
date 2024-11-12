@@ -13,6 +13,10 @@ class PrintableStylesTemplate
     display: none;
 }
 
+#qr-bill-scissors {
+    display: none;
+}
+
 #qr-bill-receipt {
     border-right: 0;
 }
@@ -35,26 +39,28 @@ EOT;
     left: -23mm;
 }
 
-#qr-bill-receipt:after {
+#qr-bill-scissors:after {
     transform: rotate(90deg);
     display: inline-block;
     content: '\\2702';
-    position: fixed;
+    position: relative;
+    font-weight: normal;
     font-size: 16pt;
-    top: 12.5mm;
-    left: 61.1mm;
+    top: 0;
+    left: 2.5mm;
 }
 EOT;
 
     public const TEMPLATE_VERTICAL_SCISSORS_DOWN = <<<EOT
-#qr-bill-receipt:after {
+#qr-bill-scissors:after {
     transform: rotate(-90deg);
     display: inline-block;
     content: '\\2702';
-    position: fixed;
+    position: relative;
+    font-weight: normal;
     font-size: 16pt;
-    top: 91.8mm;
-    left: 61.7mm;
+    top: 78mm;
+    left: 3.3mm;
 }
 EOT;
 
