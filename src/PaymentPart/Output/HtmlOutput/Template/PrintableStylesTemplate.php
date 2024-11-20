@@ -48,7 +48,7 @@ EOT;
     font-size: 16pt;
     line-height: 1mm;
     top: 2mm;
-    left: -1.1mm;
+    left: -1.4mm;
 }
 EOT;
 
@@ -62,7 +62,7 @@ EOT;
     font-size: 16pt;
     line-height: 1mm;
     top: 80mm;
-    left: -0.8mm;
+    left: -0.5mm;
 }
 EOT;
 
