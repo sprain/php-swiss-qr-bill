@@ -46,8 +46,9 @@ EOT;
     position: relative;
     font-weight: normal;
     font-size: 16pt;
-    top: 0;
-    left: 2.5mm;
+    line-height: 1mm;
+    top: 2mm;
+    left: -1.1mm;
 }
 EOT;
 
@@ -59,8 +60,9 @@ EOT;
     position: relative;
     font-weight: normal;
     font-size: 16pt;
-    top: 78mm;
-    left: 3.3mm;
+    line-height: 1mm;
+    top: 80mm;
+    left: -0.8mm;
 }
 EOT;
 

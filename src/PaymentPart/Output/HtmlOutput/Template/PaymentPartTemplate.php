@@ -181,6 +181,10 @@ class PaymentPartTemplate
 
 #qr-bill-scissors {
     float: right;
+    width: 1mm;
+    line-height: 1mm;
+    font-size: 16px;
+    font-weight: normal;
 }
 
 {{ printable-content }}
