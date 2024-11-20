@@ -180,11 +180,13 @@ class PaymentPartTemplate
 }
 
 #qr-bill-scissors {
+    display: none;
     float: right;
     width: 1mm;
     line-height: 1mm;
-    font-size: 16px;
+    font-size: 22px;
     font-weight: normal;
+    position: relative;
 }
 
 {{ printable-content }}
@@ -196,7 +198,7 @@ class PaymentPartTemplate
     </tr>
     <tr>
         <td id="qr-bill-receipt">
-            <h1>{{ text.receipt }}<span id="qr-bill-scissors"></span></h1>
+            <h1>{{ text.receipt }}<span id="qr-bill-scissors">&#9986;</span></h1>
             <div id="qr-bill-information-receipt">
                 {{ information-content-receipt }}
             </div>
