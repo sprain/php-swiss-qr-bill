@@ -25,8 +25,6 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 final class QrBill implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
-
-    private Header $header;
     private ?CreditorInformation $creditorInformation = null;
     private ?AddressInterface $creditor = null;
     private ?PaymentAmountInformation $paymentAmountInformation = null;
@@ -40,9 +38,8 @@ final class QrBill implements SelfValidatableInterface
     /** @var AlternativeScheme[] */
     private array $alternativeSchemes = [];
 
-    private function __construct(Header $header)
+    private function __construct(private Header $header)
     {
-        $this->header = $header;
     }
 
     public static function create(): self

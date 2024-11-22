@@ -13,13 +13,12 @@ final class CreditorInformation implements QrCodeableInterface, SelfValidatableI
 {
     use SelfValidatableTrait;
 
-    /**
-     * IBAN or QR-IBAN of the creditor
-     */
-    private string $iban;
-
-    private function __construct(string $iban)
-    {
+    private function __construct(
+        /**
+         * IBAN or QR-IBAN of the creditor
+         */
+        private string $iban
+    ) {
         $this->iban = StringModifier::stripWhitespace($iban);
     }
 

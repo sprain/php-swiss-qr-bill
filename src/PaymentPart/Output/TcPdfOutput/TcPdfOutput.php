@@ -56,21 +56,14 @@ final class TcPdfOutput extends AbstractOutput
     private const LINE_SPACING_RECEIPT = 3.5;
     private const LINE_SPACING_PAYMENT_PART = 4.8;
 
-    private TCPDF|Fpdi $tcPdf;
-    private float $offsetX;
-    private float $offsetY;
-
     public function __construct(
         QrBill $qrBill,
         string $language,
-        TCPDF|Fpdi $tcPdf,
-        float $offsetX = 0,
-        float $offsetY = 0
+        private TCPDF|Fpdi $tcPdf,
+        private float $offsetX = 0,
+        private float $offsetY = 0
     ) {
         parent::__construct($qrBill, $language);
-        $this->tcPdf = $tcPdf;
-        $this->offsetX = $offsetX;
-        $this->offsetY = $offsetY;
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG);
     }
 
@@ -254,16 +247,14 @@ final class TcPdfOutput extends AbstractOutput
                 $this->setX($xmiddle);
                 $this->tcPdf->StartTransform();
                 $this->tcPdf->Rotate(90);
-                $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
-                $this->tcPdf->StopTransform();
             } else {
                 $this->setY($y + 3);
                 $this->setX($xmiddle);
                 $this->tcPdf->StartTransform();
                 $this->tcPdf->Rotate(-90);
-                $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
-                $this->tcPdf->StopTransform();
             }
+            $this->tcPdf->Cell(0, 10, self::FONT_UNICODE_CHAR_SCISSORS, 0, 0, 'L', false, '', 0, false, 'C');
+            $this->tcPdf->StopTransform();
         }
 
         if ($layout->isDisplayText()) {
@@ -336,7 +327,6 @@ final class TcPdfOutput extends AbstractOutput
         $this->printMultiCell(
             str_replace('text.', '', $element->getText()),
             $isReceiptPart ? 54 : 0,
-            0,
             self::ALIGN_BELOW
         );
 
@@ -348,7 +338,6 @@ final class TcPdfOutput extends AbstractOutput
         $this->tcPdf->SetFont($this->getFont(), '', self::FONT_SIZE_FURTHER_INFORMATION);
         $this->printMultiCell(
             $element->getText(),
-            0,
             0,
             self::BORDER
         );
@@ -406,10 +395,9 @@ final class TcPdfOutput extends AbstractOutput
     private function printMultiCell(
         string $text,
         int $w = 0,
-        int $h = 0,
         int $nextLineAlign = 0
     ): void {
-        $this->tcPdf->MultiCell($w, $h, $text, self::BORDER, self::ALIGN_LEFT, false, $nextLineAlign);
+        $this->tcPdf->MultiCell($w, 0, $text, self::BORDER, self::ALIGN_LEFT, false, $nextLineAlign);
     }
 
     private function printLine(int $x1, int $y1, int $x2, int $y2): void

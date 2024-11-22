@@ -16,14 +16,12 @@ final class AlternativeScheme implements QrCodeableInterface, SelfValidatableInt
 {
     use SelfValidatableTrait;
 
-    /**
-     * Parameter character chain of the alternative scheme
-     */
-    private string $parameter;
-
-    private function __construct(string $parameter)
-    {
-        $this->parameter = $parameter;
+    private function __construct(
+        /**
+         * Parameter character chain of the alternative scheme
+         */
+        private string $parameter
+    ) {
     }
 
     public static function create(string $parameter): self
