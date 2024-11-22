@@ -24,9 +24,9 @@ final class TcPdfOutput extends AbstractOutput
     private const ALIGN_RIGHT = 'R';
     private const ALIGN_CENTER = 'C';
     private const FONT = 'Helvetica';
-    private const FONT_UNICODE = 'zapfdingbats';
-    private const FONT_UNICODE_CHAR_SCISSORS = '"';
-    private const FONT_UNICODE_CHAR_DOWN_ARROW = 't';
+    private const FONT_UNICODE = 'freeserif';
+    private const FONT_UNICODE_CHAR_SCISSORS = '✂';
+    private const FONT_UNICODE_CHAR_DOWN_ARROW = '▼';
 
     // Ratio
     private const LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
@@ -269,7 +269,8 @@ final class TcPdfOutput extends AbstractOutput
                 $yoffset = 5.5;
                 $this->tcPdf->SetFont(self::FONT_UNICODE, '', self::FONT_SIZE_DOWN_ARROW);
 
-                $arrows = str_pad('', 3, self::FONT_UNICODE_CHAR_DOWN_ARROW);
+                // length is 9 because char is multibyte. mb_str_pad is only available since PHP@8.3
+                $arrows = str_pad('', 9, self::FONT_UNICODE_CHAR_DOWN_ARROW);
 
                 $xstart = ($this->tcPdf->getPageWidth() / 2) - ($textWidth / 2);
                 $this->tcPdf->setXY($xstart - $arrowMargin, $y - $yoffset);
