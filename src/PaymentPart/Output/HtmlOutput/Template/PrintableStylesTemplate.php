@@ -35,26 +35,20 @@ EOT;
     left: -23mm;
 }
 
-#qr-bill-receipt:after {
-    transform: rotate(90deg);
+#qr-bill-scissors {
     display: inline-block;
-    content: '\\2702';
-    position: fixed;
-    font-size: 16pt;
-    top: 12.5mm;
-    left: 61.1mm;
+    transform: rotate(90deg);
+    top: 2mm;
+    left: 0.7mm;
 }
 EOT;
 
     public const TEMPLATE_VERTICAL_SCISSORS_DOWN = <<<EOT
-#qr-bill-receipt:after {
-    transform: rotate(-90deg);
+#qr-bill-scissors {
     display: inline-block;
-    content: '\\2702';
-    position: fixed;
-    font-size: 16pt;
-    top: 91.8mm;
-    left: 61.7mm;
+    transform: rotate(-90deg);
+    top: 80mm;
+    left: 1.0mm;
 }
 EOT;
 
