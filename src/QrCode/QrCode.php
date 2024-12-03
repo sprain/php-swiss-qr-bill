@@ -2,6 +2,8 @@
 
 namespace Sprain\SwissQrBill\QrCode;
 
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeEnlarge;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\Logo\Logo;
@@ -63,14 +65,14 @@ final class QrCode
         $data = $this->replaceUnsupportedCharacters($data, $unsupportedCharacterReplacements);
         $data = $this->cleanUnsupportedCharacters($data);
 
-        if (class_exists(ErrorCorrectionLevel\ErrorCorrectionLevelMedium::class)) {
+        if (class_exists(ErrorCorrectionLevelMedium::class)) {
             // Endroid 4.x
             $this->qrCode = BaseQrCode::create($data)
                 ->setEncoding(new Encoding('UTF-8'))
-                ->setErrorCorrectionLevel(new ErrorCorrectionLevel\ErrorCorrectionLevelMedium())
+                ->setErrorCorrectionLevel(new ErrorCorrectionLevelMedium())
                 ->setSize(self::PX_QR_CODE)
                 ->setMargin(0)
-                ->setRoundBlockSizeMode(new RoundBlockSizeMode\RoundBlockSizeModeEnlarge());
+                ->setRoundBlockSizeMode(new RoundBlockSizeModeEnlarge());
         } elseif (method_exists(BaseQrCode::class, 'create')) {
             // Endroid 5.x
             $this->qrCode = BaseQrCode::create($data)

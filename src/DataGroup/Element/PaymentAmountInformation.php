@@ -15,20 +15,18 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
     public const CURRENCY_CHF = 'CHF';
     public const CURRENCY_EUR = 'EUR';
 
-    /**
-     * The payment amount due
-     */
-    private ?float $amount;
+    private function __construct(
+        /**
+         * Payment currency code (ISO 4217)
+         */
+        private string $currency,
 
-    /**
-     * Payment currency code (ISO 4217)
-     */
-    private string $currency;
-
-    private function __construct(string $currency, ?float $amount)
-    {
+        /**
+         * The payment amount due
+         */
+        private readonly ?float $amount
+    ) {
         $this->currency = strtoupper($currency);
-        $this->amount = $amount;
     }
 
     public static function create(string $currency, ?float $amount = null): self

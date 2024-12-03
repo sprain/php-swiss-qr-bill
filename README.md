@@ -62,6 +62,15 @@ The beauty of open source software lies in the fact that everybody can benefit f
 
 In addition, a minor version will always be published if any visible change in the output of the qr code or the payment part takes place, even if it could be considered to be just a bugfix.
 
+### PHP version support
+
+This library supports a PHP version as long as it accounts for at least approximately 10% [of current installations](https://packagist.org/packages/sprain/swiss-qr-bill/php-stats).
+
+### Depdendency support
+
+Older versions of dependencies are supported as long as they do not hinder further development or account for at least
+approximately 10% of current installations of the corresponding dependency.
+
 ## Support the project
 
 * Do you like this project? [Consider a Github sponsorship.](https://github.com/sponsors/sprain)

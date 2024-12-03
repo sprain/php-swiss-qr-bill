@@ -4,7 +4,7 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "~8.0.0|~8.1.0|~8.2.0|~8.3.0",
+        "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0",
         "ext-dom": "*",
         "ext-bcmath": "*",
         "symfony/validator": "^4.4|^5.0|^6.0|^7.0",
@@ -25,7 +25,8 @@
         "phpstan/phpstan": "^1.11-dev",
         "setasign/fpdi": "^2.3.5",
         "setasign/fpdf": "^1.8.2",
-        "tecnickcom/tcpdf": "^6.3.2"
+        "tecnickcom/tcpdf": "^6.3.2",
+        "rector/rector": "^1.2"
     },
     "scripts": {
         "cs:fix": "vendor/bin/php-cs-fixer fix --verbose",

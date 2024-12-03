@@ -5,7 +5,6 @@ namespace Sprain\SwissQrBill\DataGroup\Element;
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
 use Sprain\SwissQrBill\DataGroup\Element\Abstracts\Address;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
-use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,45 +16,38 @@ final class StructuredAddress extends Address implements AddressInterface, SelfV
 
     public const ADDRESS_TYPE = 'S';
 
-    /**
-     * Name or company
-     */
-    private string $name;
-
-    /**
-     * Street / P.O. box
-     *
-     * May not include building or house number.
-     */
-    private ?string $street;
-
-    /**
-     * Building number
-     */
-    private ?string $buildingNumber;
-
-    /**
-     * Postal code without country code
-     */
-    private string $postalCode;
-
-    /**
-     * City
-     */
-    private string $city;
-
-    /**
-     * Country (ISO 3166-1 alpha-2)
-     */
-    private string $country;
-
     private function __construct(
-        string $name,
-        ?string $street,
-        ?string $buildingNumber,
-        string $postalCode,
-        string $city,
-        string $country
+        /**
+         * Name or company
+         */
+        private string $name,
+
+        /**
+         * Street / P.O. box
+         *
+         * May not include building or house number.
+         */
+        private ?string $street,
+
+        /**
+         * Building number
+         */
+        private ?string $buildingNumber,
+
+        /**
+         * Postal code without country code
+         */
+        private string $postalCode,
+
+        /**
+         * City
+         */
+        private string $city,
+
+        /**
+         * Country (ISO 3166-1 alpha-2)
+         */
+        private string $country
     ) {
         $this->name = self::normalizeString($name);
         $this->street = self::normalizeString($street);

@@ -20,22 +20,18 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
     public const TYPE_SCOR = 'SCOR';
     public const TYPE_NON = 'NON';
 
-    /**
-     * Reference type
-     */
-    private string $type;
+    private function __construct(
+        /**
+         * Reference type
+         */
+        private readonly string $type,
 
-    /**
-     * Structured reference number
-     * Either a QR reference or a Creditor Reference (ISO 11649)
-     */
-    private ?string $reference;
-
-    private function __construct(string $type, ?string $reference)
-    {
-        $this->type = $type;
-        $this->reference = $reference;
-
+        /**
+         * Structured reference number
+         * Either a QR reference or a Creditor Reference (ISO 11649)
+         */
+        private ?string $reference
+    ) {
         $this->handleWhiteSpaceInReference();
     }
 
@@ -56,14 +52,11 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
 
     public function getFormattedReference(): ?string
     {
-        switch ($this->type) {
-            case self::TYPE_QR:
-                return trim(strrev(chunk_split(strrev($this->reference), 5, ' ')));
-            case self::TYPE_SCOR:
-                return trim(chunk_split($this->reference, 4, ' '));
-            default:
-                return null;
-        }
+        return match ($this->type) {
+            self::TYPE_QR => trim(strrev(chunk_split(strrev($this->reference), 5, ' '))),
+            self::TYPE_SCOR => trim(chunk_split($this->reference, 4, ' ')),
+            default => null,
+        };
     }
 
     public function getQrCodeData(): array
