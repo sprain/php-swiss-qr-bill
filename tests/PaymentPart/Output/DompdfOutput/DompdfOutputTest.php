@@ -38,11 +38,11 @@ final class DompdfOutputTest extends TestCase
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => __DIR__ . '/../../../TestData/DompdfOutput/' . $name . $this->getCompact() . '.scissors.pdf'
             ],
-            /*[
+            [
                 'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true)->setPositionScissorsAtBottom(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
                 'file' => __DIR__ . '/../../../TestData/DompdfOutput/' . $name . $this->getCompact() . '.scissorsdown.pdf'
-            ],
+            ],/*
             [
                 'layout' => (new DisplayOptions())->setPrintable(false)->setDisplayTextDownArrows(true),
                 'format' => QrCode::FILE_FORMAT_PNG,
