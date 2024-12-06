@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
 
 final class CreditorInformationTest extends TestCase
 {
-    /**
-     * @dataProvider ibanProvider
-     */
+    #[DataProvider('ibanProvider')]
     public function testIban(int $numberOfViolations, string $value)
     {
         $creditorInformation = CreditorInformation::create(
@@ -19,7 +18,7 @@ final class CreditorInformationTest extends TestCase
         $this->assertSame($numberOfViolations, $creditorInformation->getViolations()->count());
     }
 
-    public function ibanProvider(): array
+    public static function ibanProvider(): array
     {
         return [
             [0, 'CH93 0076 2011 6238 5295 7'],
@@ -55,9 +54,7 @@ final class CreditorInformationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider qrIbanCheckProvider
-     */
+    #[DataProvider('qrIbanCheckProvider')]
     public function testContainsQrIban(bool $isQrIban, string $value): void
     {
         $creditorInformation = CreditorInformation::create(
@@ -67,7 +64,7 @@ final class CreditorInformationTest extends TestCase
         $this->assertSame($isQrIban, $creditorInformation->containsQrIban());
     }
 
-    public function qrIbanCheckProvider(): array
+    public static function qrIbanCheckProvider(): array
     {
         return [
             // normal valid IBANs
@@ -85,9 +82,7 @@ final class CreditorInformationTest extends TestCase
     }
 
 
-    /**
-     * @dataProvider formattedIbanProvider
-     */
+    #[DataProvider('formattedIbanProvider')]
     public function testFormattedIban(string $iban, string $formattedIban): void
     {
         $creditorInformation = CreditorInformation::create(
@@ -97,7 +92,7 @@ final class CreditorInformationTest extends TestCase
         $this->assertSame($formattedIban, $creditorInformation->getFormattedIban());
     }
 
-    public function formattedIbanProvider(): array
+    public static function formattedIbanProvider(): array
     {
         return [
             ['CH93 0076 2011 6238 5295 7', 'CH93 0076 2011 6238 5295 7'],

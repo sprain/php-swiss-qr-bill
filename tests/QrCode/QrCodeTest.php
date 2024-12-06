@@ -2,6 +2,7 @@
 
 namespace Sprain\Tests\SwissQrBill\QrCode;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 use Sprain\SwissQrBill\QrCode\QrCode;
@@ -11,9 +12,7 @@ final class QrCodeTest extends TestCase
 {
     use TestCompactSvgQrCodeTrait;
 
-    /**
-     * @dataProvider supportedExtensionsProvider
-     */
+    #[DataProvider('supportedExtensionsProvider')]
     public function testSupportedFileExtensions(string $extension): void
     {
         $qrCode = QrCode::create('This is a test code');
@@ -28,7 +27,7 @@ final class QrCodeTest extends TestCase
         unlink($testfile);
     }
 
-    public function supportedExtensionsProvider(): array
+    public static function supportedExtensionsProvider(): array
     {
         return [
             ['svg'],
@@ -36,9 +35,7 @@ final class QrCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider unsupportedExtensionsProvider
-     */
+    #[DataProvider('unsupportedExtensionsProvider')]
     public function testUnsupportedFileExtensions(?string $extension): void
     {
         $this->expectException(UnsupportedFileExtensionException::class);
@@ -47,7 +44,7 @@ final class QrCodeTest extends TestCase
         $qrCode->writeFile(__DIR__ . '/../TestData/testfile.' . $extension);
     }
 
-    public function unsupportedExtensionsProvider(): array
+    public static function unsupportedExtensionsProvider(): array
     {
         return [
             ['eps'],
@@ -58,9 +55,7 @@ final class QrCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataUriProvider
-     */
+    #[DataProvider('dataUriProvider')]
     public function testDataUri(string $code, string $dataUri, string $format): void
     {
         $qrCode = QrCode::create($code);
@@ -89,9 +84,7 @@ final class QrCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stringProvider
-     */
+    #[DataProvider('stringProvider')]
     public function testString(string $code, string $string, string $format): void
     {
         $qrCode = QrCode::create($code);
@@ -119,9 +112,7 @@ final class QrCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider replacementCharactersProvider
-     */
+    #[DataProvider('replacementCharactersProvider')]
     public function testItReplacesUnsupportedCharacters(string $providedString, array $replacements, string $expectedString): void
     {
         $qrCode = QrCode::create($providedString, null, $replacements);
@@ -132,7 +123,7 @@ final class QrCodeTest extends TestCase
         );
     }
 
-    public function replacementCharactersProvider(): array
+    public static function replacementCharactersProvider(): array
     {
         return [
             'replaceSpecificUnsupportedCharacters' => [
@@ -153,9 +144,7 @@ final class QrCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider unsupportedCharactersProvider
-     */
+    #[DataProvider('unsupportedCharactersProvider')]
     public function testItRemovesUnsupportedCharacters(string $providedString, string $expectedString): void
     {
         $qrCode = QrCode::create($providedString);
@@ -166,7 +155,7 @@ final class QrCodeTest extends TestCase
         );
     }
 
-    public function unsupportedCharactersProvider(): array
+    public static function unsupportedCharactersProvider(): array
     {
         return [
             'keepAllAllowedCharacters' => [

@@ -2,6 +2,7 @@
 
 namespace Sprain\Tests\SwissQrBill\Constraints;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use DG\BypassFinals;
 use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombination;
 use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombinationValidator;
@@ -32,9 +33,7 @@ final class ValidCreditorInformationPaymentReferenceCombinationTest extends Cons
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider emptyQrBillMocksProvider
-     */
+    #[DataProvider('emptyQrBillMocksProvider')]
     public function testEmptyQrBillValuesAreValid(QrBill $qrBillMock)
     {
         $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination());
@@ -59,9 +58,7 @@ final class ValidCreditorInformationPaymentReferenceCombinationTest extends Cons
         ];
     }
 
-    /**
-     * @dataProvider validCombinationsQrBillMocksProvider
-     */
+    #[DataProvider('validCombinationsQrBillMocksProvider')]
     public function testValidCombinations(QrBill $qrBillMock)
     {
         $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination());
@@ -87,9 +84,7 @@ final class ValidCreditorInformationPaymentReferenceCombinationTest extends Cons
         ];
     }
 
-    /**
-     * @dataProvider invalidCombinationsQrBillMocksProvider
-     */
+    #[DataProvider('invalidCombinationsQrBillMocksProvider')]
     public function testInvalidCombinations(QrBill $qrBillMock)
     {
         $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination([

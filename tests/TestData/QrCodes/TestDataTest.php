@@ -2,6 +2,7 @@
 
 namespace Sprain\Tests\SwissQrBill\TestData\QrCodes;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -9,9 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TestDataTest extends TestCase
 {
-    /**
-     * @dataProvider qrFileProvider
-     */
+    #[DataProvider('qrFileProvider')]
     public function testQrFile(string $file, string $hash): void
     {
         $this->assertSame(
@@ -20,7 +19,7 @@ class TestDataTest extends TestCase
         );
     }
 
-    public function qrFileProvider(): array
+    public static function qrFileProvider(): array
     {
         return [
             [__DIR__ . '/qr-additional-information.png', '5089db74d380d6ece97d02c86cb35e2d'],

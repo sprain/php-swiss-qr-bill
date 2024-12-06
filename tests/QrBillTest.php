@@ -2,6 +2,7 @@
 
 namespace Sprain\Tests\SwissQrBill;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
 use Sprain\SwissQrBill\Exception\InvalidQrBillDataException;
@@ -10,11 +11,9 @@ use Zxing\QrReader;
 
 final class QrBillTest extends TestCase
 {
-    use TestQrBillCreatorTrait;
+    use TraitValidQrBillsProvider;
 
-    /**
-     * @dataProvider validQrBillsProvider
-     */
+    #[DataProvider('validQrBillsProvider')]
     public function testValidQrBills(string $name, QrBill $qrBill)
     {
         $file = __DIR__ . '/TestData/QrCodes/' . $name . '.png';
@@ -33,7 +32,7 @@ final class QrBillTest extends TestCase
 
     public function testAlternativeSchemesCanBeSetAtOnce()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -54,7 +53,7 @@ final class QrBillTest extends TestCase
 
     public function testHeaderMustBeValid()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'invalidHeader',
             'creditorInformationQrIban',
             'creditor',
@@ -69,17 +68,19 @@ final class QrBillTest extends TestCase
     {
         $qrBill = QrBill::create();
 
-        $this->creditorInformationQrIban($qrBill);
-        $this->creditor($qrBill);
-        $this->paymentAmountInformation($qrBill);
-        $this->paymentReferenceQr($qrBill);
+        $creator = new TestQrBillCreator();
+
+        $creator->creditorInformationQrIban($qrBill);
+        $creator->creditor($qrBill);
+        $creator->paymentAmountInformation($qrBill);
+        $creator->paymentReferenceQr($qrBill);
 
         $this->assertTrue($qrBill->isValid());
     }
 
     public function testCreditorInformationIsRequired()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditor',
             'paymentAmountInformation',
@@ -91,7 +92,7 @@ final class QrBillTest extends TestCase
 
     public function testCreditorInformationMustBeValid()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'invalidCreditorInformation',
             'creditor',
@@ -104,7 +105,7 @@ final class QrBillTest extends TestCase
 
     public function testCreditorIsRequired()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'paymentAmountInformation',
@@ -116,7 +117,7 @@ final class QrBillTest extends TestCase
 
     public function testCreditorMustBeValid()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'invalidCreditor',
@@ -129,7 +130,7 @@ final class QrBillTest extends TestCase
 
     public function testPaymentAmountInformationIsRequired()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -141,7 +142,7 @@ final class QrBillTest extends TestCase
 
     public function testPaymentAmountInformationMustBeValid()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -154,7 +155,7 @@ final class QrBillTest extends TestCase
 
     public function testPaymentReferenceIsRequired()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -166,7 +167,7 @@ final class QrBillTest extends TestCase
 
     public function testPaymentReferenceMustBeValid()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -179,7 +180,7 @@ final class QrBillTest extends TestCase
 
     public function testNonMatchingAccountAndReference()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationIban',
             'creditor',
@@ -192,7 +193,7 @@ final class QrBillTest extends TestCase
 
     public function testOptionalUltimateDebtorMustBeValid()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -206,7 +207,7 @@ final class QrBillTest extends TestCase
 
     public function testAlternativeSchemesMustBeValid()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -222,7 +223,7 @@ final class QrBillTest extends TestCase
 
     public function testMaximumTwoAlternativeSchemesAreAllowed()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -239,7 +240,7 @@ final class QrBillTest extends TestCase
 
     public function testItReplacesUnsupportedCharacters()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditorWithUnsupportedCharacters',
@@ -255,7 +256,7 @@ final class QrBillTest extends TestCase
 
     public function testItConsidersReplacementCharacters()
     {
-        $qrBill = $this->createQrBill([
+        $qrBill = (new TestQrBillCreator())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditorWithUnsupportedCharacters',
