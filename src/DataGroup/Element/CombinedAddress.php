@@ -44,7 +44,7 @@ class CombinedAddress extends Address implements AddressInterface, SelfValidatab
         $this->name = self::normalizeString($name);
         $this->addressLine1 = self::normalizeString($addressLine1);
         $this->addressLine2 = self::normalizeString($addressLine2);
-        $this->country = strtoupper(self::normalizeString($country));
+        $this->country = strtoupper((string) self::normalizeString($country));
     }
 
     public static function create(

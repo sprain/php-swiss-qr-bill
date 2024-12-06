@@ -5,7 +5,6 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestCompactSvgQrCodeTrait;

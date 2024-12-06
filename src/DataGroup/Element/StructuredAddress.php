@@ -54,7 +54,7 @@ final class StructuredAddress extends Address implements AddressInterface, SelfV
         $this->buildingNumber = self::normalizeString($buildingNumber);
         $this->postalCode = self::normalizeString($postalCode);
         $this->city = self::normalizeString($city);
-        $this->country = strtoupper(self::normalizeString($country));
+        $this->country = strtoupper((string) self::normalizeString($country));
     }
 
     public static function createWithoutStreet(
