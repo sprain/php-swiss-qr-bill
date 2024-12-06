@@ -15,9 +15,9 @@
         "symfony/polyfill-mbstring": "^1.30"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0",
-        "dg/bypass-finals": "^1.3",
-        "dms/phpunit-arraysubset-asserts": "^0.2",
+        "phpunit/phpunit": "^10.0",
+        "dg/bypass-finals": "^1.8",
+        "dms/phpunit-arraysubset-asserts": "^0.5",
         "fpdf/fpdf": "^1.85",
         "friendsofphp/php-cs-fixer": "^3.15",
         "khanamiryan/qrcode-detector-decoder": "^1.0.3",
@@ -31,7 +31,7 @@
         "cs:fix": "vendor/bin/php-cs-fixer fix --verbose",
         "cs:diff": "vendor/bin/php-cs-fixer fix --dry-run --diff --verbose",
         "phpstan": "vendor/bin/phpstan analyse",
-        "phpunit": "vendor/bin/phpunit --verbose",
+        "phpunit": "vendor/bin/phpunit",
         "rector": "vendor/bin/rector"
     },
     "conflict": {
