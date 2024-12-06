@@ -45,7 +45,7 @@ final class QrCode
      * @return self
      * @throws UnsupportedFileExtensionException
      */
-    public static function create(string $data, string $fileFormat = null, array $unsupportedCharacterReplacements = []): self
+    public static function create(string $data, ?string $fileFormat = null, array $unsupportedCharacterReplacements = []): self
     {
         if (null === $fileFormat) {
             $fileFormat = self::FILE_FORMAT_SVG;
