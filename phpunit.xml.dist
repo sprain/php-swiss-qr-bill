@@ -7,12 +7,7 @@
         displayDetailsOnTestsThatTriggerErrors="true"
         displayDetailsOnTestsThatTriggerNotices="true"
         displayDetailsOnTestsThatTriggerWarnings="true"
-        displayDetailsOnPhpunitDeprecations="true"
 >
-    <extensions>
-        <bootstrap class="DG\BypassFinals\PHPUnitExtension"/>
-    </extensions>
-
     <php>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
     </php>
