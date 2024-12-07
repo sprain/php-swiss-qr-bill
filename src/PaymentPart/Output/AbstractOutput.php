@@ -32,7 +32,7 @@ abstract class AbstractOutput implements OutputInterface
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use setDisplayOptions() instead.
+     * @deprecated Will be removed in v5. Use setDisplayOptions() instead.
      */
     public function setPrintable(bool $printable): static
     {
@@ -42,7 +42,7 @@ abstract class AbstractOutput implements OutputInterface
     }
 
     /**
-     * @deprecated Will be removed in next major release. Use getDisplayOptions() instead.
+     * @deprecated Will be removed in v5. Use getDisplayOptions() instead.
      */
     public function isPrintable(): bool
     {
