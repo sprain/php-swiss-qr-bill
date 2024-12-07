@@ -6,20 +6,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\Reference\QrPaymentReferenceGenerator;
 use Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class QrPaymentReferenceGeneratorTest extends TestCase
 {
-    private ValidatorInterface $validator;
-
-    public function setUp(): void
-    {
-        $this->validator = Validation::createValidatorBuilder()
-            ->addMethodMapping('loadValidatorMetadata')
-            ->getValidator();
-    }
-
     #[DataProvider('qrPaymentReferenceProvider')]
     public function testMakesResultsViaConstructor(?string $customerIdentification, string $referenceNumber, string $expectedResult): void
     {
