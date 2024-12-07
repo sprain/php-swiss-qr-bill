@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
 use Fpdf\Fpdf;
-use Sprain\SwissQrBill as QrBill;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -26,7 +26,7 @@ $fpdf = new Fpdf('P', 'mm', 'A4');
 $fpdf->AddPage();
 
 // 3. Create a full payment part for FPDF
-$output = new QrBill\PaymentPart\Output\FpdfOutput\FpdfOutput($qrBill, 'en', $fpdf);
+$output = new FpdfOutput($qrBill, 'en', $fpdf);
 
 // 4. Optional, set layout options
 $displayOptions = new DisplayOptions();

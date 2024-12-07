@@ -5,7 +5,6 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 use PHPUnit\Framework\TestCase;
 use setasign\Fpdi\Tcpdf\Fpdi;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;

@@ -2,7 +2,6 @@
 
 namespace Sprain\SwissQrBill\DataGroup\Element\Abstracts;
 
-use Sprain\SwissQrBill\String\StringAnalyzer;
 use Sprain\SwissQrBill\String\StringModifier;
 
 /**

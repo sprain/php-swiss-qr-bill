@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use Sprain\SwissQrBill as QrBill;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -16,7 +16,7 @@ $tcPdf->setPrintFooter(false);
 $tcPdf->AddPage();
 
 // 3. Create a full payment part for TcPDF
-$output = new QrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput($qrBill, 'en', $tcPdf);
+$output = new TcPdfOutput($qrBill, 'en', $tcPdf);
 
 // 4. Optional, set layout options
 $displayOptions = new DisplayOptions();

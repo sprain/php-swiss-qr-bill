@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-use Sprain\SwissQrBill as QrBill;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
+use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -9,7 +9,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/../example.php';
 
 // 2. Create a full payment part in HTML
-$output = new QrBill\PaymentPart\Output\HtmlOutput\HtmlOutput($qrBill, 'en');
+$output = new HtmlOutput($qrBill, 'en');
 
 // 3. Optional, set layout options
 $displayOptions = new DisplayOptions();
