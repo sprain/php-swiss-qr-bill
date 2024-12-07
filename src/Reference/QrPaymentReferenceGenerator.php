@@ -21,6 +21,9 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $qrPaymentReferenceGenerator->doGenerate();
     }
 
+    /**
+     * @internal Will be made private in v5. Use QrPaymentReferenceGenerator::generate() instead.
+     */
     public function __construct(
         private ?string $customerIdentificationNumber,
         private string $referenceNumber
@@ -31,16 +34,25 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         $this->referenceNumber = StringModifier::stripWhitespace($referenceNumber);
     }
 
+    /**
+     * @deprecated Will be removed in v5.
+     */
     public function getCustomerIdentificationNumber(): ?string
     {
         return $this->customerIdentificationNumber;
     }
 
+    /**
+     * @deprecated Will be removed in v5.
+     */
     public function getReferenceNumber(): string
     {
         return $this->referenceNumber;
     }
 
+    /**
+     * @internal Will be made private in v5. Use QrPaymentReferenceGenerator::generate() instead.
+     */
     public function doGenerate(): string
     {
         if (!$this->isValid()) {
