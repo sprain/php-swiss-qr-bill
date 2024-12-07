@@ -8,7 +8,7 @@ trait TraitValidQrBillsProvider
 
     public static function validQrBillsProvider(): array
     {
-        $creator = new TestQrBillCreator();
+        $creator = new QrBillTestDataRepository();
 
         return [
             ['qr-minimal-setup',

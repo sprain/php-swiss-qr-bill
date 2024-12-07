@@ -15,11 +15,11 @@ use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 
-class TestQrBillCreator
+class QrBillTestDataRepository
 {
     public function getQrBillWithAdditionalSchemes(): QrBill
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -35,7 +35,7 @@ class TestQrBillCreator
 
     public function getQrBillFullSet(): QrBill
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',

@@ -11,8 +11,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class QrPaymentReferenceGeneratorTest extends TestCase
 {
-    /** @var  ValidatorInterface */
-    private $validator;
+    private ValidatorInterface $validator;
 
     public function setUp(): void
     {

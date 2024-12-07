@@ -4,7 +4,7 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Fpdf\Fpdf;
-use Sprain\Tests\SwissQrBill\TestQrBillCreator;
+use Sprain\Tests\SwissQrBill\QrBillTestDataRepository;
 use Fpdf\Traits\MemoryImageSupport\MemImageTrait;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
@@ -79,7 +79,7 @@ final class FpdfOutputTest extends TestCase
     {
         $this->expectException(MissingTraitException::class);
 
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -101,7 +101,7 @@ final class FpdfOutputTest extends TestCase
     {
         $file = __DIR__ . '/../../../TestData/FpdfOutput/qr-utf8.svg.pdf';
 
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -133,7 +133,7 @@ final class FpdfOutputTest extends TestCase
     {
         $this->expectException(InvalidFpdfImageFormat::class);
 
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -158,7 +158,7 @@ final class FpdfOutputTest extends TestCase
 
         $this->expectException(UnsupportedEnvironmentException::class);
 
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',

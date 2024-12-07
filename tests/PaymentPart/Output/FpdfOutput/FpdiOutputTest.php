@@ -3,7 +3,7 @@
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use Sprain\Tests\SwissQrBill\TestQrBillCreator;
+use Sprain\Tests\SwissQrBill\QrBillTestDataRepository;
 use Fpdf\Traits\MemoryImageSupport\MemImageTrait;
 use PHPUnit\Framework\TestCase;
 use setasign\Fpdi\Fpdi;
@@ -78,7 +78,7 @@ final class FpdiOutputTest extends TestCase
     {
         $this->expectException(MissingTraitException::class);
 
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -100,7 +100,7 @@ final class FpdiOutputTest extends TestCase
     {
         $this->expectException(InvalidFpdfImageFormat::class);
 
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',

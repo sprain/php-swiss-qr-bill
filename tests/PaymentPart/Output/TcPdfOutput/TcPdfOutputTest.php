@@ -4,7 +4,7 @@ namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Sprain\Tests\SwissQrBill\TestQrBillCreator;
+use Sprain\Tests\SwissQrBill\QrBillTestDataRepository;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
@@ -87,7 +87,7 @@ final class TcPdfOutputTest extends TestCase
     {
         $file = __DIR__ . '/../../../TestData/TcPdfOutput/qr-utf8.svg.pdf';
 
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',

@@ -32,7 +32,7 @@ final class QrBillTest extends TestCase
 
     public function testAlternativeSchemesCanBeSetAtOnce()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -53,7 +53,7 @@ final class QrBillTest extends TestCase
 
     public function testHeaderMustBeValid()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'invalidHeader',
             'creditorInformationQrIban',
             'creditor',
@@ -68,19 +68,19 @@ final class QrBillTest extends TestCase
     {
         $qrBill = QrBill::create();
 
-        $creator = new TestQrBillCreator();
+        $testData = new QrBillTestDataRepository();
 
-        $creator->creditorInformationQrIban($qrBill);
-        $creator->creditor($qrBill);
-        $creator->paymentAmountInformation($qrBill);
-        $creator->paymentReferenceQr($qrBill);
+        $testData->creditorInformationQrIban($qrBill);
+        $testData->creditor($qrBill);
+        $testData->paymentAmountInformation($qrBill);
+        $testData->paymentReferenceQr($qrBill);
 
         $this->assertTrue($qrBill->isValid());
     }
 
     public function testCreditorInformationIsRequired()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditor',
             'paymentAmountInformation',
@@ -92,7 +92,7 @@ final class QrBillTest extends TestCase
 
     public function testCreditorInformationMustBeValid()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'invalidCreditorInformation',
             'creditor',
@@ -105,7 +105,7 @@ final class QrBillTest extends TestCase
 
     public function testCreditorIsRequired()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'paymentAmountInformation',
@@ -117,7 +117,7 @@ final class QrBillTest extends TestCase
 
     public function testCreditorMustBeValid()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'invalidCreditor',
@@ -130,7 +130,7 @@ final class QrBillTest extends TestCase
 
     public function testPaymentAmountInformationIsRequired()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -142,7 +142,7 @@ final class QrBillTest extends TestCase
 
     public function testPaymentAmountInformationMustBeValid()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -155,7 +155,7 @@ final class QrBillTest extends TestCase
 
     public function testPaymentReferenceIsRequired()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -167,7 +167,7 @@ final class QrBillTest extends TestCase
 
     public function testPaymentReferenceMustBeValid()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -180,7 +180,7 @@ final class QrBillTest extends TestCase
 
     public function testNonMatchingAccountAndReference()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationIban',
             'creditor',
@@ -193,7 +193,7 @@ final class QrBillTest extends TestCase
 
     public function testOptionalUltimateDebtorMustBeValid()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -207,7 +207,7 @@ final class QrBillTest extends TestCase
 
     public function testAlternativeSchemesMustBeValid()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -223,7 +223,7 @@ final class QrBillTest extends TestCase
 
     public function testMaximumTwoAlternativeSchemesAreAllowed()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -240,7 +240,7 @@ final class QrBillTest extends TestCase
 
     public function testItReplacesUnsupportedCharacters()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditorWithUnsupportedCharacters',
@@ -256,7 +256,7 @@ final class QrBillTest extends TestCase
 
     public function testItConsidersReplacementCharacters()
     {
-        $qrBill = (new TestQrBillCreator())->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditorWithUnsupportedCharacters',
