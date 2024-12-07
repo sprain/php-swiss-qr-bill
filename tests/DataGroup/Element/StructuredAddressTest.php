@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
 
 final class StructuredAddressTest extends TestCase
 {
-    /**
-     * @dataProvider nameProvider
-     */
+    #[DataProvider('nameProvider')]
     public function testName($numberOfValidations, $value): void
     {
         $address = StructuredAddress::createWithoutStreet(
@@ -22,7 +21,7 @@ final class StructuredAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function nameProvider(): array
+    public static function nameProvider(): array
     {
         return [
             [0, 'A'],
@@ -35,9 +34,7 @@ final class StructuredAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider streetProvider
-     */
+    #[DataProvider('streetProvider')]
     public function testStreet(int $numberOfViolations, string $value): void
     {
         $address = StructuredAddress::createWithStreet(
@@ -52,7 +49,7 @@ final class StructuredAddressTest extends TestCase
         $this->assertSame($numberOfViolations, $address->getViolations()->count());
     }
 
-    public function streetProvider(): array
+    public static function streetProvider(): array
     {
         return [
             [0, ''],
@@ -64,9 +61,7 @@ final class StructuredAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider buildingNumberProvider
-     */
+    #[DataProvider('buildingNumberProvider')]
     public function testBuildingNumber(int $numberOfViolations, ?string $value): void
     {
         $address = StructuredAddress::createWithStreet(
@@ -81,7 +76,7 @@ final class StructuredAddressTest extends TestCase
         $this->assertSame($numberOfViolations, $address->getViolations()->count());
     }
 
-    public function buildingNumberProvider(): array
+    public static function buildingNumberProvider(): array
     {
         return [
             [0, null],
@@ -94,9 +89,7 @@ final class StructuredAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider postalCodeProvider
-     */
+    #[DataProvider('postalCodeProvider')]
     public function testPostalCode(int $numberOfViolations, string $value): void
     {
         $address = StructuredAddress::createWithStreet(
@@ -111,7 +104,7 @@ final class StructuredAddressTest extends TestCase
         $this->assertSame($numberOfViolations, $address->getViolations()->count());
     }
 
-    public function postalCodeProvider(): array
+    public static function postalCodeProvider(): array
     {
         return [
             [0, '1'],
@@ -123,9 +116,7 @@ final class StructuredAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider cityProvider
-     */
+    #[DataProvider('cityProvider')]
     public function testCity(int $numberOfViolations, string $value)
     {
         $address = StructuredAddress::createWithStreet(
@@ -140,7 +131,7 @@ final class StructuredAddressTest extends TestCase
         $this->assertSame($numberOfViolations, $address->getViolations()->count());
     }
 
-    public function cityProvider(): array
+    public static function cityProvider(): array
     {
         return [
             [0, 'A'],
@@ -151,9 +142,7 @@ final class StructuredAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider countryProvider
-     */
+    #[DataProvider('countryProvider')]
     public function testCountry($numberOfValidations, $value): void
     {
         $address = StructuredAddress::createWithoutStreet(
@@ -166,7 +155,7 @@ final class StructuredAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function countryProvider(): array
+    public static function countryProvider(): array
     {
         return [
             [0, 'CH'],
@@ -205,15 +194,13 @@ final class StructuredAddressTest extends TestCase
         $this->assertSame($expected, $address->getQrCodeData());
     }
 
-    /**
-     * @dataProvider addressProvider
-     */
+    #[DataProvider('addressProvider')]
     public function testFullAddressString(StructuredAddress $address, $expected): void
     {
         $this->assertSame($expected, $address->getFullAddress());
     }
 
-    public function addressProvider(): array
+    public static function addressProvider(): array
     {
         return [
             [
@@ -302,15 +289,13 @@ final class StructuredAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider addressProviderReceipt
-     */
+    #[DataProvider('addressProviderReceipt')]
     public function testFullAddressStringForReceipt(StructuredAddress $address, $expected): void
     {
         $this->assertSame($expected, $address->getFullAddress(true));
     }
 
-    public function addressProviderReceipt(): array
+    public static function addressProviderReceipt(): array
     {
         return [
             [

@@ -2,6 +2,7 @@
 
 namespace Sprain\Tests\SwissQrBill\Constraints;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Sprain\SwissQrBill\Constraint\ValidCreditorReference;
 use Sprain\SwissQrBill\Constraint\ValidCreditorReferenceValidator;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
@@ -28,9 +29,7 @@ final class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    /**
-     * @dataProvider getValidCreditorReferences
-     */
+    #[DataProvider('getValidCreditorReferences')]
     public function testValidCreditorReferences($value)
     {
         $this->validator->validate($value, new ValidCreditorReference());
@@ -38,7 +37,7 @@ final class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
         $this->assertNoViolation();
     }
 
-    public function getValidCreditorReferences()
+    public static function getValidCreditorReferences()
     {
         return [
             ['RF45 1234 5123 45'],
@@ -46,9 +45,7 @@ final class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
         ];
     }
 
-    /**
-     * @dataProvider getInvalidCreditorReferences
-     */
+    #[DataProvider('getInvalidCreditorReferences')]
     public function testInvalidCreditorReferences($creditorReference)
     {
         $this->validator->validate($creditorReference, new ValidCreditorReference([
@@ -60,7 +57,7 @@ final class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
             ->assertRaised();
     }
 
-    public function getInvalidCreditorReferences()
+    public static function getInvalidCreditorReferences()
     {
         return [
             ['RF43 1234 5123 45'],

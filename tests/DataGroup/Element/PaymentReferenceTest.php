@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 
 final class PaymentReferenceTest extends TestCase
 {
-    /**
-     * @dataProvider qrReferenceProvider
-     */
+    #[DataProvider('qrReferenceProvider')]
     public function testQrReference(int $numberOfViolations, ?string $value): void
     {
         $paymentReference = PaymentReference::create(
@@ -20,7 +19,7 @@ final class PaymentReferenceTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function qrReferenceProvider(): array
+    public static function qrReferenceProvider(): array
     {
         return [
             [0, '012345678901234567890123456'],
@@ -34,9 +33,7 @@ final class PaymentReferenceTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider scorReferenceProvider
-     */
+    #[DataProvider('scorReferenceProvider')]
     public function testScorReference(int $numberOfViolations, ?string $value): void
     {
         $paymentReference = PaymentReference::create(
@@ -47,7 +44,7 @@ final class PaymentReferenceTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function scorReferenceProvider(): array
+    public static function scorReferenceProvider(): array
     {
         return [
             [0, 'RF18539007547034'],
@@ -61,9 +58,7 @@ final class PaymentReferenceTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider nonReferenceProvider
-     */
+    #[DataProvider('nonReferenceProvider')]
     public function testNonReference(int $numberOfViolations, ?string $value): void
     {
         $paymentReference = PaymentReference::create(
@@ -74,7 +69,7 @@ final class PaymentReferenceTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentReference->getViolations()->count());
     }
 
-    public function nonReferenceProvider()
+    public static function nonReferenceProvider()
     {
         return [
             [0, null],
@@ -84,9 +79,7 @@ final class PaymentReferenceTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider formattedReferenceProvider
-     */
+    #[DataProvider('formattedReferenceProvider')]
     public function testFormattedReference(string $type, ?string  $reference, ?string  $formattedReference): void
     {
         $paymentReference = PaymentReference::create(
@@ -97,7 +90,7 @@ final class PaymentReferenceTest extends TestCase
         $this->assertSame($formattedReference, $paymentReference->getFormattedReference());
     }
 
-    public function formattedReferenceProvider(): array
+    public static function formattedReferenceProvider(): array
     {
         return [
             [PaymentReference::TYPE_QR, '012345678901234567890123456', '01 23456 78901 23456 78901 23456'],

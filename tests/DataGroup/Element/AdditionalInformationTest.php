@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
 
 final class AdditionalInformationTest extends TestCase
 {
-    /**
-     * @dataProvider messageProvider
-     */
+    #[DataProvider('messageProvider')]
     public function testMessage(int $numberOfValidations, ?string $value): void
     {
         $additionalInformation = AdditionalInformation::create($value);
@@ -17,7 +16,7 @@ final class AdditionalInformationTest extends TestCase
         $this->assertSame($numberOfValidations, $additionalInformation->getViolations()->count());
     }
 
-    public function messageProvider(): array
+    public static function messageProvider(): array
     {
         return [
             [0, '012345678901234567890123456'],
@@ -27,9 +26,7 @@ final class AdditionalInformationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider billInformationProvider
-     */
+    #[DataProvider('billInformationProvider')]
     public function testBillInformation(int $numberOfValidations, ?string $value)
     {
         $additionalInformation = AdditionalInformation::create(null, $value);
@@ -37,7 +34,7 @@ final class AdditionalInformationTest extends TestCase
         $this->assertSame($numberOfValidations, $additionalInformation->getViolations()->count());
     }
 
-    public function billInformationProvider(): array
+    public static function billInformationProvider(): array
     {
         return [
             [0, '012345678901234567890123456'],

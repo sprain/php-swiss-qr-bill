@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\CombinedAddress;
 
 final class CombinedAddressTest extends TestCase
 {
-    /**
-     * @dataProvider nameProvider
-     */
+    #[DataProvider('nameProvider')]
     public function testName($numberOfValidations, $value): void
     {
         $address = CombinedAddress::create(
@@ -22,7 +21,7 @@ final class CombinedAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function nameProvider(): array
+    public static function nameProvider(): array
     {
         return [
             [0, 'A'],
@@ -35,9 +34,7 @@ final class CombinedAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider addressLine1Provider
-     */
+    #[DataProvider('addressLine1Provider')]
     public function testAddressLine1(int $numberOfValidations, ?string $value): void
     {
         $address = CombinedAddress::create(
@@ -50,7 +47,7 @@ final class CombinedAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function addressLine1Provider(): array
+    public static function addressLine1Provider(): array
     {
         return [
             [0, null],
@@ -63,9 +60,7 @@ final class CombinedAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider addressLine2Provider
-     */
+    #[DataProvider('addressLine2Provider')]
     public function testAddressLine2(int $numberOfValidations, string $value): void
     {
         $address = CombinedAddress::create(
@@ -78,7 +73,7 @@ final class CombinedAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function addressLine2Provider(): array
+    public static function addressLine2Provider(): array
     {
         return [
             [0, 'A'],
@@ -112,9 +107,7 @@ final class CombinedAddressTest extends TestCase
         $this->assertSame($expected, $address->getQrCodeData());
     }
 
-    /**
-     * @dataProvider countryProvider
-     */
+    #[DataProvider('countryProvider')]
     public function testCountry(int $numberOfValidations, string $value): void
     {
         $address = CombinedAddress::create(
@@ -127,7 +120,7 @@ final class CombinedAddressTest extends TestCase
         $this->assertSame($numberOfValidations, $address->getViolations()->count());
     }
 
-    public function countryProvider(): array
+    public static function countryProvider(): array
     {
         return [
             [0, 'CH'],
@@ -143,15 +136,13 @@ final class CombinedAddressTest extends TestCase
     }
 
 
-    /**
-     * @dataProvider addressProvider
-     */
+    #[DataProvider('addressProvider')]
     public function testFullAddressString(CombinedAddress $address, string $expected): void
     {
         $this->assertSame($expected, $address->getFullAddress());
     }
 
-    public function addressProvider(): array
+    public static function addressProvider(): array
     {
         return [
             [
@@ -220,15 +211,13 @@ final class CombinedAddressTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider addressProviderReceipt
-     */
+    #[DataProvider('addressProviderReceipt')]
     public function testFullAddressStringForReceipt(CombinedAddress $address, string $expected): void
     {
         $this->assertSame($expected, $address->getFullAddress(true));
     }
 
-    public function addressProviderReceipt(): array
+    public static function addressProviderReceipt(): array
     {
         return [
             [

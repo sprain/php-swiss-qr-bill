@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\String;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\String\StringModifier;
 
 final class StringModifierTest extends TestCase
 {
-    /**
-     * @dataProvider lineBreaksAndTabsProvider
-     */
+    #[DataProvider('lineBreaksAndTabsProvider')]
     public function testRemoveLineBreaksAndTabs(?string $string, string $expectedResult): void
     {
         $this->assertSame(
@@ -18,7 +17,7 @@ final class StringModifierTest extends TestCase
         );
     }
 
-    public function lineBreaksAndTabsProvider(): array
+    public static function lineBreaksAndTabsProvider(): array
     {
         return [
             [null, ''],
@@ -28,9 +27,7 @@ final class StringModifierTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider multipleSpacesProvider
-     */
+    #[DataProvider('multipleSpacesProvider')]
     public function testReplaceMultipleSpacesWithOne(?string $string, string $expectedResult): void
     {
         $this->assertSame(
@@ -39,7 +36,7 @@ final class StringModifierTest extends TestCase
         );
     }
 
-    public function multipleSpacesProvider(): array
+    public static function multipleSpacesProvider(): array
     {
         return [
             [null, ''],
@@ -49,9 +46,7 @@ final class StringModifierTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stripWhitespaceProvider
-     */
+    #[DataProvider('stripWhitespaceProvider')]
     public function testStripWhitespace(?string $string, string $expectedResult): void
     {
         $this->assertSame(
@@ -60,7 +55,7 @@ final class StringModifierTest extends TestCase
         );
     }
 
-    public function stripWhitespaceProvider(): array
+    public static function stripWhitespaceProvider(): array
     {
         return [
             [null, ''],

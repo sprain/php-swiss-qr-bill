@@ -2,7 +2,9 @@
 
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Fpdf\Fpdf;
+use Sprain\Tests\SwissQrBill\QrBillTestDataRepository;
 use Fpdf\Traits\MemoryImageSupport\MemImageTrait;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
@@ -11,17 +13,15 @@ use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\UnsupportedEnvironmentExcep
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
-use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
+use Sprain\Tests\SwissQrBill\TraitValidQrBillsProvider;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfTrait;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\MissingTraitException;
 
 final class FpdfOutputTest extends TestCase
 {
-    use TestQrBillCreatorTrait;
+    use TraitValidQrBillsProvider;
 
-    /**
-     * @dataProvider validQrBillsProvider
-     */
+    #[DataProvider('validQrBillsProvider')]
     public function testValidQrBills(string $name, QrBill $qrBill): void
     {
         $variations = [
@@ -79,7 +79,7 @@ final class FpdfOutputTest extends TestCase
     {
         $this->expectException(MissingTraitException::class);
 
-        $qrBill = $this->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -101,7 +101,7 @@ final class FpdfOutputTest extends TestCase
     {
         $file = __DIR__ . '/../../../TestData/FpdfOutput/qr-utf8.svg.pdf';
 
-        $qrBill = $this->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -133,7 +133,7 @@ final class FpdfOutputTest extends TestCase
     {
         $this->expectException(InvalidFpdfImageFormat::class);
 
-        $qrBill = $this->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -158,7 +158,7 @@ final class FpdfOutputTest extends TestCase
 
         $this->expectException(UnsupportedEnvironmentException::class);
 
-        $qrBill = $this->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',

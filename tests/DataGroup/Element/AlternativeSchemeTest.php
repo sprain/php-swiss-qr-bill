@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
 
 final class AlternativeSchemeTest extends TestCase
 {
-    /**
-     * @dataProvider parameterProvider
-     */
+    #[DataProvider('parameterProvider')]
     public function testParameter(int $numberOfValidations, string $value): void
     {
         $alternativeScheme = AlternativeScheme::create($value);
@@ -17,7 +16,7 @@ final class AlternativeSchemeTest extends TestCase
         $this->assertSame($numberOfValidations, $alternativeScheme->getViolations()->count());
     }
 
-    public function parameterProvider(): array
+    public static function parameterProvider(): array
     {
         return [
             [0, '1'],
