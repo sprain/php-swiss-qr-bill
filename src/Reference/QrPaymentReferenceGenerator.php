@@ -14,9 +14,6 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    private ?string $customerIdentificationNumber = null;
-    private string $referenceNumber;
-
     public static function generate(?string $customerIdentificationNumber, string $referenceNumber): string
     {
         $qrPaymentReferenceGenerator = new self($customerIdentificationNumber, $referenceNumber);
@@ -24,24 +21,38 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $qrPaymentReferenceGenerator->doGenerate();
     }
 
-    public function __construct(?string $customerIdentificationNumber, string $referenceNumber)
-    {
+    /**
+     * @internal Will be made private in v5. Use QrPaymentReferenceGenerator::generate() instead.
+     */
+    public function __construct(
+        private ?string $customerIdentificationNumber,
+        private string $referenceNumber
+    ) {
         if (null !== $customerIdentificationNumber) {
             $this->customerIdentificationNumber = StringModifier::stripWhitespace($customerIdentificationNumber);
         }
         $this->referenceNumber = StringModifier::stripWhitespace($referenceNumber);
     }
 
+    /**
+     * @deprecated Will be removed in v5.
+     */
     public function getCustomerIdentificationNumber(): ?string
     {
         return $this->customerIdentificationNumber;
     }
 
-    public function getReferenceNumber(): ?string
+    /**
+     * @deprecated Will be removed in v5.
+     */
+    public function getReferenceNumber(): string
     {
         return $this->referenceNumber;
     }
 
+    /**
+     * @internal Will be made private in v5. Use QrPaymentReferenceGenerator::generate() instead.
+     */
     public function doGenerate(): string
     {
         if (!$this->isValid()) {
@@ -53,7 +64,7 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         $completeReferenceNumber  = $this->getCustomerIdentificationNumber();
 
         $strlen = $completeReferenceNumber ? strlen($completeReferenceNumber) : 0;
-        $completeReferenceNumber .= str_pad((string) $this->getReferenceNumber(), 26 - $strlen, '0', STR_PAD_LEFT);
+        $completeReferenceNumber .= str_pad($this->getReferenceNumber(), 26 - $strlen, '0', STR_PAD_LEFT);
         $completeReferenceNumber .= $this->modulo10($completeReferenceNumber);
 
         return $completeReferenceNumber;
