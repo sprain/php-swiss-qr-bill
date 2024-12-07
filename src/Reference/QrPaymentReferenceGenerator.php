@@ -14,9 +14,6 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    private ?string $customerIdentificationNumber = null;
-    private string $referenceNumber;
-
     public static function generate(?string $customerIdentificationNumber, string $referenceNumber): string
     {
         $qrPaymentReferenceGenerator = new self($customerIdentificationNumber, $referenceNumber);
@@ -24,8 +21,10 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $qrPaymentReferenceGenerator->doGenerate();
     }
 
-    public function __construct(?string $customerIdentificationNumber, string $referenceNumber)
-    {
+    public function __construct(
+        private ?string $customerIdentificationNumber,
+        private string $referenceNumber
+    ) {
         if (null !== $customerIdentificationNumber) {
             $this->customerIdentificationNumber = StringModifier::stripWhitespace($customerIdentificationNumber);
         }

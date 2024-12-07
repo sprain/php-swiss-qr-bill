@@ -14,8 +14,6 @@ final class RfCreditorReferenceGenerator implements SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    private string $reference;
-
     public static function generate(string $reference): string
     {
         $generator = new self($reference);
@@ -23,7 +21,7 @@ final class RfCreditorReferenceGenerator implements SelfValidatableInterface
         return $generator->doGenerate();
     }
 
-    public function __construct(string $reference)
+    public function __construct(private string $reference)
     {
         $this->reference = StringModifier::stripWhitespace($reference);
     }
