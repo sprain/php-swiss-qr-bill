@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\Header;
 
 final class HeaderTest extends TestCase
 {
-    /**
-     * @dataProvider qrTypeProvider
-     */
+    #[DataProvider('qrTypeProvider')]
     public function testQrType(int $numberOfViolations, string $value): void
     {
         $header = Header::create(
@@ -21,7 +20,7 @@ final class HeaderTest extends TestCase
         $this->assertSame($numberOfViolations, $header->getViolations()->count());
     }
 
-    public function qrTypeProvider(): array
+    public static function qrTypeProvider(): array
     {
         return [
             [0, 'SPC'],
@@ -42,9 +41,7 @@ final class HeaderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider versionProvider
-     */
+    #[DataProvider('versionProvider')]
     public function testVersionIsValid(int $numberOfViolations, string $value): void
     {
         $header = Header::create(
@@ -56,7 +53,7 @@ final class HeaderTest extends TestCase
         $this->assertSame($numberOfViolations, $header->getViolations()->count());
     }
 
-    public function versionProvider(): array
+    public static function versionProvider(): array
     {
         return [
             [0, '0200'],
@@ -74,9 +71,7 @@ final class HeaderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider codingProvider
-     */
+    #[DataProvider('codingProvider')]
     public function testCodingIsValid(int $numberOfViolations, int $value): void
     {
         $header = Header::create(
@@ -88,7 +83,7 @@ final class HeaderTest extends TestCase
         $this->assertSame($numberOfViolations, $header->getViolations()->count());
     }
 
-    public function codingProvider()
+    public static function codingProvider()
     {
         return [
             [0, 0],
