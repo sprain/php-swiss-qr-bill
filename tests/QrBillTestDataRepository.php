@@ -293,7 +293,7 @@ class QrBillTestDataRepository
     public function addressWithUnsupportedCharacters(): CombinedAddress
     {
         return CombinedAddress::create(
-            'Team «We are the Champions!»',
+            'Team «We ♥ tests!»',
             'Rue examplaire 22a',
             '1000 Lausanne',
             'CH'
