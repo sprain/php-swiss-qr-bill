@@ -93,9 +93,9 @@ For more official information see
 
 How to generate new test data:
 
-1. Set `$regenerateReferenceFiles = true` in `TestQrBillCreatorTrait`
+1. Set `$regenerateReferenceFiles = true` in `TraitValidQrBillsProvider`
 2. `composer update --prefer-lowest`
 3. `vendor/bin/phpunit` – ignore failing tests in `testQrFile`
 4. `composer update`
 5. `vendor/bin/phpunit` – there should be no more errors
-6. Set `$regenerateReferenceFiles = false` in `TestQrBillCreatorTrait`
+6. Set `$regenerateReferenceFiles = false` in `TraitValidQrBillsProvider`
