@@ -16,10 +16,12 @@ $qrBill = QrBill\QrBill::create();
 
 // Add creditor information
 $qrBill->setCreditor(
-    QrBill\DataGroup\Element\CombinedAddress::create(
+    QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
         'Robert Schneider AG',
-        'Rue du Lac 1268',
-        '2501 Biel',
+        'Rue du Lac',
+        '1268',
+        '2501',
+        'Biel',
         'CH'
     )
 );

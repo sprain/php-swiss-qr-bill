@@ -10,6 +10,11 @@ use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
+/**
+ * @deprecated The CombinedAdress is no longer supported by v2.3 of the QR bill specifications, valid from 21 November 2025.
+ * This class will be removed in a future major version of this library. Use StructuredAddress instead.
+ * For UltimateDebtor, you can also choose to set no data at all.
+ */
 class CombinedAddress extends Address implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
     use SelfValidatableTrait;
