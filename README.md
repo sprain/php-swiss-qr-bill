@@ -81,7 +81,7 @@ approximately 10% of current installations of the corresponding dependency.
 ## Official resources
 The repository contains the official specifications the library is based on:
 
-- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-en-v2.2.pdf)
+- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-v2.3-en.pdf)
 - [Technical information about the QR-IID and QR-IBAN](docs/specs/qr-iid_qr-iban-en.pdf)
 - [Style Guide QR-bill](docs/specs/style-guide-en.pdf)
 - [Validation Tool](https://validation.iso-payments.ch/gp/qrrechnung/validation/)
