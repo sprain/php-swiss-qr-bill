@@ -2,14 +2,13 @@
 
 namespace Sprain\Tests\SwissQrBill\DataGroup\Element;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 
 final class PaymentAmountInformationTest extends TestCase
 {
-    /**
-     * @dataProvider amountProvider
-     */
+    #[DataProvider('amountProvider')]
     public function testAmount(int $numberOfViolations, ?float $value): void
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
@@ -20,7 +19,7 @@ final class PaymentAmountInformationTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentAmountInformation->getViolations()->count());
     }
 
-    public function amountProvider(): array
+    public static function amountProvider(): array
     {
         return [
             [0, null],
@@ -34,9 +33,7 @@ final class PaymentAmountInformationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider currencyProvider
-     */
+    #[DataProvider('currencyProvider')]
     public function testCurrency(int $numberOfViolations, string $value): void
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
@@ -47,7 +44,7 @@ final class PaymentAmountInformationTest extends TestCase
         $this->assertSame($numberOfViolations, $paymentAmountInformation->getViolations()->count());
     }
 
-    public function currencyProvider(): array
+    public static function currencyProvider(): array
     {
         return [
             [0, 'CHF'],
@@ -61,9 +58,7 @@ final class PaymentAmountInformationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider formattedAmountProvider
-     */
+    #[DataProvider('formattedAmountProvider')]
     public function testFormattedAmount(float $amount, string $formattedAmount)
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
@@ -74,7 +69,7 @@ final class PaymentAmountInformationTest extends TestCase
         $this->assertSame($formattedAmount, $paymentAmountInformation->getFormattedAmount());
     }
 
-    public function formattedAmountProvider(): array
+    public static function formattedAmountProvider(): array
     {
         return [
             [0, '0.00'],

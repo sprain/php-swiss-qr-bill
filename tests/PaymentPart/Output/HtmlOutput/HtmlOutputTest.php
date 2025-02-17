@@ -2,23 +2,21 @@
 
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\HtmlOutput;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\Tests\SwissQrBill\TestCompactSvgQrCodeTrait;
-use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
+use Sprain\Tests\SwissQrBill\TraitValidQrBillsProvider;
 
 final class HtmlOutputTest extends TestCase
 {
-    use TestQrBillCreatorTrait;
+    use TraitValidQrBillsProvider;
     use TestCompactSvgQrCodeTrait;
 
-    /**
-     * @dataProvider validQrBillsProvider
-     */
+    #[DataProvider('validQrBillsProvider')]
     public function testValidQrBills(string $name, QrBill $qrBill)
     {
         $variations = [

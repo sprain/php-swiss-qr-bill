@@ -53,8 +53,8 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
     public function getFormattedReference(): ?string
     {
         return match ($this->type) {
-            self::TYPE_QR => trim(strrev(chunk_split(strrev($this->reference), 5, ' '))),
-            self::TYPE_SCOR => trim(chunk_split($this->reference, 4, ' ')),
+            self::TYPE_QR => trim(strrev(chunk_split(strrev((string) $this->reference), 5, ' '))),
+            self::TYPE_SCOR => trim(chunk_split((string) $this->reference, 4, ' ')),
             default => null,
         };
     }

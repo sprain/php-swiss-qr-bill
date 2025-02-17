@@ -2,21 +2,20 @@
 
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\TcPdfOutput;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Sprain\Tests\SwissQrBill\QrBillTestDataRepository;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\PaymentPart\Output\TcPdfOutput\TcPdfOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
-use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
+use Sprain\Tests\SwissQrBill\TraitValidQrBillsProvider;
 
 final class TcPdfOutputTest extends TestCase
 {
-    use TestQrBillCreatorTrait;
+    use TraitValidQrBillsProvider;
 
-    /**
-     * @dataProvider validQrBillsProvider
-     */
+    #[DataProvider('validQrBillsProvider')]
     public function testValidQrBills(string $name, QrBill $qrBill): void
     {
         $variations = [
@@ -88,7 +87,7 @@ final class TcPdfOutputTest extends TestCase
     {
         $file = __DIR__ . '/../../../TestData/TcPdfOutput/qr-utf8.svg.pdf';
 
-        $qrBill = $this->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',

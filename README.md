@@ -81,7 +81,7 @@ approximately 10% of current installations of the corresponding dependency.
 ## Official resources
 The repository contains the official specifications the library is based on:
 
-- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-en-v2.2.pdf)
+- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-v2.3-en.pdf)
 - [Technical information about the QR-IID and QR-IBAN](docs/specs/qr-iid_qr-iban-en.pdf)
 - [Style Guide QR-bill](docs/specs/style-guide-en.pdf)
 - [Validation Tool](https://validation.iso-payments.ch/gp/qrrechnung/validation/)
@@ -93,9 +93,9 @@ For more official information see
 
 How to generate new test data:
 
-1. Set `$regenerateReferenceFiles = true` in `TestQrBillCreatorTrait`
+1. Set `$regenerateReferenceFiles = true` in `TraitValidQrBillsProvider`
 2. `composer update --prefer-lowest`
 3. `vendor/bin/phpunit` – ignore failing tests in `testQrFile`
 4. `composer update`
 5. `vendor/bin/phpunit` – there should be no more errors
-6. Set `$regenerateReferenceFiles = false` in `TestQrBillCreatorTrait`
+6. Set `$regenerateReferenceFiles = false` in `TraitValidQrBillsProvider`

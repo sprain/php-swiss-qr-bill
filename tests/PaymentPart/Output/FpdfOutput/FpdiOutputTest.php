@@ -2,26 +2,25 @@
 
 namespace Sprain\Tests\SwissQrBill\PaymentPart\Output\FpdfOutput;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use Sprain\Tests\SwissQrBill\QrBillTestDataRepository;
 use Fpdf\Traits\MemoryImageSupport\MemImageTrait;
 use PHPUnit\Framework\TestCase;
 use setasign\Fpdi\Fpdi;
 use Sprain\SwissQrBill\Exception\InvalidFpdfImageFormat;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
-use Sprain\SwissQrBill\PaymentPart\Output\VerticalSeparatorSymbolPosition;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\QrCode\QrCode;
-use Sprain\Tests\SwissQrBill\TestQrBillCreatorTrait;
+use Sprain\Tests\SwissQrBill\TraitValidQrBillsProvider;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\FpdfTrait;
 use Sprain\SwissQrBill\PaymentPart\Output\FpdfOutput\MissingTraitException;
 
 final class FpdiOutputTest extends TestCase
 {
-    use TestQrBillCreatorTrait;
+    use TraitValidQrBillsProvider;
 
-    /**
-     * @dataProvider validQrBillsProvider
-     */
+    #[DataProvider('validQrBillsProvider')]
     public function testValidQrBills(string $name, QrBill $qrBill): void
     {
         $variations = [
@@ -79,7 +78,7 @@ final class FpdiOutputTest extends TestCase
     {
         $this->expectException(MissingTraitException::class);
 
-        $qrBill = $this->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',
@@ -101,7 +100,7 @@ final class FpdiOutputTest extends TestCase
     {
         $this->expectException(InvalidFpdfImageFormat::class);
 
-        $qrBill = $this->createQrBill([
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
             'header',
             'creditorInformationQrIban',
             'creditor',

@@ -59,9 +59,9 @@ final class TcPdfOutput extends AbstractOutput
     public function __construct(
         QrBill $qrBill,
         string $language,
-        private TCPDF|Fpdi $tcPdf,
-        private float $offsetX = 0,
-        private float $offsetY = 0
+        private readonly TCPDF|Fpdi $tcPdf,
+        private readonly float $offsetX = 0,
+        private readonly float $offsetY = 0
     ) {
         parent::__construct($qrBill, $language);
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG);
