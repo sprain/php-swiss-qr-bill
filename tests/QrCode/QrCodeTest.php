@@ -127,19 +127,19 @@ final class QrCodeTest extends TestCase
     {
         return [
             'replaceSpecificUnsupportedCharacters' => [
-                'providedString' => '«This is a test!»',
+                'providedString' => 'We ♥ tests!',
                 'replacements' => [
-                    '«' => '"',
-                    '»' => '"'
+                    '♥' => '<3',
                 ],
-                'expectedString' => '"This is a test!"'
+                'expectedString' => 'We <3 tests!'
             ],
             'ignoreReplacementsOfSupportedCharacters' => [
                 'providedString' => '«This is a test!»',
                 'replacements' => [
-                    't' => 'a',
+                    '«' => '"',
+                    '»' => '"',
                 ],
-                'expectedString' => 'This is a test!'
+                'expectedString' => '«This is a test!»'
             ],
         ];
     }
@@ -158,13 +158,13 @@ final class QrCodeTest extends TestCase
     public static function unsupportedCharactersProvider(): array
     {
         return [
-            'keepAllAllowedCharacters' => [
-                'providedString' => 'a-zA-Z0-9.,;:\'+-/()?*[]{}|`´~!"#%&<>÷=@_$£^àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ',
-                'expectedString' => 'a-zA-Z0-9.,;:\'+-/()?*[]{}|`´~!"#%&<>÷=@_$£^àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ'
+            'keepAllowedCharacters' => [
+                'providedString' => 'a-zA-Z0-9.,;:\'+-/()?*[]{}|`´~!"#%&<>÷=@_$£^àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑȘșȚț€©',
+                'expectedString' => 'a-zA-Z0-9.,;:\'+-/()?*[]{}|`´~!"#%&<>÷=@_$£^àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑȘșȚț€©'
             ],
             'removeUnallowedCharacters' => [
-                'providedString' => '«This is a test!»',
-                'expectedString' => 'This is a test!'
+                'providedString' => 'We ♥ tests!',
+                'expectedString' => 'We  tests!'
             ],
         ];
     }
