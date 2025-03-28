@@ -89,7 +89,7 @@ The repository contains the official specifications the library is based on:
 For more official information see
 - [https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/qr-bill.html](https://www.six-group.com/en/products-services/banking-services/payment-standardization/standards/qr-bill.html)
 
-## For contributors of this libray
+## For contributors of this library
 
 How to generate new test data:
 
