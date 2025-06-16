@@ -75,14 +75,14 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('amount', [
-            new Assert\Range([
-                'min' => 0,
-                'max'=> 999999999.99
-            ]),
+            new Assert\Range(
+                min: 0,
+                max: 999999999.99
+            ),
         ]);
 
         $metadata->addPropertyConstraints('currency', [
-            new Assert\Choice([
+            new Assert\Choice(choices: [
                 self::CURRENCY_CHF,
                 self::CURRENCY_EUR
             ])

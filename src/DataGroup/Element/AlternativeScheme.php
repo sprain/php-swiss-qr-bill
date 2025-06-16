@@ -45,9 +45,9 @@ final class AlternativeScheme implements QrCodeableInterface, SelfValidatableInt
     {
         $metadata->addPropertyConstraints('parameter', [
             new Assert\NotBlank(),
-            new Assert\Length([
-                'max' => 100
-            ])
+            new Assert\Length(
+                max: 100
+            )
         ]);
     }
 }

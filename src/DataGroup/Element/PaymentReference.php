@@ -72,39 +72,37 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
         $metadata->setGroupSequenceProvider(true);
 
         $metadata->addPropertyConstraints('type', [
-            new Assert\NotBlank([
-                'groups' => ['default']
-            ]),
-            new Assert\Choice([
-                'groups' => ['default'],
-                'choices' => [
+            new Assert\NotBlank(groups: ['default']),
+            new Assert\Choice(
+                groups: ['default'],
+                choices: [
                     self::TYPE_QR,
                     self::TYPE_SCOR,
                     self::TYPE_NON
                 ]
-            ])
+            )
         ]);
 
         $metadata->addPropertyConstraints('reference', [
             /** @phpstan-ignore-next-line because docs do not match bc compatible syntax */
-            new Assert\Type([
-                'type' => 'alnum',
-                'groups' => [self::TYPE_QR]
-            ]),
-            new Assert\NotBlank([
-                'groups' => [self::TYPE_QR, self::TYPE_SCOR]
-            ]),
-            new Assert\Length([
-                'min' => 27,
-                'max' => 27,
-                'groups' => [self::TYPE_QR]
-            ]),
-            new Assert\Blank([
-                'groups' => [self::TYPE_NON]
-            ]),
-            new ValidCreditorReference([
-                'groups' => [self::TYPE_SCOR]
-            ])
+            new Assert\Type(
+                type: 'alnum',
+                groups: [self::TYPE_QR]
+            ),
+            new Assert\NotBlank(
+                groups: [self::TYPE_QR, self::TYPE_SCOR]
+            ),
+            new Assert\Length(
+                min: 27,
+                max: 27,
+                groups: [self::TYPE_QR]
+            ),
+            new Assert\Blank(
+                groups: [self::TYPE_NON]
+            ),
+            new ValidCreditorReference(
+                groups: [self::TYPE_SCOR]
+            )
         ]);
     }
 

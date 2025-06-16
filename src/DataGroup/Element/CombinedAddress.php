@@ -124,22 +124,22 @@ class CombinedAddress extends Address implements AddressInterface, SelfValidatab
     {
         $metadata->addPropertyConstraints('name', [
             new Assert\NotBlank(),
-            new Assert\Length([
-                'max' => 70
-            ])
+            new Assert\Length(
+                max: 70
+            )
         ]);
 
         $metadata->addPropertyConstraints('addressLine1', [
-            new Assert\Length([
-                'max' => 70
-            ])
+            new Assert\Length(
+                max: 70
+            )
         ]);
 
         $metadata->addPropertyConstraints('addressLine2', [
             new Assert\NotBlank(),
-            new Assert\Length([
-                'max' => 70
-            ])
+            new Assert\Length(
+                max: 70
+            )
         ]);
 
         $metadata->addPropertyConstraints('country', [
