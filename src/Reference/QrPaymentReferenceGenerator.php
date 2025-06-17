@@ -74,21 +74,21 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
     {
         $metadata->addPropertyConstraints('customerIdentificationNumber', [
             // Only numbers are allowed (including leading zeros)
-            new Assert\Regex([
-                'pattern' => '/^\d*$/',
-                'match' => true
-            ]),
-            new Assert\Length([
-                'max' => 11
-            ]),
+            new Assert\Regex(
+                pattern: '/^\d*$/',
+                match: true
+            ),
+            new Assert\Length(
+                max: 11
+            ),
         ]);
 
         $metadata->addPropertyConstraints('referenceNumber', [
-            new Assert\Regex([
-                'pattern' => '/^\d*$/',
-                'match' => true,
-                'message' => 'The reference number must not contain any non-numeric characters.'
-            ]),
+            new Assert\Regex(
+                pattern: '/^\d*$/',
+                match: true,
+                message: 'The reference number must not contain any non-numeric characters.'
+            ),
             new Assert\NotBlank()
         ]);
 
