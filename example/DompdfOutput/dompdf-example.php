@@ -29,6 +29,7 @@ $html = $output
 $dompdf = new Dompdf();
 $dompdf->setPaper('A4', 'portrait');
 
+// important: needs UTF-8
 $html = <<<EOT
 <!DOCTYPE html>
 <html>
@@ -43,10 +44,8 @@ EOT;
 $dompdf->loadHtml($html, 'UTF-8');
 $dompdf->render();
 
-$output = $dompdf->output();
-
 // 5. For demo purposes, let's save the generated example in a file
 $examplePath = __DIR__ . '/dompdf-example.pdf';
-file_put_contents($examplePath, $output);
+file_put_contents($examplePath, $dompdf->output());
 
 print 'Dompdf example created here: ' . $examplePath;

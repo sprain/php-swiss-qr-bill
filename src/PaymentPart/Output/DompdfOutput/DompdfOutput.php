@@ -43,7 +43,8 @@ final class DompdfOutput extends AbstractOutput
         return $html;
     }
 
-    private function getTemplate() {
+    private function getTemplate(): string
+    {
         $options = $this->getDisplayOptions();
 
         $font = self::FONT_UNICODE;
