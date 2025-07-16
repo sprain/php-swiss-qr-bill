@@ -10,80 +10,76 @@ use Dompdf\Dompdf;
 
 final class DompdfOutput extends AbstractOutput
 {
-    private Dompdf $dompdf;
     private HtmlOutput $htmlOutput;
-    private string $baseHtml;
+    private const FONT_UNICODE = 'zapfdingbats';
+    private const FONT_UNICODE_CHAR_SCISSORS = '"';
+    private const FONT_UNICODE_CHAR_DOWN_ARROW = 't';
 
-    private const FONT_UNICODE = 'DejaVu Sans, sans-serif';
-    private const FONT_UNICODE_CHAR_SCISSORS = '✂';
-    private const FONT_UNICODE_CHAR_DOWN_ARROW = '▼';
-
-    public function __construct(
-        QrBill $qrBill,
-        string $language,
-        Dompdf $dompdf,
-        string $baseHtml = '<qrbill />'
-    ) {
+    public function __construct(QrBill $qrBill, string $language) {
         parent::__construct($qrBill, $language);
-        $this->dompdf = $dompdf;
-        $this->baseHtml = $baseHtml;
         $this->htmlOutput = (new HtmlOutput($qrBill, $language));
     }
 
     public function getPaymentPart(): ?string
     {
-        // SVG is not compatible with Dompdf for now
-        $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
-
         $options = $this->getDisplayOptions();
+
         $html = $this->htmlOutput
             ->setDisplayOptions($options)
-            ->setQrCodeImageFormat($this->getQrCodeImageFormat())
+            // SVG is not compatible with Dompdf for now
+            ->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG)
             ->getPaymentPart();
 
         // add custom styles
-        $font = self::FONT_UNICODE;
-        $scissorsLeft = $options->isPositionScissorsAtBottom() ? '2.6mm' : '-0.9mm';
-        $html .= <<<EOT
-        <style type="text/css">
-            html {
-                margin: 0;
-            }
-            #qr-bill-separate-info:before,
-            #qr-bill-separate-info-text:before,
-            #qr-bill-separate-info-text:after,
-            #qr-bill #qr-bill-scissors {
-                font-family: $font !important;
-            }
-            #qr-bill-separate-info:before {
-                top: 3.0mm;
-            }
-            #qr-bill-scissors {
-                left: $scissorsLeft;
-            }
-            #qr-bill {
-                position: absolute;
-                bottom: 104mm;
-            }
-            #qr-bill-currency {
-                float: none !important;
-                display: inline-block;
-            }
-            #qr-bill-amount {
-                display: inline-block;
-            }
-        </style>
-EOT;
+        $html .= $this->getTemplate();
 
-        $data = str_ireplace(['<qrbill />', '<qrbill/>', '<qrbill></qrbill>'], $html, $this->baseHtml);
+        // replace base HTML special chars with the Dompdf-compatible ones
         $mapping = [
             '\\2702' => self::FONT_UNICODE_CHAR_SCISSORS,
             '\\25BC' => self::FONT_UNICODE_CHAR_DOWN_ARROW,
             '&#9986;' => self::FONT_UNICODE_CHAR_SCISSORS
         ];
-        $data = str_replace(array_keys($mapping), array_values($mapping), $data);
-        $this->dompdf->loadHtml($data, 'UTF-8');
+        $html = str_replace(array_keys($mapping), array_values($mapping), $html);
 
-        return null;
+        return $html;
+    }
+
+
+    private function getTemplate() {
+        $options = $this->getDisplayOptions();
+
+        $font = self::FONT_UNICODE;
+        $scissorsLeft = $options->isPositionScissorsAtBottom() ? '2.6mm' : '-0.9mm';
+
+        return <<<EOT
+<style type="text/css">
+    html {
+        margin: 0;
+    }
+    #qr-bill-separate-info:before,
+    #qr-bill-separate-info-text:before,
+    #qr-bill-separate-info-text:after,
+    #qr-bill #qr-bill-scissors {
+        font-family: $font !important;
+    }
+    #qr-bill-separate-info:before {
+        top: 3.0mm;
+    }
+    #qr-bill-scissors {
+        left: $scissorsLeft;
+    }
+    #qr-bill {
+        position: absolute;
+        bottom: 104mm;
+    }
+    #qr-bill-currency {
+        float: none !important;
+        display: inline-block;
+    }
+    #qr-bill-amount {
+        display: inline-block;
+    }
+</style>
+EOT;
     }
 }
