@@ -43,7 +43,6 @@ final class DompdfOutput extends AbstractOutput
         return $html;
     }
 
-
     private function getTemplate() {
         $options = $this->getDisplayOptions();
 
@@ -60,6 +59,13 @@ final class DompdfOutput extends AbstractOutput
     #qr-bill-separate-info-text:after,
     #qr-bill #qr-bill-scissors {
         font-family: $font !important;
+    }
+    #qr-bill-separate-info-text:before {
+        margin-right: -6mm;
+    }
+    #qr-bill-separate-info-text:before,
+    #qr-bill-separate-info-text:after {
+        letter-spacing: 0.7mm;
     }
     #qr-bill-separate-info:before {
         top: 3.0mm;
