@@ -6,7 +6,6 @@ use Sprain\SwissQrBill\PaymentPart\Output\AbstractOutput;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\QrCode\QrCode;
 use Sprain\SwissQrBill\QrBill;
-use Dompdf\Dompdf;
 
 final class DompdfOutput extends AbstractOutput
 {
