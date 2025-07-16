@@ -14,7 +14,8 @@ final class DompdfOutput extends AbstractOutput
     private const FONT_UNICODE_CHAR_SCISSORS = '"';
     private const FONT_UNICODE_CHAR_DOWN_ARROW = 't';
 
-    public function __construct(QrBill $qrBill, string $language) {
+    public function __construct(QrBill $qrBill, string $language)
+    {
         parent::__construct($qrBill, $language);
         $this->htmlOutput = (new HtmlOutput($qrBill, $language));
     }
