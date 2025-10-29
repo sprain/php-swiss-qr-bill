@@ -211,7 +211,7 @@ class QrBillTestDataRepository
     {
         $qrBill->setUltimateDebtor(CombinedAddress::create(
             'Jôachim Kräutłą',
-            'Ewigérmeisterstrasse 20',
+            '€wigérmeisterstrasse 20',
             '80331 München',
             'DE'
         ));
