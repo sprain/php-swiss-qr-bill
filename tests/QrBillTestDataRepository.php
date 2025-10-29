@@ -282,7 +282,7 @@ class QrBillTestDataRepository
             'Street of the Mighty Long Names Where Heroes Live and Villans Die',
             '75',
             '1000',
-            'Lausanne  Lausanne au bord du lac, où le soleil brille encore la nuit',
+            'Lausanne au bord du lac',
             'CH'
         );
     }
