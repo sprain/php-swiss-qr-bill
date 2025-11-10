@@ -4,7 +4,7 @@ namespace Sprain\Tests\SwissQrBill;
 
 trait TraitValidQrBillsProvider
 {
-    protected bool $regenerateReferenceFiles = true;
+    protected bool $regenerateReferenceFiles = false;
 
     public static function validQrBillsProvider(): array
     {

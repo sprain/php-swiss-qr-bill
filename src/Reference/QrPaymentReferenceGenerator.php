@@ -39,10 +39,10 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
             );
         }
 
-        $completeReferenceNumber  = $this->getCustomerIdentificationNumber();
+        $completeReferenceNumber  = $this->customerIdentificationNumber;
 
         $strlen = $completeReferenceNumber ? strlen($completeReferenceNumber) : 0;
-        $completeReferenceNumber .= str_pad($this->getReferenceNumber(), 26 - $strlen, '0', STR_PAD_LEFT);
+        $completeReferenceNumber .= str_pad($this->referenceNumber, 26 - $strlen, '0', STR_PAD_LEFT);
         $completeReferenceNumber .= $this->modulo10($completeReferenceNumber);
 
         return $completeReferenceNumber;
