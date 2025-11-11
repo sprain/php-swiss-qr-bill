@@ -21,10 +21,7 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $qrPaymentReferenceGenerator->doGenerate();
     }
 
-    /**
-     * @internal Will be made private in v5. Use QrPaymentReferenceGenerator::generate() instead.
-     */
-    public function __construct(
+    private function __construct(
         private ?string $customerIdentificationNumber,
         private string $referenceNumber
     ) {
@@ -34,26 +31,7 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         $this->referenceNumber = StringModifier::stripWhitespace($referenceNumber);
     }
 
-    /**
-     * @deprecated Will be removed in v5.
-     */
-    public function getCustomerIdentificationNumber(): ?string
-    {
-        return $this->customerIdentificationNumber;
-    }
-
-    /**
-     * @deprecated Will be removed in v5.
-     */
-    public function getReferenceNumber(): string
-    {
-        return $this->referenceNumber;
-    }
-
-    /**
-     * @internal Will be made private in v5. Use QrPaymentReferenceGenerator::generate() instead.
-     */
-    public function doGenerate(): string
+    private function doGenerate(): string
     {
         if (!$this->isValid()) {
             throw new InvalidQrPaymentReferenceException(
@@ -61,10 +39,10 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
             );
         }
 
-        $completeReferenceNumber  = $this->getCustomerIdentificationNumber();
+        $completeReferenceNumber  = $this->customerIdentificationNumber;
 
         $strlen = $completeReferenceNumber ? strlen($completeReferenceNumber) : 0;
-        $completeReferenceNumber .= str_pad($this->getReferenceNumber(), 26 - $strlen, '0', STR_PAD_LEFT);
+        $completeReferenceNumber .= str_pad($this->referenceNumber, 26 - $strlen, '0', STR_PAD_LEFT);
         $completeReferenceNumber .= $this->modulo10($completeReferenceNumber);
 
         return $completeReferenceNumber;

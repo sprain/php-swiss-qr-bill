@@ -18,12 +18,12 @@ CH
 
 25.90
 CHF
-K
+S
 Jôachim Kräutłą
 €wigérmeisterstrasse 20
-80331 München
-
-
+20
+80331
+München
 DE
 QRR
 123456789012345678901234567

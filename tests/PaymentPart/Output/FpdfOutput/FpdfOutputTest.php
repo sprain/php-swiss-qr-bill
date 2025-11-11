@@ -59,10 +59,20 @@ final class FpdfOutputTest extends TestCase
             $fpdf->AddPage();
 
             $output = new FpdfOutput($qrBill, 'en', $fpdf);
+
+
+            try {
             $output
                 ->setDisplayOptions($variation['layout'])
                 ->setQrCodeImageFormat($variation['format'])
                 ->getPaymentPart();
+
+            } catch (\Exception) {
+                foreach ($qrBill->getViolations() as $violation) {
+                    print $violation->getMessage()."\n";
+                }
+                exit;
+            }
 
             if ($this->regenerateReferenceFiles) {
                 $fpdf->Output($file, 'F');
@@ -152,7 +162,7 @@ final class FpdfOutputTest extends TestCase
 
     public function testItThrowsUnsupportedEnvironmentException(): void
     {
-        if ((bool)ini_get('allow_url_fopen')) {
+        if (ini_get('allow_url_fopen')) {
             $this->markTestSkipped("This test only works in hardened environment.");
         }
 

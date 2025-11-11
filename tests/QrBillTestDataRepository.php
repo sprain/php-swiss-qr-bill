@@ -6,7 +6,6 @@ namespace Sprain\Tests\SwissQrBill;
 
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\DataGroup\Element\Header;
-use Sprain\SwissQrBill\DataGroup\Element\CombinedAddress;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\DataGroup\Element\AlternativeScheme;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
@@ -189,7 +188,7 @@ class QrBillTestDataRepository
 
     public function ultimateDebtor(QrBill &$qrBill): void
     {
-        $qrBill->setUltimateDebtor($this->combinedAddress());
+        $qrBill->setUltimateDebtor($this->structuredAddress());
     }
 
     public function ultimateDebtorLong(QrBill &$qrBill): void
@@ -199,20 +198,24 @@ class QrBillTestDataRepository
 
     public function internationalUltimateDebtor(QrBill &$qrBill): void
     {
-        $qrBill->setUltimateDebtor(CombinedAddress::create(
+        $qrBill->setUltimateDebtor(StructuredAddress::createWithStreet(
             'Joachim Kraut',
             'Ewigermeisterstrasse 20',
-            '80331 München',
+            '20',
+            '80331',
+            'München',
             'DE'
         ));
     }
 
     public function utf8SpecialCharsUltimateDebtor(QrBill &$qrBill): void
     {
-        $qrBill->setUltimateDebtor(CombinedAddress::create(
+        $qrBill->setUltimateDebtor(StructuredAddress::createWithStreet(
             'Jôachim Kräutłą',
             '€wigérmeisterstrasse 20',
-            '80331 München',
+            '20',
+            '80331',
+            'München',
             'DE'
         ));
     }
@@ -260,49 +263,47 @@ class QrBillTestDataRepository
         );
     }
 
-    public function combinedAddress(): CombinedAddress
+    public function mediumLongAddress(): StructuredAddress
     {
-        return CombinedAddress::create(
-            'Thomas LeClaire',
-            'Rue examplaire 22a',
-            '1000 Lausanne',
-            'CH'
-        );
-    }
-
-    public function mediumLongAddress(): CombinedAddress
-    {
-        return CombinedAddress::create(
+        return StructuredAddress::createWithStreet(
             'Heaps of Characters International Trading Company of Switzerland GmbH',
             'Rue examplaire 22a',
-            '1000 Lausanne',
+            null,
+            '1000',
+            'Lausanne',
             'CH'
         );
     }
 
-    public function longAddress(): CombinedAddress
+    public function longAddress(): StructuredAddress
     {
-        return CombinedAddress::create(
+        return StructuredAddress::createWithStreet(
             'Heaps of Characters International Trading Company of Switzerland GmbH',
-            'Street of the Mighty Long Names Where Heroes Live and Villans Die 75',
-            '1000 Lausanne au bord du lac, où le soleil brille encore la nuit',
+            'Street of the Mighty Long Names Where Heroes Live and Villans Die',
+            '75',
+            '1000',
+            'Lausanne au bord du lac',
             'CH'
         );
     }
 
-    public function addressWithUnsupportedCharacters(): CombinedAddress
+    public function addressWithUnsupportedCharacters(): StructuredAddress
     {
-        return CombinedAddress::create(
+        return StructuredAddress::createWithStreet(
             'Team «We ♥ tests!»',
             'Rue examplaire 22a',
-            '1000 Lausanne',
+            null,
+            '1000',
+            'Lausanne',
             'CH'
         );
     }
 
-    public function invalidAddress(): CombinedAddress
+    public function invalidAddress(): StructuredAddress
     {
-        return CombinedAddress::create(
+        return StructuredAddress::createWithStreet(
+            '',
+            '',
             '',
             '',
             '',

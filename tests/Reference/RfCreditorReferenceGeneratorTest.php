@@ -6,15 +6,14 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Sprain\SwissQrBill\Reference\RfCreditorReferenceGenerator;
 use PHPUnit\Framework\TestCase;
 use Sprain\SwissQrBill\String\StringModifier;
+use Sprain\SwissQrBill\Validator\Exception\InvalidCreditorReferenceException;
 
 final class RfCreditorReferenceGeneratorTest extends TestCase
 {
     #[DataProvider('rfCreditorReferenceProvider')]
     public function testMakesResultsViaConstructor(string $input): void
     {
-        $generator = new RfCreditorReferenceGenerator($input);
-
-        $output = $generator->doGenerate();
+        $output = RfCreditorReferenceGenerator::generate($input);
 
         $this->assertStringContainsStringIgnoringCase(
             StringModifier::stripWhitespace($input),
@@ -46,9 +45,9 @@ final class RfCreditorReferenceGeneratorTest extends TestCase
     #[DataProvider('invalidReferenceProvider')]
     public function testInvalidReference(string $input): void
     {
-        $generator = new RfCreditorReferenceGenerator($input);
+        $this->expectException(InvalidCreditorReferenceException::class);
 
-        $this->assertGreaterThan(0, $generator->getViolations()->count());
+        RfCreditorReferenceGenerator::generate($input);
     }
 
     public static function invalidReferenceProvider(): array

@@ -113,14 +113,6 @@ final class QrCode
         $this->getQrCodeResult()->saveToFile($path);
     }
 
-    /**
-     * @deprecated Will be removed in v5. Use getDataUri() instead.
-     */
-    public function writeDataUri(): string
-    {
-        return $this->getDataUri();
-    }
-
     public function getDataUri(string $format = self::FILE_FORMAT_SVG): string
     {
         $this->setWriterByExtension($format);
