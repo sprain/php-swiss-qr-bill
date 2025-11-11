@@ -86,11 +86,10 @@ final class ValidCreditorInformationPaymentReferenceCombinationTest extends Cons
             $this->getPaymentReferenceMock($paymentReferenceType)
         );
 
-        $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination([
-            'message' => 'myMessage',
-        ]));
+        $constraint = new ValidCreditorInformationPaymentReferenceCombination();
+        $this->validator->validate($qrBillMock, $constraint);
 
-        $this->buildViolation('myMessage')
+        $this->buildViolation($constraint->message)
             ->setParameter('{{ referenceType }}', $qrBillMock->getPaymentReference()->getType())
             ->setParameter('{{ iban }}', $qrBillMock->getCreditorInformation()->getIban())
             ->assertRaised();
