@@ -62,23 +62,34 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         ]);
 
         $metadata->addPropertyConstraints('referenceNumber', [
-            // Only numbers are allowed (including leading zeros)
             new Assert\Regex([
                 'pattern' => '/^\d*$/',
-                'match' => true
+                'match' => true,
+                'message' => 'The reference number must not contain any non-numeric characters.'
             ]),
             new Assert\NotBlank()
         ]);
 
-        $metadata->addConstraint(new Assert\Callback('validateFullReference'));
+        $metadata->addConstraint(new Assert\Callback('validateFullReferenceLength'));
+        $metadata->addConstraint(new Assert\Callback('validateNotExclusivelyZeros'));
     }
 
-    public function validateFullReference(ExecutionContextInterface $context): void
+    public function validateFullReferenceLength(ExecutionContextInterface $context): void
     {
         $strlenCustomerIdentificationNumber = $this->customerIdentificationNumber ? strlen($this->customerIdentificationNumber) : 0;
 
         if ($strlenCustomerIdentificationNumber + strlen($this->referenceNumber) > 26) {
-            $context->buildViolation('The length of customer identification number + reference number may not exceed 26 characters in total.')
+            $context->buildViolation('The length of customer identification number + reference number must not exceed 26 characters in total.')
+                ->addViolation();
+        }
+    }
+
+    public function validateNotExclusivelyZeros(ExecutionContextInterface $context): void
+    {
+        $regex = '/^0*$/';
+
+        if (preg_match($regex, ($this->customerIdentificationNumber ?? '0')) && preg_match($regex, $this->referenceNumber)) {
+            $context->buildViolation('The qr reference must not consist exclusively of zeros.')
                 ->addViolation();
         }
     }
