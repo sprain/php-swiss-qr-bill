@@ -7,7 +7,7 @@
         "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0",
         "ext-dom": "*",
         "ext-bcmath": "*",
-        "symfony/validator": "^4.4|^5.0|^6.0|^7.0|v8.0.0-BETA2",
+        "symfony/validator": "^6.3|^7.0|v8.0.0-BETA2",
         "symfony/intl": "^4.4|^5.0|^6.0|^7.0|v8.0.0-BETA2",
         "kmukku/php-iso11649": "^1.5",
         "endroid/qr-code": "^4.4.4|^5.0|^6.0",
