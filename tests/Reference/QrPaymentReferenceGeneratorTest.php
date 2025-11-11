@@ -12,12 +12,12 @@ final class QrPaymentReferenceGeneratorTest extends TestCase
     #[DataProvider('qrPaymentReferenceProvider')]
     public function testMakesResultsViaConstructor(?string $customerIdentification, string $referenceNumber, string $expectedResult): void
     {
-        $qrReference = new QrPaymentReferenceGenerator(
+        $qrReference = QrPaymentReferenceGenerator::generate(
             $customerIdentification,
             $referenceNumber
         );
 
-        $this->assertSame($expectedResult, $qrReference->doGenerate());
+        $this->assertSame($expectedResult, $qrReference);
     }
 
     #[DataProvider('qrPaymentReferenceProvider')]

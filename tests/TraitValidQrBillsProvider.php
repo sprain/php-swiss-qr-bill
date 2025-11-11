@@ -96,6 +96,16 @@ trait TraitValidQrBillsProvider
                     'ultimateDebtor'
                 ])
             ],
+            ['qr-special-chars-ultimate-debtor',
+                $creator->createQrBill([
+                    'header',
+                    'creditorInformationQrIban',
+                    'creditor',
+                    'paymentAmountInformation',
+                    'paymentReferenceQr',
+                    'utf8SpecialCharsUltimateDebtor'
+                ])
+            ],
             ['qr-international-ultimate-debtor',
                 $creator->createQrBill([
                     'header',

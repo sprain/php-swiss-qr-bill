@@ -6,7 +6,7 @@ on:
 
 jobs:
   run_tests:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -48,7 +48,7 @@ jobs:
         run: php -d allow_url_fopen=0 -d memory_limit=256M -d register_globals=0 vendor/bin/phpunit
 
   code_checks:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     name: Static code analysis
 
     steps:

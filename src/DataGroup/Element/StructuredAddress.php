@@ -3,18 +3,19 @@
 namespace Sprain\SwissQrBill\DataGroup\Element;
 
 use Sprain\SwissQrBill\DataGroup\AddressInterface;
-use Sprain\SwissQrBill\DataGroup\Element\Abstracts\Address;
 use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
+use Sprain\SwissQrBill\String\StringModifier;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-final class StructuredAddress extends Address implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
+final class StructuredAddress implements AddressInterface, SelfValidatableInterface, QrCodeableInterface
 {
     use SelfValidatableTrait;
 
     public const ADDRESS_TYPE = 'S';
+    private const MAX_CHARS_PER_LINE_ON_RECEIPT = 40;
 
     private function __construct(
         /**
@@ -25,12 +26,14 @@ final class StructuredAddress extends Address implements AddressInterface, SelfV
         /**
          * Street / P.O. box
          *
-         * May not include building or house number.
+         * Is allowed to also include the building number.
          */
         private ?string $street,
 
         /**
          * Building number
+         *
+         * If not already provided in $street.         *
          */
         private ?string $buildingNumber,
 
@@ -198,5 +201,48 @@ final class StructuredAddress extends Address implements AddressInterface, SelfV
             new Assert\NotBlank(),
             new Assert\Country()
         ]);
+    }
+
+    private static function normalizeString(?string $string): ?string
+    {
+        if (is_null($string)) {
+            return null;
+        }
+
+        $string = trim($string);
+        $string = StringModifier::replaceLineBreaksAndTabsWithSpaces($string);
+        return StringModifier::replaceMultipleSpacesWithOne($string);
+    }
+
+    /**
+     * @param string[] $lines
+     * @return string[]
+     */
+    private static function clearMultilines(array $lines): array
+    {
+        $noOfLongLines = 0;
+
+        foreach ($lines as $line) {
+            if (self::willBeMoreThanOneLineOnReceipt($line)) {
+                $noOfLongLines++;
+            }
+        }
+
+        if ($noOfLongLines > 0) {
+            if (isset($lines[2])) {
+                unset($lines[2]);
+            }
+        }
+
+        if ($noOfLongLines > 1) {
+            unset($lines[3]);
+        }
+
+        return $lines;
+    }
+
+    private static function willBeMoreThanOneLineOnReceipt(string $string): bool
+    {
+        return mb_strlen($string) > self::MAX_CHARS_PER_LINE_ON_RECEIPT;
     }
 }

@@ -20,7 +20,7 @@ final class QrCode
     public const FILE_FORMAT_PNG = 'png';
     public const FILE_FORMAT_SVG = 'svg';
 
-    public const SUPPORTED_CHARACTERS = 'a-zA-Z0-9.,;:\'"+\-\/()?*\[\]{}|`´~ !^#%&<>÷=@_$£àáâäçèéêëìíîïñòóôöùúûüýßÀÁÂÄÇÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÑ';
+    public const SUPPORTED_CHARACTERS = '\x20-\x7E\xA0-\xFF\x{0100}-\x{017F}\x{0218}\x{0219}\x{021A}\x{021B}\x{20AC}';
 
     private const SUPPORTED_FILE_FORMATS = [
         self::FILE_FORMAT_PNG,
@@ -111,14 +111,6 @@ final class QrCode
         $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
         $this->setWriterByExtension($extension);
         $this->getQrCodeResult()->saveToFile($path);
-    }
-
-    /**
-     * @deprecated Will be removed in v5. Use getDataUri() instead.
-     */
-    public function writeDataUri(): string
-    {
-        return $this->getDataUri();
     }
 
     public function getDataUri(string $format = self::FILE_FORMAT_SVG): string
