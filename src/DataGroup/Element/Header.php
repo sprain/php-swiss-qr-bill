@@ -71,28 +71,28 @@ final class Header implements QrCodeableInterface, SelfValidatableInterface
         // Fixed length, three-digit, alphanumeric
         $metadata->addPropertyConstraints('qrType', [
             new Assert\NotBlank(),
-            new Assert\Regex([
-                'pattern' => '/^[a-zA-Z0-9]{3}$/',
-                'match' => true
-            ])
+            new Assert\Regex(
+                pattern: '/^[a-zA-Z0-9]{3}$/',
+                match: true
+            )
         ]);
 
         // Fixed length, four-digit, numeric
         $metadata->addPropertyConstraints('version', [
             new Assert\NotBlank(),
-            new Assert\Regex([
-                'pattern' => '/^\d{4}$/',
-                'match' => true
-            ])
+            new Assert\Regex(
+                pattern: '/^\d{4}$/',
+                match: true
+            )
         ]);
 
         // One-digit, numeric
         $metadata->addPropertyConstraints('coding', [
             new Assert\NotBlank(),
-            new Assert\Regex([
-                'pattern' => '/^\d{1}$/',
-                'match' => true
-            ])
+            new Assert\Regex(
+                pattern: '/^\d{1}$/',
+                match: true
+            )
         ]);
     }
 }
