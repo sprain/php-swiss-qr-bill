@@ -72,15 +72,15 @@ final class AdditionalInformation implements QrCodeableInterface, SelfValidatabl
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('message', [
-            new Assert\Length([
-                'max' => 140
-            ])
+            new Assert\Length(
+                max: 140
+            )
         ]);
 
         $metadata->addPropertyConstraints('billInformation', [
-            new Assert\Length([
-                'max' => 140
-            ])
+            new Assert\Length(
+                max: 140
+            )
         ]);
     }
 }
