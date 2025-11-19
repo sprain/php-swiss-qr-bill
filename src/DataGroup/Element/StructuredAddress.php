@@ -166,35 +166,35 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
     {
         $metadata->addPropertyConstraints('name', [
             new Assert\NotBlank(),
-            new Assert\Length([
-                'max' => 70
-            ])
+            new Assert\Length(
+                max: 70
+            )
         ]);
 
         $metadata->addPropertyConstraints('street', [
-            new Assert\Length([
-                'max' => 70
-            ])
+            new Assert\Length(
+                max: 70
+            )
         ]);
 
         $metadata->addPropertyConstraints('buildingNumber', [
-            new Assert\Length([
-                'max' => 16
-            ])
+            new Assert\Length(
+                max: 16
+            )
         ]);
 
         $metadata->addPropertyConstraints('postalCode', [
             new Assert\NotBlank(),
-            new Assert\Length([
-                'max' => 16
-            ])
+            new Assert\Length(
+                max: 16
+            )
         ]);
 
         $metadata->addPropertyConstraints('city', [
             new Assert\NotBlank(),
-            new Assert\Length([
-                'max' => 35
-            ])
+            new Assert\Length(
+                max: 35
+            )
         ]);
 
         $metadata->addPropertyConstraints('country', [

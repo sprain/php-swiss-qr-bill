@@ -284,12 +284,12 @@ final class QrBill implements SelfValidatableInterface
         ]);
 
         $metadata->addPropertyConstraints('alternativeSchemes', [
-            new Assert\Count([
-                'max' => 2
-            ]),
-            new Assert\Valid([
-                'traverse' => true
-            ])
+            new Assert\Count(
+                max: 2
+            ),
+            new Assert\Valid(
+                traverse: true
+            )
         ]);
     }
 }
