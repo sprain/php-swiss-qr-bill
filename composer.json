@@ -7,8 +7,8 @@
         "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0|~8.5.0",
         "ext-dom": "*",
         "ext-bcmath": "*",
-        "symfony/validator": "^4.4|^5.0|^6.0|^7.0",
-        "symfony/intl": "^4.4|^5.0|^6.0|^7.0",
+        "symfony/validator": "^6.3|^7.0|^8.0",
+        "symfony/intl": "^6.3|^7.0|^8.0",
         "kmukku/php-iso11649": "^1.5",
         "endroid/qr-code": "^4.4.4|^5.0|^6.0",
         "symfony/polyfill-intl-icu": "^1.23",
@@ -34,9 +34,6 @@
         "phpstan": "vendor/bin/phpstan analyse",
         "phpunit": "vendor/bin/phpunit",
         "rector": "vendor/bin/rector"
-    },
-    "conflict": {
-        "khanamiryan/qrcode-detector-decoder": "1.0.6"
     },
     "suggest": {
         "tecnickcom/tcpdf": "Needed to create pdfs with TcPdfOutput",

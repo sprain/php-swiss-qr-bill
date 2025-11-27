@@ -48,11 +48,10 @@ final class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
     #[DataProvider('getInvalidCreditorReferences')]
     public function testInvalidCreditorReferences($creditorReference)
     {
-        $this->validator->validate($creditorReference, new ValidCreditorReference([
-            'message' => 'myMessage',
-        ]));
+        $constraint = new ValidCreditorReference();
+        $this->validator->validate($creditorReference, $constraint);
 
-        $this->buildViolation('myMessage')
+        $this->buildViolation($constraint->message)
             ->setParameter('{{ string }}', $creditorReference)
             ->assertRaised();
     }

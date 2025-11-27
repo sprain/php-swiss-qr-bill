@@ -57,10 +57,10 @@ final class CreditorInformation implements QrCodeableInterface, SelfValidatableI
         $metadata->addPropertyConstraints('iban', [
             new Assert\NotBlank(),
             new Assert\Iban(),
-            new Assert\Regex([
-                'pattern' => '/^(CH|LI)/',
-                'match' => true
-            ])
+            new Assert\Regex(
+                pattern: '/^(CH|LI)/',
+                match: true
+            )
         ]);
     }
 }
