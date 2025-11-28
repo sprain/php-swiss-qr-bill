@@ -25,7 +25,7 @@ In a QR IBAN, the *institute id*, which is defined in the 5th to 9th character, 
 * **How do I create QR bills for international IBANs?**<br>
 You can't. The QR bill by specification only supports IBANs from Switzerland and Liechtenstein.
 
-* **How do I support currencies other than CHF or EUR?**<br>
+* **How do I create QR bills for amounts in currencies other than CHF or EUR?**<br>
 You can't. The QR bill by specification only supports CHF and EUR.
 
 * **How do I change translations to use my own wording?**<br>
