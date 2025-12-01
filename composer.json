@@ -18,6 +18,7 @@
         "phpunit/phpunit": "^10.5",
         "dg/bypass-finals": "^1.8",
         "dms/phpunit-arraysubset-asserts": "^0.5",
+        "dompdf/dompdf": "^3.0",
         "fpdf/fpdf": "^1.85",
         "friendsofphp/php-cs-fixer": "^3.15",
         "khanamiryan/qrcode-detector-decoder": "^2.0.2",
@@ -39,7 +40,8 @@
         "tecnickcom/tcpdf": "Needed to create pdfs with TcPdfOutput",
         "fpdf/fpdf": "Needed to create pdfs with FpdfOutput",
         "setasign/fpdi": "Needed to create pdfs with Fpdi",
-        "setasign/fpdf": "Needed to create pdfs with Fpdi"
+        "setasign/fpdf": "Needed to create pdfs with Fpdi",
+        "dompdf/dompdf": "Needed to create pdfs with Dompdf"
     },
     "autoload": {
         "psr-4": {
