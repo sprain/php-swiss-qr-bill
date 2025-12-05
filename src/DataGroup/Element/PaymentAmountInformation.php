@@ -60,14 +60,8 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
 
     public function getQrCodeData(): array
     {
-        if (null !== $this->getAmount()) {
-            $amountOutput = $this->getFormattedAmount();
-        } else {
-            $amountOutput = null;
-        }
-
         return [
-            $amountOutput,
+            $this->getFormattedAmountForQrCode(),
             $this->getCurrency()
         ];
     }
@@ -87,5 +81,15 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
                 self::CURRENCY_EUR
             ])
         ]);
+    }
+
+    private function getFormattedAmountForQrCode(): ?string
+    {
+        if (null === $this->amount) {
+            return null;
+        }
+
+        // Unlike the formatted code for the payment part, the amount in the qr code has no thousands separator
+        return number_format($this->amount, 2, '.', '');
     }
 }
