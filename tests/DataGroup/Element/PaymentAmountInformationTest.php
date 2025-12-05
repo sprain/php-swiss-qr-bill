@@ -81,18 +81,24 @@ final class PaymentAmountInformationTest extends TestCase
         ];
     }
 
-    public function testQrCodeData(): void
+    #[DataProvider('qrCodeDataProvider')]
+    public function testQrCodeData(string $currency, ?float $amount, array $expected): void
     {
         $paymentAmountInformation = PaymentAmountInformation::create(
-            'CHF',
-            25
+            $currency,
+            $amount
         );
 
-        $expected = [
-            '25.00',
-            'CHF'
-        ];
-
         $this->assertSame($expected, $paymentAmountInformation->getQrCodeData());
+    }
+
+    public static function qrCodeDataProvider(): array
+    {
+        return [
+            ['CHF', 25, ['25.00', 'CHF']],
+            ['CHF', 2500, ['2500.00', 'CHF']],
+            ['CHF', null, [null, 'CHF']],
+            ['EUR', 0.2, ['0.20', 'EUR']],
+        ];
     }
 }
