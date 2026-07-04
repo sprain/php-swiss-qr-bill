@@ -32,6 +32,12 @@ use Sprain\SwissQrBill\QrCode\QrCode;
  * corporate font converted with tc-lib-pdf-font), pass their font keys via
  * $fontRegular / $fontBold. The Swiss QR bill style guide permits Arial,
  * Frutiger, Helvetica and Liberation Sans.
+ *
+ * IMPORTANT - page margins: tc-lib-pdf clips text cells to the page's
+ * content region. The payment part occupies the bottom 105 mm of the page
+ * (y = 188-297 mm on A4), so the target page must be created with margins
+ * that do not clip this area (e.g. margin 'CB' = 0). Otherwise parts of
+ * the bill (amount, acceptance point) are silently dropped.
  */
 final class TcLibPdfOutput extends AbstractOutput
 {
