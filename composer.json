@@ -24,6 +24,7 @@
         "phpstan/phpstan": "^1.11-dev",
         "setasign/fpdi": "^2.3.5",
         "setasign/fpdf": "^1.8.2",
+        "tecnickcom/tc-lib-pdf": "^8.20",
         "tecnickcom/tcpdf": "^6.3.2",
         "rector/rector": "^1.2",
         "nunomaduro/mock-final-classes": "^1.2"
