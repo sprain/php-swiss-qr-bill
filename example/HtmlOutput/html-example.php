@@ -11,7 +11,7 @@ require __DIR__ . '/../example.php';
 $output = new HtmlOutput($qrBill, 'en');
 $html = $output->getPaymentPart();
 
-// 4. For demo purposes, let's save the generated example in a file
+// 3. For demo purposes, let's save the generated example in a file
 $examplePath = __DIR__ . '/html-example.html';
 file_put_contents($examplePath, $html);
 
