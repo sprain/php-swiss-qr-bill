@@ -6,6 +6,7 @@ use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableInterface;
 use Sprain\SwissQrBill\Validator\SelfValidatableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 final class PaymentAmountInformation implements QrCodeableInterface, SelfValidatableInterface
@@ -81,6 +82,21 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
                 self::CURRENCY_EUR
             ])
         ]);
+
+        $metadata->addConstraint(new Assert\Callback('validateAmountDecimals'));
+    }
+
+    public function validateAmountDecimals(ExecutionContextInterface $context): void
+    {
+        if (null === $this->amount) {
+            return;
+        }
+
+        if (abs((float) $this->amount - round((float) $this->amount, 2)) > 0) {
+            $context->buildViolation('The amount must not have more than 2 decimal places.')
+                ->atPath('amount')
+                ->addViolation();
+        }
     }
 
     private function getFormattedAmountForQrCode(): ?string

@@ -29,7 +29,8 @@ final class PaymentAmountInformationTest extends TestCase
             [0, 999999999.99],
             [1, -0.01],
             [1, 1999999999.99],
-            // [1, 11.111], @todo: only two decimal places should be allowed
+            [1, 11.111],
+            [1, 11.115],
         ];
     }
 
