@@ -2,6 +2,7 @@
 
 namespace Sprain\SwissQrBill\Constraint;
 
+use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\QrBill;
 use Symfony\Component\Validator\Constraint;
@@ -40,6 +41,15 @@ final class ValidCreditorInformationPaymentReferenceCombinationValidator extends
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ referenceType }}', $paymentReference->getType())
                 ->setParameter('{{ iban }}', $creditorInformation->getIban())
+                ->addViolation();
+
+            return;
+        }
+
+        $currency = $qrBill->getPaymentAmountInformation()?->getCurrency();
+        if (PaymentAmountInformation::CURRENCY_EUR === $currency && $creditorInformation->containsQrIban()) {
+            $this->context->buildViolation($constraint->currencyMessage)
+                ->setParameter('{{ currency }}', $currency)
                 ->addViolation();
         }
     }

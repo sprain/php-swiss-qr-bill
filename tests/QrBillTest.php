@@ -191,6 +191,61 @@ final class QrBillTest extends TestCase
         $this->assertFalse($qrBill->isValid());
     }
 
+    public function testQrIbanAndQrReferenceAreNotAllowedInEur()
+    {
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditor',
+            'paymentAmountInformationEur',
+            'paymentReferenceQr'
+        ]);
+
+        $this->assertFalse($qrBill->isValid());
+        $this->assertCount(1, $qrBill->getViolations());
+        $this->assertSame(
+            'Neither a QR-IBAN nor a payment reference of type "QRR" is allowed for currency "EUR". Use a regular IBAN with a reference of type "SCOR" or "NON" instead.',
+            $qrBill->getViolations()->get(0)->getMessage()
+        );
+    }
+
+    public function testUnsupportedCurrencyWithQrIbanRaisesCurrencyViolationOnly()
+    {
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
+            'header',
+            'creditorInformationQrIban',
+            'creditor',
+            'invalidPaymentAmountInformation',
+            'paymentReferenceQr'
+        ]);
+
+        $this->assertFalse($qrBill->isValid());
+        $this->assertCount(1, $qrBill->getViolations());
+        $this->assertSame('paymentAmountInformation.currency', $qrBill->getViolations()->get(0)->getPropertyPath());
+    }
+
+    #[DataProvider('eurCompatibleReferencesProvider')]
+    public function testIbanIsAllowedInEur(string $paymentReference)
+    {
+        $qrBill = (new QrBillTestDataRepository())->createQrBill([
+            'header',
+            'creditorInformationIban',
+            'creditor',
+            'paymentAmountInformationEur',
+            $paymentReference
+        ]);
+
+        $this->assertTrue($qrBill->isValid());
+    }
+
+    public static function eurCompatibleReferencesProvider(): array
+    {
+        return [
+            ['paymentReferenceScor'],
+            ['paymentReferenceNon'],
+        ];
+    }
+
     public function testOptionalUltimateDebtorMustBeValid()
     {
         $qrBill = (new QrBillTestDataRepository())->createQrBill([
