@@ -193,6 +193,62 @@ final class FpdfOutputTest extends TestCase
         return $matches[1] ?? null;
     }
 
+    public function testOutputIsIndependentOfDocumentState(): void
+    {
+        $qrBill = (new QrBillTestDataRepository())->getQrBillFullSet();
+        $layout = (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true);
+
+        $defaultFpdf = $this->instantiateFpdf();
+        $defaultFpdf->AddPage();
+        $defaultFpdf->SetFont('Courier', 'IU', 20);
+        $expectedContent = $this->getAddedPageContent($defaultFpdf, new FpdfOutput($qrBill, 'en', $defaultFpdf), $layout);
+
+        $fpdf = $this->instantiateFpdf();
+        $fpdf->AddPage();
+        $fpdf->SetFont('Courier', 'IU', 20);
+        $fpdf->SetTextColor(255, 0, 0);
+        $fpdf->SetDrawColor(0, 0, 255);
+        $fpdf->SetFillColor(0, 255, 0);
+        $fpdf->SetLineWidth(1.5);
+        $fpdf->SetAutoPageBreak(true, 30);
+        $fpdf->swissQrBillSetDash(2, 1);
+        $stateBefore = $this->getFpdfState($fpdf);
+
+        $content = $this->getAddedPageContent($fpdf, new FpdfOutput($qrBill, 'en', $fpdf), $layout);
+
+        $this->assertSame($expectedContent, $content);
+        $this->assertSame($stateBefore, $this->getFpdfState($fpdf));
+    }
+
+    /**
+     * Returns the content which the output added to the current page.
+     */
+    private function getAddedPageContent(Fpdf $fpdf, FpdfOutput $output, DisplayOptions $layout): string
+    {
+        $getPage = \Closure::bind(fn (): string => $this->pages[$this->page], $fpdf, $fpdf::class);
+        $before = strlen($getPage());
+
+        $output->setDisplayOptions($layout)->getPaymentPart();
+
+        return substr($getPage(), $before);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getFpdfState(Fpdf $fpdf): array
+    {
+        return \Closure::bind(fn (): array => [
+            'font' => [$this->FontFamily, $this->FontStyle, $this->FontSizePt, $this->FontSize, $this->underline, $this->CurrentFont],
+            // Fonts used by the payment part are added, but the existing fonts must stay intact
+            'fonts' => array_intersect_key($this->fonts, ['courierIU' => true, 'courierI' => true]),
+            'lineWidth' => $this->LineWidth,
+            'colors' => [$this->DrawColor, $this->FillColor, $this->TextColor, $this->ColorFlag],
+            'cellMargin' => $this->cMargin,
+            'pageBreak' => [$this->AutoPageBreak, $this->bMargin, $this->PageBreakTrigger],
+        ], $fpdf, $fpdf::class)();
+    }
+
     private function instantiateFpdf($withMemImageSupport = null, $withBundledTrait = null): Fpdf
     {
         if ($withMemImageSupport === null) {
