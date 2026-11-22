@@ -15,6 +15,10 @@ use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 use Sprain\SwissQrBill\QrBill;
 use TCPDF;
 
+/**
+ * @deprecated TCPDF is superseded by tecnickcom/tc-lib-pdf. Use TcLibPdfOutput instead.
+ *             This output will be removed in an upcoming major release.
+ */
 final class TcPdfOutput extends AbstractOutput
 {
     // TCPDF
