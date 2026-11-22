@@ -52,6 +52,9 @@ final class TcPdfOutput extends AbstractOutput
     private const FONT_SIZE_SCISSORS = 14;
     private const FONT_SIZE_DOWN_ARROW = 10;
 
+    // Cell padding, as set by TCPDF by default: 1 mm left and right (28.35 pt / 10), none at top and bottom
+    private const CELL_PADDING_HORIZONTAL_PT = 2.835;
+
     // Line spacing
     private const LINE_SPACING_RECEIPT = 3.5;
     private const LINE_SPACING_PAYMENT_PART = 4.8;
@@ -71,23 +74,44 @@ final class TcPdfOutput extends AbstractOutput
     {
         $retainCellHeightRatio = $this->tcPdf->getCellHeightRatio();
         $retainAutoPageBreak = $this->tcPdf->getAutoPageBreak();
+        $retainCellPaddings = $this->tcPdf->getCellPaddings();
+        $retainCellMargins = $this->tcPdf->getCellMargins();
 
         $this->tcPdf->SetAutoPageBreak(false);
 
-        $this->addSeparatorContentIfNotPrintable();
+        // The layout relies on the default cell padding and margins of TCPDF
+        $cellPaddingHorizontal = self::CELL_PADDING_HORIZONTAL_PT / $this->tcPdf->getScaleFactor();
+        $this->tcPdf->setCellPaddings($cellPaddingHorizontal, 0, $cellPaddingHorizontal, 0);
+        $this->tcPdf->setCellMargins(0, 0, 0, 0);
 
-        $this->addInformationContentReceipt();
-        $this->addCurrencyContentReceipt();
-        $this->addAmountContentReceipt();
+        try {
+            $this->addSeparatorContentIfNotPrintable();
 
-        $this->addSwissQrCodeImage();
-        $this->addInformationContent();
-        $this->addCurrencyContent();
-        $this->addAmountContent();
-        $this->addFurtherInformationContent();
+            $this->addInformationContentReceipt();
+            $this->addCurrencyContentReceipt();
+            $this->addAmountContentReceipt();
 
-        $this->tcPdf->setCellHeightRatio($retainCellHeightRatio);
-        $this->tcPdf->SetAutoPageBreak($retainAutoPageBreak);
+            $this->addSwissQrCodeImage();
+            $this->addInformationContent();
+            $this->addCurrencyContent();
+            $this->addAmountContent();
+            $this->addFurtherInformationContent();
+        } finally {
+            $this->tcPdf->setCellHeightRatio($retainCellHeightRatio);
+            $this->tcPdf->SetAutoPageBreak($retainAutoPageBreak);
+            $this->tcPdf->setCellPaddings(
+                $retainCellPaddings['L'],
+                $retainCellPaddings['T'],
+                $retainCellPaddings['R'],
+                $retainCellPaddings['B']
+            );
+            $this->tcPdf->setCellMargins(
+                $retainCellMargins['L'],
+                $retainCellMargins['T'],
+                $retainCellMargins['R'],
+                $retainCellMargins['B']
+            );
+        }
 
         return null;
     }
