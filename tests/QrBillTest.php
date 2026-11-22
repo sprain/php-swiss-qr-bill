@@ -219,6 +219,7 @@ final class QrBillTest extends TestCase
             'paymentReferenceQr'
         ]);
 
+        $this->assertFalse($qrBill->isValid());
         $this->assertCount(1, $qrBill->getViolations());
         $this->assertSame('paymentAmountInformation.currency', $qrBill->getViolations()->get(0)->getPropertyPath());
     }
