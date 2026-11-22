@@ -1,0 +1,58 @@
+font 2 11
+text 14.17 275.18 Receipt
+font 2 6
+text 14.17 257.82 Account / Payable to
+font 3 8
+text 14.17 248.8 CH44 3199 9123 0008 8901 2
+text 14.17 239.2 Heaps of Characters International
+text 14.17 229.6 Trading Company of Switzerland GmbH
+font 2 6
+text 14.17 211.9 Reference
+font 3 8
+text 14.17 202.88 12 34567 89012 34567 89012 34567
+font 2 6
+text 14.17 185.18 Payable by
+font 3 8
+text 14.17 176.16 Heaps of Characters International
+text 14.17 166.56 Trading Company of Switzerland GmbH
+font 2 6
+text 111.56 62.23 Acceptance point
+font 2 6
+text 14.17 101.01 Currency
+font 3 8
+text 14.17 89.89 EUR
+font 2 6
+text 48.19 101.01 Amount
+image 85.04 0 0 28.35 76.54 76.04
+image 130.39 0 0 130.39 189.92 117.64
+font 2 11
+text 189.92 275.18 Payment part
+font 2 8
+text 334.49 276.13 Account / Payable to
+font 3 10
+text 334.49 265.63 CH44 3199 9123 0008 8901 2
+text 334.49 254.63 Heaps of Characters International Trading Company of
+text 334.49 243.63 Switzerland GmbH
+text 334.49 232.63 Street of the Mighty Long Names Where Heroes Live
+text 334.49 221.63 and Villans Die 75
+text 334.49 210.63 1000 Lausanne au bord du lac
+font 2 8
+text 334.49 187.72 Reference
+font 3 10
+text 334.49 177.23 12 34567 89012 34567 89012 34567
+font 2 8
+text 334.49 154.32 Payable by
+font 3 10
+text 334.49 143.82 Heaps of Characters International Trading Company of
+text 334.49 132.82 Switzerland GmbH
+text 334.49 121.82 Street of the Mighty Long Names Where Heroes Live
+text 334.49 110.82 and Villans Die 75
+text 334.49 99.82 1000 Lausanne au bord du lac
+font 2 8
+text 189.92 98.78 Currency
+font 3 10
+text 189.92 84.69 EUR
+font 2 8
+text 229.61 98.78 Amount
+image 113.39 0 0 42.52 221.1 50.36
+font 3 7

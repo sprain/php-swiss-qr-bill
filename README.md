@@ -38,6 +38,7 @@ See https://github.com/sprain/php-swiss-qr-bill/issues/129
 The following libraries are currently actively supported:
   * [fpdf/fpdf](https://packagist.org/packages/fpdf/fpdf)
   * [tecnickcom/tcpdf](https://packagist.org/packages/tecnickcom/tcpdf)
+  * [tecnickcom/tc-lib-pdf](https://packagist.org/packages/tecnickcom/tc-lib-pdf)
   * [setasign/fpdi](https://packagist.org/packages/setasign/fpdi) (accepted by `FpdfOutput` and `TcPdfOutput`)
 
   The output of `HtmlOutput` is known to be used to generate PDFs with [PrinceXML](https://www.princexml.com), [Docraptor](http://docraptor.com), and [dompdf/dompdf](https://packagist.org/packages/dompdf/dompdf) (with some adjustments as decribed [here](https://github.com/sprain/php-swiss-qr-bill/issues/178#issuecomment-1222752493))

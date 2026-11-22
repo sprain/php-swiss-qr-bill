@@ -1,0 +1,62 @@
+dash 1.98 0
+move 5.67 294.8
+line 589.61 294.8
+dash 1.98 0
+move 175.75 294.8
+line 175.75 2.83
+font 1 14
+text 14.17 289.98 "
+matrix 0 1 -1 0 220.25 -140.88
+text 180.57 39.69 "
+font 2 11
+text 14.17 275.18 Receipt
+font 2 6
+text 14.17 257.82 Account / Payable to
+font 3 8
+text 14.17 248.8 CH93 0076 2011 6238 5295 7
+text 14.17 239.2 Thomas LeClaire
+text 14.17 229.6 Rue examplaire 22a
+text 14.17 220 1000 Lausanne
+font 2 6
+text 14.17 202.3 Reference
+font 3 8
+text 14.17 193.28 RF18 5390 0754 7034
+font 2 6
+text 14.17 175.58 Payable by \(name/address\)
+image 147.4 0 0 56.69 14.17 114.65
+font 2 6
+text 111.56 62.23 Acceptance point
+font 2 6
+text 14.17 101.01 Currency
+font 3 8
+text 14.17 89.89 CHF
+font 2 6
+text 48.19 101.01 Amount
+font 3 8
+text 48.19 89.89 25.90
+image 130.39 0 0 130.39 189.92 117.64
+font 2 11
+text 189.92 275.18 Payment part
+font 2 8
+text 334.49 276.13 Account / Payable to
+font 3 10
+text 334.49 265.63 CH93 0076 2011 6238 5295 7
+text 334.49 254.63 Thomas LeClaire
+text 334.49 243.63 Rue examplaire 22a
+text 334.49 232.63 1000 Lausanne
+font 2 8
+text 334.49 209.72 Reference
+font 3 10
+text 334.49 199.23 RF18 5390 0754 7034
+font 2 8
+text 334.49 176.32 Payable by \(name/address\)
+image 184.25 0 0 70.87 334.49 101.15
+font 2 8
+text 189.92 98.78 Currency
+font 3 10
+text 189.92 84.69 CHF
+font 2 8
+text 229.61 98.78 Amount
+font 3 10
+text 229.61 84.69 25.90
+font 3 7
