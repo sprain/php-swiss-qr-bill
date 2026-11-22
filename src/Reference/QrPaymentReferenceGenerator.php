@@ -48,6 +48,7 @@ final class QrPaymentReferenceGenerator implements SelfValidatableInterface
         return $completeReferenceNumber;
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('customerIdentificationNumber', [

@@ -13,6 +13,7 @@ final class ValidCreditorInformationPaymentReferenceCombination extends Constrai
 
     public string $currencyMessage = 'Neither a QR-IBAN nor a payment reference of type "QRR" is allowed for currency "{{ currency }}". Use a regular IBAN with a reference of type "SCOR" or "NON" instead.';
 
+    #[\Override]
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;

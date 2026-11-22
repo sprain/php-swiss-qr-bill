@@ -2,6 +2,4 @@ parameters:
     level: 7
     paths:
         - src/
-    excludePaths:
-    	- src/QrCode/QrCode.php
     reportUnmatchedIgnoredErrors: false

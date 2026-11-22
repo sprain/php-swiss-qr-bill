@@ -7,10 +7,10 @@ namespace Sprain\SwissQrBill\PaymentPart\Output\Element;
  */
 final class Placeholder implements OutputElementInterface
 {
-    public const FILE_TYPE_SVG = 'svg';
-    public const FILE_TYPE_PNG = 'png';
+    public const string FILE_TYPE_SVG = 'svg';
+    public const string FILE_TYPE_PNG = 'png';
 
-    public const PLACEHOLDER_TYPE_PAYABLE_BY = [
+    public const array PLACEHOLDER_TYPE_PAYABLE_BY = [
         'type' => 'placeholder_payable_by',
         'fileSvg' => __DIR__ . '/../../../../assets/marks_65x25mm.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_65x25mm.png',
@@ -18,7 +18,7 @@ final class Placeholder implements OutputElementInterface
         'height' => 25
     ];
 
-    public const PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT = [
+    public const array PLACEHOLDER_TYPE_PAYABLE_BY_RECEIPT = [
         'type' => 'placeholder_payable_by_receipt',
         'fileSvg' => __DIR__ . '/../../../../assets/marks_52x20mm.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_52x20mm.png',
@@ -26,7 +26,7 @@ final class Placeholder implements OutputElementInterface
         'height' => 20
     ];
 
-    public const PLACEHOLDER_TYPE_AMOUNT = [
+    public const array PLACEHOLDER_TYPE_AMOUNT = [
         'type' => 'placeholder_amount',
         'fileSvg' => __DIR__ . '/../../../../assets/marks_40x15mm.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_40x15mm.png',
@@ -34,7 +34,7 @@ final class Placeholder implements OutputElementInterface
         'height' => 15
     ];
 
-    public const PLACEHOLDER_TYPE_AMOUNT_RECEIPT = [
+    public const array PLACEHOLDER_TYPE_AMOUNT_RECEIPT = [
         'type' => 'placeholder_amount_receipt',
         'fileSvg' => __DIR__ . '/../../../../assets/marks_30x10mm.svg',
         'filePng' => __DIR__ . '/../../../../assets/marks_30x10mm.png',

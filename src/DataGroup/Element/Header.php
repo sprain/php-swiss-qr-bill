@@ -12,9 +12,9 @@ final class Header implements QrCodeableInterface, SelfValidatableInterface
 {
     use SelfValidatableTrait;
 
-    public const QRTYPE_SPC = 'SPC';
-    public const VERSION_0200 = '0200';
-    public const CODING_LATIN = 1;
+    public const string QRTYPE_SPC = 'SPC';
+    public const string VERSION_0200 = '0200';
+    public const int CODING_LATIN = 1;
 
     private function __construct(
         /**
@@ -57,6 +57,7 @@ final class Header implements QrCodeableInterface, SelfValidatableInterface
         return $this->coding;
     }
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [
@@ -66,6 +67,7 @@ final class Header implements QrCodeableInterface, SelfValidatableInterface
         ];
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         // Fixed length, three-digit, alphanumeric

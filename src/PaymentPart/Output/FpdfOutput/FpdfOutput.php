@@ -20,43 +20,43 @@ use Sprain\SwissQrBill\QrCode\QrCode;
 final class FpdfOutput extends AbstractOutput
 {
     // FPDF
-    private const BORDER = 0;
-    private const ALIGN_LEFT = 'L';
-    private const ALIGN_RIGHT = 'R';
-    private const ALIGN_CENTER = 'C';
-    private const FONT = 'Helvetica';
-    private const FONT_UNICODE = 'zapfdingbats';
-    private const FONT_UNICODE_CHAR_SCISSORS = '"';
-    private const FONT_UNICODE_CHAR_DOWN_ARROW = 't';
+    private const int BORDER = 0;
+    private const string ALIGN_LEFT = 'L';
+    private const string ALIGN_RIGHT = 'R';
+    private const string ALIGN_CENTER = 'C';
+    private const string FONT = 'Helvetica';
+    private const string FONT_UNICODE = 'zapfdingbats';
+    private const string FONT_UNICODE_CHAR_SCISSORS = '"';
+    private const string FONT_UNICODE_CHAR_DOWN_ARROW = 't';
 
     // Positioning
-    private const CURRENCY_AMOUNT_Y = 259.3;
-    private const AMOUNT_LINE_SPACING = 1.2;
-    private const AMOUNT_LINE_SPACING_RCPT = 0.6;
-    private const LEFT_PART_X = 4;
-    private const RIGHT_PART_X = 66;
-    private const RIGHT_PART_X_INFO = 117;
-    private const TITLE_Y = 195.2;
+    private const float CURRENCY_AMOUNT_Y = 259.3;
+    private const float AMOUNT_LINE_SPACING = 1.2;
+    private const float AMOUNT_LINE_SPACING_RCPT = 0.6;
+    private const int LEFT_PART_X = 4;
+    private const int RIGHT_PART_X = 66;
+    private const int RIGHT_PART_X_INFO = 117;
+    private const float TITLE_Y = 195.2;
 
     // Font size
-    private const FONT_SIZE_MAIN_TITLE = 11;
-    private const FONT_SIZE_TITLE_RECEIPT = 6;
-    private const FONT_SIZE_RECEIPT = 8;
-    private const FONT_SIZE_TITLE_PAYMENT_PART = 8;
-    private const FONT_SIZE_PAYMENT_PART = 10;
-    private const FONT_SIZE_FURTHER_INFORMATION = 7;
-    private const FONT_SIZE_SCISSORS = 14;
-    private const FONT_SIZE_DOWN_ARROW = 10;
+    private const int FONT_SIZE_MAIN_TITLE = 11;
+    private const int FONT_SIZE_TITLE_RECEIPT = 6;
+    private const int FONT_SIZE_RECEIPT = 8;
+    private const int FONT_SIZE_TITLE_PAYMENT_PART = 8;
+    private const int FONT_SIZE_PAYMENT_PART = 10;
+    private const int FONT_SIZE_FURTHER_INFORMATION = 7;
+    private const int FONT_SIZE_SCISSORS = 14;
+    private const int FONT_SIZE_DOWN_ARROW = 10;
 
     // Line spacing
-    private const LINE_SPACING_RECEIPT = 3.4;
-    private const LINE_SPACING_PAYMENT_PART = 4.8;
+    private const float LINE_SPACING_RECEIPT = 3.4;
+    private const float LINE_SPACING_PAYMENT_PART = 4.8;
 
     // Default cell margin of FPDF: 1 cm / 10
-    private const CELL_MARGIN_PT = 2.835;
+    private const float CELL_MARGIN_PT = 2.835;
 
     // Settings of FPDF which are changed while rendering and restored afterwards
-    private const FPDF_STATE_PROPERTIES = [
+    private const array FPDF_STATE_PROPERTIES = [
         'LineWidth', 'DrawColor', 'FillColor', 'TextColor', 'ColorFlag', 'ws', 'cMargin',
         'AutoPageBreak', 'bMargin', 'PageBreakTrigger',
     ];
@@ -73,6 +73,7 @@ final class FpdfOutput extends AbstractOutput
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_PNG);
     }
 
+    #[\Override]
     public function getPaymentPart(): ?string
     {
         $retainedState = $this->getDocumentState();
@@ -179,6 +180,7 @@ final class FpdfOutput extends AbstractOutput
         (new \ReflectionMethod($this->fpdf, '_out'))->invoke($this->fpdf, $content);
     }
 
+    #[\Override]
     public function setQrCodeImageFormat(string $fileExtension): static
     {
         if (QrCode::FILE_FORMAT_SVG === $fileExtension) {

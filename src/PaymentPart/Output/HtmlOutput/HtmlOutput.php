@@ -17,6 +17,7 @@ use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
 final class HtmlOutput extends AbstractOutput
 {
+    #[\Override]
     public function getPaymentPart(): ?string
     {
         $paymentPart = PaymentPartTemplate::TEMPLATE;

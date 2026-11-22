@@ -9,8 +9,9 @@ use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
  */
 final class EmptyAddress implements QrCodeableInterface
 {
-    public const ADDRESS_TYPE = '';
+    public const string ADDRESS_TYPE = '';
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [

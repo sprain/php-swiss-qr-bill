@@ -9,6 +9,7 @@ use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
  */
 final class EmptyLine implements QrCodeableInterface
 {
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [

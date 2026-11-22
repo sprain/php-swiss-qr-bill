@@ -16,9 +16,9 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
 {
     use SelfValidatableTrait;
 
-    public const TYPE_QR = 'QRR';
-    public const TYPE_SCOR = 'SCOR';
-    public const TYPE_NON = 'NON';
+    public const string TYPE_QR = 'QRR';
+    public const string TYPE_SCOR = 'SCOR';
+    public const string TYPE_NON = 'NON';
 
     private function __construct(
         /**
@@ -59,6 +59,7 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
         };
     }
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [
@@ -67,6 +68,7 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
         ];
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->setGroupSequenceProvider(true);
@@ -105,6 +107,7 @@ final class PaymentReference implements GroupSequenceProviderInterface, QrCodeab
         ]);
     }
 
+    #[\Override]
     public function getGroupSequence(): array|GroupSequence
     {
         return [

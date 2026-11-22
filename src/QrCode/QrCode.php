@@ -2,8 +2,6 @@
 
 namespace Sprain\SwissQrBill\QrCode;
 
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeEnlarge;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\Logo\Logo;
@@ -17,19 +15,19 @@ use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 
 final class QrCode
 {
-    public const FILE_FORMAT_PNG = 'png';
-    public const FILE_FORMAT_SVG = 'svg';
+    public const string FILE_FORMAT_PNG = 'png';
+    public const string FILE_FORMAT_SVG = 'svg';
 
-    public const SUPPORTED_CHARACTERS = '\x20-\x7E\xA0-\xFF\x{0100}-\x{017F}\x{0218}\x{0219}\x{021A}\x{021B}\x{20AC}';
+    public const string SUPPORTED_CHARACTERS = '\x20-\x7E\xA0-\xFF\x{0100}-\x{017F}\x{0218}\x{0219}\x{021A}\x{021B}\x{20AC}';
 
-    private const SUPPORTED_FILE_FORMATS = [
+    private const array SUPPORTED_FILE_FORMATS = [
         self::FILE_FORMAT_PNG,
         self::FILE_FORMAT_SVG
     ];
 
-    private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../../assets/swiss-cross.optimized.png';
-    private const PX_QR_CODE = 543;    // recommended 46x46 mm in px @ 300dpi – in pixel based outputs the final image size may be slightly different, depending on the qr code contents
-    private const PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
+    private const string SWISS_CROSS_LOGO_FILE = __DIR__ . '/../../assets/swiss-cross.optimized.png';
+    private const int PX_QR_CODE = 543;    // recommended 46x46 mm in px @ 300dpi – in pixel based outputs the final image size may be slightly different, depending on the qr code contents
+    private const int PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
 
     private BaseQrCode $qrCode;
     private Logo $qrCodeLogo;
@@ -65,43 +63,19 @@ final class QrCode
         $data = $this->replaceUnsupportedCharacters($data, $unsupportedCharacterReplacements);
         $data = $this->cleanUnsupportedCharacters($data);
 
-        if (class_exists(ErrorCorrectionLevelMedium::class)) {
-            // Endroid 4.x
-            $this->qrCode = BaseQrCode::create($data)
-                ->setEncoding(new Encoding('UTF-8'))
-                ->setErrorCorrectionLevel(new ErrorCorrectionLevelMedium())
-                ->setSize(self::PX_QR_CODE)
-                ->setMargin(0)
-                ->setRoundBlockSizeMode(new RoundBlockSizeModeEnlarge());
-        } elseif (method_exists(BaseQrCode::class, 'create')) {
-            // Endroid 5.x
-            $this->qrCode = BaseQrCode::create($data)
-                ->setEncoding(new Encoding('UTF-8'))
-                ->setErrorCorrectionLevel(ErrorCorrectionLevel::Medium)
-                ->setSize(self::PX_QR_CODE)
-                ->setMargin(0)
-                ->setRoundBlockSizeMode(RoundBlockSizeMode::Enlarge);
-        } else {
-            // Endroid 6.x
-            $this->qrCode = new BaseQrCode(
-                $data,
-                new Encoding('UTF-8'),
-                ErrorCorrectionLevel::Medium,
-                self::PX_QR_CODE,
-                0,
-                RoundBlockSizeMode::Enlarge
-            );
-        }
+        $this->qrCode = new BaseQrCode(
+            $data,
+            new Encoding('UTF-8'),
+            ErrorCorrectionLevel::Medium,
+            self::PX_QR_CODE,
+            0,
+            RoundBlockSizeMode::Enlarge
+        );
 
-        if (method_exists(Logo::class, 'create')) {
-            $this->qrCodeLogo = Logo::create(self::SWISS_CROSS_LOGO_FILE)
-                ->setResizeToWidth(self::PX_SWISS_CROSS);
-        } else {
-            $this->qrCodeLogo = new Logo(
-                self::SWISS_CROSS_LOGO_FILE,
-                self::PX_SWISS_CROSS
-            );
-        }
+        $this->qrCodeLogo = new Logo(
+            self::SWISS_CROSS_LOGO_FILE,
+            self::PX_SWISS_CROSS
+        );
 
         $this->setWriterByExtension($fileFormat);
     }

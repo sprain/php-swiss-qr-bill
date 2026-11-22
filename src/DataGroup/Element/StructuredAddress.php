@@ -14,8 +14,8 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
 {
     use SelfValidatableTrait;
 
-    public const ADDRESS_TYPE = 'S';
-    private const MAX_CHARS_PER_LINE_ON_RECEIPT = 40;
+    public const string ADDRESS_TYPE = 'S';
+    private const int MAX_CHARS_PER_LINE_ON_RECEIPT = 40;
 
     private function __construct(
         /**
@@ -94,6 +94,7 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
         );
     }
 
+    #[\Override]
     public function getName(): string
     {
         return $this->name;
@@ -119,11 +120,13 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
         return $this->city;
     }
 
+    #[\Override]
     public function getCountry(): string
     {
         return $this->country;
     }
 
+    #[\Override]
     public function getFullAddress(bool $forReceipt = false): string
     {
         $lines[1] = $this->getName();
@@ -149,6 +152,7 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
         return implode("\n", $lines);
     }
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [
@@ -162,6 +166,7 @@ final class StructuredAddress implements AddressInterface, SelfValidatableInterf
         ];
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('name', [

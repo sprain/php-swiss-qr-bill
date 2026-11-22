@@ -14,12 +14,13 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
  */
 final class ValidCreditorInformationPaymentReferenceCombinationValidator extends ConstraintValidator
 {
-    private const QR_IBAN_IS_ALLOWED = [
+    private const array QR_IBAN_IS_ALLOWED = [
         PaymentReference::TYPE_QR   => true,
         PaymentReference::TYPE_SCOR => false,
         PaymentReference::TYPE_NON  => false,
     ];
 
+    #[\Override]
     public function validate(mixed $qrBill, Constraint $constraint): void
     {
         if (!$constraint instanceof ValidCreditorInformationPaymentReferenceCombination) {
