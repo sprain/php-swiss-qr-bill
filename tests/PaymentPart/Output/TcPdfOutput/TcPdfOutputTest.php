@@ -117,6 +117,40 @@ final class TcPdfOutputTest extends TestCase
         $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
     }
 
+    /**
+     * @see https://github.com/sprain/php-swiss-qr-bill/issues/273
+     */
+    public function testOutputIsIndependentOfCellPaddingsAndMargins(): void
+    {
+        $file = __DIR__ . '/../../../TestData/TcPdfOutput/qr-full-set.svg.pdf';
+        $qrBill = (new QrBillTestDataRepository())->getQrBillFullSet();
+
+        $tcPdf = new \TCPDF('P', 'mm', 'A4', true, 'ISO-8859-1');
+        $tcPdf->setPrintHeader(false);
+        $tcPdf->setPrintFooter(false);
+        $tcPdf->AddPage();
+        $tcPdf->setCellPaddings(5, 4, 3, 2);
+        $tcPdf->setCellMargins(1, 2, 3, 4);
+
+        $output = (new TcPdfOutput($qrBill, 'en', $tcPdf));
+        $output
+            ->setDisplayOptions((new DisplayOptions())->setPrintable(false))
+            ->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG)
+            ->getPaymentPart();
+
+        $this->assertSame(['T' => 4.0, 'R' => 3.0, 'B' => 2.0, 'L' => 5.0], array_map('floatval', $tcPdf->getCellPaddings()));
+        $this->assertSame(['T' => 2.0, 'R' => 3.0, 'B' => 4.0, 'L' => 1.0], array_map('floatval', $tcPdf->getCellMargins()));
+
+        // TCPDF adds its "Powered by" link on output, using the current cell padding and margins
+        $tcPdf->setCellPaddings(28.35 / $tcPdf->getScaleFactor() / 10, 0, 28.35 / $tcPdf->getScaleFactor() / 10, 0);
+        $tcPdf->setCellMargins(0, 0, 0, 0);
+
+        $contents = $this->getActualPdfContents($tcPdf->Output($file, 'S'));
+
+        $this->assertNotNull($contents);
+        $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
+    }
+
     private function getActualPdfContents(string $fileContents): ?string
     {
         // Extract actual pdf content and ignore all meta data which may differ in different versions of TcPdf
