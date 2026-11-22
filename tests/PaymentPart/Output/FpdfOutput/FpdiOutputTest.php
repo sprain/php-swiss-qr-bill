@@ -117,6 +117,24 @@ final class FpdiOutputTest extends TestCase
             ->getPaymentPart();
     }
 
+    public function testFontsAreKeptIntact(): void
+    {
+        $fpdf = $this->instantiateFpdi();
+        $fpdf->AddPage();
+
+        $output = new FpdfOutput((new QrBillTestDataRepository())->getQrBillFullSet(), 'en', $fpdf);
+        $output->getPaymentPart();
+
+        // Some versions of FPDF keep a reference to the current font, which must not be overwritten.
+        $fonts = (new \ReflectionProperty($fpdf, 'fonts'))->getValue($fpdf);
+        foreach ($fonts as $font) {
+            $this->assertIsArray($font);
+        }
+
+        $pdf = $fpdf->Output('S');
+        $this->assertSame(substr_count($pdf, '/Type /Font'), count($fonts));
+    }
+
     private function getActualPdfContents(string $fileContents): ?string
     {
         // Extract actual pdf content and ignore all meta data which may differ in different versions of Fpdf

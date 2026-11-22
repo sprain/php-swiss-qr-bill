@@ -117,6 +117,84 @@ final class TcPdfOutputTest extends TestCase
         $this->assertSame($this->getActualPdfContents(file_get_contents($file)), $contents);
     }
 
+    /**
+     * @see https://github.com/sprain/php-swiss-qr-bill/issues/273
+     */
+    public function testOutputIsIndependentOfDocumentState(): void
+    {
+        $qrBill = (new QrBillTestDataRepository())->getQrBillFullSet();
+        $layout = (new DisplayOptions())->setPrintable(false)->setDisplayScissors(true);
+
+        $defaultTcPdf = $this->instantiateTcPdf();
+        $defaultTcPdf->SetFont('courier', 'IU', 20);
+        $expectedContent = $this->getAddedPageContent($defaultTcPdf, new TcPdfOutput($qrBill, 'en', $defaultTcPdf), $layout);
+
+        $tcPdf = $this->instantiateTcPdf();
+        $tcPdf->SetFont('courier', 'IU', 20);
+        $tcPdf->SetTextColor(255, 0, 0);
+        $tcPdf->SetDrawColor(0, 0, 255);
+        $tcPdf->SetFillColor(0, 255, 0);
+        $tcPdf->SetLineStyle(['width' => 1.5, 'cap' => 'round', 'dash' => '2,1']);
+        $tcPdf->setCellHeightRatio(2);
+        $tcPdf->setCellPaddings(5, 4, 3, 2);
+        $tcPdf->setCellMargins(1, 2, 3, 4);
+        $tcPdf->setFontSpacing(1);
+        $tcPdf->setFontStretching(150);
+        $tcPdf->setTextRenderingMode(1);
+        $tcPdf->setAlpha(0.5);
+        $tcPdf->setRTL(true, false);
+        $tcPdf->SetAutoPageBreak(true, 30);
+        $stateBefore = $this->getTcPdfState($tcPdf);
+
+        $content = $this->getAddedPageContent($tcPdf, new TcPdfOutput($qrBill, 'en', $tcPdf), $layout);
+
+        $this->assertSame($expectedContent, $content);
+        $this->assertSame($stateBefore, $this->getTcPdfState($tcPdf));
+    }
+
+    private function instantiateTcPdf(): \TCPDF
+    {
+        $tcPdf = new \TCPDF('P', 'mm', 'A4', true, 'ISO-8859-1');
+        $tcPdf->setPrintHeader(false);
+        $tcPdf->setPrintFooter(false);
+        $tcPdf->AddPage();
+
+        return $tcPdf;
+    }
+
+    /**
+     * Returns the content which the output added to the current page.
+     */
+    private function getAddedPageContent(\TCPDF $tcPdf, TcPdfOutput $output, DisplayOptions $layout): string
+    {
+        $getPage = \Closure::bind(fn (): string => $this->getPageBuffer($this->page), $tcPdf, $tcPdf::class);
+        $before = strlen($getPage());
+
+        $output->setDisplayOptions($layout)->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG)->getPaymentPart();
+        $content = substr($getPage(), $before);
+
+        // Ignore the restoration of the document's state after the payment part, which differs by design
+        $content = substr($content, 0, (int) strrpos($content, "\nQ\n") + 3);
+
+        // Ignore the reset of a transparency set in the document, which adds a graphics state
+        return (string) preg_replace('/^\/GS\d+ gs\n/m', '', $content);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getTcPdfState(\TCPDF $tcPdf): array
+    {
+        return \Closure::bind(fn (): array => [
+            // The position of the cursor is not restored
+            'graphicVars' => array_diff_key($this->getGraphicVars(), array_flip(['x', 'y', 'lasth'])),
+            'font' => [$this->CurrentFont['fontkey'] ?? null, $this->FontSize],
+            'strokeColor' => $this->strokecolor,
+            'textShadow' => $this->txtshadow,
+            'rtl' => $this->rtl,
+        ], $tcPdf, $tcPdf::class)();
+    }
+
     private function getActualPdfContents(string $fileContents): ?string
     {
         // Extract actual pdf content and ignore all meta data which may differ in different versions of TcPdf
