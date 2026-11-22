@@ -6,9 +6,71 @@ class PaymentPartTemplate
 {
     public const TEMPLATE = <<<EOT
 <style>
+/*
+ * Reset, so the styles of the surrounding document do not affect the payment part.
+ * Where the payment part is placed (e.g. margin, float or position of #qr-bill) is left to the document.
+ * The rules further below override these values where needed.
+ */
+#qr-bill * {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    float: none;
+    position: static;
+    min-width: 0;
+    max-width: none;
+    min-height: 0;
+    max-height: none;
+    text-decoration: none;
+    font-size: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    font-variant: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
+    text-transform: inherit;
+    text-indent: inherit;
+    text-align: inherit;
+    text-shadow: inherit;
+    white-space: inherit;
+    color: inherit;
+}
+
+#qr-bill :where(tbody) {
+    vertical-align: middle;
+}
+
+#qr-bill :where(tr, td) {
+    vertical-align: inherit;
+}
+
+#qr-bill img {
+    display: inline;
+    vertical-align: baseline;
+}
+
 #qr-bill {
     box-sizing: border-box;
     border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: auto;
+    width: 210mm;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0;
+    text-align: left;
+    text-shadow: none;
+    white-space: normal;
     color: #000 !important;
 }
 
