@@ -172,6 +172,7 @@ class PaymentPartTemplate
     border-right: 0.75pt solid black;
     padding-left: 5mm;
     padding-top: 5mm;
+    padding-bottom: 5mm;
     vertical-align: top;
 }
 
@@ -207,6 +208,7 @@ class PaymentPartTemplate
     padding-left: 5mm;
     padding-top: 5mm;
     padding-right: 5mm;
+    padding-bottom: 5mm;
     vertical-align: top;
 }
 
