@@ -1,0 +1,76 @@
+dash 1.98 0
+move 34.02 578.27
+line 617.95 578.27
+dash 1.98 0
+move 204.09 578.27
+line 204.09 286.3
+font 1 14
+text 42.52 573.45 "
+matrix 0 -1 1 0 -367.65 766.2
+text 199.28 566.93 "
+font 2 11
+text 42.52 558.64 Receipt
+font 2 6
+text 42.52 541.28 Account / Payable to
+font 3 8
+text 42.52 532.26 CH44 3199 9123 0008 8901 2
+text 42.52 522.66 Thomas LeClaire
+text 42.52 513.06 Rue examplaire 22a
+text 42.52 503.46 1000 Lausanne
+font 2 6
+text 42.52 485.76 Reference
+font 3 8
+text 42.52 476.74 12 34567 89012 34567 89012 34567
+font 2 6
+text 42.52 459.04 Payable by
+font 3 8
+text 42.52 450.02 Thomas LeClaire
+text 42.52 440.42 Rue examplaire 22a
+text 42.52 430.82 1000 Lausanne
+font 2 6
+text 139.91 345.69 Acceptance point
+font 2 6
+text 42.52 384.48 Currency
+font 3 8
+text 42.52 373.36 CHF
+font 2 6
+text 76.54 384.48 Amount
+font 3 8
+text 76.54 373.36 25.90
+image 130.39 0 0 130.39 218.27 401.1
+font 2 11
+text 218.27 558.64 Payment part
+font 2 8
+text 362.83 559.59 Account / Payable to
+font 3 10
+text 362.83 549.1 CH44 3199 9123 0008 8901 2
+text 362.83 538.1 Thomas LeClaire
+text 362.83 527.1 Rue examplaire 22a
+text 362.83 516.1 1000 Lausanne
+font 2 8
+text 362.83 493.19 Reference
+font 3 10
+text 362.83 482.69 12 34567 89012 34567 89012 34567
+font 2 8
+text 362.83 459.78 Additional information
+font 3 10
+text 362.83 449.29 Invoice 1234568
+text 362.83 438.29 Gardening work
+text 362.83 427.29 Bill Information
+font 2 8
+text 362.83 404.37 Payable by
+font 3 10
+text 362.83 393.88 Thomas LeClaire
+text 362.83 382.88 Rue examplaire 22a
+text 362.83 371.88 1000 Lausanne
+font 2 8
+text 218.27 382.25 Currency
+font 3 10
+text 218.27 368.15 CHF
+font 2 8
+text 257.95 382.25 Amount
+font 3 10
+text 257.95 368.15 25.90
+font 3 7
+text 218.27 306.92 CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9
+text 218.27 296.42 CC/XRPL/10/bUuK6fwHtfZ3HGAgKvEV7Y5TzHEu8ChUj9
