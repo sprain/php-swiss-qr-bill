@@ -4,7 +4,7 @@ namespace Sprain\SwissQrBill\PaymentPart\Translation;
 
 final class Translation
 {
-    private const TRANSLATIONS = [
+    private const array TRANSLATIONS = [
         'de' => [
             'paymentPart' => 'Zahlteil',
             'creditor' => 'Konto / Zahlbar an',

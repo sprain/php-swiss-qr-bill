@@ -17,19 +17,19 @@ use Sprain\SwissQrBill\QrCode\Exception\UnsupportedFileExtensionException;
 
 final class QrCode
 {
-    public const FILE_FORMAT_PNG = 'png';
-    public const FILE_FORMAT_SVG = 'svg';
+    public const string FILE_FORMAT_PNG = 'png';
+    public const string FILE_FORMAT_SVG = 'svg';
 
-    public const SUPPORTED_CHARACTERS = '\x20-\x7E\xA0-\xFF\x{0100}-\x{017F}\x{0218}\x{0219}\x{021A}\x{021B}\x{20AC}';
+    public const string SUPPORTED_CHARACTERS = '\x20-\x7E\xA0-\xFF\x{0100}-\x{017F}\x{0218}\x{0219}\x{021A}\x{021B}\x{20AC}';
 
-    private const SUPPORTED_FILE_FORMATS = [
+    private const array SUPPORTED_FILE_FORMATS = [
         self::FILE_FORMAT_PNG,
         self::FILE_FORMAT_SVG
     ];
 
-    private const SWISS_CROSS_LOGO_FILE = __DIR__ . '/../../assets/swiss-cross.optimized.png';
-    private const PX_QR_CODE = 543;    // recommended 46x46 mm in px @ 300dpi – in pixel based outputs the final image size may be slightly different, depending on the qr code contents
-    private const PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
+    private const string SWISS_CROSS_LOGO_FILE = __DIR__ . '/../../assets/swiss-cross.optimized.png';
+    private const int PX_QR_CODE = 543;    // recommended 46x46 mm in px @ 300dpi – in pixel based outputs the final image size may be slightly different, depending on the qr code contents
+    private const int PX_SWISS_CROSS = 83; // recommended 7x7 mm in px @ 300dpi
 
     private BaseQrCode $qrCode;
     private Logo $qrCodeLogo;

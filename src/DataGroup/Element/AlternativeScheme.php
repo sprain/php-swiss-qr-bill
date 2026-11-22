@@ -34,6 +34,7 @@ final class AlternativeScheme implements QrCodeableInterface, SelfValidatableInt
         return $this->parameter;
     }
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [
@@ -41,6 +42,7 @@ final class AlternativeScheme implements QrCodeableInterface, SelfValidatableInt
         ];
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('parameter', [

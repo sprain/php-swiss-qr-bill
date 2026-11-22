@@ -18,43 +18,43 @@ use TCPDF;
 final class TcPdfOutput extends AbstractOutput
 {
     // TCPDF
-    private const BORDER = 0;
-    private const ALIGN_BELOW = 2;
-    private const ALIGN_LEFT = 'L';
-    private const ALIGN_RIGHT = 'R';
-    private const ALIGN_CENTER = 'C';
-    private const FONT = 'Helvetica';
-    private const FONT_UNICODE = 'freeserif';
-    private const FONT_UNICODE_CHAR_SCISSORS = '✂';
-    private const FONT_UNICODE_CHAR_DOWN_ARROW = '▼';
+    private const int BORDER = 0;
+    private const int ALIGN_BELOW = 2;
+    private const string ALIGN_LEFT = 'L';
+    private const string ALIGN_RIGHT = 'R';
+    private const string ALIGN_CENTER = 'C';
+    private const string FONT = 'Helvetica';
+    private const string FONT_UNICODE = 'freeserif';
+    private const string FONT_UNICODE_CHAR_SCISSORS = '✂';
+    private const string FONT_UNICODE_CHAR_DOWN_ARROW = '▼';
 
     // Ratio
-    private const LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
-    private const RIGHT_CELL_HEIGHT_RATIO_COMMON = 1.1;
-    private const LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
-    private const RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
-    private const FURTHER_INFORMATION_CELL_HEIGHT_RATIO_COMMON = 1.5;
+    private const float LEFT_CELL_HEIGHT_RATIO_COMMON = 1.2;
+    private const float RIGHT_CELL_HEIGHT_RATIO_COMMON = 1.1;
+    private const float LEFT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
+    private const float RIGHT_CELL_HEIGHT_RATIO_CURRENCY_AMOUNT = 1.5;
+    private const float FURTHER_INFORMATION_CELL_HEIGHT_RATIO_COMMON = 1.5;
 
     // Positioning
-    private const CURRENCY_AMOUNT_Y = 259;
-    private const LEFT_PART_X = 4;
-    private const RIGHT_PART_X = 66;
-    private const RIGHT_PART_X_INFO = 117;
-    private const TITLE_Y = 195;
+    private const int CURRENCY_AMOUNT_Y = 259;
+    private const int LEFT_PART_X = 4;
+    private const int RIGHT_PART_X = 66;
+    private const int RIGHT_PART_X_INFO = 117;
+    private const int TITLE_Y = 195;
 
     // Font
-    private const FONT_SIZE_MAIN_TITLE = 11;
-    private const FONT_SIZE_TITLE_RECEIPT = 6;
-    private const FONT_SIZE_RECEIPT = 8;
-    private const FONT_SIZE_TITLE_PAYMENT_PART = 8;
-    private const FONT_SIZE_PAYMENT_PART = 10;
-    private const FONT_SIZE_FURTHER_INFORMATION = 7;
-    private const FONT_SIZE_SCISSORS = 14;
-    private const FONT_SIZE_DOWN_ARROW = 10;
+    private const int FONT_SIZE_MAIN_TITLE = 11;
+    private const int FONT_SIZE_TITLE_RECEIPT = 6;
+    private const int FONT_SIZE_RECEIPT = 8;
+    private const int FONT_SIZE_TITLE_PAYMENT_PART = 8;
+    private const int FONT_SIZE_PAYMENT_PART = 10;
+    private const int FONT_SIZE_FURTHER_INFORMATION = 7;
+    private const int FONT_SIZE_SCISSORS = 14;
+    private const int FONT_SIZE_DOWN_ARROW = 10;
 
     // Line spacing
-    private const LINE_SPACING_RECEIPT = 3.5;
-    private const LINE_SPACING_PAYMENT_PART = 4.8;
+    private const float LINE_SPACING_RECEIPT = 3.5;
+    private const float LINE_SPACING_PAYMENT_PART = 4.8;
 
     public function __construct(
         QrBill $qrBill,
@@ -67,6 +67,7 @@ final class TcPdfOutput extends AbstractOutput
         $this->setQrCodeImageFormat(QrCode::FILE_FORMAT_SVG);
     }
 
+    #[\Override]
     public function getPaymentPart(): ?string
     {
         $retainCellHeightRatio = $this->tcPdf->getCellHeightRatio();

@@ -13,8 +13,8 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
 {
     use SelfValidatableTrait;
 
-    public const CURRENCY_CHF = 'CHF';
-    public const CURRENCY_EUR = 'EUR';
+    public const string CURRENCY_CHF = 'CHF';
+    public const string CURRENCY_EUR = 'EUR';
 
     private function __construct(
         /**
@@ -59,6 +59,7 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
         return $this->currency;
     }
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [
@@ -67,6 +68,7 @@ final class PaymentAmountInformation implements QrCodeableInterface, SelfValidat
         ];
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('amount', [

@@ -248,6 +248,7 @@ final class QrBill implements SelfValidatableInterface
         return $qrCodeElements;
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addConstraint(

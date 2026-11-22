@@ -21,16 +21,19 @@ abstract class AbstractOutput implements OutputInterface
         $this->qrCodeImageFormat = QrCode::FILE_FORMAT_SVG;
     }
 
+    #[\Override]
     public function getQrBill(): ?QrBill
     {
         return $this->qrBill;
     }
 
+    #[\Override]
     public function getLanguage(): ?string
     {
         return $this->language;
     }
 
+    #[\Override]
     public function setDisplayOptions(DisplayOptions $displayOptions): static
     {
         $this->displayOptions = $displayOptions;
@@ -38,6 +41,7 @@ abstract class AbstractOutput implements OutputInterface
         return $this;
     }
 
+    #[\Override]
     public function getDisplayOptions(): DisplayOptions
     {
         $this->displayOptions->consolidate();
@@ -45,6 +49,7 @@ abstract class AbstractOutput implements OutputInterface
         return $this->displayOptions;
     }
 
+    #[\Override]
     public function setQrCodeImageFormat(string $fileExtension): static
     {
         $this->qrCodeImageFormat = $fileExtension;
@@ -52,6 +57,7 @@ abstract class AbstractOutput implements OutputInterface
         return $this;
     }
 
+    #[\Override]
     public function getQrCodeImageFormat(): string
     {
         return $this->qrCodeImageFormat;

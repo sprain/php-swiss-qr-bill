@@ -44,6 +44,7 @@ final class CreditorInformation implements QrCodeableInterface, SelfValidatableI
         return ($this->isValid() && (int) $qrIid >= 30000 && (int) $qrIid <= 31999);
     }
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [
@@ -51,6 +52,7 @@ final class CreditorInformation implements QrCodeableInterface, SelfValidatableI
         ];
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         // Only IBANs with CH or LI country code

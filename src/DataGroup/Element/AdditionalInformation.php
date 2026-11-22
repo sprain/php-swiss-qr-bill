@@ -12,7 +12,7 @@ final class AdditionalInformation implements QrCodeableInterface, SelfValidatabl
 {
     use SelfValidatableTrait;
 
-    public const TRAILER_EPD = 'EPD';
+    public const string TRAILER_EPD = 'EPD';
 
     private function __construct(
         /**
@@ -55,6 +55,7 @@ final class AdditionalInformation implements QrCodeableInterface, SelfValidatabl
         return $string;
     }
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         $qrCodeData = [
@@ -69,6 +70,7 @@ final class AdditionalInformation implements QrCodeableInterface, SelfValidatabl
         return $qrCodeData;
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('message', [

@@ -39,6 +39,7 @@ final class RfCreditorReferenceGenerator implements SelfValidatableInterface
         return $generator->generateRfReference($this->reference, false);
     }
 
+    #[\Override]
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
         $metadata->addPropertyConstraints('reference', [

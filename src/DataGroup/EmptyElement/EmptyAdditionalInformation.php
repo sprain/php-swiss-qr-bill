@@ -9,8 +9,9 @@ use Sprain\SwissQrBill\DataGroup\QrCodeableInterface;
  */
 final class EmptyAdditionalInformation implements QrCodeableInterface
 {
-    public const TRAILER_EPD = 'EPD';
+    public const string TRAILER_EPD = 'EPD';
 
+    #[\Override]
     public function getQrCodeData(): array
     {
         return [

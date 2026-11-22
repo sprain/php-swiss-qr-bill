@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 final class ValidCreditorReferenceTest extends ConstraintValidatorTestCase
 {
+    #[\Override]
     protected function createValidator(): ConstraintValidatorInterface
     {
         return new ValidCreditorReferenceValidator();
