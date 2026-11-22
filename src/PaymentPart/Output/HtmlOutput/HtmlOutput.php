@@ -15,6 +15,21 @@ use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplat
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
 
+/**
+ * Renders the payment part as an HTML fragment, consisting of a <style> block and a <table id="qr-bill">.
+ *
+ * Limitations:
+ * - The payment part is not positioned on the page. If it is part of an A4 page, place it at the
+ *   bottom of the page with your own CSS for #qr-bill, as required by the specification.
+ * - The result depends on the HTML renderer. It requires support for CSS floats, transform and
+ *   the :before / :after pseudo-elements. HTML-to-PDF renderers with limited CSS support
+ *   (e.g. dompdf) may need additional styles.
+ * - All styles are scoped to #qr-bill, and the payment part resets the styles it relies on. Styles of the
+ *   surrounding document with a higher specificity (e.g. selectors with ids) or with !important can
+ *   still affect the payment part.
+ * - If you add more than one payment part to an HTML document, use the same display options for all
+ *   of them. The styles of each payment part apply to all payment parts in the document.
+ */
 final class HtmlOutput extends AbstractOutput
 {
     public function getPaymentPart(): ?string
