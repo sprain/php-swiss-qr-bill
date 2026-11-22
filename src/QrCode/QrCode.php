@@ -2,8 +2,6 @@
 
 namespace Sprain\SwissQrBill\QrCode;
 
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelMedium;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeEnlarge;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\Logo\Logo;
@@ -65,43 +63,19 @@ final class QrCode
         $data = $this->replaceUnsupportedCharacters($data, $unsupportedCharacterReplacements);
         $data = $this->cleanUnsupportedCharacters($data);
 
-        if (class_exists(ErrorCorrectionLevelMedium::class)) {
-            // Endroid 4.x
-            $this->qrCode = BaseQrCode::create($data)
-                ->setEncoding(new Encoding('UTF-8'))
-                ->setErrorCorrectionLevel(new ErrorCorrectionLevelMedium())
-                ->setSize(self::PX_QR_CODE)
-                ->setMargin(0)
-                ->setRoundBlockSizeMode(new RoundBlockSizeModeEnlarge());
-        } elseif (method_exists(BaseQrCode::class, 'create')) {
-            // Endroid 5.x
-            $this->qrCode = BaseQrCode::create($data)
-                ->setEncoding(new Encoding('UTF-8'))
-                ->setErrorCorrectionLevel(ErrorCorrectionLevel::Medium)
-                ->setSize(self::PX_QR_CODE)
-                ->setMargin(0)
-                ->setRoundBlockSizeMode(RoundBlockSizeMode::Enlarge);
-        } else {
-            // Endroid 6.x
-            $this->qrCode = new BaseQrCode(
-                $data,
-                new Encoding('UTF-8'),
-                ErrorCorrectionLevel::Medium,
-                self::PX_QR_CODE,
-                0,
-                RoundBlockSizeMode::Enlarge
-            );
-        }
+        $this->qrCode = new BaseQrCode(
+            $data,
+            new Encoding('UTF-8'),
+            ErrorCorrectionLevel::Medium,
+            self::PX_QR_CODE,
+            0,
+            RoundBlockSizeMode::Enlarge
+        );
 
-        if (method_exists(Logo::class, 'create')) {
-            $this->qrCodeLogo = Logo::create(self::SWISS_CROSS_LOGO_FILE)
-                ->setResizeToWidth(self::PX_SWISS_CROSS);
-        } else {
-            $this->qrCodeLogo = new Logo(
-                self::SWISS_CROSS_LOGO_FILE,
-                self::PX_SWISS_CROSS
-            );
-        }
+        $this->qrCodeLogo = new Logo(
+            self::SWISS_CROSS_LOGO_FILE,
+            self::PX_SWISS_CROSS
+        );
 
         $this->setWriterByExtension($fileFormat);
     }
