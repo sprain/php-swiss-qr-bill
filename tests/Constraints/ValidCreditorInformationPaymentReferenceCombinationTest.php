@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombination;
 use Sprain\SwissQrBill\Constraint\ValidCreditorInformationPaymentReferenceCombinationValidator;
 use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
+use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\QrBill;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
@@ -105,8 +106,85 @@ final class ValidCreditorInformationPaymentReferenceCombinationTest extends Cons
         ];
     }
 
-    public function getQrBillMock(?CreditorInformation $creditorInformation = null, ?PaymentReference $paymentReference = null)
+    #[DataProvider('validCurrencyCombinationsProvider')]
+    public function testValidCurrencyCombinations(bool $containsQrIban, string $paymentReferenceType, string $currency)
     {
+        $qrBillMock = $this->getQrBillMock(
+            $this->getCreditorInformationMock('any-iban', $containsQrIban),
+            $this->getPaymentReferenceMock($paymentReferenceType),
+            PaymentAmountInformation::create($currency)
+        );
+
+        $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination());
+
+        $this->assertNoViolation();
+    }
+
+    public static function validCurrencyCombinationsProvider(): array
+    {
+        return [
+         // containsQrIban, paymentReferenceType, currency
+            [true, PaymentReference::TYPE_QR, 'CHF'],
+            [false, PaymentReference::TYPE_SCOR, 'CHF'],
+            [false, PaymentReference::TYPE_NON, 'CHF'],
+            [false, PaymentReference::TYPE_SCOR, 'EUR'],
+            [false, PaymentReference::TYPE_NON, 'EUR'],
+        ];
+    }
+
+    public function testQrIbanWithQrReferenceIsInvalidInEur()
+    {
+        $qrBillMock = $this->getQrBillMock(
+            $this->getCreditorInformationMock('any-iban', true),
+            $this->getPaymentReferenceMock(PaymentReference::TYPE_QR),
+            PaymentAmountInformation::create('EUR')
+        );
+
+        $constraint = new ValidCreditorInformationPaymentReferenceCombination();
+        $this->validator->validate($qrBillMock, $constraint);
+
+        $this->buildViolation($constraint->currencyMessage)
+            ->setParameter('{{ currency }}', 'EUR')
+            ->assertRaised();
+    }
+
+    public function testQrIbanWithQrReferenceRaisesNoCurrencyViolationForUnsupportedCurrency()
+    {
+        // An unsupported currency is reported by PaymentAmountInformation itself
+        $qrBillMock = $this->getQrBillMock(
+            $this->getCreditorInformationMock('any-iban', true),
+            $this->getPaymentReferenceMock(PaymentReference::TYPE_QR),
+            PaymentAmountInformation::create('USD')
+        );
+
+        $this->validator->validate($qrBillMock, new ValidCreditorInformationPaymentReferenceCombination());
+
+        $this->assertNoViolation();
+    }
+
+    #[DataProvider('invalidCombinationsQrBillMocksProvider')]
+    public function testInvalidCombinationsInEurRaiseCombinationViolationOnly(bool $containsQrIban, string $paymentReferenceType)
+    {
+        $qrBillMock = $this->getQrBillMock(
+            $this->getCreditorInformationMock('any-iban', $containsQrIban),
+            $this->getPaymentReferenceMock($paymentReferenceType),
+            PaymentAmountInformation::create('EUR')
+        );
+
+        $constraint = new ValidCreditorInformationPaymentReferenceCombination();
+        $this->validator->validate($qrBillMock, $constraint);
+
+        $this->buildViolation($constraint->message)
+            ->setParameter('{{ referenceType }}', $paymentReferenceType)
+            ->setParameter('{{ iban }}', 'any-iban')
+            ->assertRaised();
+    }
+
+    public function getQrBillMock(
+        ?CreditorInformation $creditorInformation = null,
+        ?PaymentReference $paymentReference = null,
+        ?PaymentAmountInformation $paymentAmountInformation = null
+    ) {
         $qrBill = $this->createMock(QrBill::class);
 
         $qrBill->method('getCreditorInformation')
@@ -114,6 +192,9 @@ final class ValidCreditorInformationPaymentReferenceCombinationTest extends Cons
 
         $qrBill->method('getPaymentReference')
             ->willReturn($paymentReference);
+
+        $qrBill->method('getPaymentAmountInformation')
+            ->willReturn($paymentAmountInformation);
 
         return $qrBill;
     }

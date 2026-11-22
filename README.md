@@ -17,7 +17,7 @@ Then have a look at [example/example.php](example/example.php).
 
 ## FAQs
 * **Why is my IBAN not working?**<br>
-A typical QR bill ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example.php)) requires a special QR IBAN. You can get yours from your bank. A classic IBAN can be used for QR bills with a SCOR reference ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example_scor.php)) or no reference number at all ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example_minimal.php)).
+A typical QR bill ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example.php)) requires a special QR IBAN. You can get yours from your bank. A classic IBAN can be used for QR bills with a SCOR reference ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example_scor.php)) or no reference number at all ([example](https://github.com/sprain/php-swiss-qr-bill/blob/master/example/example_minimal.php)). QR IBANs and QR references can only be used for bills in CHF. Bills in EUR require a classic IBAN.
 
 * **How do I recognize a QR IBAN?**<br>
 In a QR IBAN, the *institute id*, which is defined in the 5th to 9th character, is a number in the range of 30000 to 31999. (Example: CH44 **3199 9**123 0008 8901 2). For how to detect it in code, see https://github.com/sprain/php-swiss-qr-bill/issues/182#issuecomment-1229539977
@@ -81,7 +81,7 @@ approximately 10% of current installations of the corresponding dependency.
 ## Official resources
 The repository contains the official specifications the library is based on:
 
-- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-v2.3-en.pdf)
+- [Swiss Implementation Guidelines QR-bill](docs/specs/ig-qr-bill-v2.4-en.pdf)
 - [Technical information about the QR-IID and QR-IBAN](docs/specs/qr-iid_qr-iban-en.pdf)
 - [Style Guide QR-bill](docs/specs/style-guide-en-v1.1.pdf)
 - [Validation Tool](https://validation.iso-payments.ch/gp/qrrechnung/validation/)

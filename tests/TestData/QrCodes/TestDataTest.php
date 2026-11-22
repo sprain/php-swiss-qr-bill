@@ -27,16 +27,17 @@ class TestDataTest extends TestCase
             [__DIR__ . '/qr-full-set.png', '9bedd6bdfa1819a80b7f27bcd2720989'],
             [__DIR__ . '/qr-international-ultimate-debtor.png', 'c52014c1b12faa2d6071406c43f300d7'],
             [__DIR__ . '/qr-minimal-setup.png', '72911d0c7d23298aeb14e4960204d6e0'],
-            [__DIR__ . '/qr-payment-information-with-mediumlong-creditor-and-unknown-debtor.png', '85c0267c6b0bbe427f7f3568ed27ea62'],
-            [__DIR__ . '/qr-payment-information-without-amount-and-long-addresses.png', 'b374dca724328ac2587127406ce77369'],
-            [__DIR__ . '/qr-payment-information-without-amount.png', '1da10251b49d72aa48c35207f54d4f1e'],
-            [__DIR__ . '/qr-payment-information-without-amount-but-debtor.png', '44e4dc184fa2ab19517ae62edef58281'],
-            [__DIR__ . '/qr-payment-information-zero-amount.png', 'd779c23775b755e7d193b22e93b51ed4'],
+            [__DIR__ . '/qr-payment-information-with-mediumlong-creditor-and-unknown-debtor.png', 'c8f3ea4e3a06624b8b0429872c14f0b0'],
+            [__DIR__ . '/qr-payment-information-without-amount-and-long-addresses.png', '310db0f82443ef471efd37d982405b80'],
+            [__DIR__ . '/qr-payment-information-without-amount.png', 'bdccbaec3eedebc422ed8b011934bfda'],
+            [__DIR__ . '/qr-payment-information-without-amount-but-debtor.png', '6deea4e53e5c7f819c06f8d2f61712c9'],
+            [__DIR__ . '/qr-payment-information-zero-amount.png', '65a0f8ae26baab93eaad6370a3ab0477'],
             [__DIR__ . '/qr-payment-reference-non.png', '176a87b6743ebb3b4d15e9d85937780a'],
             [__DIR__ . '/qr-payment-reference-scor.png', '7abd60316b137fa472165faff8e4a28c'],
+            [__DIR__ . '/qr-payment-reference-scor-eur.png', 'a819ff1f0c3e88d857a9e9b67ca72719'],
             [__DIR__ . '/qr-ultimate-debtor.png', 'b60739f211a626720cee7990ada02633'],
 
-            [__DIR__ . '/proof-of-validation.png', '86ef8e9bba53cc16193ee99e395f44e8'],
+            [__DIR__ . '/proof-of-validation.png', 'b8b467ac31940ab6f6449f8876103f4e'],
         ];
     }
 }

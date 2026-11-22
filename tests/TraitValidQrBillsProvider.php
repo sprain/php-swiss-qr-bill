@@ -77,6 +77,15 @@ trait TraitValidQrBillsProvider
                     'paymentReferenceScor'
                 ])
             ],
+            ['qr-payment-reference-scor-eur',
+                $creator->createQrBill([
+                    'header',
+                    'creditorInformationIban',
+                    'creditor',
+                    'paymentAmountInformationEur',
+                    'paymentReferenceScor'
+                ])
+            ],
             ['qr-payment-reference-non',
                 $creator->createQrBill([
                     'header',

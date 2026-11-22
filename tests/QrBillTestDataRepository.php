@@ -131,13 +131,19 @@ class QrBillTestDataRepository
 
     public function paymentAmountInformationWithoutAmount(QrBill &$qrBill): void
     {
-        $paymentAmountInformation = PaymentAmountInformation::create('EUR');
+        $paymentAmountInformation = PaymentAmountInformation::create('CHF');
+        $qrBill->setPaymentAmountInformation($paymentAmountInformation);
+    }
+
+    public function paymentAmountInformationEur(QrBill &$qrBill): void
+    {
+        $paymentAmountInformation = PaymentAmountInformation::create('EUR', 25.90);
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
     public function paymentAmountInformationZeroAmount(QrBill &$qrBill): void
     {
-        $paymentAmountInformation = PaymentAmountInformation::create('EUR', 0);
+        $paymentAmountInformation = PaymentAmountInformation::create('CHF', 0);
         $qrBill->setPaymentAmountInformation($paymentAmountInformation);
     }
 
