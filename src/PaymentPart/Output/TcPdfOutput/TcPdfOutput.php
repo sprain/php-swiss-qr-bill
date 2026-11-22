@@ -72,17 +72,8 @@ final class TcPdfOutput extends AbstractOutput
 
     public function getPaymentPart(): ?string
     {
-        $retainCellHeightRatio = $this->tcPdf->getCellHeightRatio();
-        $retainAutoPageBreak = $this->tcPdf->getAutoPageBreak();
-        $retainCellPaddings = $this->tcPdf->getCellPaddings();
-        $retainCellMargins = $this->tcPdf->getCellMargins();
-
-        $this->tcPdf->SetAutoPageBreak(false);
-
-        // The layout relies on the default cell padding and margins of TCPDF
-        $cellPaddingHorizontal = self::CELL_PADDING_HORIZONTAL_PT / $this->tcPdf->getScaleFactor();
-        $this->tcPdf->setCellPaddings($cellPaddingHorizontal, 0, $cellPaddingHorizontal, 0);
-        $this->tcPdf->setCellMargins(0, 0, 0, 0);
+        $retainedState = $this->getDocumentState();
+        $this->setUpDocument();
 
         try {
             $this->addSeparatorContentIfNotPrintable();
@@ -97,23 +88,97 @@ final class TcPdfOutput extends AbstractOutput
             $this->addAmountContent();
             $this->addFurtherInformationContent();
         } finally {
-            $this->tcPdf->setCellHeightRatio($retainCellHeightRatio);
-            $this->tcPdf->SetAutoPageBreak($retainAutoPageBreak);
-            $this->tcPdf->setCellPaddings(
-                $retainCellPaddings['L'],
-                $retainCellPaddings['T'],
-                $retainCellPaddings['R'],
-                $retainCellPaddings['B']
-            );
-            $this->tcPdf->setCellMargins(
-                $retainCellMargins['L'],
-                $retainCellMargins['T'],
-                $retainCellMargins['R'],
-                $retainCellMargins['B']
-            );
+            $this->restoreDocument($retainedState);
         }
 
         return null;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getDocumentState(): array
+    {
+        return [
+            // Fonts, colors, line style, cell padding and margins, cell height ratio, font spacing and stretching, etc.
+            'graphicVars' => $this->callTcPdfMethod('getGraphicVars'),
+            'textShadow' => $this->getTcPdfProperty('txtshadow'),
+            'strokeColor' => $this->getTcPdfProperty('strokecolor'),
+            'autoPageBreak' => $this->tcPdf->getAutoPageBreak(),
+            'breakMargin' => $this->tcPdf->getBreakMargin(),
+            'rtl' => $this->tcPdf->getRTL(),
+        ];
+    }
+
+    /**
+     * Sets everything the layout relies on, independent of how the document has been set up.
+     */
+    private function setUpDocument(): void
+    {
+        $this->tcPdf->SetAutoPageBreak(false);
+
+        // Save the graphics state of the page, to restore it afterwards
+        $this->tcPdf->StartTransform();
+
+        $this->tcPdf->setRTL(false, false);
+        $this->tcPdf->setTextShadow();
+        $this->tcPdf->setTextRenderingMode();
+        $this->tcPdf->setFontSpacing();
+        $this->tcPdf->setFontStretching();
+        if ($this->tcPdf->getAlpha() !== ['CA' => 1, 'ca' => 1, 'BM' => '/Normal', 'AIS' => false]) {
+            $this->tcPdf->setAlpha(1);
+        }
+        $this->tcPdf->SetLineStyle(['cap' => 'butt', 'join' => 'miter', 'dash' => 0]);
+        $this->tcPdf->SetTextColor(0);
+        $this->tcPdf->SetDrawColor(0);
+        $this->tcPdf->SetFillColor(0);
+
+        $cellPaddingHorizontal = self::CELL_PADDING_HORIZONTAL_PT / $this->tcPdf->getScaleFactor();
+        $this->tcPdf->setCellPaddings($cellPaddingHorizontal, 0, $cellPaddingHorizontal, 0);
+        $this->tcPdf->setCellMargins(0, 0, 0, 0);
+    }
+
+    /**
+     * @param array<string, mixed> $state
+     */
+    private function restoreDocument(array $state): void
+    {
+        $this->tcPdf->StopTransform();
+
+        $this->callTcPdfMethod('setGraphicVars', $state['graphicVars']);
+        $this->setTcPdfProperty('txtshadow', $state['textShadow']);
+        $this->setTcPdfProperty('strokecolor', $state['strokeColor']);
+
+        // Keep the current font of TCPDF in line with the restored font settings
+        if ($state['graphicVars']['FontFamily'] !== '') {
+            $this->tcPdf->SetFont(
+                $state['graphicVars']['FontFamily'],
+                $state['graphicVars']['FontStyle'],
+                $state['graphicVars']['FontSizePt']
+            );
+        }
+
+        $this->tcPdf->setRTL($state['rtl'], false);
+        $this->tcPdf->SetAutoPageBreak($state['autoPageBreak'], $state['breakMargin']);
+    }
+
+    /*
+     * TCPDF does not provide public access to all of its settings. They are therefore accessed directly.
+     */
+
+    private function getTcPdfProperty(string $property): mixed
+    {
+        return (new \ReflectionProperty($this->tcPdf, $property))->getValue($this->tcPdf);
+    }
+
+    private function setTcPdfProperty(string $property, mixed $value): void
+    {
+        (new \ReflectionProperty($this->tcPdf, $property))->setValue($this->tcPdf, $value);
+    }
+
+    private function callTcPdfMethod(string $method, mixed ...$arguments): mixed
+    {
+        return (new \ReflectionMethod($this->tcPdf, $method))->invoke($this->tcPdf, ...$arguments);
     }
 
     private function addSwissQrCodeImage(): void

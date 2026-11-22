@@ -51,6 +51,15 @@ final class FpdfOutput extends AbstractOutput
     // Line spacing
     private const LINE_SPACING_RECEIPT = 3.4;
     private const LINE_SPACING_PAYMENT_PART = 4.8;
+
+    // Default cell margin of FPDF: 1 cm / 10
+    private const CELL_MARGIN_PT = 2.835;
+
+    // Settings of FPDF which are changed while rendering and restored afterwards
+    private const FPDF_STATE_PROPERTIES = [
+        'LineWidth', 'DrawColor', 'FillColor', 'TextColor', 'ColorFlag', 'ws', 'cMargin',
+        'AutoPageBreak', 'bMargin', 'PageBreakTrigger',
+    ];
     private float $amountLS = 0;
 
     public function __construct(
@@ -66,21 +75,108 @@ final class FpdfOutput extends AbstractOutput
 
     public function getPaymentPart(): ?string
     {
-        $this->fpdf->SetAutoPageBreak(false);
+        $retainedState = $this->getDocumentState();
+        $this->setUpDocument();
 
-        $this->addSeparatorContentIfNotPrintable();
+        try {
+            $this->addSeparatorContentIfNotPrintable();
 
-        $this->addInformationContentReceipt();
-        $this->addCurrencyContentReceipt();
-        $this->addAmountContentReceipt();
+            $this->addInformationContentReceipt();
+            $this->addCurrencyContentReceipt();
+            $this->addAmountContentReceipt();
 
-        $this->addSwissQrCodeImage();
-        $this->addInformationContent();
-        $this->addCurrencyContent();
-        $this->addAmountContent();
-        $this->addFurtherInformationContent();
+            $this->addSwissQrCodeImage();
+            $this->addInformationContent();
+            $this->addCurrencyContent();
+            $this->addAmountContent();
+            $this->addFurtherInformationContent();
+        } finally {
+            $this->restoreDocument($retainedState);
+        }
 
         return null;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getDocumentState(): array
+    {
+        $state = [];
+        foreach (self::FPDF_STATE_PROPERTIES as $property) {
+            $state[$property] = $this->getFpdfProperty($property);
+        }
+
+        $state['font'] = [
+            'family' => $this->getFpdfProperty('FontFamily'),
+            'style' => $this->getFpdfProperty('FontStyle') . ($this->getFpdfProperty('underline') ? 'U' : ''),
+            'size' => $this->getFpdfProperty('FontSizePt'),
+        ];
+
+        return $state;
+    }
+
+    /**
+     * Sets everything the layout relies on, independent of how the document has been set up.
+     */
+    private function setUpDocument(): void
+    {
+        $this->fpdf->SetAutoPageBreak(false);
+
+        // Save the graphics state of the page, to restore it afterwards
+        $this->writeToPage('q');
+
+        $this->writeToPage('[] 0 d');
+        $this->writeToPage('0 Tw');
+        $this->setFpdfProperty('ws', 0);
+
+        // Default cell margin of FPDF: 1 cm / 10
+        $this->setFpdfProperty('cMargin', self::CELL_MARGIN_PT / $this->getFpdfProperty('k'));
+
+        $this->fpdf->SetTextColor(0);
+        $this->fpdf->SetDrawColor(0);
+        $this->fpdf->SetFillColor(0);
+    }
+
+    /**
+     * @param array<string, mixed> $state
+     */
+    private function restoreDocument(array $state): void
+    {
+        $this->writeToPage('Q');
+
+        $font = $state['font'];
+        unset($state['font']);
+
+        foreach ($state as $property => $value) {
+            $this->setFpdfProperty($property, $value);
+        }
+
+        // The font is restored with SetFont(), as some versions of FPDF keep a reference to the current font.
+        // Resetting the family makes sure it is applied, even if FPDF considers it to be the current font.
+        $this->setFpdfProperty('FontFamily', '');
+        if ($font['family'] !== '') {
+            $this->fpdf->SetFont($font['family'], $font['style'], $font['size']);
+        }
+    }
+
+    /*
+     * FPDF does not provide public access to most of its settings. They are therefore accessed directly.
+     */
+
+    private function getFpdfProperty(string $property): mixed
+    {
+        return (new \ReflectionProperty($this->fpdf, $property))->getValue($this->fpdf);
+    }
+
+    private function setFpdfProperty(string $property, mixed $value): void
+    {
+        (new \ReflectionProperty($this->fpdf, $property))->setValue($this->fpdf, $value);
+    }
+
+    private function writeToPage(string $content): void
+    {
+        (new \ReflectionMethod($this->fpdf, '_out'))->invoke($this->fpdf, $content);
     }
 
     public function setQrCodeImageFormat(string $fileExtension): static
